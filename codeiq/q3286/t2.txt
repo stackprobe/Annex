@@ -1,0 +1,22 @@
+<a>
+	aaa1
+	<b>111</b>
+	<b>222</b>
+	<b>333</b>
+	<c>ccc</c>
+	<ddd>1</ddd>
+	<ddd>2</ddd>
+	<ddd>3</ddd>
+	<ddd>4</ddd>
+	<ddd2>4</ddd2>
+	<ddd>5</ddd>
+	<ddd>6</ddd>
+	<ddd2>6.</ddd2>
+	<ddd3>6..</ddd3>
+	<ddd3>6...</ddd3>
+	<ddd>7</ddd>
+	<ddd>8</ddd>
+	<ddd>9<d1/></ddd>
+	<ddd>10<d1/><d2/></ddd>
+	aaa2
+</a>

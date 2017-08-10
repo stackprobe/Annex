@@ -1,0 +1,5 @@
+ECHO 5|a
+ECHO 6|a
+ECHO 7|a
+ECHO 8|a
+ECHO 9|a

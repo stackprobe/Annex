@@ -1,0 +1,8 @@
+"/html",""
+"/html/head",""
+"/html/head/meta",""
+"/html/head/title","title"
+"/html/body",""
+"/html/body/div[1]","Div1"
+"/html/body/div[1]/small","..."
+"/html/body/div[2]","Div2"

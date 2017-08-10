@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>CodeIQ</title>
+</head>
+<body>
+<div>
+<p>AB</p>
+<div>
+<p>1234</p>
+<p>5678</p>
+</div>
+<p>CD</p>
+</div>
+</body>

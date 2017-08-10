@@ -1,0 +1,60 @@
+<html>
+<head>
+<script language="javascript">
+<!--
+
+var PtnNum;
+
+function GetPtnNum(line) {
+	PtnNum = 0;
+	TryNextPtn(line, 0, 0);
+	return PtnNum;
+}
+
+function TryNextPtn(line, currPos, sum) {
+	if(line.length <= currPos) {
+		if(
+			1 <= sum &&
+			(
+				sum % 2 == 0 ||
+				sum % 3 == 0 ||
+				sum % 5 == 0 ||
+				sum % 7 == 0
+				)
+			)
+			PtnNum++;
+
+		return;
+	}
+
+	for(var nextLen = 1; currPos + nextLen <= line.length; nextLen++) {
+		var nextVal =  parseInt(line.substr(currPos, nextLen));
+		var nextPos = currPos + nextLen;
+
+		TryNextPtn(line, nextPos, sum + nextVal);
+
+		if(1 <= currPos) {
+			TryNextPtn(line, nextPos, sum - nextVal);
+		}
+	}
+}
+
+var magic_number = [
+	"0",
+	"5",
+	"123",
+	"015",
+	"1132"
+];
+
+for(var i = 0; i < magic_number.length; i++) {
+	document.write(GetPtnNum(magic_number[i]) + "<br/>");
+}
+
+//-->
+</script>
+</head>
+<body>
+
+</body>
+</html>

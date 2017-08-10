@@ -1,0 +1,5 @@
+5 is false (1)
+2 is true (2)
+2 is true (3)
+3 is false (4)
+1 is false (5)
