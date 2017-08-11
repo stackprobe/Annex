@@ -7,6 +7,6 @@ int main(int argc, char **argv)
 	while(n = malloc(1000)) *n = p, p = n;
 	while(p) n = *p, free(p), p = n;
 //	printf("####1\n");
-	system("DIR");
+	system("DIR"); // é¿çsÇ≥ÇÍÇ»Ç¢ÅI
 //	printf("####2\n");
 }
