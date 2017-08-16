@@ -12,11 +12,11 @@ namespace Charlotte.Test.Tools
 		public static void Test01()
 		{
 			Test01_a(
-				///////////////////////// $_git:secret
+				////////////////////// // $_git:secret
 				);
 
 			using (new DirectoryTools.Into(
-				////////////////////////////////////////// $_git:secret
+				/////////////////////////////////////// // $_git:secret
 				))
 			{
 				Test01_a(".."); // -> @"..\aaaaa_bbbbbb\1234567.jpg"
