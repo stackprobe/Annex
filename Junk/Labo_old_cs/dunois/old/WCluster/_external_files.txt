@@ -1,3 +1,0 @@
-■以下の外部ファイルをリリース物に含める。
-
-	C:\Factory\Tools\ZCluster.exe
