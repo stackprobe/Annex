@@ -1,13 +1,12 @@
-//// _git source mask md5:2a7c86a71a3b1bae5afd8bda5b4be618 ////
-//////// /////////////////////////
+#include "C:\Factory\Common\all.h"
 
-/// //////// ///// //// ///////
-/
-	//// /// / //
+int main(int argc, char **argv)
+{
+	uint num = 5;
 
-	///////// / //////
-	/
-		////////// /////
-		//////
-	/
-/
+	while(num < 10000)
+	{
+		cout("%u", num);
+		num++;
+	}
+}
