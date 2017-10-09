@@ -1,0 +1,440 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" lang="ja" dir="ltr" prefix="fb: http://ogp.me/ns/fb# og: http://ogp.me/ns# article: http://ogp.me/ns/article# book: http://ogp.me/ns/book# profile: http://ogp.me/ns/profile# video: http://ogp.me/ns/video# product: http://ogp.me/ns/product#">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+      <meta name="format-detection" content="telephone=no">
+  <meta charset="utf-8" /><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1059.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
+<link rel="shortcut icon" href="https://codeiq.jp/sites/all/themes/codeiq/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="profile" href="http://www.w3.org/1999/xhtml/vocab" />
+<meta name="description" content="自分のITエンジニアとしての能力や市場価値の可視化って難しい。CodeIQで、企業の第一線で活躍するエンジニアによる実践的な問題に挑戦！その企業におけるリアルな評価がフィードバックされます。自分のスキルの価値が気になる方は、トライしてみてください！" />
+<meta name="keywords" content="エンジニア,プログラマ,プログラミング,スキル,市場価値,実力,code,コード,問題,技術者,挑戦,CodeIQ,コードアイキュー,キュラゲ,能力,システム,IT" />
+<meta name="generator" content="Drupal 7 (http://drupal.org)" />
+<link rel="shortlink" href="https://codeiq.jp/challenge/1662" />
+<meta property="fb:app_id" content="277045419020756" />
+<meta property="og:site_name" content="CodeIQ" />
+<meta property="og:url" content="https://codeiq.jp/challenge/1662" />
+<meta property="og:title" content="CodeIQ運営事務局 プログラミング部からの問題に挑戦中！ | CodeIQ" />
+<meta property="og:description" content="自分のITエンジニアとしての能力や市場価値の可視化って難しい。CodeIQで、企業の第一線で活躍するエンジニアによる実践的な問題に挑戦！その企業におけるリアルな評価がフィードバックされます。自分のスキルの価値が気になる方は、トライしてみてください！" />
+<meta property="og:image" content="https://codeiq.jp/img/facebookOGP.jpg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:url" content="https://codeiq.jp/challenge/1662" />
+<meta name="twitter:title" content="CodeIQ運営事務局 プログラミング部からの問題に挑戦中！" />
+  <link rel="alternate" type="application/rss+xml" title="CodeIQ｜ITエンジニアのための実務スキル評価サービス" href="https://codeiq.jp" />
+  <title>CodeIQ運営事務局 プログラミング部からの問題に挑戦中！ | CodeIQ</title>
+  <script src="https://codeiq.jp/sites/all/modules/jquery_update/replace/jquery/1.10/jquery.min.js?v=1.10.2"></script>
+<script src="https://codeiq.jp/misc/jquery.once.js?v=1.2"></script>
+<script src="https://codeiq.jp/misc/drupal.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/themes/omega/omega/js/no-js.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/modules/codeiq/codeiq_snippet/js/jquery.snippet.min.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/modules/codeiq/codeiq_snippet/js/syntax_highlight.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/modules/admin_menu/admin_devel/admin_devel.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/default/files/languages/ja_IDEunrgjWd9QlQieQTQkWcBOddZEsxe565mE2NzNmJw.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/modules/codeiq/codeiq_fapi_validate/codeiq_fapi_validate.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/modules/clientside_validation/jquery-validate/jquery.validate.min.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/themes/codeiq/js/codeiq.challenge.confirm.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/themes/codeiq/js/codeiq.challenge.submit.js?oxbs9z"></script>
+<script src="https://codeiq.jp/misc/textarea.js?v=7.53"></script>
+<script src="https://codeiq.jp/sites/all/themes/codeiq/js/codeiq.behaviors.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/themes/codeiq/js/codeiq.common.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/themes/codeiq/js/thickbox.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/themes/codeiq/js/rollover.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/themes/codeiq/js/jquery.scrollable.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/themes/codeiq/js/jquery.colorbox-min.js?oxbs9z"></script>
+<script>jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","better_exposed_filters":{"views":{"latest_news2_top":{"displays":{"news_for_you":{"filters":[]}}}}},"clientsideValidation":{"forms":{"codeiq-members-challenge-nid-form":{"errorPlacement":"1","general":{"errorClass":"error","wrapper":"li","validateTabs":0,"scrollTo":1,"scrollSpeed":"100","disableHtml5Validation":"1","validateOnBlur":"1","validateOnBlurAlways":"1","validateOnKeyUp":"1","validateBeforeAjax":"0","validateOnSubmit":"1","showMessages":"0","errorElement":"label"},"rules":{"program_language":{"required":true,"messages":{"required":"\u30d7\u30ed\u30b0\u30e9\u30e0\u8a00\u8a9e\u306f\u5165\u529b\u5fc5\u9808\u3067\u3059\u3002","blacklist":"\u30d7\u30ed\u30b0\u30e9\u30e0\u8a00\u8a9e\u306f\u5165\u529b\u5fc5\u9808\u3067\u3059\u3002","number":"\u30d7\u30ed\u30b0\u30e9\u30e0\u8a00\u8a9e\u306e\u9078\u629e\u304c\u4e0d\u6b63\u3067\u3059\u3002"},"blacklist":{"values":["_none"],"negate":false},"number":true},"answer":{"rangelength":["1","10000"],"messages":{"rangelength":"\u300c\u89e3\u7b54\u5165\u529b\u6b04\u300d\u306e\u6587\u5b57\u6570\u304c\u9577\u3059\u304e\u307e\u3059\u3002 10000\u6587\u5b57\u4ee5\u5185\u3067\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002","check_empty":"\u89e3\u7b54\u5165\u529b\u6b04\u306f\u5165\u529b\u5fc5\u9808\u3067\u3059\u3002"},"check_empty":true}}}},"general":{"usexregxp":0,"months":{"1\u6708":1,"2\u6708":2,"3\u6708":3,"4\u6708":4,"5\u6708":5,"6\u6708":6,"7\u6708":7,"8\u6708":8,"9\u6708":9,"10\u6708":10,"11\u6708":11,"12\u6708":12}},"groups":{"codeiq-members-challenge-nid-form":{}}}});</script>
+  <style type="text/css">[v-cloak] {display: none}</style>
+  <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+  <script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    googletag.cmd.push(function() {
+      googletag.defineSlot('/155605289/CodeIQ本体内', [300, 250], 'div-gpt-ad-1471235875449-0').addService(googletag.pubads());
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().collapseEmptyDivs();
+      googletag.enableServices();
+    });
+    googletag.cmd.push(function() {
+      googletag.defineSlot('/155605289/CodeIQ本体_TOP右カラムレクタングル2', [300, 250], 'div-gpt-ad-1471235797069-0').addService(googletag.pubads());
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().collapseEmptyDivs();
+      googletag.enableServices();
+    });
+  </script>
+</head>
+<body class="html not-front logged-in page-challenge page-challenge- page-challenge-1662 node-type-question section-challenge page-is-not-403 page-is-not-404"  class="html not-front logged-in page-challenge page-challenge- page-challenge-1662 node-type-question section-challenge">
+  <!-- ABtest -->
+  <script src="//cdn.optimizely.com/js/4041489102.js"></script>
+  <!-- End ABtest -->
+  <link type="text/css" rel="stylesheet" href="https://codeiq.jp/sites/default/files/css/css_uQCiKfv0xvf8IF1NuJhAj5LwuWzqpcG18T2VCSsC--A.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://codeiq.jp/sites/default/files/css/css_F40f1emj-P-9q0ggD35bghIwY26aY8b2sZmmUJORKMU.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://codeiq.jp/sites/default/files/css/css_sHzpTC-fO9IdB9kMrHYn15d-clxkA4W8OWPftZ-J68g.css" media="all" />
+
+<!--[if lte IE 8]>
+<link type="text/css" rel="stylesheet" href="https://codeiq.jp/sites/default/files/css/css_AbpHGcgLb-kRsJGnwFEktk7uzpZOCcBY74-YBdrKVGs.css" media="all" />
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="https://codeiq.jp/sites/default/files/css/css_hgjFRL4qy9xNFdAkWmf0MGDxZl3BLfKLsQr7CG4KsxU.css" media="all" />
+    <div id="fb-root"></div>
+<div  id="container" class="l-page subject">
+  <header class="l-header" role="banner">
+    <div class="l-branding">
+
+
+          </div>
+
+      <div class="l-region l-region--header">
+    <div id="block-block-3" class="block block--block block--block-3">
+        <div class="block__content">
+
+<!--header-->
+	<div id="header">
+		<div class="headerInnner">
+			<div class="headerleft">
+				<p class="logo"><strong><em><a href="/"><img src="/sites/all/themes/codeiq/images/logo.gif" alt="CodeIQ（コードアイキュー）" /></a></em></strong></p>
+				<p class="headmessage">本当にできる人は、見逃されない</p>
+				<p class="recruitNew"><img src="/sites/all/themes/codeiq/images/logo_header_produced_by_recruit_white.png" alt="PRODUCED BY RECRUIT" /></p>
+			</div>
+			<div class="headerright">
+				<table border="0" cellspacing="0" cellpadding="0" style="width: auto; margin-bottom: auto;">
+					<tr>
+<td class="headIUserImg"><img src="/sites/all/themes/codeiq/images/dummy_thumb_29x29.gif" alt="hotcake_box" /></td>
+                        <td class="headName"><a href="/my_scout_list">hotcake_box</a></td>
+<td class="headMorebtn"><a id="mainMenu" href="/my_scout_list"><i class="fa fa-angle-down" aria-hidden="true"></i></a></td>
+<td class="headNotice"><a class="infomation" href="/my_scout_list"><i class="fa fa-bell" aria-hidden="true"></i>
+<span class="notice-badge"><span class="notice-count">21</span></span>
+</a></td>
+					</tr>
+				</table>
+				<!--メニュー-->
+				<div class="topmenu" style="display:none;" >
+					<p><a href="/my_timeline">マイページ</a></p>
+<p><a href="/my_scout_list">スカウト一覧</a></p>
+<p><a href="/my_bookmark_list">ブックマーク一覧</a></p>
+					<p><a href="/my_account_profile">アカウント設定</a></p>
+					<p><a href="/user/logout">ログアウト</a></p>
+				</div>
+				<!--メニュー-->
+			</div>
+		</div>
+	</div>	<!--header end-->  </div>
+</div>
+  </div>
+      </header>
+
+  <div id="content" class="l-main">
+    <div class="l-content" role="main">
+      <div class="mainContent">
+                                          <!-- <h1>CodeIQ運営事務局 プログラミング部からの問題に挑戦中！</h1> -->
+
+
+
+<!--mainContent-->
+<div class="mainContent">
+  <div class="pageTitle">
+    <h1><p class="h1 hightshort">言語不問：htmlタグの入れ子の違い　 プログラミング部さんの問題に挑戦中！</p></h1>
+  </div>
+  <div class="title">
+    <div class="floatLeft">
+      <h2>
+        設問 </h2>
+    </div>
+    <div class="floatRight">
+          </div>
+  </div>
+
+  <!-- ▼設問▼-->
+  <div class="subjectBlock">
+          <div class="question-text">
+        <p><img src="/sites/default/files/answer_ready/1662/Fotolia_82642384_XS.jpg" width="500"></p>
+<p style="font-size:16px;">
+<br><b>【プロローグ】</b><br />
+<font color="green">先輩社員「昔つくったhtmlファイルがたくさんあって、そのなかのhtmlタグの入れ子に一部間違いがあるんだ」</font><br><br />
+<font color="blue">あなた「入れ子が間違っているというと、&lt;div&gt;&lt;span&gt;&lt;/div&gt;&lt;/span&gt;のような状態ということですか？」</font><br><br />
+<font color="green">先輩社員「そうだね。そこでhtmlの文字列を引数に取って、入れ子の違いがあるかないかを調べるクラスを作成してほしいんだ」</font><br><br />
+<font color="blue">あなた「大変そうですね。htmlタグのなかには、liタグのように閉じタグがあったりなかったりするものもあるし」</font><br><br />
+<font color="green">先輩社員「そうだね。liタグに関しては閉じタグがあってもなくてもいいようにしたい」</font><br><br />
+<font color="blue">あなた「なるほど。liタグ以外はなんとかなりそうですね」</font><br><br />
+<font color="green">先輩社員「もしかしたら同僚のA君に、今回チェックするhtmlファイルに出てくるタグ以外のタグチェックも依頼するかもしれないので、コメントアウトでコードの説明も簡単にしておいてもらいたい」</font></p>
+<p><br><br></p>
+<p style="font-size:16px;">
+<b>【問題】</b><br />
+htmlが標準入力から与えられるので、htmlタグの入れ子が間違っている、閉じタグが現れる最初の行番号を、標準出力に出力するプログラムを作ってください。<br />
+htmlは最大20行、1行あたり最大100文字です。<br />
+ただし、liタグに関しては、タグが閉じていても閉じてなくてもよいものとします。<br />
+間違いがない場合には0を出力してください。</p>
+<p><br><br></p>
+<p style="font-size:16px;">
+<b>【解答方法】</b><br />
+■挑戦言語は下記のプログラム言語選択で選択可能なものであれば何でもＯＫです！<br />
+1)自分の書いたプログラム言語を選択<br />
+2)解答欄にソースコードを記入<br />
+3)送信前に「提出前に確認」ボタンをクリック（構文エラーがないかどうかチェックできます）<br />
+4)「解答コードは正常に実行されました」というメッセージを確認の上、「解答を送信」ボタンで解答してください。<br><br />
+■この問題にはテストケースが3つ用意されています。すべてに通れば正解です！<br><br><br />
+<b>【採点について】</b><br />
+・採点は「ideone」を使ってプログラムを実行し、標準入力および標準出力のテストケースと照合して正誤を判定します<br />
+・各言語の標準入力と標準出力は<a href="https://codeiq.jp/node/1598" target=_blank">こちら</a>を参考にしてください<br />
+・標準入力の最終行の改行はあり／なし両方に対応してください<br />
+※なおCodeIQで使用しているideoneは企業版のため、webで公開されているコンシューマー版<a href="http://ideone.com/" target="_blank">ideone</a>とは<br />
+　対応言語・バージョン・挙動が異なる場合があります。<br />
+　企業版ideoneの対応バージョンは、「提出前チェック」の結果とともに表示されます。</p>
+      </div>
+      </div>
+  <!-- ▲設問▲-->
+
+
+    <form class="codeiq-members-challenge-nid-form" enctype="multipart/form-data" action="/challenge/1662" method="post" id="codeiq-members-challenge-nid-form" accept-charset="UTF-8">
+      <div class="title uproad">
+        <div class="floatLeft">
+          <h2>プログラム言語を選択してください</h2>
+        </div>
+      </div>
+
+      <div class="subjectBlock">
+        <div class="subjectBlockSelect">
+        <div class="form-item form-type-select form-item-program-language">
+  <label class="element-invisible" for="edit-program-language">プログラム言語 <span class="form-required" title="このフィールドは必須です。">*</span></label>
+ <select class="programLanguage form-select required" id="edit-program-language" name="program_language"><option value="108" selected="selected">Bash</option><option value="150">Brainf**k</option><option value="110">C</option><option value="112">C#</option><option value="174">C++</option><option value="116">C++11</option><option value="158">C99 strict</option><option value="135">D (dmd)</option><option value="163">Go</option><option value="122">Java7</option><option value="120">Java8</option><option value="133">JavaScript (rhino)</option><option value="136">JavaScript (spidermonkey)</option><option value="156">Node.js</option><option value="124">Objective-C</option><option value="113">Perl</option><option value="130">Perl 6</option><option value="115">PHP</option><option value="117">Python</option><option value="119">Python 3</option><option value="145">R</option><option value="121">Ruby</option><option value="149">Scala</option><option value="123">SQL</option><option value="125">VB.NET</option></select>
+</div>
+        </div>
+      </div>
+
+      <div class="title uproad">
+        <div class="floatLeft">
+          <h2>解答を入力して送信ボタンをクリックしてください</h2>
+        </div>
+        <div class="floatRight">
+                  </div>
+      </div>
+
+      <div class="subjectBlock">
+        <div class="form-item form-type-textarea form-item-answer">
+  <label for="edit-answer">解答入力欄 </label>
+ <div class="form-textarea-wrapper resizable"><textarea id="edit-answer" name="answer" cols="60" rows="5" class="form-textarea"></textarea></div>
+</div>
+      </div>
+
+      <div class="challengeerr"></div>
+      <div class="btmCenterBtn">
+        <div class="btn1">
+
+
+              <div id="btn_confirm_code_wrapper" class="mb20">
+                <img class="imgover" id="btn_confirm_ideone_exec_code" src="/sites/all/themes/codeiq/images/btn_confirm_code.gif" width="204" height="38" alt="提出前に確認" />
+              </div>
+              <div id="ideone_response_wrapper" class="mb20">
+
+                <!-- ideone response message -->
+                <div class="message_box wait hidden">
+                  <img src="/sites/all/themes/codeiq/images/throbber.gif" class="throbber" width="13" height="13" alt"レスポンス待ち">
+                  <span>採点中です。しばらくお待ち下さい。</span>
+                </div>
+                <div class="message_box status hidden"><div class="message_box_inner"><span><!-- ideone response message --></span></div></div>
+                <div class="message_box worning hidden"><div class="message_box_inner"><span><!-- ideone response message --></span></div></div>
+                <div class="message_box error hidden"><div class="message_box_inner"><span><!-- ideone response message --></span></div></div>
+
+              </div>
+
+
+            <input class="btn_sendanswer form-submit" type="submit" id="edit-submit" name="op" value="" />                  </div>
+      </div>
+      <div class="hidden">
+        <input type="hidden" name="form_build_id" value="form-0g7AkFSXv60lJG2jvDZAwuKYC-v_aNKdAOAvlXg8jmE" />
+<input type="hidden" name="form_token" value="_JTbHYwRRUkCqUsBucHzu0XtOq-qSi9bFKMDAdY0A54" />
+<input type="hidden" name="form_id" value="codeiq_members_challenge_nid_form" />
+      </div>
+    </form>
+
+
+</div>
+<div class="hidden">
+  <div id="timeout-alert">
+    <div class="alertBox">
+      <p class="alertTxt1">制限時間が経過しました。</p>
+      <div class="alertBtn">
+        <ul>
+          <li class="alertBtn1">
+            <a href="/challenge_complete/1662/?timeover=timeover">
+              <img class="imgover"  src="/sites/all/themes/codeiq/images/btn_charangefinish.gif" width="321" height="62" alt="挑戦完了へ進む" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div><!-- #timeout-alert -->
+</div>
+                                        </div><!-- .mainContent -->
+    </div>
+  </div>
+
+  <footer class="l-footer" role="contentinfo">
+      <div class="l-region l-region--footer">
+    <div id="block-block-17" class="block block--block block--block-17">
+        <div class="block__content">
+    <!--footer-->
+    <div class="footerInnerWrp"><a class="backtotop" onclick="backToTop(); return false" href="#">ページ上部へ<i class="fa fa-angle-double-up" aria-hidden="true"></i></a></div>
+    <div id="footer">
+        <div class="footerInner">
+            <ul class="toSNSaccount">
+                <li><a href="https://www.facebook.com/codeiq" target="_blank"><img src="/sites/all/themes/codeiq/images/btn_tofacebook.gif" alt="公式Facebookページ" width="223" height="44" /></a></li>
+                <li><a href="https://twitter.com/codeiq" target="_blank"><img src="/sites/all/themes/codeiq/images/btn_totwitter.gif" alt="公式Twitterアカウント" width="223" height="44" /></a></li>
+                <li><a href="/" target="_blank"><img src="/sites/all/themes/codeiq/images/btn_toblog_CodeIQ.gif" alt="CodeIQ" width="223" height="44" /></a></li>
+                <li><a href="/magazine/" target="_blank"><img src="/sites/all/themes/codeiq/images/btn_toblog_MG.gif" alt="CodeIQ MAGAZINE" width="223" height="44" /></a></li>
+                <li><a href="https://codeiq.jp/rss.xml" target="_blank"><img src="/sites/all/themes/codeiq/images/btn_toRSS.gif" alt="Read CodeIQ on RSS" width="223" height="44" /></a></li>
+            </ul>
+            <ul class="footerList">
+                <li>
+                    <dl class="aboutCodeIQ">
+                        <dt><strong>CodeIQ</strong>とは</dt>
+                        <dd><strong>CodeIQ（コードアイキュー）</strong>とは、ITエンジニアが<strong>自分のスキル</strong>をチェックし、スキルにマッチした企業からの<strong>スカウト</strong>を受け取ることができるサービスです。<br />
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl class="useCodeIQ">
+                        <dt><strong>CodeIQ</strong>ご利用にあたって</dt>
+                        <dd><a href="/q/search" target="_blank"><strong>エンジニア</strong>からの問題一覧</a></dd>
+                        <dd><a href="/q/search?field_tag_tid=105" target="_blank"><strong>企業スカウト付き</strong>問題一覧</a></dd>
+                        <dd><a href="/kiyaku" target="_blank">利用規約</a></dd>
+                        <dd><a href="/privacy" target="_blank">プライバシーポリシー</a></dd>
+                        <dd><a href="/inquiry" target="_blank">お問い合わせ</a></dd>
+                        <dd><a href="/node/3023" target="_blank">よくあるご質問</a></dd>
+                        <dd><a href="/node/3146" target="_blank">スカウト実績企業例</a></dd>
+                    </dl>
+                </li>
+                <li class="last">
+                    <dl class="otherSite">
+                        <dt>関連サイト</dt>
+                        <dd><a href="http://next.rikunabi.com/?vos=drnncodeiq00001" target="_blank">リクナビNEXT</a></dd>
+                        <dd><a href="http://next.rikunabi.com/rnc/docs/ci_s00010.jsp?vos=drnncodeiq00002" target="_blank">リクナビNEXT ITキャリア</a></dd>
+                        <dd><a href="http://next.rikunabi.com/tech/docs/ct_s01100.jsp?vos=drnncodeiq00003" target="_blank">リクナビNEXT Tech総研</a></dd>
+                        <dd><a href="http://atnd.org/?utm_source=CodeIQ&utm_medium=content-text&utm_campaign=ciq-ft" target="_blank">ATND</a></dd>
+                        <dd><a href="https://moffers.codeiq.jp/?utm_source=CodeIQ&utm_medium=content-text&utm_campaign=ciq-ft" target="_blank">moffers</a></dd>
+                    </dl>
+                </li>
+            </ul>
+         </div>
+    </div>  </div>
+</div>
+<div id="block-block-18" class="block block--block block--block-18">
+        <div class="block__content">
+    	<div id="footer">
+		<div class="footerInner">
+			<div class="site_list" style="margin-top: 0;">
+				<div class="logo_recruitNew floatLeft">
+					<a href="http://www.recruitcareer.co.jp/" target="_blank"> <img src="/sites/all/themes/codeiq/images/logo_footer_recruit_white.png" width="101" height="27" alt="リクルート"></a>
+					<div class="copyright"><a href="http://www.recruitcareer.co.jp/" target="_blank">(C) Recruit Career Co.,Ltd.</a></div>
+					<div class="textLink"><a href="http://www.recruit.jp/" target="_blank">リクルートグループサイトへ</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--footer end-->  </div>
+</div>
+  </div>
+  </footer>
+</div>
+
+<!--[if lt IE 9]>
+<script src="https://codeiq.jp/sites/all/modules/clientside_validation/clientside_validation.ie8.js?oxbs9z"></script>
+<![endif]-->
+<script src="https://codeiq.jp/sites/all/modules/clientside_validation/clientside_validation_html5/clientside_validation_html5.js?oxbs9z"></script>
+<script src="https://codeiq.jp/sites/all/modules/clientside_validation/clientside_validation.js?oxbs9z"></script>
+
+<!-- 共通フッタースクリプト start -->
+
+
+  <!-- Google Tag Manager -->
+  <noscript>
+  <iframe src="//www.googletagmanager.com/ns.html?id=GTM-NCXRS4"
+
+  height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+
+  })(window,document,'script','dataLayer','GTM-NCXRS4');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- for Reqruit Communications -->
+  <script type="text/javascript" src="//tm.r-ad.ne.jp/12/ra10011343.js" charset="utf-8"></script>
+
+  <!-- googleリマーケティング  -->
+  <script type="text/javascript">
+  /* <![CDATA[ */
+  var google_conversion_id = 976122709;
+  var google_custom_params = window.google_tag_params;
+  var google_remarketing_only = true;
+  /* ]]> */
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  </script>
+  <noscript>
+  <div style="display:inline;">
+  <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/976122709/?value=0&amp;guid=ON&amp;script=0"/>
+  </div>
+  </noscript>
+  <!-- GDN  -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 951759878;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/951759878/?value=0&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+  <!-- Facebook  -->
+<script>(function() {
+var _fbq = window._fbq || (window._fbq = []);
+if (!_fbq.loaded) {
+var fbds = document.createElement('script');
+fbds.async = true;
+fbds.src = '//connect.facebook.net/en_US/fbds.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(fbds, s);
+_fbq.loaded = true;
+}
+_fbq.push(['addPixelId', '809797712462041']);
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', 'PixelInitialized', {}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=809797712462041&amp;ev=PixelInitialized" /></noscript>
+  <!-- Twitter  -->
+<script src="//platform.twitter.com/oct.js" type="text/javascript"></script>
+<script type="text/javascript">twttr.conversion.trackPid('l6acy', { tw_sale_amount: 0, tw_order_quantity: 0 });</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l6acy&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0" />
+<img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=l6acy&p_id=Twitter&tw_sale_amount=0&tw_order_quantity=0" />
+</noscript>
+
+
+
+    <!-- ADPLAN  -->
+    <script language="JavaScript" type="text/javascript" src="//o.advg.jp/ojs?aid=6139&pid=1" charset="UTF-8"></script>
+    <noscript>
+    <iframe src="//o.advg.jp/oif?aid=6139&pid=1" width="1" height="1"> </iframe>
+    </noscript>
+
+
+
+
+<script type="text/javascript" src="/sites/all/themes/codeiq/js/vendor/iconate.min.js"></script>
+<script type="text/javascript" src="/sites/all/themes/codeiq/js/vendor/imgLiquid-min.js"></script>
+<!-- 共通フッタースクリプト end -->
+      <!-- ABtest -->
+    <link rel="manifest" href="https://codeiq.jp/manifest.json">
+    <!-- End ABtest -->
+
+  <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"9d4b4f2560","applicationID":"65641449","transactionName":"Y11SNRMHVhcFWxBcXVoXcQIVD1cKS1sLUVddSW8MBAtaARZLO1ZaVVRcBA8BXTsKUQA=","queueTime":0,"applicationTime":938,"atts":"TxpRQ1sdRRk=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
