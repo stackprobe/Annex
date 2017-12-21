@@ -1,3 +1,12 @@
+/*
+	毎日１回決まった時間に餌やりが必要なペットがいて、そいつは一定の日数絶食すると餓死するとして、
+	その餌やりを一定の確率で忘れる人に一定の日数間預けたとき、どれくらいの確率で死ぬか。
+
+	starvDay == 餓死する連続絶食日数
+	azukeDay == 預ける日数
+	gohanPct == (１日の)餌やりする確率 (noGhnPct == (１日の)餌やりを忘れる確率)
+*/
+
 #include "C:\Factory\Common\all.h"
 #include "C:\Factory\Common\Options\csv.h"
 #include "C:\Factory\Common\Options\CRRandom.h"
