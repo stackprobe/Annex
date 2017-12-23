@@ -7,12 +7,40 @@ static double GetRouletteDeathRate(uint starvDay, uint gohanPct)
 }
 static double GetStepDay(uint starvDay, uint gohanPct)
 {
-	double numer = gohanPct / 100.0;
-	double denom = gohanPct / 100.0;
+	double numer;
+	double denom;
 	double a = 1.0;
 	double b;
 	uint d;
 
+	/*
+		1日後に餌が食える確率は gohanPct / 100.0
+	*/
+	b = gohanPct / 100.0;
+	numer = b;
+	denom = b;
+
+	/*
+		d日後に餌が食える確率は ((noGhnPct / 100.0) ^ (d - 1)) * (gohanPct / 100.0)
+
+		次に餌が食えるのは何日後か、期待値は、A / B
+
+			A =
+				1日後に餌が食える確率 * 1 +
+				2日後に餌が食える確率 * 2 +
+				3日後に餌が食える確率 * 3 +
+				...
+				starvDay日後に餌が食える確率 * starvDay
+
+			B =
+				1日後に餌が食える確率 +
+				2日後に餌が食える確率 +
+				3日後に餌が食える確率 +
+				...
+				starvDay日後に餌が食える確率
+
+			B = 餓死しない確率
+	*/
 	for(d = 2; d <= starvDay; d++)
 	{
 		a *= (100 - gohanPct) / 100.0;
@@ -20,6 +48,7 @@ static double GetStepDay(uint starvDay, uint gohanPct)
 		numer += b * d;
 		denom += b;
 	}
+	// denom == 1.0 - GetRouletteDeathRate(starvDay, gohanPct)
 	return numer / denom;
 }
 static void Pet2(uint starvDay, uint azukeDay, uint gohanPct)
@@ -40,25 +69,26 @@ static void Pet2(uint starvDay, uint azukeDay, uint gohanPct)
 	}
 	else
 	{
-		uint d = azukeDay - starvDay + 1;
+		uint d = azukeDay + 1 - starvDay;
 		double rouletteDeathRate;
+		double rouletteAliveRate;
 		double stepDay;
 		double rouletteCount;
 		double deathRate;
 
 		rouletteDeathRate = GetRouletteDeathRate(starvDay, gohanPct);
+		rouletteAliveRate = 1.0 - rouletteDeathRate;
 		stepDay = GetStepDay(starvDay, gohanPct);
 		rouletteCount = d / stepDay;
-		deathRate = 1.0 - pow(1.0 - rouletteDeathRate, rouletteCount);
+		aliveRate = pow(rouletteAliveRate, rouletteCount);
 
 		cout("--\n");
 		cout("d: %u\n", d);
 		cout("rouletteDeathRate: %.3f\n", rouletteDeathRate);
+		cout("rouletteAliveRate: %.3f\n", rouletteAliveRate);
 		cout("stepDay: %.3f\n", stepDay);
 		cout("rouletteCount: %.3f\n", rouletteCount);
-		cout("deathRate: %.3f\n", deathRate);
-
-		aliveRate = 1.0 - deathRate;
+		cout("aliveRate: %.3f\n", aliveRate);
 	}
 	cout("--\n");
 	cout("ALIVE_PCT: %.3f PCT\n", aliveRate * 100.0);
