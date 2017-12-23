@@ -51,7 +51,7 @@ static double GetStepDay(uint starvDay, uint gohanPct)
 	// denom == 1.0 - GetRouletteDeathRate(starvDay, gohanPct)
 	return numer / denom;
 }
-static void Pet2(uint starvDay, uint azukeDay, uint gohanPct)
+static void Pet3(uint starvDay, uint azukeDay, uint gohanPct)
 {
 	double aliveRate;
 
@@ -61,11 +61,15 @@ static void Pet2(uint starvDay, uint azukeDay, uint gohanPct)
 
 	errorCase(!m_isRange(starvDay, 1, IMAX));
 	errorCase(!m_isRange(azukeDay, 1, IMAX));
-	errorCase(!m_isRange(gohanPct, 1, 100));
+	errorCase(!m_isRange(gohanPct, 0, 100));
 
 	if(azukeDay < starvDay)
 	{
 		aliveRate = 1.0;
+	}
+	else if(!gohanPct)
+	{
+		aliveRate = 0.0;
 	}
 	else
 	{
@@ -97,7 +101,7 @@ int main(int argc, char **argv)
 {
 	mt19937_initCRnd();
 
-	Pet2(
+	Pet3(
 		toValue(getArg(0)),
 		toValue(getArg(1)),
 		toValue(getArg(2))

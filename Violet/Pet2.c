@@ -39,7 +39,7 @@ static void Pet2(uint starvDay, uint azukeDay, uint gohanPct)
 
 	errorCase(!m_isRange(starvDay, 1, IMAX));
 	errorCase(!m_isRange(azukeDay, 1, IMAX));
-	errorCase(!m_isRange(gohanPct, 1, 100));
+	errorCase(!m_isRange(gohanPct, 0, 100));
 
 	for(denom = 0; denom < TEST_COUNT; denom++)
 		if(Azukeru(starvDay, azukeDay, gohanPct))
