@@ -57,7 +57,7 @@ static void Main2(uint starvDay, uint gohanPct)
 			}
 		}
 	}
-	fp = fileOpen_xc(getOutFile("ghnCnt.csv"), "wt");
+	fp = fileOpen_xc(getOutFile("rltRate.csv"), "wt");
 
 	writeLine_x(fp, xcout("STARV_DAY %u", starvDay));
 	writeLine_x(fp, xcout("GOHAN_PCT %u", gohanPct));
