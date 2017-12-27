@@ -2,7 +2,7 @@
 #include "C:\Factory\Common\Options\CRRandom.h"
 #include "C:\Factory\Common\Options\csv.h"
 
-#if 0 // full
+#if 1 // full
 
 	#define STARV_DAY_MIN 1
 	#define STARV_DAY_MAX 30
@@ -84,19 +84,20 @@ static double Pet2_Main(uint starvDay, uint azukeDay, uint gohanPct)
 
 	return numer * 100.0 / denom;
 }
+
+static autoList_t *Pet2_Cache;
+
 static double Pet2(uint starvDay, uint azukeDay, uint gohanPct)
 {
-	static double *(*cache)[AZUKE_DAY_MAX + 1][100 + 1];
-//	static double *cache[STARV_DAY_MAX + 1][AZUKE_DAY_MAX + 1][100 + 1];
+	autoList_t *cache;
 
 	errorCase(!m_isRange(starvDay, 0, STARV_DAY_MAX));
 	errorCase(!m_isRange(azukeDay, 0, AZUKE_DAY_MAX));
 	errorCase(!m_isRange(gohanPct, 0, 100));
 
-	if(!cache)
-		cache = (double *(*)[AZUKE_DAY_MAX + 1][100 + 1])memAlloc(sizeof(*cache) * (STARV_DAY_MAX + 1));
+	cache = refList(refList(refList(Pet2_Cache, starvDay), azukeDay), gohanPct);
 
-	if(!cache[starvDay][azukeDay][gohanPct])
+	if(!getCount(cache))
 	{
 		double *p = (double *)memAlloc(sizeof(double));
 
@@ -104,70 +105,107 @@ LOGPOS();
 		*p = Pet2_Main(starvDay, azukeDay, gohanPct);
 LOGPOS();
 
-		cache[starvDay][azukeDay][gohanPct] = p;
+		addElement(cache, (uint)p);
 	}
-	return *cache[starvDay][azukeDay][gohanPct];
+	return *(double *)getElement(cache, 0);
 }
 
-// ---- Pet3 ----
+// ---- Pet4 ----
 
-static double GetRouletteDeathRate(uint starvDay, uint gohanPct)
+static double P(double a, uint s)
 {
-	return pow((100 - gohanPct) / 100.0, starvDay);
-}
-static double GetStepDay(uint starvDay, uint gohanPct)
-{
-	double numer;
-	double denom;
-	double a = 1.0;
-	double b;
-	uint d;
-
-	b = gohanPct / 100.0;
-	numer = b;
-	denom = b;
-
-	for(d = 2; d <= starvDay; d++)
+	if(s == 0)
 	{
-		a *= (100 - gohanPct) / 100.0;
-		b = a * gohanPct / 100.0;
-		numer += b * d;
-		denom += b;
+		return 1.0;
 	}
-	return numer / denom;
+	if(s == 1)
+	{
+		return a;
+	}
+	if(s % 2 == 1)
+	{
+		return P(a * a, s / 2) * a;
+	}
+	else
+	{
+		return P(a * a, s / 2);
+	}
 }
-static double Pet3(uint starvDay, uint azukeDay, uint gohanPct)
-{
-	double aliveRate;
 
+double G(double a, uint s, uint n, uint d);
+
+static double G_Main(double a, uint s, uint n, uint d)
+{
+	if(d < s)
+	{
+		return n == 0 ? 1.0 : 0.0;
+	}
+	if(n == 0)
+	{
+		return 0.0;
+	}
+	else
+	{
+		double ret = 0.0;
+		uint t;
+
+		for(t = 1; t <= s; t++)
+		{
+			ret += G(a, s, n - 1, d - t) * P(a, t - 1);
+		}
+		return ret * (1.0 - a) / (1.0 - P(a, s));
+	}
+}
+
+static autoList_t *G_Cache;
+
+static double G(double a, uint s, uint n, uint d)
+{
+	autoList_t *cache = refList(refList(G_Cache, n), d); // a, s ‚ÍŒÅ’è
+
+	if(getCount(cache) == 0)
+	{
+		double *p = (double *)memAlloc(sizeof(double));
+
+		*p = G_Main(a, s, n, d);
+
+		addElement(cache, (uint)p);
+	}
+	return *(double *)getElement(cache, 0);
+}
+static double F(uint s, uint d, double a)
+{
+	double ret = 0.0;
+	uint n;
+
+	for(n = 0; n + s <= d + 1 || !n; n++) // n = 0, 1, 2, ... max(0, d + 1 - s)
+	{
+		ret += G(a, s, n, d) * P(1.0 - P(a, s), n);
+	}
+	return ret;
+}
+static double Pet4(uint starvDay, uint azukeDay, uint gohanPct)
+{
 	errorCase(!m_isRange(starvDay, 1, IMAX));
 	errorCase(!m_isRange(azukeDay, 1, IMAX));
 	errorCase(!m_isRange(gohanPct, 0, 100));
 
-	if(azukeDay < starvDay)
+	// init G_Cache
 	{
-		aliveRate = 1.0;
+		if(G_Cache)
+			releaseDim(G_Cache, 3);
+
+		G_Cache = newList();
 	}
-	else if(!gohanPct)
+
+	if(!gohanPct)
 	{
-		aliveRate = 0.0;
+		return azukeDay < starvDay ? 100.0 : 0.0;
 	}
 	else
 	{
-		uint d = azukeDay + 1 - starvDay;
-		double rouletteDeathRate;
-		double rouletteAliveRate;
-		double stepDay;
-		double rouletteCount;
-		double deathRate;
-
-		rouletteDeathRate = GetRouletteDeathRate(starvDay, gohanPct);
-		rouletteAliveRate = 1.0 - rouletteDeathRate;
-		stepDay = GetStepDay(starvDay, gohanPct);
-		rouletteCount = d / stepDay;
-		aliveRate = pow(rouletteAliveRate, rouletteCount);
+		return F(starvDay, azukeDay, (100 - gohanPct) / 100.0) * 100.0;
 	}
-	return aliveRate * 100.0;
 }
 
 // ----
@@ -194,8 +232,8 @@ LOGPOS();
 		switch(mode)
 		{
 		case 1: addElement(row, (uint)strx("MODE -- PET2")); break;
-		case 2: addElement(row, (uint)strx("MODE -- PET3")); break;
-		case 3: addElement(row, (uint)strx("MODE -- PET3 - PET2")); break;
+		case 2: addElement(row, (uint)strx("MODE -- PET4")); break;
+		case 3: addElement(row, (uint)strx("MODE -- PET4 - PET2")); break;
 
 		default:
 			error();
@@ -221,17 +259,17 @@ LOGPOS();
 			{
 				double pct;
 
-//cout("starvDay mode noGhnPct azukeDay: %u %u %u %u\n", starvDay, mode, noGhnPct, azukeDay);
+LOGPOS();
 				switch(mode)
 				{
 				case 1: pct = Pet2(starvDay, azukeDay, gohanPct); break;
-				case 2: pct = Pet3(starvDay, azukeDay, gohanPct); break;
-				case 3: pct = Pet3(starvDay, azukeDay, gohanPct) - Pet2(starvDay, azukeDay, gohanPct); break;
+				case 2: pct = Pet4(starvDay, azukeDay, gohanPct); break;
+				case 3: pct = Pet4(starvDay, azukeDay, gohanPct) - Pet2(starvDay, azukeDay, gohanPct); break;
 
 				default:
 					error();
 				}
-//LOGPOS();
+LOGPOS();
 				addElement(row, (uint)xcout("%.3f", pct));
 			}
 			addElement(rows, (uint)row);
@@ -247,6 +285,9 @@ LOGPOS();
 int main(int argc, char **argv)
 {
 	mt19937_initCRnd();
+
+	Pet2_Cache = newList();
+//	G_Cache = newList();
 
 	Main2();
 }
