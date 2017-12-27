@@ -1,25 +1,25 @@
 /*
 
-s = 餓死する日数	1, 2, 3, ...
-d = 預ける日数		1, 2, 3, ...
-a = 餌を忘れる確率	0 <=, < 1
+s = 餓死する日数     1, 2, 3, ...
+d = 預ける日数       1, 2, 3, ...
+a = 餌を忘れる確率   0 <=, < 1
 
-f(s,d,a) =	生きて帰ってくる確率
+f(s,d,a) = 生きて帰ってくる確率
 
 
-			∞
-f(s,d,a) =	Σ			{ g(s, d, a, n) * (1 - a^s)^n }
-			n=0,1,2,...
+           ∞
+f(s,d,a) = Σ          { g(s, d, a, n) * (1 - a^s)^n }
+           n=0,1,2,...
 
 
 g(s,d,a,n) =
-	if d <  s AND n == 0 then	1
-	if d <  s AND n != 0 then	0
-	if d >= s AND n == 0 then	0
+	if d <  s AND n == 0 then 1
+	if d <  s AND n != 0 then 0
+	if d >= s AND n == 0 then 0
 
-								s
-	if d >= s AND n != 0 then	Σ			{ g(a, s, n - 1, d - t) * a^(t - 1) * (1 - a) / (1 - a^s) }
-								t=1,2,3,...
+	                          s
+	if d >= s AND n != 0 then Σ          { g(a, s, n - 1, d - t) * a^(t - 1) * (1 - a) / (1 - a^s) }
+	                          t=1,2,3,...
 
 */
 

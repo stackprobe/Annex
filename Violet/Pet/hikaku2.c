@@ -2,7 +2,7 @@
 #include "C:\Factory\Common\Options\CRRandom.h"
 #include "C:\Factory\Common\Options\csv.h"
 
-#if 1 // full
+#if 0 // full
 
 	#define STARV_DAY_MIN 1
 	#define STARV_DAY_MAX 30
@@ -14,7 +14,7 @@
 
 	#define NO_GHN_PCT_STEP 1
 
-#elif 0 // kizamu
+#elif 1 // kizamu
 
 	#define STARV_DAY_MIN 1
 	#define STARV_DAY_MAX 10
