@@ -6,20 +6,13 @@ a = ‰a‚ð–Y‚ê‚éŠm—¦   0 <=, < 1
 
 f(s,d,a) = ¶‚«‚Ä‹A‚Á‚Ä‚­‚éŠm—¦
 
-
-           ‡
-f(s,d,a) = ƒ°          { g(s, d, a, n) * (1 - a^s)^n }
-           n=0,1,2,...
-
+f(s,d,a) = ƒ°[n=0,‡] { g(s, d, a, n) * (1 - a^s)^n }
 
 g(s,d,a,n) =
 	if d <  s AND n == 0 then 1
 	if d <  s AND n != 0 then 0
 	if d >= s AND n == 0 then 0
-
-	                          s
-	if d >= s AND n != 0 then ƒ°          { g(a, s, n - 1, d - t) * a^(t - 1) * (1 - a) / (1 - a^s) }
-	                          t=1,2,3,...
+	if d >= s AND n != 0 then ƒ°[t=1,s] { g(a, s, n - 1, d - t) * a^(t - 1) * (1 - a) / (1 - a^s) }
 
 */
 
