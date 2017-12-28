@@ -12,7 +12,7 @@ g(s,d,a,n) =
 	if d <  s AND n == 0 then 1
 	if d <  s AND n != 0 then 0
 	if d >= s AND n == 0 then 0
-	if d >= s AND n != 0 then ƒ°[t=1,s] { g(a, s, n - 1, d - t) * a^(t - 1) * (1 - a) / (1 - a^s) }
+	if d >= s AND n != 0 then ƒ°[t=1,s] { g(a, s, n - 1, d - t) * a^(t - 1) } * (1 - a) / (1 - a^s)
 
 */
 
