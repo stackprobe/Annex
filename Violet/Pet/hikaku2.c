@@ -14,7 +14,7 @@
 
 	#define NO_GHN_PCT_STEP 1
 
-#elif 1 // kizamu
+#elif 0 // kizamu
 
 	#define STARV_DAY_MIN 1
 	#define STARV_DAY_MAX 10
@@ -26,7 +26,7 @@
 
 	#define NO_GHN_PCT_STEP 10
 
-#else // hiroku
+#elif 0 // hiroku
 
 	#define STARV_DAY_MIN 5
 	#define STARV_DAY_MAX 30
@@ -37,6 +37,18 @@
 	#define AZUKE_DAY_STEP 10
 
 	#define NO_GHN_PCT_STEP 10
+
+#else // easy
+
+	#define STARV_DAY_MIN 2
+	#define STARV_DAY_MAX 10
+	#define STARV_DAY_STEP 2
+
+	#define AZUKE_DAY_MIN 10
+	#define AZUKE_DAY_MAX 60
+	#define AZUKE_DAY_STEP 5
+
+	#define NO_GHN_PCT_STEP 20
 
 #endif
 
