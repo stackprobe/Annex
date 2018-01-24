@@ -2,10 +2,10 @@
 
 #define NUM 200000000
 
-typedef struct
+typedef union
 {
-	uint A[NUM];
-	uint B[NUM];
+	uint A[2][NUM];
+	uint B[NUM][2];
 }
 T_t;
 
@@ -14,24 +14,23 @@ T_t *T;
 static void Test_A(void)
 {
 	int c;
+	int d;
 
 	for(c = 0; c < NUM; c++)
+	for(d = 0; d < 2; d++)
 	{
-		T->A[c] = c;
-		T->B[c] = c;
+		T->A[d][c] = c;
 	}
 }
 static void Test_B(void)
 {
 	int c;
+	int d;
 
 	for(c = 0; c < NUM; c++)
+	for(d = 0; d < 2; d++)
 	{
-		T->A[c] = c;
-	}
-	for(c = 0; c < NUM; c++)
-	{
-		T->B[c] = c;
+		T->B[c][d] = c;
 	}
 }
 int main(int argc, char **argv)
