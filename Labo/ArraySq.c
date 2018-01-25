@@ -11,28 +11,32 @@ T_t;
 
 T_t *T;
 
-static void Test_A(void)
+static uint Test_A(void)
 {
-	int c;
+	uint t = 0;
+	uint c;
 
 	for(c = 0; c < NUM; c++)
 	{
-		T->A[c] = c;
-		T->B[c] = c;
+		t ^= T->A[c];
+		t ^= T->B[c];
 	}
+	return t;
 }
-static void Test_B(void)
+static uint Test_B(void)
 {
-	int c;
+	uint t = 0;
+	uint c;
 
 	for(c = 0; c < NUM; c++)
 	{
-		T->A[c] = c;
+		t ^= T->A[c];
 	}
 	for(c = 0; c < NUM; c++)
 	{
-		T->B[c] = c;
+		t ^= T->B[c];
 	}
+	return t;
 }
 int main(int argc, char **argv)
 {
@@ -41,15 +45,30 @@ int main(int argc, char **argv)
 
 	T = nb(T_t);
 
+	{
+		uint c;
+
+		for(c = 0; c < sizeof(T_t); c++)
+		{
+			((uchar *)T)[c] = (c / 3) & 0xff;
+		}
+	}
+
+	if(argIs("T"))
+	{
+		cout("%08x\n", Test_A());
+		cout("%08x\n", Test_B());
+	}
+
 	stTm = nowTick();
 
 	if(argIs("A"))
 	{
-		Test_A();
+		noop_u(Test_A());
 	}
 	if(argIs("B"))
 	{
-		Test_B();
+		noop_u(Test_B());
 	}
 
 	edTm = nowTick();
