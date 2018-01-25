@@ -1,26 +1,23 @@
 #include "C:\Factory\Common\all.h"
 
-#define NUM 200000000
+#define NUM 150000000
 
-typedef union
-{
-	uint A[2][NUM];
-	uint B[NUM][2];
-}
-T_t;
-
-T_t *T;
+uint *A;
+uint *B;
 
 static uint Test_A(void)
 {
 	uint t = 0;
 	uint c;
-	uint d;
+	uint i;
 
-	for(c = 0; c < NUM; c++)
-	for(d = 0; d < 2; d++)
+	for(c = 11; c; c--)
 	{
-		t ^= T->A[d][c];
+		for(i = 0; i < NUM; i++)
+		{
+			t ^= A[i];
+			t ^= B[i];
+		}
 	}
 	return t;
 }
@@ -28,13 +25,39 @@ static uint Test_B(void)
 {
 	uint t = 0;
 	uint c;
-	uint d;
+	uint i;
 
-	for(c = 0; c < NUM; c++)
-	for(d = 0; d < 2; d++)
+	for(c = 11; c; c--)
 	{
-		t ^= T->B[c][d];
+		for(i = 0; i < NUM; i++)
+		{
+			t ^= A[i];
+		}
+		for(i = 0; i < NUM; i++)
+		{
+			t ^= B[i];
+		}
 	}
+	return t;
+}
+static uint Xorshift128(void)
+{
+	static uint x = 1;
+	static uint y;
+	static uint z;
+	static uint a;
+	uint t;
+
+	t = x;
+	t ^= x << 11;
+	t ^= t >> 8;
+	t ^= a;
+	t ^= a >> 19;
+	x = y;
+	y = z;
+	z = a;
+	a = t;
+
 	return t;
 }
 int main(int argc, char **argv)
@@ -42,14 +65,17 @@ int main(int argc, char **argv)
 	uint64 stTm;
 	uint64 edTm;
 
-	T = nb(T_t);
+	A = (uint *)memAlloc(sizeof(uint) * NUM * 2);
+	B = A + NUM;
 
+	// init A, B
 	{
-		uint c;
+		uint i;
 
-		for(c = 0; c < sizeof(T_t); c++)
+		for(i = 0; i < NUM; i++)
 		{
-			((uchar *)T)[c] = (c / 3) & 0xff;
+			A[i] = Xorshift128();
+			B[i] = Xorshift128();
 		}
 	}
 

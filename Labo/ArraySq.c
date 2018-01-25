@@ -1,25 +1,29 @@
+/*
+	ArraySq a より ArraySq b の方が速ければ L1,L2,L3 キャッシュのせい。多分。
+
+	環境によっては a の方が速くなる。賢いCPU？
+*/
+
 #include "C:\Factory\Common\all.h"
 
 #define NUM 200000000
 
-typedef struct
-{
-	uint A[NUM];
-	uint B[NUM];
-}
-T_t;
-
-T_t *T;
+uint A[NUM];
+uint B[NUM];
 
 static uint Test_A(void)
 {
 	uint t = 0;
 	uint c;
+	uint i;
 
-	for(c = 0; c < NUM; c++)
+	for(c = 11; c; c--)
 	{
-		t ^= T->A[c];
-		t ^= T->B[c];
+		for(i = 0; i < NUM; i++)
+		{
+			t ^= A[i];
+			t ^= B[i];
+		}
 	}
 	return t;
 }
@@ -27,15 +31,39 @@ static uint Test_B(void)
 {
 	uint t = 0;
 	uint c;
+	uint i;
 
-	for(c = 0; c < NUM; c++)
+	for(c = 11; c; c--)
 	{
-		t ^= T->A[c];
+		for(i = 0; i < NUM; i++)
+		{
+			t ^= A[i];
+		}
+		for(i = 0; i < NUM; i++)
+		{
+			t ^= B[i];
+		}
 	}
-	for(c = 0; c < NUM; c++)
-	{
-		t ^= T->B[c];
-	}
+	return t;
+}
+static uint Xorshift128(void)
+{
+	static uint x = 1;
+	static uint y;
+	static uint z;
+	static uint a;
+	uint t;
+
+	t = x;
+	t ^= x << 11;
+	t ^= t >> 8;
+	t ^= a;
+	t ^= a >> 19;
+	x = y;
+	y = z;
+	z = a;
+	a = t;
+
 	return t;
 }
 int main(int argc, char **argv)
@@ -43,14 +71,14 @@ int main(int argc, char **argv)
 	uint64 stTm;
 	uint64 edTm;
 
-	T = nb(T_t);
-
+	// init A, B
 	{
-		uint c;
+		uint i;
 
-		for(c = 0; c < sizeof(T_t); c++)
+		for(i = 0; i < NUM; i++)
 		{
-			((uchar *)T)[c] = (c / 3) & 0xff;
+			A[i] = Xorshift128();
+			B[i] = Xorshift128();
 		}
 	}
 
