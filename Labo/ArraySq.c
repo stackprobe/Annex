@@ -1,7 +1,7 @@
 /*
 	ArraySq a より ArraySq b の方が速ければ L1,L2,L3 キャッシュのせい。多分。
 
-	環境によっては a の方が速くなる。賢いCPU？
+	環境によっては ArraySq a の方が速くなる。？？？
 */
 
 #include "C:\Factory\Common\all.h"
@@ -87,6 +87,8 @@ int main(int argc, char **argv)
 		cout("%08x\n", Test_A());
 		cout("%08x\n", Test_B());
 	}
+
+writeBinary_cx("C:\\temp\\ArraySq_001.tmp", readBinary("C:\\Factory\\Resource\\CP932.txt"));
 
 	stTm = nowTick();
 

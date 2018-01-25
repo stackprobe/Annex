@@ -85,6 +85,8 @@ int main(int argc, char **argv)
 		cout("%08x\n", Test_B());
 	}
 
+writeBinary_cx("C:\\temp\\ArraySq_001.tmp", readBinary("C:\\Factory\\Resource\\CP932.txt"));
+
 	stTm = nowTick();
 
 	if(argIs("A"))
