@@ -42,6 +42,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\ArgsReader.cs" />
+    <Compile Include="Tools\FileTools.cs" />
+    <Compile Include="Tools\MSection.cs" />
+    <Compile Include="Tools\WorkingDir.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
