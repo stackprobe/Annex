@@ -26,7 +26,7 @@ namespace Charlotte.Tools
 					if (File.Exists(path) == false)
 						break;
 
-					if (10 <= c)
+					if (10 < c)
 						throw new Exception("ファイル " + path + " の削除に失敗しました。");
 
 					Thread.Sleep(c * 100);
@@ -48,7 +48,7 @@ namespace Charlotte.Tools
 					if (Directory.Exists(path) == false)
 						break;
 
-					if (10 <= c)
+					if (10 < c)
 						throw new Exception("ディレクトリ " + path + " の削除に失敗しました。");
 
 					Thread.Sleep(c * 100);
@@ -72,7 +72,7 @@ namespace Charlotte.Tools
 				if (Directory.Exists(dir))
 					break;
 
-				if (10 <= c)
+				if (10 < c)
 					throw new Exception("ディレクトリ " + dir + " を作成出来ません。");
 
 				Thread.Sleep(c * 100);

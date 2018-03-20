@@ -8,7 +8,7 @@ namespace Charlotte.Tools
 {
 	public class WorkingDir
 	{
-		private const string ROOT_IDENT = "{0eb7082a-ec41-46bf-beae-6bdadaf4ebbc}"; // UUID v4, only in here
+		private const string ROOT_IDENT = "{7f54a509-d3f6-4fe4-a032-4405be839829}";
 
 		private static string RootDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), ROOT_IDENT);
 
