@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Charlotte.Tools
 {
-	public class WorkingDir
+	public class WorkingDir : IDisposable
 	{
 		private const string ROOT_IDENT = "{7f54a509-d3f6-4fe4-a032-4405be839829}";
 

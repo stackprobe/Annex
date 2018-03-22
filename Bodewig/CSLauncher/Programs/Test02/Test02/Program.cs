@@ -5,11 +5,11 @@ using System.Text;
 using System.Windows.Forms;
 using Charlotte.Tools;
 
-namespace Test02
+namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{79fee069-7fff-47b4-816a-c46bb7475945}";
+		public const string APP_IDENT = "{14552449-d3ac-4d7b-a26f-f036e84c222a}";
 
 		static void Main(string[] args)
 		{

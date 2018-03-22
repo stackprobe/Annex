@@ -8,7 +8,7 @@
     <ProjectGuid>{1C22AB93-89D6-4C61-92D0-ECA0FC67AB06}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TTTT</RootNamespace>
+    <RootNamespace>Charlotte</RootNamespace>
     <AssemblyName>TTTT</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
