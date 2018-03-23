@@ -56,10 +56,10 @@ namespace Charlotte
 			this.List.Sort(this.Comp);
 		}
 
-		public List<T> GetMatch(T ferret, Comparison<T> cmp = null)
+		public List<T> GetMatch(T target, Comparison<T> cmp = null)
 		{
 			List<T> buff = new List<T>();
-			int[] lr = this.GetRange(ferret, cmp);
+			int[] lr = this.GetRange(target, cmp);
 
 			for (int index = lr[0] + 1; index < lr[1]; index++)
 				buff.Add(this[index]);
@@ -67,10 +67,10 @@ namespace Charlotte
 			return buff;
 		}
 
-		public List<T> GetMatchAndEdge(T ferret, T edge, Comparison<T> cmp = null)
+		public List<T> GetMatchAndEdge(T target, T edge, Comparison<T> cmp = null)
 		{
 			List<T> buff = new List<T>();
-			int[] lr = this.GetRange(ferret, cmp);
+			int[] lr = this.GetRange(target, cmp);
 
 			for (int index = lr[0]; index <= lr[1]; index++)
 			{
@@ -82,7 +82,7 @@ namespace Charlotte
 			return buff;
 		}
 
-		public int[] GetRange(T ferret, Comparison<T> cmp = null)
+		public int[] GetRange(T target, Comparison<T> cmp = null)
 		{
 			if (cmp == null)
 				cmp = this.Comp;
@@ -93,12 +93,12 @@ namespace Charlotte
 			while (l + 1 < r)
 			{
 				int m = (l + r) / 2;
-				int ret = cmp(this[m], ferret);
+				int ret = cmp(this[m], target);
 
 				if (ret == 0)
 				{
-					l = this.GetBorder(l, m, ferret, delegate(T a, T b) { return cmp(a, b) == 0 ? 1 : 0; })[0];
-					r = this.GetBorder(m, r, ferret, cmp)[1];
+					l = this.GetBorder(l, m, target, delegate(T a, T b) { return cmp(a, b) == 0 ? 1 : 0; })[0];
+					r = this.GetBorder(m, r, target, cmp)[1];
 					break;
 				}
 				if (ret < 0)
@@ -109,12 +109,12 @@ namespace Charlotte
 			return new int[] { l, r };
 		}
 
-		private int[] GetBorder(int l, int r, T ferret, Comparison<T> cmp)
+		private int[] GetBorder(int l, int r, T target, Comparison<T> cmp)
 		{
 			while (l + 1 < r)
 			{
 				int m = (l + r) / 2;
-				int ret = cmp(this[m], ferret);
+				int ret = cmp(this[m], target);
 
 				if (ret == 0)
 					l = m;

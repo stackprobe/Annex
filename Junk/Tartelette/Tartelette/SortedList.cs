@@ -54,15 +54,15 @@ namespace Tartelette
 			}
 		}
 
-		public T this[T ferret]
+		public T this[T target]
 		{
 			get
 			{
-				return this[this.IndexOf(ferret)];
+				return this[this.IndexOf(target)];
 			}
 		}
 
-		public int IndexOf(T ferret)
+		public int IndexOf(T target)
 		{
 			this.TrySort();
 
@@ -73,7 +73,7 @@ namespace Tartelette
 			while (l + 1 < r)
 			{
 				int m = (l + r) / 2;
-				int ret = _comp(ferret, _list[m]);
+				int ret = _comp(target, _list[m]);
 
 				if (ret == 0)
 					return m;
@@ -91,7 +91,7 @@ namespace Tartelette
 			while(l < r)
 			{
 				int m = (l + r) / 2;
-				int ret = _comp(ferret, _list[m]);
+				int ret = _comp(target, _list[m]);
 
 				if (ret == 0)
 					return m;
@@ -121,9 +121,9 @@ namespace Tartelette
 
 		private delegate bool IsHi(T e);
 
-		public int[] GetRange(T ferret)
+		public int[] GetRange(T target)
 		{
-			int m = this.IndexOf(ferret);
+			int m = this.IndexOf(target);
 
 			if (m == -1)
 				return null;
@@ -133,7 +133,7 @@ namespace Tartelette
 				m,
 				(IsHi)delegate(T e)
 				{
-					return _comp(ferret, e) == 0;
+					return _comp(target, e) == 0;
 				}
 				) + 1;
 
@@ -142,7 +142,7 @@ namespace Tartelette
 				_list.Count,
 				(IsHi)delegate(T e)
 				{
-					return _comp(ferret, e) != 0;
+					return _comp(target, e) != 0;
 				}
 				);
 
@@ -163,9 +163,9 @@ namespace Tartelette
 			return l;
 		}
 
-		public int GetCount(T ferret)
+		public int GetCount(T target)
 		{
-			int[] range = this.GetRange(ferret);
+			int[] range = this.GetRange(target);
 
 			if (range == null)
 				return 0;
