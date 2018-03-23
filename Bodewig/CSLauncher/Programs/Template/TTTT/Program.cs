@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Charlotte.Tools;
+using Charlotte.Utils;
 
 namespace Charlotte
 {
@@ -13,21 +14,12 @@ namespace Charlotte
 
 		static void Main(string[] args)
 		{
-			try
-			{
-				new Program().Main2(new ArgsReader(args));
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-
-				MessageBox.Show("" + e);
-			}
+			Common.MainProc(new Program().Main2, APP_IDENT);
 		}
 
 		private void Main2(ArgsReader ar)
 		{
-			throw null; // TODO
+			MessageBox.Show(Common.APP_IDENT); // TODO
 		}
 	}
 }

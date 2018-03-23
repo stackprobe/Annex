@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Charlotte
+namespace Charlotte.Utils
 {
-	public class Utils
+	public class XXXUtils
 	{
 	}
 }

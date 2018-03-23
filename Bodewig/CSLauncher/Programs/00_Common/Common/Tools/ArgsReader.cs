@@ -10,18 +10,18 @@ namespace Charlotte.Tools
 		public ArgsReader()
 		{ }
 
-		public ArgsReader(string[] args)
+		public ArgsReader(string[] args, int argIndex = 0)
 		{
-			this.SetArgs(args);
+			this.SetArgs(args, argIndex);
 		}
 
 		private string[] Args = null;
 		private int ArgIndex;
 
-		public void SetArgs(string[] args)
+		public void SetArgs(string[] args, int argIndex = 0)
 		{
 			this.Args = args;
-			this.ArgIndex = 0;
+			this.ArgIndex = argIndex;
 		}
 
 		private class SpellInfo
@@ -41,9 +41,9 @@ namespace Charlotte.Tools
 			});
 		}
 
-		public void Perform(string[] args)
+		public void Perform(string[] args, int argIndex = 0)
 		{
-			this.SetArgs(args);
+			this.SetArgs(args, argIndex);
 			this.Perform();
 		}
 

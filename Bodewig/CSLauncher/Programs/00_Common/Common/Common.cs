@@ -7,15 +7,17 @@ using Charlotte.Tools;
 
 namespace Charlotte
 {
-	class Program
+	public class Common
 	{
-		public const string APP_IDENT = "{16dff65c-995c-49d6-ac70-8d7b7ce7aa76}";
+		public static string APP_IDENT;
 
-		static void Main(string[] args)
+		public static void MainProc(Action<ArgsReader> mainFunc, string ident)
 		{
+			APP_IDENT = ident;
+
 			try
 			{
-				new Program().Main2(new ArgsReader(args));
+				mainFunc(new ArgsReader(Environment.GetCommandLineArgs(), 1));
 			}
 			catch (Exception e)
 			{
@@ -23,11 +25,6 @@ namespace Charlotte
 
 				MessageBox.Show("" + e);
 			}
-		}
-
-		private void Main2(ArgsReader ar)
-		{
-			throw null; // TODO
 		}
 	}
 }
