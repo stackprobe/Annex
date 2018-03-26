@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Windows.Forms;
 using Charlotte.Tools;
 using Charlotte.Utils;
@@ -19,7 +20,7 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			MessageBox.Show(Common.APP_IDENT); // TODO
+			MessageBox.Show(Common.APP_IDENT + "\r\n" + Directory.GetCurrentDirectory()); // TODO
 		}
 	}
 }
