@@ -5,7 +5,6 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using Charlotte.Tools;
-using Charlotte.Utils;
 
 namespace Charlotte
 {

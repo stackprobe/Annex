@@ -47,7 +47,6 @@
     <Compile Include="Tools\MSection.cs" />
     <Compile Include="Tools\WorkingDir.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="Utils\XXXUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
