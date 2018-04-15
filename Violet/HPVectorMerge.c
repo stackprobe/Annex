@@ -1,3 +1,8 @@
+/*
+	newest.txt        --  http://stackprobe.dip.jp:58946/newest.txt の内容をコピペして保存（或いはダウンロードして保存）
+	公開ファイル一覧  --  Vectorにログイン / 新規登録・登録ソフト一覧 / 公開ファイル一覧 / このページをコピペして保存
+*/
+
 #include "C:\Factory\Common\all.h"
 
 static autoList_t *HPApps;
