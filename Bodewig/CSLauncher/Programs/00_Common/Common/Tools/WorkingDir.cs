@@ -8,7 +8,7 @@ namespace Charlotte.Tools
 {
 	public class WorkingDir : IDisposable
 	{
-		private const string ROOT_IDENT = "{7f54a509-d3f6-4fe4-a032-4405be839829}"; // ランチャー毎に固有 -- Cleanup のため
+		private const string ROOT_IDENT = "{7f54a509-d3f6-4fe4-a032-4405be839829}"; // ランチャー毎に固有
 
 		private static string RootDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), ROOT_IDENT);
 		private string Dir = Path.Combine(RootDir, Guid.NewGuid().ToString("B"));
