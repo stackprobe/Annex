@@ -80,10 +80,10 @@ int main(int argc, char **argv)
 
 	hasArgs(0); // for //X opts
 
-	cout("Drop newest.txt cpp file\n");
+	cout("Drop newest.txt コピペ file\n");
 	newestCppFile = dropFile();
 
-	cout("Drop 公開ファイル一覧 page cpp file\n");
+	cout("Drop 公開ファイル一覧 page コピペ file\n");
 	vectorCppFile = dropFile();
 
 	HPApps = newList();
