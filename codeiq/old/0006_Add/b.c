@@ -1,8 +1,7 @@
-//// _git source mask md5:4487dbc91974afb614ae4d7f56edd9f8 ////
-//////// /////////////////////////
-//////// ///////////////////////////////////
+#include "C:\Factory\Common\all.h"
+#include "C:\Factory\Common\Options\Calc2.h"
 
-/// //////// ///// //// ///////
-/
-	//////////// ///////////////// //// ////////////
-/
+int main(int argc, char **argv)
+{
+	cout("%s\n", c_calc(getArg(0), '+', getArg(1)));
+}
