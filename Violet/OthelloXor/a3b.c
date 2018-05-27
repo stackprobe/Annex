@@ -23,29 +23,6 @@ static void PrintGame(void)
 
 	cout("\n");
 }
-static void InitGame(void)
-{
-	uint tNum = TURN_NUM;
-	uint c;
-
-	zeroclear(Turneds);
-
-	for(c = 0; c < tNum; c++)
-	{
-		uint i;
-
-		do
-		{
-			i = mt19937_rnd(64);
-		}
-		while(Turneds[i]);
-
-		Turneds[i] = 1;
-
-		if(!c)
-			FirstTurned = i;
-	}
-}
 static uint GetXNumber(void)
 {
 	uint i;
@@ -99,22 +76,67 @@ static int JudgeGame(void)
 CLEAR_GAME:
 	return 1;
 }
-static void DoTest01(void)
+static void IG_Perform(void)
 {
-	int ret;
-
-	InitGame();
-	ret = JudgeGame();
+	int ret = JudgeGame();
 
 	if(!ret)
 		PrintGame();
+
+	if(eqIntPulseSec(2, NULL) && hasKey())
+		termination(0);
+}
+static void IG_Turned(void)
+{
+	uint index;
+
+	for(index = 0; index < 64; index++)
+	{
+		if(Turneds[index])
+		{
+			FirstTurned = index;
+
+			IG_Perform();
+
+			FirstTurned = 0; // 2bs
+		}
+	}
+}
+
+static uint TurnedCnt;
+
+static void IG_Turn(uint index)
+{
+	if(TURN_NUM <= TurnedCnt)
+	{
+		IG_Turned();
+	}
+	else if(index < 64)
+	{
+		TurnedCnt++;
+		Turneds[index] = 1;
+
+		IG_Turn(index + 1);
+
+		Turneds[index] = 0;
+		TurnedCnt--;
+
+		IG_Turn(index + 1);
+	}
+}
+static void InitGame(void)
+{
+	IG_Turn(0);
+}
+static void DoTest01(void)
+{
+	InitGame();
 }
 int main(int argc, char **argv)
 {
+	hasArgs(0); // for //X options
+
 	mt19937_initCRnd();
 
-	while(!hasKey())
-	{
-		DoTest01();
-	}
+	DoTest01();
 }

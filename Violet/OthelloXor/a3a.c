@@ -1,8 +1,10 @@
 #include "C:\Factory\Common\all.h"
 #include "C:\Factory\Common\Options\CRRandom.h"
 
-//#define TURN_NUM 11 // ñ≥Ç¢Ç¡Ç€Ç¢ÅB
-#define TURN_NUM 12
+//#define TURN_NUM 9
+#define TURN_NUM 10
+//#define TURN_NUM 11
+//#define TURN_NUM 12
 
 static uint Turneds[64];
 static uint FirstTurned; // 0 Å` 63
@@ -164,14 +166,18 @@ static void DoTest01(void)
 		JudgeGame();
 		GXN_Print = 0;
 
-//		cout("\n");
-//		cout("\n");
-
+#if 1
+		cout("\n");
+		cout("\n");
+#else
 		termination(0);
+#endif
 	}
 }
 int main(int argc, char **argv)
 {
+	hasArgs(0); // for //X options
+
 	mt19937_initCRnd();
 
 	while(!hasKey())
