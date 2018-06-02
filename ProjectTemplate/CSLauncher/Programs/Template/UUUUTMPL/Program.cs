@@ -14,12 +14,12 @@ namespace Charlotte
 
 		static void Main(string[] args)
 		{
-			Common.MainProc(new Program().Main2, APP_IDENT);
+			ProcMain.MainProc(new Program().Main2, APP_IDENT);
 		}
 
 		private void Main2(ArgsReader ar)
 		{
-			MessageBox.Show(Common.APP_IDENT + "\r\n" + Directory.GetCurrentDirectory()); // TODO
+			MessageBox.Show(ProcMain.APP_IDENT + "\r\n" + Directory.GetCurrentDirectory()); // TODO
 		}
 	}
 }

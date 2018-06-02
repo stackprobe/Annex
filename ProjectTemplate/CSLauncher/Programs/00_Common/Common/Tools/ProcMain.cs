@@ -9,7 +9,7 @@ using Charlotte.Tools;
 
 namespace Charlotte
 {
-	public class Common
+	public class ProcMain
 	{
 		public static string APP_IDENT;
 
