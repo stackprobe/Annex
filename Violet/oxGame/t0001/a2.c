@@ -111,40 +111,50 @@ noGameover:
 
 // ---- Thinker ----
 
-static uint GetWeight(State_t *i, int plStn) // ret: 1 == lose, 2 == draw, 3 == win
+static double GetWeight(State_t *i, int plStn) // ret: 1Å` == lose, 2Å` == draw, 3Å`4 == win
 {
 	uint x;
 	uint y;
-	uint wgt;
+	uint res;
+	double wgt;
 
 	if(IsWin(i, plStn))
-		return 3;
+		return 4.0;
 
 	if(IsWin(i, OTHER_PL_STN(plStn)))
-		return 1;
+		return 1.0;
 
-	wgt = 0;
+	res = 0;
+	wgt = 0.0;
 
 	for(x = 0; x < 3; x++)
 	for(y = 0; y < 3; y++)
 	{
 		if(i->Map[x][y] == ' ')
 		{
-			uint tmpWgt;
+			uint tmpRes;
+			double tmpWgt;
 
 			i->Map[x][y] = plStn;
 			tmpWgt = GetWeight(i, OTHER_PL_STN(plStn));
 			i->Map[x][y] = ' ';
 
-			tmpWgt = 4 - tmpWgt;
+			     if(3.0 <= tmpWgt) tmpRes = 3;
+			else if(2.0 <= tmpWgt) tmpRes = 2;
+			else                   tmpRes = 1;
 
-			m_maxim(wgt, tmpWgt);
+			tmpRes = 4 - tmpRes;
+			tmpWgt = 5.0 - tmpWgt;
+
+			m_maxim(res, tmpRes);
+
+			wgt += tmpWgt;
 		}
 	}
-	if(!wgt) // ? fill
-		wgt = 2;
+	if(!res) // ? fill
+		res = 2;
 
-	return wgt;
+	return res + wgt / 100.0;
 }
 
 // ---- Turn ----
@@ -169,7 +179,7 @@ static void TurnP(State_t *i, int plStn, int rndFlg)
 	}
 	else
 	{
-		uint wgtMap[3][3];
+		double wgtMap[3][3];
 
 		zeroclear(wgtMap);
 
@@ -178,13 +188,13 @@ static void TurnP(State_t *i, int plStn, int rndFlg)
 		{
 			if(i->Map[x][y] == ' ')
 			{
-				uint tmpWgt;
+				double tmpWgt;
 
 				i->Map[x][y] = plStn;
 				tmpWgt = GetWeight(i, OTHER_PL_STN(plStn));
 				i->Map[x][y] = ' ';
 
-				tmpWgt = 4 - tmpWgt;
+				tmpWgt = 5.0 - tmpWgt;
 
 				wgtMap[x][y] = tmpWgt;
 			}
@@ -196,36 +206,40 @@ static void TurnP(State_t *i, int plStn, int rndFlg)
 		for(y = 0; y < 3; y++)
 		{
 			for(x = 0; x < 3; x++)
-				cout(" %u", wgtMap[x][y]);
+				cout(" %.20f", wgtMap[x][y]);
 
 			cout("\n");
 		}
 #endif
 
 		{
-			uint maxWgt = 0;
+			double maxWgt = 0.0;
 			uint maxWgtCnt = 0;
+			int maxWgtMap[3][3];
 			uint c;
 
-			for(x = 0; x < 3; x++)
-			for(y = 0; y < 3; y++)
+			for (x = 0; x < 3; x++)
+			for (y = 0; y < 3; y++)
 			{
-				if(maxWgt < wgtMap[x][y])
-				{
-					maxWgt = wgtMap[x][y];
-					maxWgtCnt = 1;
-				}
-				else if(maxWgt == wgtMap[x][y])
+				m_maxim(maxWgt, wgtMap[x][y]);
+			}
+			for (x = 0; x < 3; x++)
+			for (y = 0; y < 3; y++)
+			{
+				if(maxWgt - 0.00001 < wgtMap[x][y])
 				{
 					maxWgtCnt++;
+					maxWgtMap[x][y] = 1;
 				}
+				else
+					maxWgtMap[x][y] = 0;
 			}
 			c = mt19937_rnd(maxWgtCnt) + 1;
 
-			for(x = 0; x < 3; x++)
-			for(y = 0; y < 3; y++)
+			for (x = 0; x < 3; x++)
+			for (y = 0; y < 3; y++)
 			{
-				if(maxWgt == wgtMap[x][y] && !--c)
+				if(maxWgtMap[x][y] && !--c)
 					goto fnd_c;
 			}
 			error(); // never
