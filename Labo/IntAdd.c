@@ -24,8 +24,7 @@ static void DoTest(uint64 a, uint64 b)
 	uint64 ans1;
 	uint64 ans2;
 
-	errorCase(SINT64MAX < a);
-	errorCase(SINT64MAX < b);
+	errorCase(UINT64MAX - a < b);
 
 	ans1 = a + b;
 	ans2 = TestAdd(a, b);
@@ -52,9 +51,14 @@ int main(int argc, char **argv)
 
 	while(!waitKey(0))
 	{
-		uint64 a = mt19937_rnd64() & SINT64MAX;
-		uint64 b = mt19937_rnd64() & SINT64MAX;
+		uint64 a = mt19937_rnd64();
+		uint64 b = mt19937_rnd64();
 
+		if(UINT64MAX - a < b)
+		{
+			a &= SINT64MAX;
+			b &= SINT64MAX;
+		}
 		DoTest(a, b);
 		cout("\n");
 	}
