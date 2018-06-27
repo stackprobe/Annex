@@ -16,15 +16,15 @@ static char *GetBmpToCsvExe(void)
 	return file;
 }
 
-#define BOX_W 30
-#define BOX_H 30
+#define GRID_W 30
+#define GRID_H 30
 
 // ---- ImgInfo_t ----
 
 typedef struct ImgInfo_st
 {
 	char *File;
-	double Lvs[BOX_W][BOX_H][3];
+	double Lvs[GRID_W][GRID_H][3];
 }
 ImgInfo_t;
 
@@ -34,7 +34,7 @@ static void ReleaseImgInfo(ImgInfo_t *i)
 	memFree(i);
 }
 
-// ---- MakeSimilarPicMatrix ----
+// ----
 
 static void CsvFileToImgLvs(char *csvFile, ImgInfo_t *img)
 {
@@ -72,9 +72,28 @@ static void AddToImgs(autoList_t *files, autoList_t *imgs)
 	}
 }
 
-autoList_t *XImgs;
-autoList_t *YImgs;
+static autoList_t *XImgs;
+static autoList_t *YImgs;
 
+static autoTable_t *Matrix;
+
+static void MakeMatrix(void)
+{
+	ImgInfo_t *xImg;
+	ImgInfo_t *yImg;
+	uint x;
+	uint y;
+
+	Matrix = newTable(getZero, noop_u);
+
+	resizeTable(Matrix, getCount(XImgs), getCount(YImgs));
+
+	foreach(XImgs, xImg, x)
+	foreach(YImgs, yImg, y)
+	{
+		//
+	}
+}
 static void MakeSimilarPicMatrix(autoList_t *files1, autoList_t *files2)
 {
 	XImgs = newList();
@@ -83,14 +102,15 @@ static void MakeSimilarPicMatrix(autoList_t *files1, autoList_t *files2)
 	AddToImgs(files1, XImgs);
 	AddToImgs(files2, YImgs);
 
-	// TODO
+	MakeMatrix();
 
 	releaseDim_BR(XImgs, 0, ReleaseImgInfo);
 	releaseDim_BR(YImgs, 0, ReleaseImgInfo);
 }
-
-// ----
-
+static void OutputMatrix(void)
+{
+	// TODO
+}
 static void Main2(char *dir1, char *dir2)
 {
 	autoList_t *files1 = lssFiles(dir1);
@@ -100,6 +120,8 @@ static void Main2(char *dir1, char *dir2)
 	sortJLinesICase(files2);
 
 	MakeSimilarPicMatrix(files1, files2);
+
+	OutputMatrix();
 
 	releaseDim(files1, 1);
 	releaseDim(files2, 1);
