@@ -47,17 +47,16 @@ advance:
 
 	denom++;
 
-	do
-	{
-		ai--;
+retreat:
+	ai--;
 
-		if(aa[ai] < n)
-		{
-			aa[ai]++;
-			goto advance;
-		}
+	if(aa[ai] < n)
+	{
+		aa[ai]++;
+		goto advance;
 	}
-	while(0 < ai);
+	if(0 < ai)
+		goto retreat;
 
 	cout("%.10f\n", (double)numer / denom);
 }
