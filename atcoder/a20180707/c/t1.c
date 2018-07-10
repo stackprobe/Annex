@@ -28,18 +28,18 @@ int main(int argc, char **argv)
 
 	errorCase(M_MAX < m);
 
-	ai = 0;
+	ai = -1;
 	numer = 0;
 	denom = 0;
 
-ahead:
+advance:
+	ai++;
+
 	if(ai < m)
 	{
 		aa[ai] = 1;
-		ai++;
-		goto ahead;
+		goto advance;
 	}
-	ai = m - 1; // ai--;
 
 	for(i = 1; i < m; i++)
 		if(abs(aa[i - 1] - aa[i]) == d)
@@ -47,18 +47,17 @@ ahead:
 
 	denom++;
 
-back:
-	if(aa[ai] < n)
-	{
-		aa[ai]++;
-		ai++;
-		goto ahead;
-	}
-	if(0 < ai)
+	do
 	{
 		ai--;
-		goto back;
+
+		if(aa[ai] < n)
+		{
+			aa[ai]++;
+			goto advance;
+		}
 	}
+	while(0 < ai);
 
 	cout("%.10f\n", (double)numer / denom);
 }
