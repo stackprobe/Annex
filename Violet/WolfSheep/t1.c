@@ -1,6 +1,9 @@
 /*
 	WolfSheep > 1.txt
 	t1 1.txt
+
+	Colorful > 1.txt
+	t1 1.txt
 */
 
 #include "C:\Factory\Common\all.h"
@@ -21,6 +24,8 @@ static void Main2(char *file)
 	rapidSortLines(lines);
 
 	errorCase(!isSameLines(orgLines, lines, 0));
+
+	cout("OK!\n");
 
 	// g
 }
