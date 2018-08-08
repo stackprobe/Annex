@@ -6,27 +6,37 @@ static int N;
 static int A[N_MAX];
 static int T[N_MAX];
 
-static int Teams[N_MAX][N_MAX];
-static int TAmounts[N_MAX];
+static int Teams[N_MAX];
 static int TCount;
 
 static __int64 Ans;
 
 static void Found(void)
 {
+#if 0
+	int i;
+
+	for(i = 0; i < N; i++)
+		cout("\t%d", T[i]);
+
+	cout("\n");
+#endif
+
 	Ans++;
 }
 static int CanEnterTeam(int i)
 {
-	return 0; // TODO
+	return Teams[T[i]] < A[i];
 }
 static void EnterTeam(int i)
 {
-	// TODO
+	if(!Teams[T[i]]++)
+		TCount++;
 }
 static void LeaveTeam(int i)
 {
-	// TODO
+	if(!--Teams[T[i]])
+		TCount--;
 }
 static void Search(void)
 {
@@ -75,6 +85,13 @@ static void Search(void)
 		}
 	}
 }
+static int ACompDesc(const void *p1, const void *p2)
+{
+	int a = *(int *)p1;
+	int b = *(int *)p2;
+
+	return b - a; // ~‡
+}
 int main(int argc, char **argv)
 {
 	int i;
@@ -83,6 +100,8 @@ int main(int argc, char **argv)
 
 	for(i = 0; i < N; i++)
 		scanf("%d", A + i);
+
+	qsort(A, N, sizeof(A[0]), ACompDesc); // CanEnterTeam()‚ÅŠù‘¶ƒƒ“ƒo[‚ÌA[x]‚ð”»’è‚µ‚Ä‚¢‚È‚¢‚½‚ßB
 
 	Search();
 

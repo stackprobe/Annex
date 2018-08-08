@@ -38,25 +38,6 @@ static int MoveUD(char *mvPtn, char *glPtn)
 	}
 	return 0;
 }
-
-
-// zantei >>>>
-static void replacePtn(char *line, char *ptn1, char *ptn2, int ignoreCase) // mbs_
-{
-	char *p = line;
-	uint ptnSz = strlen(ptn1);
-
-	errorCase(ptnSz != strlen(ptn2));
-
-	while(p = mbs_strstrCase(p, ptn1, ignoreCase))
-	{
-		memcpy(p, ptn2, ptnSz);
-		p += ptnSz;
-	}
-}
-// <<<< zantei
-
-
 static int MoveLR(char *mvPtn, char *glPtn)
 {
 	int i;
