@@ -1,10 +1,10 @@
 #include "C:\Factory\Common\all.h"
 #include "C:\Factory\Common\Options\CRRandom.h"
 
-static sint Neg2ToInt(char *s)
+static sint64 Neg2ToInt64(char *s)
 {
-	sint ans = 0;
-	sint b = 1;
+	sint64 ans = 0;
+	sint64 b = 1;
 
 	reverseLine(s);
 
@@ -26,7 +26,7 @@ static sint Neg2ToInt(char *s)
 static void Test01(sint c)
 {
 	char *s;
-	sint t;
+	sint64 t;
 
 	cout("< %d\n", c);
 
@@ -38,12 +38,12 @@ static void Test01(sint c)
 
 	cout("> %s\n", s);
 
-	t = Neg2ToInt(s);
+	t = Neg2ToInt64(s);
 	memFree(s);
 
-	cout("t %d\n", t);
+	cout("t %I64d\n", t);
 
-	errorCase(c != t);
+	errorCase((sint64)c != t);
 
 	cout("OK!\n");
 }
