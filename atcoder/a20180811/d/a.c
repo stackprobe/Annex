@@ -1,9 +1,5 @@
 #include "C:\Factory\Common\all.h"
 
-// zantei
-// zantei
-// zantei
-
 int main()
 {
 	int n;
