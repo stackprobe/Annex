@@ -19,7 +19,8 @@ int main(int argc, char **argv)
 {
 	uint c;
 
-	for(c = 1; c <= 100; c++)
+	for(c = 1; c <= 200; c++)
+//	for(c = 1; c <= 1000; c++)
 	{
 		cout("%u => %u\n", c, Func01(c, 3));
 	}
