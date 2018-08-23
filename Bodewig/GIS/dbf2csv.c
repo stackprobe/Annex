@@ -6,6 +6,8 @@ static void DBFFileToCSVFile(char *dbfFile, char *csvFile)
 	FILE *rfp = fileOpen(dbfFile, "rb");
 	FILE *wfp = fileOpen(csvFile, "wt");
 	uint recordCount;
+	uint recordSize;
+	uint fieldTotalSize = 0;
 	autoList_t *fieldNames = newList();
 	autoList_t *fieldSizes = newList();
 
@@ -65,6 +67,8 @@ static void DBFFileToCSVFile(char *dbfFile, char *csvFile)
 		writeChar(wfp, ',');
 		writeCSVCell_x(wfp, xcout("%u", value));
 		writeChar(wfp, '\n');
+
+		recordSize = value; // ★★★保存
 	}
 
 	//	16	H	予約
@@ -174,6 +178,7 @@ static void DBFFileToCSVFile(char *dbfFile, char *csvFile)
 			writeCSVCell_x(wfp, xcout("%d", c));
 			writeChar(wfp, ',');
 
+			fieldTotalSize += (uint)c;
 			addElement(fieldSizes, (uint)c); // ★★★保存
 		}
 
@@ -225,13 +230,15 @@ static void DBFFileToCSVFile(char *dbfFile, char *csvFile)
 		}
 	}
 
+	errorCase(recordSize < fieldTotalSize);
+
 	writeChar(wfp, '\n'); // 空行
 
 	{
 		uint rowidx;
 		uint colidx;
 
-		for(colidx = 0; colidx < getCount(fieldSizes); colidx++)
+		for(colidx = 0; colidx < getCount(fieldNames); colidx++)
 		{
 			if(colidx)
 				writeChar(wfp, ',');
@@ -242,14 +249,18 @@ static void DBFFileToCSVFile(char *dbfFile, char *csvFile)
 
 		for(rowidx = 0; rowidx < recordCount; rowidx++)
 		{
-
-neReadChar(rfp); // ？？？１文字ある？？？ -- レコード長さとフィールド長さの合計と合わない分じゃまいか
+			/*
+				fixme: レコードサイズとフィールド合計サイズの差はレコードの前のパディングと判断。
+					これでいいのか？
+			*/
+			for(colidx = fieldTotalSize; colidx < recordSize; colidx++)
+				neReadChar(rfp);
 
 			for(colidx = 0; colidx < getCount(fieldSizes); colidx++)
 			{
 				char *line = ab_makeLine_x(neReadBinaryBlock(rfp, getElement(fieldSizes, colidx)));
 
-				line2JLine(line, 1, 0, 0, 1);
+				line2JLine(line, 1, 0, 0, 1); // fixme: 全部文字列扱い。
 
 				if(colidx)
 					writeChar(wfp, ',');
@@ -260,7 +271,7 @@ neReadChar(rfp); // ？？？１文字ある？？？ -- レコード長さとフィールド長さの合計
 		}
 	}
 
-errorCase(neReadChar(rfp) != 0x1a); // ？？？ターミネータ？？？
+	errorCase(neReadChar(rfp) != 0x1a); // ? ターミネータ // fixme: こんなのあるの？
 
 	errorCase(readChar(rfp) != EOF); // ? まだファイルの途中
 
