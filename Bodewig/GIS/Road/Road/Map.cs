@@ -9,29 +9,38 @@ namespace Charlotte
 	{
 		public class Pref // Prefecture
 		{
-			public Header H;
+			public Header H = new Header();
 			public List<Node> Ns = new List<Node>();
 			public List<Link> Ls = new List<Link>();
-			public Header LDH; // Link台帳のヘッダ
-			public List<Link台帳> LDs = new List<Link台帳>();
+			public Header DLH = new Header(); // Link台帳のヘッダ
+			public List<DLink> DLs = new List<DLink>();
 		}
 
 		public class Header
 		{
-			public string レイヤコード; // "H"
+			// 1行目
 			public string 作成機関; // "NLA" (National Land Agency)
 			public string データコード; // "N01-07L"
 			public int データの種類; // 2(線)
 			public int 作成年度; // 西暦
-			public int 行桁数; // 80
+			public int 行_桁数; // 80
+
+			// 2行目
+			public int 行数_データ全体;
+			public int 行数_ノードデータ;
+			public int 行数_リンクデータ;
+			public int 行数_ラインデータ;
+			public int 行数_ノード台帳;
+			public int 行数_リンク台帳;
+			public int 行数_ライン台帳;
 		}
 
 		public class Node
 		{
 			public int Mesh; // 2次メッシュ
 			public int No; // ノード番号(1～)
-			public int X; // (1/10)秒
-			public int Y; // (1/10)秒
+			public int X; // (1/10)秒_東経
+			public int Y; // (1/10)秒_北緯
 			public bool ノード台帳有り;
 			public int ノード属性番号;
 			public int 接続リンク数;
@@ -50,7 +59,15 @@ namespace Charlotte
 			public bool リンク台帳有り;
 			public int リンク属性番号;
 			public int リンク構成中間点数; // 両端も含む
-			public List<Node> Ns = new List<Node>();
+
+			// 2行目以降
+			public List<Point> Ps = new List<Point>();
+		}
+
+		public class Point
+		{
+			public int X; // (1/10)秒_東経
+			public int Y; // (1/10)秒_北緯
 		}
 
 		public enum 道路種別コード_e
@@ -64,7 +81,7 @@ namespace Charlotte
 			私道,
 		}
 
-		public class Link台帳
+		public class DLink
 		{
 			public int 属性番号; // 路線コード
 			public int 属性の行数;
@@ -86,7 +103,7 @@ namespace Charlotte
 			山梨,
 		}
 
-		public List<Pref> Prefs = new List<Pref>();
+		public List<Pref> Prefs = new List<Pref>(); // Pref_e の並びであること。
 
 		public Pref 茨城 { get { return Prefs[(int)Pref_e.茨城]; } }
 		public Pref 栃木 { get { return Prefs[(int)Pref_e.栃木]; } }

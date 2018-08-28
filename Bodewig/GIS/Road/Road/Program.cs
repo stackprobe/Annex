@@ -26,7 +26,19 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			// TODO
+			MapLoader ml = new MapLoader();
+
+			ml.Load();
+
+			Map m = ml.Map;
+
+			// ----
+
+			//new BranchMap01.Test0001() { Map = m }.Test01();
+			//new NodeMap01.Test0001() { Map = m }.Test01();
+			//new NodeMap01.Test0001() { Map = m }.Test02();
+			//new NodeMap01.Test0001() { Map = m }.Test03();
+			new NodeMap01.Test0001() { Map = m }.Test04();
 		}
 	}
 }

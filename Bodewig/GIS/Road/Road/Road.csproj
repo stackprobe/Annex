@@ -50,9 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BranchMap01\BranchMap.cs" />
+    <Compile Include="BranchMap01\Test0001.cs" />
     <Compile Include="GISTxtReader.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapLoader.cs" />
+    <Compile Include="NodeMap01\NodeMap.cs" />
+    <Compile Include="NodeMap01\Test0001.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
