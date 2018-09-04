@@ -8,5 +8,6 @@ namespace Charlotte
 	public class Consts
 	{
 		public const int TILE_WH = 200;
+		public const int ZOOMING_COUNTER_MAX = 4;
 	}
 }
