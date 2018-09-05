@@ -174,7 +174,7 @@ namespace Charlotte
 			}
 			else
 			{
-				// TODO update Gnd.I.ActiveTiles
+				//this.UpdateActiveTiles(); // TODO
 			}
 
 			// ---- タイルの再配置 ----
@@ -183,6 +183,10 @@ namespace Charlotte
 			{
 				// TODO
 			}
+
+			// ----
+
+			GC.Collect();
 		}
 	}
 }

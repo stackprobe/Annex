@@ -45,6 +45,7 @@ namespace Charlotte
 
 		public class ActiveTileInfo
 		{
+			public GeoPoint CenterLatLon;
 			public int DegreePerMDot;
 
 			// [0][0] == 左下
