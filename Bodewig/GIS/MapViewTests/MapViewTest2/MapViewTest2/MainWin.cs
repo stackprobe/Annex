@@ -151,6 +151,18 @@ namespace Charlotte
 					Gnd.I.DownCenterLatLon.X - mX * (Gnd.I.DegreePerMDot / 1000000.0),
 					Gnd.I.DownCenterLatLon.Y + mY * (Gnd.I.DegreePerMDot / 1000000.0)
 					);
+
+				// Range
+				{
+					double x = Gnd.I.CenterLatLon.X;
+					double y = Gnd.I.CenterLatLon.Y;
+
+					x = DoubleTools.Range(x, 120.0, 160.0);
+					y = DoubleTools.Range(y, 20.0, 50.0);
+
+					Gnd.I.CenterLatLon.X = x;
+					Gnd.I.CenterLatLon.Y = y;
+				}
 			}
 		}
 
@@ -161,7 +173,7 @@ namespace Charlotte
 
 		private void Tiling()
 		{
-			// ---- ズームによるタイル更新と、その抑止 ----
+			// ---- タイル更新と、その抑止 ----
 
 			if (Gnd.I.LastDegreePerMDot != Gnd.I.DegreePerMDot)
 			{
@@ -174,19 +186,162 @@ namespace Charlotte
 			}
 			else
 			{
-				//this.UpdateActiveTiles(); // TODO
+				this.UpdateActiveTiles();
 			}
 
 			// ---- タイルの再配置 ----
 
 			if (Gnd.I.ActiveTiles != null)
 			{
-				// TODO
+				this.ChangeUIActiveTiles();
 			}
 
 			// ----
 
 			GC.Collect();
+		}
+
+		private void UpdateActiveTiles()
+		{
+			// ? 中心座標＆ズーム変わっていない。-> 更新不要
+			if (
+				Gnd.I.ActiveTiles != null &&
+				Utils.IsSameOrNear(Gnd.I.ActiveTiles.CenterLatLon.X, Gnd.I.CenterLatLon.X) &&
+				Utils.IsSameOrNear(Gnd.I.ActiveTiles.CenterLatLon.Y, Gnd.I.CenterLatLon.Y) &&
+				Gnd.I.ActiveTiles.DegreePerMDot == Gnd.I.DegreePerMDot
+				)
+				return;
+
+			double x1 = Gnd.I.CenterLatLon.X - (this.MapPanel.Width / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 左
+			double x2 = Gnd.I.CenterLatLon.X + (this.MapPanel.Width / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 右
+			double y1 = Gnd.I.CenterLatLon.Y - (this.MapPanel.Height / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 下
+			double y2 = Gnd.I.CenterLatLon.Y + (this.MapPanel.Height / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 上
+
+			int l = GetTileLB(x1, Gnd.I.DegreePerMDot);
+			int r = GetTileLB(x2, Gnd.I.DegreePerMDot);
+			int b = GetTileLB(y1, Gnd.I.DegreePerMDot);
+			int t = GetTileLB(y2, Gnd.I.DegreePerMDot);
+			int w = (r - l) + 1;
+			int h = (t - b) + 1;
+
+			if (w < 1) throw null; // test
+			if (h < 1) throw null; // test
+
+			Gnd.ActiveTileTable activeTilesNew = new Gnd.ActiveTileTable();
+
+			activeTilesNew.CenterLatLon = Gnd.I.CenterLatLon;
+			activeTilesNew.DegreePerMDot = Gnd.I.DegreePerMDot;
+
+			activeTilesNew.Table = new Gnd.Tile[w][];
+			activeTilesNew.L = l;
+			activeTilesNew.B = b;
+			activeTilesNew.W = w;
+			activeTilesNew.H = h;
+
+			for (int x = 0; x < w; x++)
+				activeTilesNew.Table[x] = new Gnd.Tile[h];
+
+			for (int x = 0; x < w; x++)
+			{
+				for (int y = 0; y < h; y++)
+				{
+					int tileL = l + x;
+					int tileB = b + y;
+
+					Gnd.Tile tile = TakeTile(tileL, tileB, Gnd.I.DegreePerMDot, Gnd.I.ActiveTiles);
+
+					if (tile == null)
+					{
+						tile = CreateTile(tileL, tileB, Gnd.I.DegreePerMDot);
+						activeTilesNew.AddedTiles.Add(tile);
+					}
+					activeTilesNew.Table[x][y] = tile;
+				}
+			}
+			if (Gnd.I.ActiveTiles != null)
+				for (int x = 0; x < Gnd.I.ActiveTiles.W; x++)
+					for (int y = 0; y < Gnd.I.ActiveTiles.H; y++)
+						if (Gnd.I.ActiveTiles.Table[x][y] != null)
+							activeTilesNew.DeletedTiles.Add(Gnd.I.ActiveTiles.Table[x][y]);
+
+			Gnd.I.ActiveTiles = activeTilesNew;
+		}
+
+		private Gnd.Tile CreateTile(int tileL, int tileB, int p)
+		{
+			throw null; // TODO
+		}
+
+		private Gnd.Tile TakeTile(int tileL, int tileB, int tileDegreePerMDot, Gnd.ActiveTileTable src)
+		{
+			if (
+				src != null &&
+				src.DegreePerMDot == tileDegreePerMDot &&
+				src.L <= tileL && tileL < src.L + src.W &&
+				src.B <= tileB && tileB < src.B + src.H
+				)
+			{
+				int x = tileL - src.L;
+				int y = tileB - src.B;
+
+				Gnd.Tile tile = src.Table[x][y];
+
+				src.Table[x][y] = null;
+
+				if (tile.L != tileL) throw null; // test
+				if (tile.B != tileB) throw null; // test
+
+				return tile;
+			}
+			return null;
+		}
+
+		private int GetTileLB(double degree, int degreePerMDot)
+		{
+			int p1 = 0;
+			int p2 = IntTools.IMAX;
+
+			while (p1 + 1 < p2)
+			{
+				int m = (p1 + p2) / 2;
+				double mDeg = m * degreePerMDot * (Consts.TILE_WH / 1000000.0);
+
+				if (mDeg < degree)
+				{
+					p2 = m;
+				}
+				else
+				{
+					p1 = m;
+				}
+			}
+			return p1;
+		}
+
+		private void ChangeUIActiveTiles()
+		{
+			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.DeletedTiles)
+				this.MapPanel.Controls.Remove(tile.Pic);
+
+			// ---- 再配置 ----
+
+			double x1 = Gnd.I.CenterLatLon.X - (this.MapPanel.Width / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 左
+			double x2 = Gnd.I.CenterLatLon.X + (this.MapPanel.Width / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 右
+			double y1 = Gnd.I.CenterLatLon.Y - (this.MapPanel.Height / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 下
+			double y2 = Gnd.I.CenterLatLon.Y + (this.MapPanel.Height / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 上
+
+			for (int x = 0; x < Gnd.I.ActiveTiles.W; x++)
+			{
+				for (int y = 0; y < Gnd.I.ActiveTiles.H; y++)
+				{
+					// TODO
+				}
+			}
+
+			// ----
+
+			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.AddedTiles)
+				this.MapPanel.Controls.Add(tile.Pic);
 		}
 	}
 }

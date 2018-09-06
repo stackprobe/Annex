@@ -41,9 +41,11 @@ namespace Charlotte
 
 			// 左座標 == L * DegreePerMDot * TILE_WH / 1,000,000
 			// 下座標 == B * DegreePerMDot * TILE_WH / 1,000,000
+
+			public int[] Pic_LTWH = null;
 		}
 
-		public class ActiveTileInfo
+		public class ActiveTileTable
 		{
 			public GeoPoint CenterLatLon;
 			public int DegreePerMDot;
@@ -58,9 +60,12 @@ namespace Charlotte
 			public int B; // == Table[0][0].B
 			public int W; // == Table.Length
 			public int H; // == Table[0].Length
+
+			public List<Tile> AddedTiles = new List<Tile>();
+			public List<Tile> DeletedTiles = new List<Tile>();
 		}
 
-		public ActiveTileInfo ActiveTiles = null;
+		public ActiveTileTable ActiveTiles = null;
 
 		public int LastDegreePerMDot = -1;
 		public int ZoomingCounter = 0;
