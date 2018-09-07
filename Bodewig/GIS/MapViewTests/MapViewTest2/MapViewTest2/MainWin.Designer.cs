@@ -37,7 +37,6 @@
 			// MainTimer
 			// 
 			this.MainTimer.Enabled = true;
-			this.MainTimer.Interval = 50;
 			this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
 			// 
 			// MapPanel

@@ -267,9 +267,89 @@ namespace Charlotte
 			Gnd.I.ActiveTiles = activeTilesNew;
 		}
 
-		private Gnd.Tile CreateTile(int tileL, int tileB, int p)
+		private Gnd.Tile CreateTile(int tileL, int tileB, int tileDegreePerMDot)
 		{
-			throw null; // TODO
+			Gnd.Tile tile = new Gnd.Tile();
+
+			tile.Pic = new PictureBox();
+			tile.Pic.Image = CreateTilePic(tileL, tileB, tileDegreePerMDot);
+			tile.Pic.SizeMode = PictureBoxSizeMode.StretchImage;
+
+			tile.DegreePerMDot = tileDegreePerMDot;
+			tile.L = tileL;
+			tile.B = tileB;
+
+			// イベント
+
+			tile.Pic.MouseDown += (sender, e) =>
+			{
+				MouseEventArgs mea = new MouseEventArgs(
+					MouseButtons.Left,
+					0,
+					tile.Pic.Left + e.Location.X,
+					tile.Pic.Top + e.Location.Y,
+					0
+					);
+
+				MapPanel_MouseDown(null, mea);
+			};
+
+			tile.Pic.MouseUp += (sender, e) =>
+			{
+				MouseEventArgs mea = new MouseEventArgs(
+					MouseButtons.Left,
+					0,
+					tile.Pic.Left + e.Location.X,
+					tile.Pic.Top + e.Location.Y,
+					0
+					);
+
+				MapPanel_MouseUp(null, mea);
+			};
+
+			tile.Pic.MouseMove += (sender, e) =>
+			{
+				MouseEventArgs mea = new MouseEventArgs(
+					MouseButtons.Left,
+					0,
+					tile.Pic.Left + e.Location.X,
+					tile.Pic.Top + e.Location.Y,
+					0
+					);
+
+				MapPanel_MouseMove(null, mea);
+			};
+
+			// ホイールのイベントは拾ってくれる。
+
+			return tile;
+		}
+
+		private Image CreateTilePic(int tileL, int tileB, int tileDegreePerMDot)
+		{
+			double x1 = (tileL + 0) * tileDegreePerMDot * (Consts.TILE_WH / 1000000.0);
+			double x2 = (tileL + 1) * tileDegreePerMDot * (Consts.TILE_WH / 1000000.0);
+			double y1 = (tileB + 0) * tileDegreePerMDot * (Consts.TILE_WH / 1000000.0);
+			double y2 = (tileB + 1) * tileDegreePerMDot * (Consts.TILE_WH / 1000000.0);
+
+			Bitmap bmp = new Bitmap(Consts.TILE_WH, Consts.TILE_WH);
+
+			using (Graphics g = Graphics.FromImage(bmp))
+			{
+				g.Clear(Color.White);
+				g.DrawLine(new Pen(Color.Red, 1f), 0f, 0f, Consts.TILE_WH - 1f, 0f);
+				g.DrawLine(new Pen(Color.Red, 1f), 0f, 0f, 0f, Consts.TILE_WH - 1f);
+				g.DrawLine(new Pen(Color.Red, 1f), Consts.TILE_WH - 1f, 0f, Consts.TILE_WH - 1f, Consts.TILE_WH - 1f);
+				g.DrawLine(new Pen(Color.Red, 1f), 0f, Consts.TILE_WH - 1f, Consts.TILE_WH - 1f, Consts.TILE_WH - 1f);
+				g.DrawString(
+					"(" + x1 + ", " + y1 + ")\r\n(" + x2 + ", " + y2 + ")",
+					new Font("メイリオ", 10f, FontStyle.Regular),
+					Brushes.Blue,
+					1f,
+					1f
+					);
+			}
+			return bmp;
 		}
 
 		private Gnd.Tile TakeTile(int tileL, int tileB, int tileDegreePerMDot, Gnd.ActiveTileTable src)
@@ -308,11 +388,11 @@ namespace Charlotte
 
 				if (mDeg < degree)
 				{
-					p2 = m;
+					p1 = m;
 				}
 				else
 				{
-					p1 = m;
+					p2 = m;
 				}
 			}
 			return p1;
@@ -322,6 +402,9 @@ namespace Charlotte
 		{
 			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.DeletedTiles)
 				this.MapPanel.Controls.Remove(tile.Pic);
+
+			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.AddedTiles)
+				this.MapPanel.Controls.Add(tile.Pic);
 
 			// ---- 再配置 ----
 
@@ -334,14 +417,73 @@ namespace Charlotte
 			{
 				for (int y = 0; y < Gnd.I.ActiveTiles.H; y++)
 				{
-					// TODO
+					Gnd.Tile tile = Gnd.I.ActiveTiles.Table[x][y];
+
+					double tx1 = (tile.L + 0) * tile.DegreePerMDot * (Consts.TILE_WH / 1000000.0);
+					double tx2 = (tile.L + 1) * tile.DegreePerMDot * (Consts.TILE_WH / 1000000.0);
+					double ty1 = (tile.B + 0) * tile.DegreePerMDot * (Consts.TILE_WH / 1000000.0);
+					double ty2 = (tile.B + 1) * tile.DegreePerMDot * (Consts.TILE_WH / 1000000.0);
+
+					double dL = (tx1 - x1) * this.MapPanel.Width / (x2 - x1);
+					double dR = (tx2 - x1) * this.MapPanel.Width / (x2 - x1);
+					double dB = (ty1 - y1) * this.MapPanel.Height / (y2 - y1);
+					double dT = (ty2 - y1) * this.MapPanel.Height / (y2 - y1);
+					double dW = dR - dL;
+					double dH = dT - dB;
+
+					bool fault = false;
+
+					if (dW < 10.0) // ? 幅が狭すぎる。
+					{
+						dW = 10.0;
+					}
+					else if (this.MapPanel.Width * 2.0 < dW) // ? 幅が広すぎる。
+					{
+						fault = true;
+					}
+					if (dH < 10.0) // ? 高さが狭すぎる。
+					{
+						dH = 10.0;
+					}
+					else if (this.MapPanel.Height * 2.0 < dH) // ? 高さが広すぎる。
+					{
+						fault = true;
+					}
+
+					int[] ltwh;
+
+					if (fault)
+					{
+						ltwh = new int[] { -30, -30, 200, 200 };
+					}
+					else
+					{
+						ltwh = new int[] { (int)dL, this.MapPanel.Height - (int)dT, (int)dW, (int)dH };
+					}
+
+					if (
+						tile.Pic_LTWH != null &&
+						tile.Pic_LTWH[0] == ltwh[0] &&
+						tile.Pic_LTWH[1] == ltwh[1] &&
+						tile.Pic_LTWH[2] == ltwh[2] &&
+						tile.Pic_LTWH[3] == ltwh[3]
+						)
+					{
+						// noop -- 位置が変わっていない。
+					}
+					else
+					{
+						tile.Pic.Left = ltwh[0];
+						tile.Pic.Top = ltwh[1];
+						tile.Pic.Width = ltwh[2];
+						tile.Pic.Height = ltwh[3];
+
+						tile.Pic_LTWH = ltwh;
+					}
 				}
 			}
 
-			// ----
-
-			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.AddedTiles)
-				this.MapPanel.Controls.Add(tile.Pic);
+			// 再配置ここまで
 		}
 	}
 }
