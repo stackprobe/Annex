@@ -49,6 +49,8 @@ namespace Charlotte
 		{
 			public GeoPoint CenterLatLon;
 			public int DegreePerMDot;
+			public int MapPanelW;
+			public int MapPanelH;
 
 			// [0][0] == 左下
 			// [W - 1][0] == 右下

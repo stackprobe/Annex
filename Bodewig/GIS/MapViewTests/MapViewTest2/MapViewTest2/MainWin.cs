@@ -86,8 +86,13 @@ namespace Charlotte
 			{
 				if (Gnd.I.Delta != 0)
 				{
-					Gnd.I.DegreePerMDot -= Gnd.I.Delta;
-					Gnd.I.DegreePerMDot = IntTools.Range(Gnd.I.DegreePerMDot, 1, IntTools.IMAX);
+					int vDlt = DoubleTools.ToInt(Gnd.I.DegreePerMDot * (Gnd.I.Delta / 1000.0));
+
+					if (vDlt == 0)
+						vDlt = Gnd.I.Delta < 0 ? -1 : 1;
+
+					Gnd.I.DegreePerMDot -= vDlt;
+					Gnd.I.DegreePerMDot = IntTools.Range(Gnd.I.DegreePerMDot, 1, 10000);
 
 					Gnd.I.Delta = 0;
 				}
@@ -208,7 +213,9 @@ namespace Charlotte
 				Gnd.I.ActiveTiles != null &&
 				Utils.IsSameOrNear(Gnd.I.ActiveTiles.CenterLatLon.X, Gnd.I.CenterLatLon.X) &&
 				Utils.IsSameOrNear(Gnd.I.ActiveTiles.CenterLatLon.Y, Gnd.I.CenterLatLon.Y) &&
-				Gnd.I.ActiveTiles.DegreePerMDot == Gnd.I.DegreePerMDot
+				Gnd.I.ActiveTiles.DegreePerMDot == Gnd.I.DegreePerMDot &&
+				Gnd.I.ActiveTiles.MapPanelW == this.MapPanel.Width &&
+				Gnd.I.ActiveTiles.MapPanelH == this.MapPanel.Height
 				)
 				return;
 
@@ -231,6 +238,8 @@ namespace Charlotte
 
 			activeTilesNew.CenterLatLon = Gnd.I.CenterLatLon;
 			activeTilesNew.DegreePerMDot = Gnd.I.DegreePerMDot;
+			activeTilesNew.MapPanelW = this.MapPanel.Width;
+			activeTilesNew.MapPanelH = this.MapPanel.Height;
 
 			activeTilesNew.Table = new Gnd.Tile[w][];
 			activeTilesNew.L = l;
@@ -454,11 +463,21 @@ namespace Charlotte
 
 					if (fault)
 					{
-						ltwh = new int[] { -30, -30, 200, 200 };
+						ltwh = new int[] { -300, -300, 200, 200 };
 					}
 					else
 					{
-						ltwh = new int[] { (int)dL, this.MapPanel.Height - (int)dT, (int)dW, (int)dH };
+						int iL = DoubleTools.ToInt(dL);
+						int iR = DoubleTools.ToInt(dR);
+						int iB = DoubleTools.ToInt(dB);
+						int iT = DoubleTools.ToInt(dT);
+						int iW = iR - iL;
+						int iH = iT - iB;
+
+						if (iW < 1) throw null; // test
+						if (iH < 1) throw null; // test
+
+						ltwh = new int[] { iL, this.MapPanel.Height - iT, iW, iH };
 					}
 
 					if (
