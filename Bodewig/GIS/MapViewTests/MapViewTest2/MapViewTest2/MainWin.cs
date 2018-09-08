@@ -208,7 +208,7 @@ namespace Charlotte
 
 		private void UpdateActiveTiles()
 		{
-			// ? 中心座標＆ズーム変わっていない。-> 更新不要
+			// ? 中心座標＆ズーム＆ウィンドウサイズ変わっていない。-> 更新不要
 			if (
 				Gnd.I.ActiveTiles != null &&
 				Utils.IsSameOrNear(Gnd.I.ActiveTiles.CenterLatLon.X, Gnd.I.CenterLatLon.X) &&
@@ -412,9 +412,6 @@ namespace Charlotte
 			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.DeletedTiles)
 				this.MapPanel.Controls.Remove(tile.Pic);
 
-			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.AddedTiles)
-				this.MapPanel.Controls.Add(tile.Pic);
-
 			// ---- 再配置 ----
 
 			double x1 = Gnd.I.CenterLatLon.X - (this.MapPanel.Width / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 左
@@ -503,6 +500,9 @@ namespace Charlotte
 			}
 
 			// 再配置ここまで
+
+			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.AddedTiles)
+				this.MapPanel.Controls.Add(tile.Pic);
 		}
 	}
 }
