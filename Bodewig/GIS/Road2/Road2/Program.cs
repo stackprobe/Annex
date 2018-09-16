@@ -46,81 +46,93 @@ namespace Charlotte
 		private void Test02()
 		{
 			int interiorMax = -1;
+			HashSet<string> subRootNames = new HashSet<string>();
+			HashSet<string> noEntitySubRootNames = new HashSet<string>();
 
-			foreach (string file in Directory.GetFiles(@"C:\wb\東京都地図", "*.xml", SearchOption.AllDirectories))
+			foreach (string file in Directory.GetFiles(@"C:\wb\東京都地図", "FG-GML-*.xml", SearchOption.AllDirectories))
 			{
-				if (StringTools.StartsWithIgnoreCase(Path.GetFileName(file), "FG-GML-"))
+				Console.WriteLine("*1 " + file);
+				XmlNode root = XmlNode.LoadFile(file);
+				Console.WriteLine("*2");
+
+				foreach (XmlNode subRoot in root.Children)
 				{
-					Console.WriteLine("*1 " + file);
-					XmlNode root = XmlNode.LoadFile(file);
-					Console.WriteLine("*2");
+					XmlNode[] areas = subRoot.Collect("area");
+					XmlNode[] locs = subRoot.Collect("loc");
+					XmlNode[] poss = subRoot.Collect("pos");
 
-					foreach (XmlNode subRoot in root.Children)
+					//Console.WriteLine("areas.Length: " + areas.Length); // test
+					//Console.WriteLine("locs.Length: " + locs.Length); // test
+					//Console.WriteLine("poss.Length: " + poss.Length); // test
+
+					if (1 < areas.Length + locs.Length + poss.Length) throw null; // test
+
+					if (areas.Length + locs.Length + poss.Length == 1)
+						subRootNames.Add(subRoot.Name);
+					else
+						noEntitySubRootNames.Add(subRoot.Name);
+
+					foreach (XmlNode area in areas)
 					{
-						XmlNode[] areas = subRoot.Collect("area");
-						XmlNode[] locs = subRoot.Collect("loc");
-						XmlNode[] poss = subRoot.Collect("pos");
+						XmlNode[] exteriors = area.Collect("Surface/patches/PolygonPatch/exterior/Ring/curveMember/Curve/segments/LineStringSegment/posList");
 
-						//Console.WriteLine("areas.Length: " + areas.Length); // test
-						//Console.WriteLine("locs.Length: " + locs.Length); // test
-						//Console.WriteLine("poss.Length: " + poss.Length); // test
+						if (exteriors.Length != 1) throw null; // test
 
-						if (1 < areas.Length + locs.Length + poss.Length) throw null; // test
+						XmlNode exterior = exteriors[0];
 
-						foreach (XmlNode area in areas)
+						CheckPointsValue(exterior);
+
+						XmlNode[] interiors = area.Collect("Surface/patches/PolygonPatch/interior/Ring/curveMember/Curve/segments/LineStringSegment/posList");
+
+						interiorMax = Math.Max(interiorMax, interiors.Length);
+						Console.WriteLine("interiors.Length: " + interiors.Length + " (" + interiorMax + ")"); // test
+
+						foreach (XmlNode interior in interiors)
 						{
-							XmlNode[] exteriors = area.Collect("Surface/patches/PolygonPatch/exterior/Ring/curveMember/Curve/segments/LineStringSegment/posList");
-
-							if (exteriors.Length != 1) throw null; // test
-
-							XmlNode exterior = exteriors[0];
-
-							CheckPointsValue(exterior);
-
-							XmlNode[] interiors = area.Collect("Surface/patches/PolygonPatch/interior/Ring/curveMember/Curve/segments/LineStringSegment/posList");
-
-							interiorMax = Math.Max(interiorMax, interiors.Length);
-							Console.WriteLine("interiors.Length: " + interiors.Length + " (" + interiorMax + ")"); // test
-
-							foreach (XmlNode interior in interiors)
-							{
-								CheckPointsValue(interior);
-							}
-						}
-						foreach (XmlNode loc in locs)
-						{
-							XmlNode[] posLists = loc.Collect("Curve/segments/LineStringSegment/posList");
-
-							if (posLists.Length != 1) throw null; // test
-
-							XmlNode posList = posLists[0];
-
-							CheckPointsValue(posList);
-						}
-						foreach (XmlNode pos in poss)
-						{
-							XmlNode[] nPoss = pos.Collect("Point/pos");
-
-							if (nPoss.Length != 1) throw null; // test
-
-							XmlNode nPos = nPoss[0];
-
-							CheckPointsValue(nPos, false);
+							CheckPointsValue(interior);
 						}
 					}
+					foreach (XmlNode loc in locs)
+					{
+						XmlNode[] posLists = loc.Collect("Curve/segments/LineStringSegment/posList");
 
-					GC.Collect();
+						if (posLists.Length != 1) throw null; // test
 
-					Console.WriteLine("LatMin: " + LatMin);
-					Console.WriteLine("LatMax: " + LatMax);
-					Console.WriteLine("LonMin: " + LonMin);
-					Console.WriteLine("LonMax: " + LonMax);
-					Console.WriteLine("Lat1LenMax: " + Lat1LenMax);
-					Console.WriteLine("Lat2LenMax: " + Lat2LenMax);
-					Console.WriteLine("Lon1LenMax: " + Lon1LenMax);
-					Console.WriteLine("Lon2LenMax: " + Lon2LenMax);
+						XmlNode posList = posLists[0];
+
+						CheckPointsValue(posList);
+					}
+					foreach (XmlNode pos in poss)
+					{
+						XmlNode[] nPoss = pos.Collect("Point/pos");
+
+						if (nPoss.Length != 1) throw null; // test
+
+						XmlNode nPos = nPoss[0];
+
+						CheckPointsValue(nPos, false);
+					}
 				}
+
+				GC.Collect();
+
+				Console.WriteLine("LatMin: " + LatMin);
+				Console.WriteLine("LatMax: " + LatMax);
+				Console.WriteLine("LonMin: " + LonMin);
+				Console.WriteLine("LonMax: " + LonMax);
+				Console.WriteLine("Lat1LenMax: " + Lat1LenMax);
+				Console.WriteLine("Lat2LenMax: " + Lat2LenMax);
+				Console.WriteLine("Lon1LenMax: " + Lon1LenMax);
+				Console.WriteLine("Lon2LenMax: " + Lon2LenMax);
 			}
+
+			Console.WriteLine("subRootNames...");
+			foreach (string name in subRootNames)
+				Console.WriteLine("\t" + name);
+
+			Console.WriteLine("noEntitySubRootNames...");
+			foreach (string name in noEntitySubRootNames)
+				Console.WriteLine("\t" + name);
 		}
 
 		private void CheckPointsValue(XmlNode exterior, bool multi = true)
