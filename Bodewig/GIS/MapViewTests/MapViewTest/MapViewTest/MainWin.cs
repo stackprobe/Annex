@@ -66,6 +66,13 @@ namespace Charlotte
 				// 面倒なので、MainPanel にはイベント無し！
 			};
 
+			// Windows7の場合、こっち(フォーム)でしかイベントを拾えない！！
+			this.MouseWheel += (sdr, ev) =>
+			{
+				MDelta_Win7 += ev.Delta;
+				MRefresh();
+			};
+
 			this.MainPanel.Controls.Add(pb);
 
 			// ----
@@ -139,6 +146,7 @@ namespace Charlotte
 		private bool MDown = false;
 		private Point MPoint = new Point(-1, -1);
 		private int MDelta = 0;
+		private int MDelta_Win7 = 0;
 
 		private void MainPanel_MouseDown(object sender, MouseEventArgs e)
 		{
@@ -160,7 +168,7 @@ namespace Charlotte
 
 		private void MRefresh()
 		{
-			this.Text = MDown + ", " + MPoint + ", " + MDelta;
+			this.Text = MDown + ", " + MPoint + ", " + MDelta + ", " + MDelta_Win7;
 		}
 	}
 }

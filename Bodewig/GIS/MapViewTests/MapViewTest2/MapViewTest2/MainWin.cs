@@ -40,7 +40,8 @@ namespace Charlotte
 
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
-			this.MapPanel.MouseWheel += this.MapPanelMouseWheel;
+			this.MouseWheel += this.MapPanelMouseWheel;
+			//this.MapPanel.MouseWheel += this.MapPanelMouseWheel; // Windows7で拾えない。
 
 			this.MTEnabled = true;
 		}
