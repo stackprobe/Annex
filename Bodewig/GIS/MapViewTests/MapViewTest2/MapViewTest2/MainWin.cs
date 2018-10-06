@@ -140,7 +140,7 @@ namespace Charlotte
 
 				Gnd.I.ClickedPoint = new GeoPoint(
 					Gnd.I.CenterLatLon.X + mX * (Gnd.I.DegreePerMDot / 1000000.0),
-					Gnd.I.CenterLatLon.X - mY * (Gnd.I.DegreePerMDot / 1000000.0)
+					Gnd.I.CenterLatLon.Y - mY * (Gnd.I.DegreePerMDot / 1000000.0)
 					);
 			}
 			Gnd.I.DownPoint = null;
@@ -413,6 +413,8 @@ namespace Charlotte
 			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.DeletedTiles)
 				this.MapPanel.Controls.Remove(tile.Pic);
 
+			Gnd.I.ActiveTiles.DeletedTiles.Clear();
+
 			// ---- 再配置 ----
 
 			double x1 = Gnd.I.CenterLatLon.X - (this.MapPanel.Width / 2) * (Gnd.I.DegreePerMDot / 1000000.0); // MapPanel 左
@@ -504,6 +506,8 @@ namespace Charlotte
 
 			foreach (Gnd.Tile tile in Gnd.I.ActiveTiles.AddedTiles)
 				this.MapPanel.Controls.Add(tile.Pic);
+
+			Gnd.I.ActiveTiles.AddedTiles.Clear();
 		}
 	}
 }
