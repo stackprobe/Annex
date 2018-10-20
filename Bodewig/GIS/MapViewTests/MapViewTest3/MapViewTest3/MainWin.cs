@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using Charlotte.Tools;
+using Charlotte.Utils;
 
 namespace Charlotte
 {
@@ -88,6 +89,8 @@ namespace Charlotte
 		private bool MTBusy;
 		private long MTCount;
 
+		private int ZoomingCounter = 0;
+
 		private void MainTimer_Tick(object sender, EventArgs e)
 		{
 			if (this.MTEnabled == false || this.MTBusy)
@@ -161,8 +164,6 @@ namespace Charlotte
 			}
 		}
 
-		private int ZoomingCounter = 0;
-
 		private void MapPictureMouseWheel(object sender, MouseEventArgs e)
 		{
 			int dlt = e.Delta;
@@ -179,7 +180,76 @@ namespace Charlotte
 
 		private void ChangeActiveTiles()
 		{
-			// TODO
+			if (
+				Gnd.I.ActiveTiles != null &&
+				Gnd.I.ActiveTiles.MeterPerMDot != Gnd.I.MeterPerMDot &&
+				Gnd.I.ActiveTiles.MeterPerLat != Gnd.I.MeterPerLat &&
+				Gnd.I.ActiveTiles.MeterPerLon != Gnd.I.MeterPerLon &&
+				Gnd.I.ActiveTiles.CenterPoint != Gnd.I.CenterPoint
+				)
+				return;
+
+			if (Gnd.I.ActiveTiles == null)
+				Gnd.I.ActiveTiles = new ActiveTiles();
+
+			Gnd.I.ActiveTiles.MeterPerMDot = Gnd.I.MeterPerMDot;
+			Gnd.I.ActiveTiles.MeterPerLat = Gnd.I.MeterPerLat;
+			Gnd.I.ActiveTiles.MeterPerLon = Gnd.I.MeterPerLon;
+			Gnd.I.ActiveTiles.CenterPoint = Gnd.I.CenterPoint;
+			Gnd.I.ActiveTiles.StateChanged = true;
+
+			List<Tile> addingTiles = new List<Tile>();
+			List<Tile> deletingTiles = new List<Tile>();
+
+			double latPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
+			double lonPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
+
+			double latPerTileH = latPerDot * Consts.TILE_WH;
+			double lonPerTileW = lonPerDot * Consts.TILE_WH;
+
+			double centerTileLat = (int)(Gnd.I.ActiveTiles.CenterPoint.Lat / latPerTileH) * latPerTileH;
+			double centerTileLon = (int)(Gnd.I.ActiveTiles.CenterPoint.Lon / lonPerTileW) * lonPerTileW;
+
+			for (int index = 0; index < Gnd.I.ActiveTiles.Tiles.Count; index++)
+			{
+				Tile tile = Gnd.I.ActiveTiles.Tiles[index];
+
+				if (
+					tile.CenterPoint.Lat < centerTileLat - latPerTileH * Consts.DELETING_XY ||
+					tile.CenterPoint.Lat > centerTileLat + latPerTileH * Consts.DELETING_XY ||
+					tile.CenterPoint.Lon < centerTileLon - lonPerTileW * Consts.DELETING_XY ||
+					tile.CenterPoint.Lon > centerTileLon + lonPerTileW * Consts.DELETING_XY
+					)
+				{
+					Gnd.I.ActiveTiles.Tiles.RemoveAt(index);
+
+					tile.Deleted();
+					tile = null;
+				}
+			}
+
+			for (int x = -Consts.ADDING_XY; x <= Consts.ADDING_XY; x++)
+			{
+				for (int y = -Consts.ADDING_XY; y <= Consts.ADDING_XY; y++)
+				{
+					GeoPoint gPoint = new GeoPoint(
+						centerTileLat + latPerTileH * y,
+						centerTileLon + lonPerTileW * x
+						);
+
+					if (Gnd.I.ActiveTiles.Tiles.Any(tile => CrashUtils.IsCrashed(gPoint, tile.CenterPoint)) == false)
+					{
+						Tile tile = new Tile();
+
+						tile.CenterPoint = gPoint;
+						tile.Bmp = null;
+
+						tile.Added();
+
+						Gnd.I.ActiveTiles.Tiles.Add(tile);
+					}
+				}
+			}
 		}
 
 		private void ActiveTilesToUI()
@@ -187,7 +257,7 @@ namespace Charlotte
 			if (Gnd.I.ActiveTiles == null)
 				return;
 
-			if (Gnd.I.ActiveTiles.SomethingChanged == false)
+			if (Gnd.I.ActiveTiles.StateChanged == false)
 				return;
 
 			// TODO

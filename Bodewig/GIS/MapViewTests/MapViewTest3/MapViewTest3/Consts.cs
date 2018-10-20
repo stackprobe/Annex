@@ -16,5 +16,9 @@ namespace Charlotte
 		public const int MPMD_MAX = 1000000000;
 
 		public const int ZOOMING_COUNTER_MAX = 6;
+
+		public const int TILE_WH = 300;
+		public const int ADDING_XY = 6;
+		public const int DELETING_XY = 8;
 	}
 }

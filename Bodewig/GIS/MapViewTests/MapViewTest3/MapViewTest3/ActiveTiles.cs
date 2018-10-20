@@ -11,9 +11,7 @@ namespace Charlotte
 		public double MeterPerLat;
 		public double MeterPerLon;
 		public GeoPoint CenterPoint;
-		public bool SomethingChanged;
-
-		// <---- state
+		public bool StateChanged;
 
 		public List<Tile> Tiles = new List<Tile>();
 	}

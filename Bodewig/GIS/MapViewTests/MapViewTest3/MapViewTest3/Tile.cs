@@ -8,7 +8,17 @@ namespace Charlotte
 {
 	public class Tile
 	{
-		public Point DrawPoint;
+		public GeoPoint CenterPoint;
 		public Bitmap Bmp;
+
+		public void Added()
+		{
+			// todo ???
+		}
+
+		public void Deleted()
+		{
+			// todo ???
+		}
 	}
 }
