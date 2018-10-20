@@ -27,7 +27,12 @@ namespace Charlotte
 		public GeoPoint CenterPoint = new GeoPoint(35.6652, 139.7125);
 		public Point? DownPoint = null;
 		public GeoPoint DownCenterPoint;
+		public bool Changing = false;
+		public bool ChangingUI = false;
 
-		public ActiveTiles ActiveTiles = null;
+		public ActiveTileTable ActiveTiles = null;
+
+
+		public int TileAddedDeleted = 0;
 	}
 }

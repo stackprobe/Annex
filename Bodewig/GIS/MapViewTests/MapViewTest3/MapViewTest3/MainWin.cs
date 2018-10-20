@@ -41,6 +41,8 @@ namespace Charlotte
 
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
+			ProcMain.WriteLog("MVT3_Start");
+
 			this.MapPicture.MouseWheel += MapPictureMouseWheel;
 
 			// ----
@@ -59,7 +61,7 @@ namespace Charlotte
 
 			// ----
 
-			// -- 9999
+			ProcMain.WriteLog("MVT3_End");
 		}
 
 		private void BeforeDialog()
@@ -108,7 +110,8 @@ namespace Charlotte
 				{
 					this.ChangeActiveTiles();
 				}
-				this.ActiveTilesToUI();
+				this.ChangeUIActiveTiles();
+				this.ChangeStatus();
 
 				GC.Collect();
 			}
@@ -148,6 +151,8 @@ namespace Charlotte
 
 				Gnd.I.CenterPoint.Lat = Gnd.I.DownCenterPoint.Lat - diffLat;
 				Gnd.I.CenterPoint.Lon = Gnd.I.DownCenterPoint.Lon - diffLon;
+
+				CenterPointChanged();
 			}
 		}
 
@@ -163,7 +168,15 @@ namespace Charlotte
 
 				Gnd.I.CenterPoint.Lat = Gnd.I.DownCenterPoint.Lat - diffLat;
 				Gnd.I.CenterPoint.Lon = Gnd.I.DownCenterPoint.Lon - diffLon;
+
+				CenterPointChanged();
 			}
+		}
+
+		private void CenterPointChanged()
+		{
+			Gnd.I.CenterPoint.Lat = DoubleTools.Range(Gnd.I.CenterPoint.Lat, Consts.LAT_MIN, Consts.LAT_MAX);
+			Gnd.I.CenterPoint.Lon = DoubleTools.Range(Gnd.I.CenterPoint.Lon, Consts.LON_MIN, Consts.LON_MAX);
 		}
 
 		private void MapPictureMouseWheel(object sender, MouseEventArgs e)
@@ -177,143 +190,187 @@ namespace Charlotte
 			Gnd.I.MeterPerMDot -= vDlt;
 			Gnd.I.MeterPerMDot = IntTools.Range(Gnd.I.MeterPerMDot, Consts.MPMD_MIN, Consts.MPMD_MAX);
 
-			Gnd.I.ActiveTiles.StateChanged = true;
+			Gnd.I.ChangingUI = true;
 
 			this.ZoomingCounter = Consts.ZOOMING_COUNTER_MAX;
 		}
 
 		private void MapPicture_Resize(object sender, EventArgs e)
 		{
-			Gnd.I.ActiveTiles.StateChanged = true;
+			Gnd.I.Changing = true;
 		}
 
 		private void ChangeActiveTiles()
 		{
 			if (
 				Gnd.I.ActiveTiles != null &&
-				Gnd.I.ActiveTiles.MeterPerMDot == Gnd.I.MeterPerMDot &&
-				Gnd.I.ActiveTiles.MeterPerLat == Gnd.I.MeterPerLat &&
-				Gnd.I.ActiveTiles.MeterPerLon == Gnd.I.MeterPerLon &&
-				CrashUtils.IsCrashed(Gnd.I.ActiveTiles.CenterPoint, Gnd.I.CenterPoint)
+				CrashUtils.IsCrashed_Double_Double(Gnd.I.ActiveTiles.MeterPerMDot, Gnd.I.MeterPerMDot) &&
+				CrashUtils.IsCrashed_Double_Double(Gnd.I.ActiveTiles.MeterPerLat, Gnd.I.MeterPerLat) &&
+				CrashUtils.IsCrashed_Double_Double(Gnd.I.ActiveTiles.MeterPerLon, Gnd.I.MeterPerLon) &&
+				CrashUtils.IsCrashed_Point_Point(Gnd.I.ActiveTiles.CenterPoint, Gnd.I.CenterPoint) &&
+				Gnd.I.Changing == false
 				)
 				return;
 
-			if (Gnd.I.ActiveTiles == null)
-				Gnd.I.ActiveTiles = new ActiveTiles();
+			Gnd.I.Changing = false;
+			Gnd.I.ChangingUI = true;
 
-			Gnd.I.ActiveTiles.MeterPerMDot = Gnd.I.MeterPerMDot;
-			Gnd.I.ActiveTiles.MeterPerLat = Gnd.I.MeterPerLat;
-			Gnd.I.ActiveTiles.MeterPerLon = Gnd.I.MeterPerLon;
-			Gnd.I.ActiveTiles.CenterPoint = Gnd.I.CenterPoint;
-			Gnd.I.ActiveTiles.StateChanged = true;
+			int w = this.MapPicture.Width;
+			int h = this.MapPicture.Height;
 
-			double latPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
-			double lonPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
+			if (
+				w < Consts.MP_WH_MIN ||
+				h < Consts.MP_WH_MIN
+				)
+				return;
 
-			double latPerTileH = latPerDot * Consts.TILE_WH;
-			double lonPerTileW = lonPerDot * Consts.TILE_WH;
+			ActiveTileTable activeTiles = new ActiveTileTable();
 
-			double centerTileLat = DoubleTools.ToInt(Gnd.I.ActiveTiles.CenterPoint.Lat / latPerTileH) * latPerTileH;
-			double centerTileLon = DoubleTools.ToInt(Gnd.I.ActiveTiles.CenterPoint.Lon / lonPerTileW) * lonPerTileW;
+			activeTiles.MeterPerMDot = Gnd.I.MeterPerMDot;
+			activeTiles.MeterPerLat = Gnd.I.MeterPerLat;
+			activeTiles.MeterPerLon = Gnd.I.MeterPerLon;
+			activeTiles.CenterPoint = Gnd.I.CenterPoint;
 
-			for (int index = 0; index < Gnd.I.ActiveTiles.Tiles.Count; index++)
+			double latPerDot = (Gnd.I.MeterPerMDot / 1000000.0) / Gnd.I.MeterPerLat;
+			double lonPerDot = (Gnd.I.MeterPerMDot / 1000000.0) / Gnd.I.MeterPerLon;
+
+			double latMin = Gnd.I.CenterPoint.Lat - (h / 2) * latPerDot;
+			double latMax = Gnd.I.CenterPoint.Lat + (h / 2) * latPerDot;
+			double lonMin = Gnd.I.CenterPoint.Lon - (w / 2) * lonPerDot;
+			double lonMax = Gnd.I.CenterPoint.Lon + (w / 2) * lonPerDot;
+
+			double tileHLat = Consts.TILE_WH * latPerDot;
+			double tileWLon = Consts.TILE_WH * lonPerDot;
+
+			long x1 = (long)(lonMin / tileWLon);
+			long x2 = (long)(lonMax / tileWLon);
+			long y1 = (long)(latMin / tileHLat);
+			long y2 = (long)(latMax / tileHLat);
+
+			List<Tile> oldTiles;
+
+			if (
+				Gnd.I.ActiveTiles != null &&
+				CrashUtils.IsCrashed_Double_Double(Gnd.I.ActiveTiles.MeterPerMDot, Gnd.I.MeterPerMDot) &&
+				CrashUtils.IsCrashed_Double_Double(Gnd.I.ActiveTiles.MeterPerLat, Gnd.I.MeterPerLat) &&
+				CrashUtils.IsCrashed_Double_Double(Gnd.I.ActiveTiles.MeterPerLon, Gnd.I.MeterPerLon)
+				)
+				oldTiles = Gnd.I.ActiveTiles.Tiles; // 参照であること。
+			else
+				oldTiles = new List<Tile>();
+
+			activeTiles.Tiles = new List<Tile>();
+
+			for (long x = x1; x <= x2; x++)
 			{
-				Tile tile = Gnd.I.ActiveTiles.Tiles[index];
-
-				if (
-					tile.CenterPoint.Lat < centerTileLat - latPerTileH * Consts.DELETING_XY_RANGE ||
-					tile.CenterPoint.Lat > centerTileLat + latPerTileH * Consts.DELETING_XY_RANGE ||
-					tile.CenterPoint.Lon < centerTileLon - lonPerTileW * Consts.DELETING_XY_RANGE ||
-					tile.CenterPoint.Lon > centerTileLon + lonPerTileW * Consts.DELETING_XY_RANGE
-					)
+				for (long y = y1; y <= y2; y++)
 				{
-					tile.Deleted();
-					tile = null;
+					int index = CommonUtils.IndexOf(oldTiles, tile => tile.X == x && tile.Y == y);
 
-					Gnd.I.ActiveTiles.Tiles.RemoveAt(index);
-				}
-			}
-
-			for (int x = -Consts.ADDING_XY_RANGE; x <= Consts.ADDING_XY_RANGE; x++)
-			{
-				for (int y = -Consts.ADDING_XY_RANGE; y <= Consts.ADDING_XY_RANGE; y++)
-				{
-					GeoPoint gPoint = new GeoPoint(
-						centerTileLat + latPerTileH * y,
-						centerTileLon + lonPerTileW * x
-						);
-
-					if (Gnd.I.ActiveTiles.Tiles.Any(tile => CrashUtils.IsCrashed(gPoint, tile.CenterPoint)) == false)
+					if (index == -1)
 					{
 						Tile tile = new Tile()
 						{
-							CenterPoint = gPoint,
+							Owner = activeTiles,
+							X = x,
+							Y = y,
 							Bmp = null,
 						};
 
 						tile.Added();
 
-						Gnd.I.ActiveTiles.Tiles.Add(tile);
+						activeTiles.Tiles.Add(tile);
+					}
+					else
+					{
+						activeTiles.Tiles.Add(oldTiles[index]);
+						oldTiles.RemoveAt(index);
 					}
 				}
 			}
+
+			if (Gnd.I.ActiveTiles != null)
+				foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
+					tile.Deleted();
+
+			Gnd.I.ActiveTiles = activeTiles;
 		}
 
-		private void ActiveTilesToUI()
+		private void ChangeUIActiveTiles()
 		{
-			if (Gnd.I.ActiveTiles == null)
+			if (
+				Gnd.I.ActiveTiles == null ||
+				Gnd.I.ChangingUI == false
+				)
 				return;
 
-			if (Gnd.I.ActiveTiles.StateChanged == false)
+			Gnd.I.ChangingUI = false;
+
+			int w = this.MapPicture.Width;
+			int h = this.MapPicture.Height;
+
+			if (
+				w < Consts.MP_WH_MIN ||
+				h < Consts.MP_WH_MIN
+				)
 				return;
 
-			Gnd.I.ActiveTiles.StateChanged = false;
+			Bitmap bmp = new Bitmap(w, h);
 
-			Bitmap bmp = new Bitmap(this.MapPicture.Width, this.MapPicture.Height);
-			int bmp_w = bmp.Width;
-			int bmp_h = bmp.Height;
+			double latPerDot = (Gnd.I.MeterPerMDot / 1000000.0) / Gnd.I.MeterPerLat;
+			double lonPerDot = (Gnd.I.MeterPerMDot / 1000000.0) / Gnd.I.MeterPerLon;
 
 			using (Graphics g = Graphics.FromImage(bmp))
 			{
-				g.FillRectangle(Brushes.Blue, 0, 0, bmp_w, bmp_h);
+				g.FillRectangle(Brushes.Cyan, 0, 0, w, h);
 
 				foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
 				{
-					double meterPerDot = Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0;
-					double latPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
-					double lonPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
+					double latMin = (tile.Y + 0) * Consts.TILE_WH * (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
+					double latMax = (tile.Y + 1) * Consts.TILE_WH * (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
+					double lonMin = (tile.X + 0) * Consts.TILE_WH * (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
+					double lonMax = (tile.X + 1) * Consts.TILE_WH * (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
 
-					GeoPoint sw = new GeoPoint(
-						tile.CenterPoint.Lat - (Consts.TILE_WH / 2) * latPerDot,
-						tile.CenterPoint.Lon - (Consts.TILE_WH / 2) * lonPerDot
-						);
+					double x1 = (w / 2) + (lonMin - Gnd.I.CenterPoint.Lon) / lonPerDot;
+					double x2 = (w / 2) + (lonMax - Gnd.I.CenterPoint.Lon) / lonPerDot;
+					double y1 = (h / 2) + (latMin - Gnd.I.CenterPoint.Lat) / latPerDot;
+					double y2 = (h / 2) + (latMax - Gnd.I.CenterPoint.Lat) / latPerDot;
 
-					GeoPoint ne = new GeoPoint(
-						tile.CenterPoint.Lat + (Consts.TILE_WH / 2) * latPerDot,
-						tile.CenterPoint.Lon + (Consts.TILE_WH / 2) * lonPerDot
-						);
+					int l = DoubleTools.ToInt(x1);
+					int r = DoubleTools.ToInt(x2);
+					int t = DoubleTools.ToInt(h - y2);
+					int b = DoubleTools.ToInt(h - y1);
 
-					meterPerDot = Gnd.I.MeterPerMDot / 1000000.0; // ここでは Gnd.I. の MPMD を使う。
-					latPerDot = meterPerDot / Gnd.I.ActiveTiles.MeterPerLat;
-					lonPerDot = meterPerDot / Gnd.I.ActiveTiles.MeterPerLon;
-
-					int l = DoubleTools.ToInt((sw.Lon - Gnd.I.ActiveTiles.CenterPoint.Lon) / lonPerDot);
-					int r = DoubleTools.ToInt((ne.Lon - Gnd.I.ActiveTiles.CenterPoint.Lon) / lonPerDot);
-					int t = DoubleTools.ToInt((ne.Lat - Gnd.I.ActiveTiles.CenterPoint.Lat) / latPerDot) * -1;
-					int b = DoubleTools.ToInt((sw.Lat - Gnd.I.ActiveTiles.CenterPoint.Lat) / latPerDot) * -1;
-
-					l += bmp_w / 2;
-					r += bmp_w / 2;
-					t += bmp_h / 2;
-					b += bmp_h / 2;
-
-					if (CrashUtils.IsCrashed_Rect_Rect(0, 0, bmp_w, bmp_h, l, t, r, b))
+					if (CrashUtils.IsCrashed_Rect_Rect(l, t, r, b, 0, 0, w, h))
 					{
 						g.DrawImage(tile.Bmp, l, t, r - l, b - t);
 					}
 				}
 			}
 			this.MapPicture.Image = bmp;
+		}
+
+		private void ChangeStatus()
+		{
+			if (Gnd.I.ActiveTiles == null)
+				return;
+
+			List<string> tokens = new List<string>();
+
+			tokens.Add(string.Format("({0}, {1})", Gnd.I.CenterPoint.Lat, Gnd.I.CenterPoint.Lon));
+			tokens.Add("" + Gnd.I.MeterPerMDot);
+			tokens.Add("" + Gnd.I.ActiveTiles.Tiles.Count);
+
+
+			tokens.Add("" + Gnd.I.TileAddedDeleted);
+
+			//foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
+			//tokens.Add(tile.L + "_" + tile.B);
+
+			string text = string.Join(", ", tokens);
+
+			if (this.Status.Text != text)
+				this.Status.Text = text;
 		}
 	}
 }

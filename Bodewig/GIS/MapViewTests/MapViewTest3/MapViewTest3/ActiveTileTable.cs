@@ -5,13 +5,12 @@ using System.Text;
 
 namespace Charlotte
 {
-	public class ActiveTiles
+	public class ActiveTileTable
 	{
 		public int MeterPerMDot;
 		public double MeterPerLat;
 		public double MeterPerLon;
 		public GeoPoint CenterPoint;
-		public bool StateChanged;
 
 		public List<Tile> Tiles = new List<Tile>();
 	}

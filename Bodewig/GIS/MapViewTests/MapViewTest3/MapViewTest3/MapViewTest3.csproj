@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveTiles.cs" />
+    <Compile Include="ActiveTileTable.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="GeoPoint.cs" />
     <Compile Include="Ground.cs" />
