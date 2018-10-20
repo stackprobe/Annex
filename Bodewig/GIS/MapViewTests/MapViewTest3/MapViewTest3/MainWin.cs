@@ -177,17 +177,24 @@ namespace Charlotte
 			Gnd.I.MeterPerMDot -= vDlt;
 			Gnd.I.MeterPerMDot = IntTools.Range(Gnd.I.MeterPerMDot, Consts.MPMD_MIN, Consts.MPMD_MAX);
 
+			Gnd.I.ActiveTiles.StateChanged = true;
+
 			this.ZoomingCounter = Consts.ZOOMING_COUNTER_MAX;
+		}
+
+		private void MapPicture_Resize(object sender, EventArgs e)
+		{
+			Gnd.I.ActiveTiles.StateChanged = true;
 		}
 
 		private void ChangeActiveTiles()
 		{
 			if (
 				Gnd.I.ActiveTiles != null &&
-				Gnd.I.ActiveTiles.MeterPerMDot != Gnd.I.MeterPerMDot &&
-				Gnd.I.ActiveTiles.MeterPerLat != Gnd.I.MeterPerLat &&
-				Gnd.I.ActiveTiles.MeterPerLon != Gnd.I.MeterPerLon &&
-				CrashUtils.IsCrashed(Gnd.I.ActiveTiles.CenterPoint, Gnd.I.CenterPoint) == false
+				Gnd.I.ActiveTiles.MeterPerMDot == Gnd.I.MeterPerMDot &&
+				Gnd.I.ActiveTiles.MeterPerLat == Gnd.I.MeterPerLat &&
+				Gnd.I.ActiveTiles.MeterPerLon == Gnd.I.MeterPerLon &&
+				CrashUtils.IsCrashed(Gnd.I.ActiveTiles.CenterPoint, Gnd.I.CenterPoint)
 				)
 				return;
 
@@ -260,8 +267,7 @@ namespace Charlotte
 			if (Gnd.I.ActiveTiles.StateChanged == false)
 				return;
 
-			double latPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
-			double lonPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
+			Gnd.I.ActiveTiles.StateChanged = false;
 
 			Bitmap bmp = new Bitmap(this.MapPicture.Width, this.MapPicture.Height);
 			int bmp_w = bmp.Width;
@@ -271,46 +277,39 @@ namespace Charlotte
 			{
 				g.FillRectangle(Brushes.Blue, 0, 0, bmp_w, bmp_h);
 
-				Point? stdDrawPoint = null;
-
 				foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
 				{
-					double diffLat = tile.CenterPoint.Lat - Gnd.I.ActiveTiles.CenterPoint.Lat;
-					double diffLon = tile.CenterPoint.Lon - Gnd.I.ActiveTiles.CenterPoint.Lon;
+					double meterPerDot = Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0;
+					double latPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
+					double lonPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
 
-					int diffX = DoubleTools.ToInt(diffLon / lonPerDot);
-					int diffY = DoubleTools.ToInt(diffLat / latPerDot) * -1;
-
-					Point drawPoint = new Point(
-						bmp_w / 2 + diffX,
-						bmp_h / 2 + diffY
+					GeoPoint sw = new GeoPoint(
+						tile.CenterPoint.Lat - (Consts.TILE_WH / 2) * latPerDot,
+						tile.CenterPoint.Lon - (Consts.TILE_WH / 2) * lonPerDot
 						);
 
-					if (stdDrawPoint != null)
-					{
-						int x = drawPoint.X - stdDrawPoint.Value.X;
-						int y = drawPoint.Y - stdDrawPoint.Value.Y;
+					GeoPoint ne = new GeoPoint(
+						tile.CenterPoint.Lat + (Consts.TILE_WH / 2) * latPerDot,
+						tile.CenterPoint.Lon + (Consts.TILE_WH / 2) * lonPerDot
+						);
 
-						x /= Consts.TILE_WH;
-						y /= Consts.TILE_WH;
+					meterPerDot = Gnd.I.MeterPerMDot / 1000000.0; // ここでは Gnd.I. の MPMD を使う。
+					latPerDot = meterPerDot / Gnd.I.ActiveTiles.MeterPerLat;
+					lonPerDot = meterPerDot / Gnd.I.ActiveTiles.MeterPerLon;
 
-						x *= Consts.TILE_WH;
-						y *= Consts.TILE_WH;
+					int l = DoubleTools.ToInt((sw.Lon - Gnd.I.ActiveTiles.CenterPoint.Lon) / lonPerDot);
+					int r = DoubleTools.ToInt((ne.Lon - Gnd.I.ActiveTiles.CenterPoint.Lon) / lonPerDot);
+					int t = DoubleTools.ToInt((ne.Lat - Gnd.I.ActiveTiles.CenterPoint.Lat) / latPerDot) * -1;
+					int b = DoubleTools.ToInt((sw.Lat - Gnd.I.ActiveTiles.CenterPoint.Lat) / latPerDot) * -1;
 
-						drawPoint.X = stdDrawPoint.Value.X + x;
-						drawPoint.Y = stdDrawPoint.Value.Y + y;
-
-						stdDrawPoint = drawPoint;
-					}
-
-					int l = drawPoint.X - Consts.TILE_WH / 2;
-					int r = drawPoint.X + Consts.TILE_WH / 2;
-					int t = drawPoint.Y - Consts.TILE_WH / 2;
-					int b = drawPoint.Y + Consts.TILE_WH / 2;
+					l += bmp_w / 2;
+					r += bmp_w / 2;
+					t += bmp_h / 2;
+					b += bmp_h / 2;
 
 					if (CrashUtils.IsCrashed_Rect_Rect(0, 0, bmp_w, bmp_h, l, t, r, b))
 					{
-						g.DrawImage(tile.Bmp, l, t);
+						g.DrawImage(tile.Bmp, l, t, r - l, b - t);
 					}
 				}
 			}

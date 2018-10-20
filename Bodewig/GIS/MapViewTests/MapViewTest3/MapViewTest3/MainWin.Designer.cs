@@ -59,6 +59,7 @@
 			this.MapPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapPicture_MouseDown);
 			this.MapPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MapPicture_MouseMove);
 			this.MapPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MapPicture_MouseUp);
+			this.MapPicture.Resize += new System.EventHandler(this.MapPicture_Resize);
 			// 
 			// statusStrip1
 			// 
