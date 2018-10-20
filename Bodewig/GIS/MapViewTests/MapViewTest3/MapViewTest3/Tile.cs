@@ -13,7 +13,16 @@ namespace Charlotte
 
 		public void Added()
 		{
-			// todo ???
+			Bmp = new Bitmap(Consts.TILE_WH, Consts.TILE_WH);
+
+			using (Graphics g = Graphics.FromImage(Bmp))
+			{
+				g.FillRectangle(Brushes.White, 0, 0, Consts.TILE_WH, Consts.TILE_WH);
+				g.DrawLine(new Pen(Color.Blue), 0, 0, 0, Consts.TILE_WH - 1);
+				g.DrawLine(new Pen(Color.Blue), 0, 0, Consts.TILE_WH - 1, 0);
+				g.DrawLine(new Pen(Color.Blue), 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
+				g.DrawLine(new Pen(Color.Blue), Consts.TILE_WH - 1, 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
+			}
 		}
 
 		public void Deleted()

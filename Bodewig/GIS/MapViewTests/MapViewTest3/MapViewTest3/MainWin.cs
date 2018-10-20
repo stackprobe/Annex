@@ -109,6 +109,8 @@ namespace Charlotte
 					this.ChangeActiveTiles();
 				}
 				this.ActiveTilesToUI();
+
+				GC.Collect();
 			}
 			catch (Exception ex)
 			{
@@ -144,8 +146,8 @@ namespace Charlotte
 				double diffLat = diffY * (Gnd.I.MeterPerMDot / 1000000.0) / Gnd.I.MeterPerLat * -1;
 				double diffLon = diffX * (Gnd.I.MeterPerMDot / 1000000.0) / Gnd.I.MeterPerLon;
 
-				Gnd.I.CenterPoint.Lat = Gnd.I.DownCenterPoint.Lat + diffLat;
-				Gnd.I.CenterPoint.Lon = Gnd.I.DownCenterPoint.Lon + diffLon;
+				Gnd.I.CenterPoint.Lat = Gnd.I.DownCenterPoint.Lat - diffLat;
+				Gnd.I.CenterPoint.Lon = Gnd.I.DownCenterPoint.Lon - diffLon;
 			}
 		}
 
@@ -159,8 +161,8 @@ namespace Charlotte
 				double diffLat = diffY * (Gnd.I.MeterPerMDot / 1000000.0) / Gnd.I.MeterPerLat * -1;
 				double diffLon = diffX * (Gnd.I.MeterPerMDot / 1000000.0) / Gnd.I.MeterPerLon;
 
-				Gnd.I.CenterPoint.Lat = Gnd.I.DownCenterPoint.Lat + diffLat;
-				Gnd.I.CenterPoint.Lon = Gnd.I.DownCenterPoint.Lon + diffLon;
+				Gnd.I.CenterPoint.Lat = Gnd.I.DownCenterPoint.Lat - diffLat;
+				Gnd.I.CenterPoint.Lon = Gnd.I.DownCenterPoint.Lon - diffLon;
 			}
 		}
 
@@ -185,7 +187,7 @@ namespace Charlotte
 				Gnd.I.ActiveTiles.MeterPerMDot != Gnd.I.MeterPerMDot &&
 				Gnd.I.ActiveTiles.MeterPerLat != Gnd.I.MeterPerLat &&
 				Gnd.I.ActiveTiles.MeterPerLon != Gnd.I.MeterPerLon &&
-				Gnd.I.ActiveTiles.CenterPoint != Gnd.I.CenterPoint
+				CrashUtils.IsCrashed(Gnd.I.ActiveTiles.CenterPoint, Gnd.I.CenterPoint) == false
 				)
 				return;
 
@@ -198,39 +200,36 @@ namespace Charlotte
 			Gnd.I.ActiveTiles.CenterPoint = Gnd.I.CenterPoint;
 			Gnd.I.ActiveTiles.StateChanged = true;
 
-			List<Tile> addingTiles = new List<Tile>();
-			List<Tile> deletingTiles = new List<Tile>();
-
 			double latPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
 			double lonPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
 
 			double latPerTileH = latPerDot * Consts.TILE_WH;
 			double lonPerTileW = lonPerDot * Consts.TILE_WH;
 
-			double centerTileLat = (int)(Gnd.I.ActiveTiles.CenterPoint.Lat / latPerTileH) * latPerTileH;
-			double centerTileLon = (int)(Gnd.I.ActiveTiles.CenterPoint.Lon / lonPerTileW) * lonPerTileW;
+			double centerTileLat = DoubleTools.ToInt(Gnd.I.ActiveTiles.CenterPoint.Lat / latPerTileH) * latPerTileH;
+			double centerTileLon = DoubleTools.ToInt(Gnd.I.ActiveTiles.CenterPoint.Lon / lonPerTileW) * lonPerTileW;
 
 			for (int index = 0; index < Gnd.I.ActiveTiles.Tiles.Count; index++)
 			{
 				Tile tile = Gnd.I.ActiveTiles.Tiles[index];
 
 				if (
-					tile.CenterPoint.Lat < centerTileLat - latPerTileH * Consts.DELETING_XY ||
-					tile.CenterPoint.Lat > centerTileLat + latPerTileH * Consts.DELETING_XY ||
-					tile.CenterPoint.Lon < centerTileLon - lonPerTileW * Consts.DELETING_XY ||
-					tile.CenterPoint.Lon > centerTileLon + lonPerTileW * Consts.DELETING_XY
+					tile.CenterPoint.Lat < centerTileLat - latPerTileH * Consts.DELETING_XY_RANGE ||
+					tile.CenterPoint.Lat > centerTileLat + latPerTileH * Consts.DELETING_XY_RANGE ||
+					tile.CenterPoint.Lon < centerTileLon - lonPerTileW * Consts.DELETING_XY_RANGE ||
+					tile.CenterPoint.Lon > centerTileLon + lonPerTileW * Consts.DELETING_XY_RANGE
 					)
 				{
-					Gnd.I.ActiveTiles.Tiles.RemoveAt(index);
-
 					tile.Deleted();
 					tile = null;
+
+					Gnd.I.ActiveTiles.Tiles.RemoveAt(index);
 				}
 			}
 
-			for (int x = -Consts.ADDING_XY; x <= Consts.ADDING_XY; x++)
+			for (int x = -Consts.ADDING_XY_RANGE; x <= Consts.ADDING_XY_RANGE; x++)
 			{
-				for (int y = -Consts.ADDING_XY; y <= Consts.ADDING_XY; y++)
+				for (int y = -Consts.ADDING_XY_RANGE; y <= Consts.ADDING_XY_RANGE; y++)
 				{
 					GeoPoint gPoint = new GeoPoint(
 						centerTileLat + latPerTileH * y,
@@ -239,10 +238,11 @@ namespace Charlotte
 
 					if (Gnd.I.ActiveTiles.Tiles.Any(tile => CrashUtils.IsCrashed(gPoint, tile.CenterPoint)) == false)
 					{
-						Tile tile = new Tile();
-
-						tile.CenterPoint = gPoint;
-						tile.Bmp = null;
+						Tile tile = new Tile()
+						{
+							CenterPoint = gPoint,
+							Bmp = null,
+						};
 
 						tile.Added();
 
@@ -260,7 +260,61 @@ namespace Charlotte
 			if (Gnd.I.ActiveTiles.StateChanged == false)
 				return;
 
-			// TODO
+			double latPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
+			double lonPerDot = (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
+
+			Bitmap bmp = new Bitmap(this.MapPicture.Width, this.MapPicture.Height);
+			int bmp_w = bmp.Width;
+			int bmp_h = bmp.Height;
+
+			using (Graphics g = Graphics.FromImage(bmp))
+			{
+				g.FillRectangle(Brushes.Blue, 0, 0, bmp_w, bmp_h);
+
+				Point? stdDrawPoint = null;
+
+				foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
+				{
+					double diffLat = tile.CenterPoint.Lat - Gnd.I.ActiveTiles.CenterPoint.Lat;
+					double diffLon = tile.CenterPoint.Lon - Gnd.I.ActiveTiles.CenterPoint.Lon;
+
+					int diffX = DoubleTools.ToInt(diffLon / lonPerDot);
+					int diffY = DoubleTools.ToInt(diffLat / latPerDot) * -1;
+
+					Point drawPoint = new Point(
+						bmp_w / 2 + diffX,
+						bmp_h / 2 + diffY
+						);
+
+					if (stdDrawPoint != null)
+					{
+						int x = drawPoint.X - stdDrawPoint.Value.X;
+						int y = drawPoint.Y - stdDrawPoint.Value.Y;
+
+						x /= Consts.TILE_WH;
+						y /= Consts.TILE_WH;
+
+						x *= Consts.TILE_WH;
+						y *= Consts.TILE_WH;
+
+						drawPoint.X = stdDrawPoint.Value.X + x;
+						drawPoint.Y = stdDrawPoint.Value.Y + y;
+
+						stdDrawPoint = drawPoint;
+					}
+
+					int l = drawPoint.X - Consts.TILE_WH / 2;
+					int r = drawPoint.X + Consts.TILE_WH / 2;
+					int t = drawPoint.Y - Consts.TILE_WH / 2;
+					int b = drawPoint.Y + Consts.TILE_WH / 2;
+
+					if (CrashUtils.IsCrashed_Rect_Rect(0, 0, bmp_w, bmp_h, l, t, r, b))
+					{
+						g.DrawImage(tile.Bmp, l, t);
+					}
+				}
+			}
+			this.MapPicture.Image = bmp;
 		}
 	}
 }

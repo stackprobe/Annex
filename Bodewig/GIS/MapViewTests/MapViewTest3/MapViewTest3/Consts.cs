@@ -18,7 +18,7 @@ namespace Charlotte
 		public const int ZOOMING_COUNTER_MAX = 6;
 
 		public const int TILE_WH = 300;
-		public const int ADDING_XY = 6;
-		public const int DELETING_XY = 8;
+		public const int ADDING_XY_RANGE = 7;
+		public const int DELETING_XY_RANGE = 9;
 	}
 }
