@@ -22,7 +22,7 @@ namespace Charlotte
 			ProcMain.GUIMain(() => new MainWin(), APP_IDENT, APP_TITLE);
 		}
 
-		public const string APP_IDENT = "{7577ec66-b727-4ded-a987-0946b08950ce}";
+		public const string APP_IDENT = "{bed26c99-3852-457e-8625-81a7766e24ca}";
 		public const string APP_TITLE = "MapViewTest3b";
 	}
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using Charlotte.Tools;
+using Charlotte.Utils;
 
 namespace Charlotte
 {
@@ -31,5 +33,7 @@ namespace Charlotte
 		public bool ChangingUI = false;
 
 		public ActiveTileTable ActiveTiles = null;
+
+		public KeyCounter DrawTileWHCounter = new KeyCounter(); // extra
 	}
 }

@@ -27,7 +27,7 @@ namespace Charlotte
 			{
 				try
 				{
-					using (new MSection("{0970cb0d-d559-4b1a-afd1-2cf3a8c95774}"))
+					using (new MSection("{94d027d7-c25d-41e5-899c-e9805c23a0d7}"))
 					using (StreamWriter writer = new StreamWriter(@"C:\temp\MapViewTest3b.log", WroteLog, Encoding.UTF8))
 					{
 						writer.WriteLine("[" + DateTime.Now + "] " + message);
@@ -275,7 +275,7 @@ namespace Charlotte
 							Owner = activeTiles,
 							X = x,
 							Y = y,
-							BgImage = null,
+							Bmp = null,
 						};
 
 						tile.Added();
@@ -325,7 +325,7 @@ namespace Charlotte
 			{
 				g.FillRectangle(Brushes.LightSkyBlue, 0, 0, w, h);
 
-				DrawTileWHCounter.Clear(); // extra
+				Gnd.I.DrawTileWHCounter.Clear(); // extra
 
 				foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
 				{
@@ -334,42 +334,29 @@ namespace Charlotte
 					double y1 = (h / 2) + (tile.LatMin - Gnd.I.CenterPoint.Lat) / latPerDot;
 					double y2 = (h / 2) + (tile.LatMax - Gnd.I.CenterPoint.Lat) / latPerDot;
 
+					if (x1 + Consts.DRAW_TILE_WH_MAX < x2)
+						continue;
+
+					if (y1 + Consts.DRAW_TILE_WH_MAX < y2)
+						continue;
+
 					int l = DoubleTools.ToInt(x1);
 					int r = DoubleTools.ToInt(x2);
 					int t = DoubleTools.ToInt(h - y2);
 					int b = DoubleTools.ToInt(h - y1);
 
-					if (CrashUtils.IsCrashed_Rect_Rect(l, t, r, b, 0, 0, w, h))
-					{
-						int drawTile_w = r - l;
-						int drawTile_h = b - t;
-						bool drawing = true;
+					if (CrashUtils.IsCrashed_Rect_Rect(l, t, r, b, 0, 0, w, h) == false)
+						continue;
 
-						if (drawTile_w < Consts.DRAW_TILE_WH_MIN)
-						{
-							drawTile_w = Consts.DRAW_TILE_WH_MIN;
-						}
-						else if (Consts.DRAW_TILE_WH_MAX < drawTile_w)
-						{
-							drawing = false;
-						}
+					int drawTile_w = r - l;
+					int drawTile_h = b - t;
 
-						if (drawTile_h < Consts.DRAW_TILE_WH_MIN)
-						{
-							drawTile_h = Consts.DRAW_TILE_WH_MIN;
-						}
-						else if (Consts.DRAW_TILE_WH_MAX < drawTile_h)
-						{
-							drawing = false;
-						}
+					drawTile_w = Math.Max(drawTile_w, Consts.DRAW_TILE_WH_MIN);
+					drawTile_h = Math.Max(drawTile_h, Consts.DRAW_TILE_WH_MIN);
 
-						if (drawing)
-						{
-							g.DrawImage(tile.BgImage, l, t, drawTile_w, drawTile_h);
-						}
+					g.DrawImage(tile.Bmp, l, t, drawTile_w, drawTile_h);
 
-						DrawTileWHCounter.Add(drawTile_w + "_" + drawTile_h); // extra
-					}
+					Gnd.I.DrawTileWHCounter.Add(drawTile_w + "_" + drawTile_h); // extra
 				}
 			}
 			this.MapPicture.Image = bmp;
@@ -386,18 +373,17 @@ namespace Charlotte
 			tokens.Add("" + Gnd.I.MeterPerMDot);
 			tokens.Add("" + Gnd.I.ActiveTiles.Tiles.Count);
 
-			// extra
-			//foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
-			//tokens.Add(tile.X + "_" + tile.Y);
-
-			tokens.Add("" + DrawTileWHCounter); // extra
+			tokens.Add("" + Gnd.I.DrawTileWHCounter); // extra
 
 			string text = string.Join(", ", tokens);
 
 			if (this.Status.Text != text)
 				this.Status.Text = text;
-		}
 
-		private KeyCounter DrawTileWHCounter = new KeyCounter(); // extra
+			text = "";
+
+			if (this.SubStatus.Text != text)
+				this.SubStatus.Text = text;
+		}
 	}
 }

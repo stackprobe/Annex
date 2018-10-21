@@ -16,13 +16,13 @@ namespace Charlotte
 		public ActiveTileTable Owner;
 		public long X;
 		public long Y;
-		public Image BgImage;
+		public Image Bmp;
 
 		public void Added()
 		{
-			BgImage = new Bitmap(Consts.TILE_WH, Consts.TILE_WH);
+			Bmp = new Bitmap(Consts.TILE_WH, Consts.TILE_WH);
 
-			using (Graphics g = Graphics.FromImage(BgImage))
+			using (Graphics g = Graphics.FromImage(Bmp))
 			{
 				Pen pen = new Pen(Color.OrangeRed);
 

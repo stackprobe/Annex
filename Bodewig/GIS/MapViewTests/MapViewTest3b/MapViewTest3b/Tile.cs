@@ -11,7 +11,7 @@ namespace Charlotte
 		public ActiveTileTable Owner;
 		public long X;
 		public long Y;
-		public Image BgImage;
+		public Image Bmp;
 
 		public double LatMin { get { return (Y + 0) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLat; } }
 		public double LatMax { get { return (Y + 1) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLat; } }
@@ -20,15 +20,15 @@ namespace Charlotte
 
 		public void Added()
 		{
-			BgImage = new Bitmap(Consts.TILE_WH, Consts.TILE_WH);
+			Bmp = new Bitmap(Consts.TILE_WH, Consts.TILE_WH);
 
-			using (Graphics g = Graphics.FromImage(BgImage))
+			using (Graphics g = Graphics.FromImage(Bmp))
 			{
-				g.FillRectangle(Brushes.White, 0, 0, Consts.TILE_WH, Consts.TILE_WH);
-				g.DrawLine(new Pen(Color.Blue), 0, 0, 0, Consts.TILE_WH - 1);
-				g.DrawLine(new Pen(Color.Blue), 0, 0, Consts.TILE_WH - 1, 0);
-				g.DrawLine(new Pen(Color.Blue), 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
-				g.DrawLine(new Pen(Color.Blue), Consts.TILE_WH - 1, 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
+				g.FillRectangle(Brushes.Moccasin, 0, 0, Consts.TILE_WH, Consts.TILE_WH);
+				g.DrawLine(new Pen(Color.Orange), 0, 0, 0, Consts.TILE_WH - 1);
+				g.DrawLine(new Pen(Color.Orange), 0, 0, Consts.TILE_WH - 1, 0);
+				g.DrawLine(new Pen(Color.Orange), 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
+				g.DrawLine(new Pen(Color.Orange), Consts.TILE_WH - 1, 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
 
 				List<string> dest = new List<string>();
 
@@ -37,8 +37,10 @@ namespace Charlotte
 				dest.Add("(" + LatMin.ToString("F9") + ", " + LonMin.ToString("F9") + ")");
 				dest.Add("(" + LatMax.ToString("F9") + ", " + LonMax.ToString("F9") + ")");
 
-				g.DrawString(string.Join("\n", dest), new Font("メイリオ", 10F, FontStyle.Regular), Brushes.DarkCyan, 0, 0);
+				g.DrawString(string.Join("\n", dest), new Font("メイリオ", 10F, FontStyle.Regular), Brushes.OrangeRed, 0, 0);
 			}
+
+			// todo ???
 		}
 
 		public void Deleted()

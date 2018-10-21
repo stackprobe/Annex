@@ -275,7 +275,7 @@ namespace Charlotte
 							Owner = activeTiles,
 							X = x,
 							Y = y,
-							BgImage = null,
+							Bmp = null,
 						};
 
 						tile.Added();
@@ -352,7 +352,7 @@ namespace Charlotte
 							Consts.DRAW_TILE_WH_MIN <= drawTile_h && drawTile_h <= Consts.DRAW_TILE_WH_MAX
 							)
 						{
-							g.DrawImage(tile.BgImage, l, t, drawTile_w, drawTile_h);
+							g.DrawImage(tile.Bmp, l, t, drawTile_w, drawTile_h);
 						}
 					}
 				}

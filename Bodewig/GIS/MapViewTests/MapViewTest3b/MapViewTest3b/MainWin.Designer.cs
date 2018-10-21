@@ -66,24 +66,25 @@
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Status,
             this.SubStatus});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 538);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 539);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(784, 23);
+			this.statusStrip1.Size = new System.Drawing.Size(784, 22);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
 			// Status
 			// 
 			this.Status.Name = "Status";
-			this.Status.Size = new System.Drawing.Size(701, 18);
+			this.Status.Size = new System.Drawing.Size(710, 17);
 			this.Status.Spring = true;
 			this.Status.Text = "Status";
 			this.Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// SubStatus
 			// 
+			this.SubStatus.ForeColor = System.Drawing.Color.Red;
 			this.SubStatus.Name = "SubStatus";
-			this.SubStatus.Size = new System.Drawing.Size(68, 18);
+			this.SubStatus.Size = new System.Drawing.Size(59, 17);
 			this.SubStatus.Text = "SubStatus";
 			// 
 			// MainWin
