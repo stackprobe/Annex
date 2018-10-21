@@ -20,5 +20,7 @@ namespace Charlotte
 		public const int TILE_WH = 300;
 
 		public const int MP_WH_MIN = 100; // MapPicture Width/Height Min
+		public const int DRAW_TILE_WH_MIN = 10;
+		public const int DRAW_TILE_WH_MAX = 9000;
 	}
 }

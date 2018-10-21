@@ -343,7 +343,16 @@ namespace Charlotte
 
 					if (CrashUtils.IsCrashed_Rect_Rect(l, t, r, b, 0, 0, w, h))
 					{
-						g.DrawImage(tile.Bmp, l, t, r - l, b - t);
+						int drawTile_w = r - l;
+						int drawTile_h = b - t;
+
+						if (
+							Consts.DRAW_TILE_WH_MIN <= drawTile_w && drawTile_w <= Consts.DRAW_TILE_WH_MAX &&
+							Consts.DRAW_TILE_WH_MIN <= drawTile_h && drawTile_h <= Consts.DRAW_TILE_WH_MAX
+							)
+						{
+							g.DrawImage(tile.Bmp, l, t, drawTile_w, drawTile_h);
+						}
 					}
 				}
 			}
@@ -366,6 +375,7 @@ namespace Charlotte
 
 			//foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
 			//tokens.Add(tile.L + "_" + tile.B);
+
 
 			string text = string.Join(", ", tokens);
 

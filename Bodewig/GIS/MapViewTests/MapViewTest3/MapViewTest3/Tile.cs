@@ -29,6 +29,20 @@ namespace Charlotte
 				g.DrawLine(new Pen(Color.Blue), 0, 0, Consts.TILE_WH - 1, 0);
 				g.DrawLine(new Pen(Color.Blue), 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
 				g.DrawLine(new Pen(Color.Blue), Consts.TILE_WH - 1, 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
+
+				double latMin = (Y + 0) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLat;
+				double latMax = (Y + 1) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLat;
+				double lonMin = (X + 0) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLon;
+				double lonMax = (X + 1) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLon;
+
+				List<string> dest = new List<string>();
+
+				dest.Add("" + X);
+				dest.Add("" + Y);
+				dest.Add("(" + latMin.ToString("F9") + ", " + lonMin.ToString("F9") + ")");
+				dest.Add("(" + latMax.ToString("F9") + ", " + lonMax.ToString("F9") + ")");
+
+				g.DrawString(string.Join("\n", dest), new Font("メイリオ", 10F, FontStyle.Regular), Brushes.Aqua, 0, 0);
 			}
 
 

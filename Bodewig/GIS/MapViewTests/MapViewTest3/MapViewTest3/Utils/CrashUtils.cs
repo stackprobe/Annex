@@ -24,7 +24,7 @@ namespace Charlotte.Utils
 
 		public static bool IsCrashed_Double_Double(double a, double b)
 		{
-			return Math.Abs(a - b) < 0.000000001; // < LatLonの精度
+			return Math.Abs(a - b) < 0.0000000001; // < LatLonの精度
 		}
 
 		public static bool IsCrashed_Point_Point(GeoPoint a, GeoPoint b)
