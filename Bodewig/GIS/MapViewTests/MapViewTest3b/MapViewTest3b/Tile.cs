@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Drawing;
+
+namespace Charlotte
+{
+	public class Tile
+	{
+		public ActiveTileTable Owner;
+		public long X;
+		public long Y;
+		public Image BgImage;
+
+		public double LatMin { get { return (Y + 0) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLat; } }
+		public double LatMax { get { return (Y + 1) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLat; } }
+		public double LonMin { get { return (X + 0) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLon; } }
+		public double LonMax { get { return (X + 1) * Consts.TILE_WH * (Owner.MeterPerMDot / 1000000.0) / Owner.MeterPerLon; } }
+
+		public void Added()
+		{
+			BgImage = new Bitmap(Consts.TILE_WH, Consts.TILE_WH);
+
+			using (Graphics g = Graphics.FromImage(BgImage))
+			{
+				g.FillRectangle(Brushes.White, 0, 0, Consts.TILE_WH, Consts.TILE_WH);
+				g.DrawLine(new Pen(Color.Blue), 0, 0, 0, Consts.TILE_WH - 1);
+				g.DrawLine(new Pen(Color.Blue), 0, 0, Consts.TILE_WH - 1, 0);
+				g.DrawLine(new Pen(Color.Blue), 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
+				g.DrawLine(new Pen(Color.Blue), Consts.TILE_WH - 1, 0, Consts.TILE_WH - 1, Consts.TILE_WH - 1);
+
+				List<string> dest = new List<string>();
+
+				dest.Add("" + X);
+				dest.Add("" + Y);
+				dest.Add("(" + LatMin.ToString("F9") + ", " + LonMin.ToString("F9") + ")");
+				dest.Add("(" + LatMax.ToString("F9") + ", " + LonMax.ToString("F9") + ")");
+
+				g.DrawString(string.Join("\n", dest), new Font("メイリオ", 10F, FontStyle.Regular), Brushes.DarkCyan, 0, 0);
+			}
+		}
+
+		public void Deleted()
+		{
+			// todo ???
+		}
+	}
+}

@@ -27,8 +27,8 @@ namespace Charlotte
 			{
 				try
 				{
-					using (new MSection("{afedb605-7ae5-435f-9294-ca227a9301be}"))
-					using (StreamWriter writer = new StreamWriter(@"C:\temp\MapViewTest3.log", WroteLog, Encoding.UTF8))
+					using (new MSection("{0970cb0d-d559-4b1a-afd1-2cf3a8c95774}"))
+					using (StreamWriter writer = new StreamWriter(@"C:\temp\MapViewTest3b.log", WroteLog, Encoding.UTF8))
 					{
 						writer.WriteLine("[" + DateTime.Now + "] " + message);
 						WroteLog = true;
@@ -323,19 +323,16 @@ namespace Charlotte
 
 			using (Graphics g = Graphics.FromImage(bmp))
 			{
-				g.FillRectangle(Brushes.LightYellow, 0, 0, w, h);
+				g.FillRectangle(Brushes.LightSkyBlue, 0, 0, w, h);
+
+				DrawTileWHCounter.Clear(); // extra
 
 				foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
 				{
-					double latMin = (tile.Y + 0) * Consts.TILE_WH * (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
-					double latMax = (tile.Y + 1) * Consts.TILE_WH * (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLat;
-					double lonMin = (tile.X + 0) * Consts.TILE_WH * (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
-					double lonMax = (tile.X + 1) * Consts.TILE_WH * (Gnd.I.ActiveTiles.MeterPerMDot / 1000000.0) / Gnd.I.ActiveTiles.MeterPerLon;
-
-					double x1 = (w / 2) + (lonMin - Gnd.I.CenterPoint.Lon) / lonPerDot;
-					double x2 = (w / 2) + (lonMax - Gnd.I.CenterPoint.Lon) / lonPerDot;
-					double y1 = (h / 2) + (latMin - Gnd.I.CenterPoint.Lat) / latPerDot;
-					double y2 = (h / 2) + (latMax - Gnd.I.CenterPoint.Lat) / latPerDot;
+					double x1 = (w / 2) + (tile.LonMin - Gnd.I.CenterPoint.Lon) / lonPerDot;
+					double x2 = (w / 2) + (tile.LonMax - Gnd.I.CenterPoint.Lon) / lonPerDot;
+					double y1 = (h / 2) + (tile.LatMin - Gnd.I.CenterPoint.Lat) / latPerDot;
+					double y2 = (h / 2) + (tile.LatMax - Gnd.I.CenterPoint.Lat) / latPerDot;
 
 					int l = DoubleTools.ToInt(x1);
 					int r = DoubleTools.ToInt(x2);
@@ -346,14 +343,32 @@ namespace Charlotte
 					{
 						int drawTile_w = r - l;
 						int drawTile_h = b - t;
+						bool drawing = true;
 
-						if (
-							Consts.DRAW_TILE_WH_MIN <= drawTile_w && drawTile_w <= Consts.DRAW_TILE_WH_MAX &&
-							Consts.DRAW_TILE_WH_MIN <= drawTile_h && drawTile_h <= Consts.DRAW_TILE_WH_MAX
-							)
+						if (drawTile_w < Consts.DRAW_TILE_WH_MIN)
+						{
+							drawTile_w = Consts.DRAW_TILE_WH_MIN;
+						}
+						else if (Consts.DRAW_TILE_WH_MAX < drawTile_w)
+						{
+							drawing = false;
+						}
+
+						if (drawTile_h < Consts.DRAW_TILE_WH_MIN)
+						{
+							drawTile_h = Consts.DRAW_TILE_WH_MIN;
+						}
+						else if (Consts.DRAW_TILE_WH_MAX < drawTile_h)
+						{
+							drawing = false;
+						}
+
+						if (drawing)
 						{
 							g.DrawImage(tile.BgImage, l, t, drawTile_w, drawTile_h);
 						}
+
+						DrawTileWHCounter.Add(drawTile_w + "_" + drawTile_h); // extra
 					}
 				}
 			}
@@ -371,17 +386,18 @@ namespace Charlotte
 			tokens.Add("" + Gnd.I.MeterPerMDot);
 			tokens.Add("" + Gnd.I.ActiveTiles.Tiles.Count);
 
-
-			tokens.Add("" + Gnd.I.TileAddedDeleted);
-
+			// extra
 			//foreach (Tile tile in Gnd.I.ActiveTiles.Tiles)
-			//tokens.Add(tile.L + "_" + tile.B);
+			//tokens.Add(tile.X + "_" + tile.Y);
 
+			tokens.Add("" + DrawTileWHCounter); // extra
 
 			string text = string.Join(", ", tokens);
 
 			if (this.Status.Text != text)
 				this.Status.Text = text;
 		}
+
+		private KeyCounter DrawTileWHCounter = new KeyCounter(); // extra
 	}
 }
