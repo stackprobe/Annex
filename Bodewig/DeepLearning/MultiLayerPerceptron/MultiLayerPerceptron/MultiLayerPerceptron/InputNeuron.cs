@@ -7,11 +7,9 @@ namespace Charlotte.MultiLayerPerceptron
 {
 	public class InputNeuron : Neuron
 	{
-		public double Value;
-
-		public override double GetOutput()
+		public override void Fire()
 		{
-			return this.Value;
+			this.Output = this.Input.Value;
 		}
 	}
 }

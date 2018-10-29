@@ -7,11 +7,10 @@ namespace Charlotte.MultiLayerPerceptron
 {
 	public class BiasNeuron : Neuron
 	{
-		public static BiasNeuron I = new BiasNeuron();
-
-		public override double GetOutput()
+		public override void Fire()
 		{
-			return 1.0;
+			this.Input = 0.0;
+			this.Output = 1.0;
 		}
 	}
 }

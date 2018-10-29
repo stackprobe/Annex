@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Charlotte.Tools;
 
 namespace Charlotte.MultiLayerPerceptron
 {
@@ -22,17 +23,10 @@ namespace Charlotte.MultiLayerPerceptron
 
 		public void Connect(Layer next)
 		{
+			this.Neurons.Add(new BiasNeuron());
+
 			foreach (Neuron n in next.Neurons)
 			{
-				{
-					Axon axon = new Axon();
-
-					axon.Prev = BiasNeuron.I;
-					axon.Next = n;
-
-					n.Prevs.Add(axon);
-				}
-
 				foreach (Neuron c in this.Neurons)
 				{
 					Axon axon = new Axon();
@@ -43,6 +37,41 @@ namespace Charlotte.MultiLayerPerceptron
 					c.Nexts.Add(axon);
 					n.Prevs.Add(axon);
 				}
+			}
+		}
+
+		public void RandomizePrevs()
+		{
+			foreach (Neuron n in this.Neurons)
+			{
+				foreach (Axon prev in n.Prevs)
+				{
+					prev.Weight = SecurityTools.CRandom.GetUInt() * 2.0 / uint.MaxValue - 1.0; // -1.0 ～ 1.0
+				}
+			}
+		}
+
+		public void Clear()
+		{
+			foreach (Neuron n in this.Neurons)
+			{
+				n.Clear();
+			}
+		}
+
+		public void Fire()
+		{
+			foreach (Neuron n in this.Neurons)
+			{
+				n.Fire();
+			}
+		}
+
+		public IEnumerable<string> ToStrings()
+		{
+			foreach (Neuron n in this.Neurons)
+			{
+				yield return n.ToString();
 			}
 		}
 	}

@@ -15,5 +15,10 @@ namespace Charlotte.MultiLayerPerceptron
 		public double Weight = 0.1;
 
 		// <---- prop
+
+		public double GetOutput()
+		{
+			return this.Prev.Output.Value * this.Weight;
+		}
 	}
 }

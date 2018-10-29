@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MultiLayerPerceptron\ActivationFunction.cs" />
     <Compile Include="MultiLayerPerceptron\Axon.cs" />
     <Compile Include="MultiLayerPerceptron\BiasNeuron.cs" />
     <Compile Include="MultiLayerPerceptron\Neuron.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="MultiLayerPerceptron\MultiLayer.cs" />
     <Compile Include="MultiLayerPerceptron\HiddenNeuron.cs" />
     <Compile Include="MultiLayerPerceptron\OutputNeuron.cs" />
+    <Compile Include="MultiLayerPerceptron\Utils\CommonUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

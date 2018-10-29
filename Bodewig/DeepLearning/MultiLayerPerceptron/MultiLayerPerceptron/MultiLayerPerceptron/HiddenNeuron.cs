@@ -7,9 +7,16 @@ namespace Charlotte.MultiLayerPerceptron
 {
 	public class HiddenNeuron : Neuron
 	{
-		public override double GetOutput()
+		public override void Fire()
 		{
-			throw null; // TODO
+			double value = 0.0;
+
+			foreach (Axon prev in this.Prevs)
+			{
+				value += prev.GetOutput();
+			}
+			this.Input = value;
+			this.Output = ActivationFunction.GetOutput(value);
 		}
 	}
 }
