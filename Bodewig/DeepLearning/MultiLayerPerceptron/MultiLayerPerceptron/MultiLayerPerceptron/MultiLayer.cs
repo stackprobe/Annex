@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Charlotte.Tools;
 
 namespace Charlotte.MultiLayerPerceptron
 {
@@ -11,15 +12,21 @@ namespace Charlotte.MultiLayerPerceptron
 		public List<Layer> Layers = new List<Layer>();
 		public Layer OutputLayer;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="inputCount">1以上</param>
+		/// <param name="outputCount">1以上</param>
+		/// <param name="counts">1つ以上、各要素は1以上</param>
 		public MultiLayer(int inputCount, int outputCount, int[] counts)
 		{
-			this.InputLayer = new Layer(this, inputCount, () => new InputNeuron());
+			this.InputLayer = new Layer(this, -1, inputCount, () => new InputNeuron());
 
 			for (int index = 0; index < counts.Length; index++)
 			{
-				this.Layers.Add(new Layer(this, counts[index], () => new HiddenNeuron()));
+				this.Layers.Add(new Layer(this, index, counts[index], () => new HiddenNeuron()));
 			}
-			this.OutputLayer = new Layer(this, outputCount, () => new OutputNeuron());
+			this.OutputLayer = new Layer(this, counts.Length, outputCount, () => new OutputNeuron());
 
 			// ----
 
@@ -99,6 +106,64 @@ namespace Charlotte.MultiLayerPerceptron
 
 					yield return "}";
 				}
+			}
+		}
+
+		public void Learn(double[] inputs, double[] correctOutputs)
+		{
+			this.Clear();
+			this.SetInputs(inputs);
+			this.Fire();
+
+			double[] outputs = this.GetOutputs();
+
+			foreach (Layer[] layers in new Layer[][]
+			{
+				this.Layers.ToArray(),
+				new Layer[] { this.OutputLayer},
+			})
+			{
+				foreach (Layer layer in layers)
+				{
+					foreach (Neuron n in layer.Neurons)
+					{
+						foreach (Axon a in n.Prevs)
+						{
+							double w = a.Weight;
+
+							for (int index = 0; index < correctOutputs.Length; index++)
+							{
+								double d = outputs[index] - correctOutputs[index];
+								d *= d;
+								d *= a.GetDifferentialCoefficient_Weight_Output(this.OutputLayer.Neurons[index]);
+								d *= 0.000001; // 学習係数
+
+								if (double.IsNaN(d))
+									throw null;
+
+								w -= d;
+							}
+							if (w < -9.0 || 9.0 < w) // zantei ?????????
+							{
+								Console.WriteLine("!!!!");
+								w = SecurityTools.CRandom.GetReal() * 0.2 - 0.1;
+							}
+							a.WeightNew = w;
+						}
+					}
+				}
+			}
+
+			foreach (Layer[] layers in new Layer[][]
+			{
+				this.Layers.ToArray(),
+				new Layer[] { this.OutputLayer},
+			})
+			{
+				foreach (Layer layer in layers)
+					foreach (Neuron n in layer.Neurons)
+						foreach (Axon a in n.Prevs)
+							a.Weight = a.WeightNew;
 			}
 		}
 	}

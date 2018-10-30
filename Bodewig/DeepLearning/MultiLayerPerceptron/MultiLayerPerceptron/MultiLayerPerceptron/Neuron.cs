@@ -32,5 +32,10 @@ namespace Charlotte.MultiLayerPerceptron
 				" => " +
 				CommonUtils.ToString(this.Output, dummy => CommonUtils.PutSign(this.Output.Value.ToString("F9")));
 		}
+
+		public double DifferentialCoefficient_Input = double.NaN;
+		public double DifferentialCoefficient_Output = double.NaN;
+
+		public abstract double GetDifferentialCoefficient();
 	}
 }

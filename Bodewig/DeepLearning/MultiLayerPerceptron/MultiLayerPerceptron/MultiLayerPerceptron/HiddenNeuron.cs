@@ -18,5 +18,10 @@ namespace Charlotte.MultiLayerPerceptron
 			this.Input = value;
 			this.Output = ActivationFunction.GetOutput(value);
 		}
+
+		public override double GetDifferentialCoefficient()
+		{
+			return ActivationFunction.GetDifferentialCoefficient(this.Input.Value);
+		}
 	}
 }

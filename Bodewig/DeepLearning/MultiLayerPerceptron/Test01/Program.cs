@@ -25,7 +25,11 @@ namespace Charlotte
 			//new MultiLayerTest().Test01();
 			//new MultiLayerTest().Test02();
 			//new Test0001().Test01();
-			new Test0001().Test02();
+			//new Test0001().Test02();
+			//new Test0002().Test01();
+			//new Test0002().Test01b();
+			//new Test0003().Test01();
+			new Test0003().Test02();
 		}
 	}
 }
