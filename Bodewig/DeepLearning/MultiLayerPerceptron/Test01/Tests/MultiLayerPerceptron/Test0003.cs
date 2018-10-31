@@ -73,14 +73,19 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 
 		public void Test02()
 		{
-			MultiLayer ml = new MultiLayer(3, 1, new int[] { 3, 3, 3 });
+			//MultiLayer ml = new MultiLayer(3, 1, new int[] { 3, 3, 3 });
+			MultiLayer ml = new MultiLayer(3, 1, new int[] { 8, 8, 8, 8, 8, 8, 8, 8 });
 
-			for (int c = 0; c < 1000000; c++)
+		restart:
+			//for (int c = 0; c < 1000000; c++)
+			//for (int c = 0; c < 100000; c++)
+			//for (int c = 0; c < 10000; c++)
+			for (int c = 0; c < 1000; c++)
 			{
 				//foreach (string line in ml.ToStrings())
 				//Console.WriteLine(line);
 
-				Console.WriteLine("Learn " + c);
+				//Console.WriteLine("Learn " + c);
 
 
 				int v = SecurityTools.CRandom.GetInt(8);
@@ -91,9 +96,9 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 					ml.Learn(
 						new double[]
 						{
-							(v & 0x01) == 0 ? 0.0: 1.0,
-							(v & 0x02) == 0 ? 0.0 : 1.0,
-							(v & 0x04) == 0 ? 0.0 : 1.0,
+							(v & 0x01) == 0 ? 0.001 : 1.0,
+							(v & 0x02) == 0 ? 0.001 : 1.0,
+							(v & 0x04) == 0 ? 0.001 : 1.0,
 						},
 						new double[]
 						{
@@ -109,9 +114,49 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 				}
 			}
 
-			for (int c = 0; c < 30; c++)
+#if true
+			double[] rets = new double[8];
+			double ret_min = double.MaxValue;
+			double ret_max = double.MinValue;
+
+			for (int c = 0; c < 8; c++)
 			{
-				int v = SecurityTools.CRandom.GetInt(8);
+				int v = c;
+				int m = v % 3;
+
+				ml.Clear();
+				ml.SetInputs(new double[]
+				{
+					(v & 0x01) == 0 ? 0.001 : 1.0,
+					(v & 0x02) == 0 ? 0.001 : 1.0,
+					(v & 0x04) == 0 ? 0.001 : 1.0,
+				});
+
+				ml.Fire();
+
+				double ret = ml.GetOutputs()[0];
+
+				rets[c] = ret;
+				ret_min = Math.Min(ret_min, ret);
+				ret_max = Math.Max(ret_max, ret);
+			}
+			for (int c = 0; c < 8; c++)
+			{
+				int v = c;
+				int m = v % 3;
+
+				double ret = rets[c];
+
+				ret -= ret_min;
+				//ret *= 1.0;
+				ret /= ret_max - ret_min;
+
+				Console.WriteLine(v + ", " + m + ", " + ret.ToString("F3"));
+			}
+#else // old
+			for (int c = 0; c < 8; c++)
+			{
+				int v = c;//SecurityTools.CRandom.GetInt(8);
 				int m = v % 3;
 
 				ml.Clear();
@@ -128,6 +173,8 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 
 				Console.WriteLine(v + ", " + m + ", " + ret[0]);
 			}
+#endif
+			goto restart;
 		}
 	}
 }

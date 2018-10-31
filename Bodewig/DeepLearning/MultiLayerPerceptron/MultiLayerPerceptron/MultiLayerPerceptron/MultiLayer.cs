@@ -143,11 +143,6 @@ namespace Charlotte.MultiLayerPerceptron
 
 								w -= d;
 							}
-							if (w < -9.0 || 9.0 < w) // zantei ?????????
-							{
-								Console.WriteLine("!!!!");
-								w = SecurityTools.CRandom.GetReal() * 0.2 - 0.1;
-							}
 							a.WeightNew = w;
 						}
 					}
@@ -164,6 +159,19 @@ namespace Charlotte.MultiLayerPerceptron
 					foreach (Neuron n in layer.Neurons)
 						foreach (Axon a in n.Prevs)
 							a.Weight = a.WeightNew;
+			}
+
+			foreach (Layer[] layers in new Layer[][]
+			{
+				this.Layers.ToArray(),
+				new Layer[] { this.OutputLayer},
+			})
+			{
+				foreach (Layer layer in layers)
+					foreach (Neuron n in layer.Neurons)
+						if (ArrayTools.Contains(n.Prevs.ToArray(), a => a.Weight < -9.0 || 9.0 < a.Weight))
+							foreach (Axon a in n.Prevs)
+								a.Weight /= 10.0;
 			}
 		}
 	}
