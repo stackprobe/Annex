@@ -109,7 +109,7 @@ namespace Charlotte.MultiLayerPerceptron
 			}
 		}
 
-		public void Learn(double[] inputs, double[] correctOutputs)
+		public void Train(double[] inputs, double[] correctOutputs)
 		{
 			this.Clear();
 			this.SetInputs(inputs);
@@ -134,9 +134,8 @@ namespace Charlotte.MultiLayerPerceptron
 							for (int index = 0; index < correctOutputs.Length; index++)
 							{
 								double d = outputs[index] - correctOutputs[index];
-								d *= d;
 								d *= a.GetDifferentialCoefficient_Weight_Output(this.OutputLayer.Neurons[index]);
-								d *= 0.000001; // 学習係数
+								d *= 0.001; // 学習係数
 
 								if (double.IsNaN(d))
 									throw null;

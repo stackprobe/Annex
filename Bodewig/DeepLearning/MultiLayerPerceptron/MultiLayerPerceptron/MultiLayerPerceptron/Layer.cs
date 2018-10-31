@@ -46,11 +46,29 @@ namespace Charlotte.MultiLayerPerceptron
 		{
 			foreach (Neuron n in this.Neurons)
 			{
+#if true
+				double wt = 0.0;
+
+				for (int index = 0; index < n.Prevs.Count; index++)
+				{
+					if (index + 1 < n.Prevs.Count)
+					{
+						double w = SecurityTools.CRandom.GetReal() * 0.2 - 0.1; // -0.1 ～ 0.1
+						wt += w;
+						n.Prevs[index].Weight = w; // not Bios
+					}
+					else
+					{
+						n.Prevs[index].Weight = wt; // Bios
+					}
+				}
+#else // old ???
 				foreach (Axon prev in n.Prevs)
 				{
 					prev.Weight = SecurityTools.CRandom.GetReal() * 0.2 - 0.1; // -0.1 ～ 0.1
 					//prev.Weight = SecurityTools.CRandom.GetUInt() * 2.0 / uint.MaxValue - 1.0; // -1.0 ～ 1.0
 				}
+#endif
 			}
 		}
 
