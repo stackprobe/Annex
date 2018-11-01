@@ -135,7 +135,7 @@ namespace Charlotte.MultiLayerPerceptron
 							{
 								double d = outputs[index] - correctOutputs[index];
 								d *= a.GetDifferentialCoefficient_Weight_Output(this.OutputLayer.Neurons[index]);
-								d *= 0.001; // 学習係数
+								d *= 0.1; // 学習係数
 
 								if (double.IsNaN(d))
 									throw null;

@@ -75,13 +75,15 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 		{
 			//MultiLayer ml = new MultiLayer(3, 1, new int[] { 3, 3, 3 });
 			//MultiLayer ml = new MultiLayer(3, 1, new int[] { 8, 8, 8, 8, 8, 8, 8, 8 });
-			MultiLayer ml = new MultiLayer(3, 1, new int[] { 2, 2 });
+			//MultiLayer ml = new MultiLayer(3, 1, new int[] { 2, 2 });
+			//MultiLayer ml = new MultiLayer(3, 1, new int[] { 4, 4 });
+			MultiLayer ml = new MultiLayer(3, 1, new int[] { 4, 4, 4, 4 });
 
 		restart:
 			//for (int c = 0; c < 1000000; c++)
-			for (int c = 0; c < 100000; c++)
+			//for (int c = 0; c < 100000; c++)
 			//for (int c = 0; c < 10000; c++)
-			//for (int c = 0; c < 1000; c++)
+			for (int c = 0; c < 1000; c++)
 			//for (int c = 0; c < 100; c++)
 			{
 				//foreach (string line in ml.ToStrings())
@@ -153,7 +155,7 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 				//ret *= 1.0;
 				ret /= ret_max - ret_min;
 
-				Console.WriteLine(v + ", " + m + ", " + ret.ToString("F9"));
+				Console.WriteLine(v + ", " + m + ", " + ret.ToString("F3") + ", " + rets[c].ToString("F9"));
 			}
 #else // old
 			for (int c = 0; c < 8; c++)
