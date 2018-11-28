@@ -16,7 +16,7 @@ static void WrPlain(char *rFile)
 
 	for(index = 0; index < getSize(fileData); index++)
 	{
-		b(fileData)[index] ^= b(mask)[index % getSize(mask)];
+		b_(fileData)[index] ^= b_(mask)[index % getSize(mask)];
 	}
 	writeBinary_cx(wFile, fileData);
 	memFree(mask);
