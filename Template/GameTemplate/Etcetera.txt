@@ -1,2 +1,2 @@
 Etcetera\DatStrings.txt
-Etcetera\JChar.bin
+C:\Dat\JChar.bin
