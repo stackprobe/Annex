@@ -2,9 +2,6 @@
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 template <class Element_t>
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 class autoList
 {
 private:
@@ -383,9 +380,6 @@ public:
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 template <class Element_t>
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 void releaseList(autoList<Element_t> *list, void (*func)(Element_t e))
 {
 	errorCase(!func);

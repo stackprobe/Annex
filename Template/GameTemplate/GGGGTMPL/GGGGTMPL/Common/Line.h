@@ -1,6 +1,24 @@
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
+#define m_isEmpty(line) \
+	(!(line) || !*(line))
+
+#define isMbc1(c) ( \
+	'\x81' <= (c) && (c) <= '\x9f' || \
+	'\xe0' <= (c) && (c) <= '\xfc')
+
+#define isMbc(p) \
+	(isMbc1((p)[0]) && (p)[1])
+//	(_ismbblead((p)[0]) && (p)[1])
+//	(_ismbblead((p)[0]) && _ismbbtrail((p)[1]))
+
+#define mbsNext(p) \
+	(p + (isMbc(p) ? 2 : 1))
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 char *xcout(char *format, ...);
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -31,13 +49,6 @@ int atoi_x(char *line);
 */
 __int64 atoi64_x(char *line);
 
-#define isMbc(p) \
-	(_ismbblead((p)[0]) && (p)[1])
-//	(_ismbblead((p)[0]) && _ismbbtrail((p)[1]))
-
-#define mbsNext(p) \
-	(p + (isMbc(p) ? 2 : 1))
-
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
@@ -50,11 +61,11 @@ void replaceChar(char *str, int srcChr, int destChr);
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *replace(char *str, char *srcPtn, char *destPtn);
+char *replaceLine(char *str, char *srcPtn, char *destPtn, int ignoreCase = 0);
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *replaceLoop(char *str, char *srcPtn, char *destPtn, int max);
+char *replaceLineLoop(char *str, char *srcPtn, char *destPtn, int ignoreCase = 0, int loopMax = 20);
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

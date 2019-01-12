@@ -117,7 +117,7 @@ void replaceChar(char *str, int srcChr, int destChr) // mbs_
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *replace(char *str, char *srcPtn, char *destPtn) // ret: strr()
+char *replaceLine(char *str, char *srcPtn, char *destPtn, int ignoreCase) // ret: strr()
 {
 	autoList<char> *buff = new autoList<char>();
 	int srcPtnLen = strlen(srcPtn);
@@ -128,7 +128,7 @@ char *replace(char *str, char *srcPtn, char *destPtn) // ret: strr()
 
 	for(char *p = str; *p; )
 	{
-		if(!strncmp(p, srcPtn, srcPtnLen))
+		if((ignoreCase ? _strnicmp : strncmp)(p, srcPtn, srcPtnLen) == 0)
 		{
 			buff->AddElements(destPtn, destPtnLen);
 			ReplacedFlag = 1;
@@ -150,11 +150,11 @@ char *replace(char *str, char *srcPtn, char *destPtn) // ret: strr()
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *replaceLoop(char *str, char *srcPtn, char *destPtn, int max) // ret: strr()
+char *replaceLineLoop(char *str, char *srcPtn, char *destPtn, int ignoreCase, int loopMax) // ret: strr()
 {
-	for(int c = 0; c < max; c++)
+	for(int c = 0; c < loopMax; c++)
 	{
-		str = replace(str, srcPtn, destPtn);
+		str = replaceLine(str, srcPtn, destPtn, ignoreCase);
 
 		if(!ReplacedFlag)
 			break;
@@ -170,7 +170,7 @@ char *combine(char *path1, char *path2)
 	char *path = xcout("%s\\%s", path1, path2);
 
 	replaceChar(path, '\\', '/');
-	path = replaceLoop(path, "//", "/", 10);
+	path = replaceLineLoop(path, "//", "/");
 	replaceChar(path, '/', '\\');
 
 	return path;

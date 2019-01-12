@@ -43,56 +43,6 @@ int isPound(int counter)
 {
 	return (counter) == 1 || POUND_FIRST_DELAY < (counter) && ((counter) - POUND_FIRST_DELAY) % POUND_DELAY == 1;
 }
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-autoList<char *> *tokenize(char *line, char *delimiters)
-{
-	autoList<char *> *tokens = new autoList<char *>();
-	autoList<char> *token = new autoList<char>();
-
-	for(char *p = line; *p; p++)
-	{
-		char *d;
-
-		for(d = delimiters; *d; d++)
-			if(*d == *p)
-				break;
-
-		if(*d)
-		{
-			token->AddElement('\0');
-			tokens->AddElement(token->UnbindBuffer());
-		}
-		else
-			token->AddElement(*p);
-	}
-	token->AddElement('\0');
-	tokens->AddElement(token->UnbindBuffer());
-
-	delete token;
-	return tokens;
-}
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-char *untokenize(autoList<char *> *tokens, char *separator)
-{
-	autoList<char> *buffer = new autoList<char>();
-
-	for(int index = 0; index < tokens->GetCount(); index++)
-	{
-		if(index)
-			buffer->AddElements(separator, strlen(separator));
-
-		char *token = tokens->GetElement(index);
-		buffer->AddElements(token, strlen(token));
-	}
-	buffer->AddElement('\0');
-	char *ret = buffer->UnbindBuffer();
-	delete buffer;
-	return ret;
-}
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -167,21 +117,6 @@ d2D_t makeD2D(double x, double y)
 	pos.Y = y;
 
 	return pos;
-}
-
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-bitList *createBitList(void)
-{
-	return new bitList();
-}
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-void releaseBitList(bitList *bl)
-{
-	delete bl;
 }
 
 /*

@@ -22,9 +22,6 @@ autoList<uchar> *LoadFileDataFromCluster(char *clusterFile, int resId, int tweek
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 template <class Handle_t>
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 class resCluster
 {
 private:

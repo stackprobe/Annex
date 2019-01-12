@@ -97,9 +97,6 @@ public:
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 template <class Param_t>
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 void AddTask(taskList *tl, int topMode, int (*tf)(Param_t *), Param_t *tp = NULL, void (*tr)(Param_t *) = NULL)
 {
 	errorCase(!tl);

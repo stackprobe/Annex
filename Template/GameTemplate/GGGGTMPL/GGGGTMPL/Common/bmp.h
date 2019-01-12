@@ -27,6 +27,3 @@ void writeBmpFile_cx(char *file, autoTable<uint> *bmp);
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 void writeBmpFile_xx(char *file, autoTable<uint> *bmp);
-
-#define m_bmpColor(r, g, b) \
-	((r) * 65536 + (g) * 256 + (b))

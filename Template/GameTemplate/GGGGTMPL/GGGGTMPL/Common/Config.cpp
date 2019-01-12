@@ -1,13 +1,7 @@
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 #include "all.h"
 
-// Conf_* >
+// app > @ Conf_
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 /*
 	-1 == デフォルト
 	0  == 最初のモニタ
@@ -17,11 +11,8 @@
 */
 int Conf_DisplayIndex = 1;
 
-// < Conf_*
+// < app
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 void ImportConfig(void)
 {
 	char *confFile = "Config.conf";
@@ -31,11 +22,11 @@ void ImportConfig(void)
 		autoList<uchar> *fileData = readFile(confFile);
 		int rIndex = 0;
 
-		// Conf_* >
+		// app > @ LOAD Conf_
 
 		Conf_DisplayIndex = atoi_x(neReadCfgLine(fileData, rIndex));
 
-		// < Conf_*
+		// < app
 
 		{
 			char *line = neReadCfgLine(fileData, rIndex);
@@ -45,9 +36,6 @@ void ImportConfig(void)
 		}
 	}
 }
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 char *neReadCfgLine(autoList<uchar> *fileData, int &rIndex)
 {
 	for(; ; )

@@ -7,9 +7,6 @@
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 template <class Element_t>
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 class autoQueue
 {
 private:
@@ -103,9 +100,6 @@ public:
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 template <class Element_t>
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 void releaseQueue(autoQueue<Element_t> *queue, void (*func)(Element_t e))
 {
 	errorCase(!queue);
