@@ -1,3 +1,6 @@
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #include "all.h"
 
 // app > @ Conf_
@@ -13,6 +16,9 @@ int Conf_DisplayIndex = 1;
 
 // < app
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 void ImportConfig(void)
 {
 	char *confFile = "Config.conf";
@@ -36,6 +42,9 @@ void ImportConfig(void)
 		}
 	}
 }
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 char *neReadCfgLine(autoList<uchar> *fileData, int &rIndex)
 {
 	for(; ; )

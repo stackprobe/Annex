@@ -1,8 +1,8 @@
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-autoList<char *> *tokenize(char *line, char *delimiters);
+int isFilled(void *block, int fillValue, int size);
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *untokenize(autoList<char *> *tokens, char *separator);
+int isSame(autoList<uchar> *binData1, autoList<uchar> *binData2);

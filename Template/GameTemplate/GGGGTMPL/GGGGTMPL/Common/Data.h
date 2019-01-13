@@ -1,6 +1,37 @@
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
+template <class Value_t>
+void swap(Value_t *a, Value_t *b, int size)
+{
+	Value_t *tmp = na(Value_t, size);
+
+	memcpy(tmp, a, size);
+	memcpy(a, b, size);
+	memcpy(b, tmp, size);
+
+	memFree(tmp);
+}
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+template <class Value_t>
+void swap(Value_t &a, Value_t &b)
+{
+	Value_t tmp = a;
+	a = b;
+	b = tmp;
+}
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void swapBlock(void *a, void *b, int size);
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 int d2i(double value);
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -10,21 +41,6 @@ int s2i(char *line, int minval, int maxval, int defval);
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 int s2i_x(char *line, int minval, int maxval, int defval);
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-int isPound(int counter);
-
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-template <class Var_t>
-void t_swap(Var_t &a, Var_t &b)
-{
-	Var_t tmp = a;
-	a = b;
-	b = tmp;
-}
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -68,14 +84,6 @@ d2D_t makeD2D(double x, double y);
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 void my_memset(void *block, int fillValue, int size);
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-int isfilled(void *block, int fillValue, int size);
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-int isSame(autoList<uchar> *binData1, autoList<uchar> *binData2);
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -92,7 +100,7 @@ void zeroclear(Var_t *var, int num = 1)
 template <class Var_t>
 int isallzero(Var_t *var, int num = 1)
 {
-	return isfilled(var, 0x00, num * sizeof(Var_t));
+	return isFilled(var, 0x00, num * sizeof(Var_t));
 }
 
 /*
