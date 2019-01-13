@@ -977,9 +977,6 @@ FUNC_STATIC void rijndaelEncrypt(const u32 rk[/*4*(Nr + 1)*/], int Nr, const u8 
     int r;
 #endif /* ?FULL_UNROLL */
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * map byte array block to cipher state
 	 * and add initial round key:
@@ -1060,9 +1057,6 @@ FUNC_STATIC void rijndaelEncrypt(const u32 rk[/*4*(Nr + 1)*/], int Nr, const u8 
     }
     rk += Nr << 2;
 #else  /* !FULL_UNROLL */
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * Nr - 1 full rounds:
 	 */
@@ -1124,9 +1118,6 @@ FUNC_STATIC void rijndaelEncrypt(const u32 rk[/*4*(Nr + 1)*/], int Nr, const u8 
             rk[3];
     }
 #endif /* ?FULL_UNROLL */
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * apply last round and
 	 * map cipher state to byte array block:
@@ -1170,9 +1161,6 @@ FUNC_STATIC void rijndaelDecrypt(const u32 rk[/*4*(Nr + 1)*/], int Nr, const u8 
     int r;
 #endif /* ?FULL_UNROLL */
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * map byte array block to cipher state
 	 * and add initial round key:
@@ -1253,9 +1241,6 @@ FUNC_STATIC void rijndaelDecrypt(const u32 rk[/*4*(Nr + 1)*/], int Nr, const u8 
     }
 	rk += Nr << 2;
 #else  /* !FULL_UNROLL */
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
      * Nr - 1 full rounds:
      */
@@ -1317,9 +1302,6 @@ FUNC_STATIC void rijndaelDecrypt(const u32 rk[/*4*(Nr + 1)*/], int Nr, const u8 
             rk[3];
     }
 #endif /* ?FULL_UNROLL */
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * apply last round and
 	 * map cipher state to byte array block:
@@ -1363,9 +1345,6 @@ void rijndaelEncryptRound(const u32 rk[/*4*(Nr + 1)*/], int Nr, u8 block[16], in
 	int r;
 	u32 s0, s1, s2, s3, t0, t1, t2, t3;
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * map byte array block to cipher state
 	 * and add initial round key:
@@ -1376,9 +1355,6 @@ void rijndaelEncryptRound(const u32 rk[/*4*(Nr + 1)*/], int Nr, u8 block[16], in
 	s3 = GETU32(block + 12) ^ rk[3];
     rk += 4;
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * Nr - 1 full rounds:
 	 */
@@ -1416,9 +1392,6 @@ void rijndaelEncryptRound(const u32 rk[/*4*(Nr + 1)*/], int Nr, u8 block[16], in
 
     }
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * apply last round and
 	 * map cipher state to byte array block:
@@ -1468,9 +1441,6 @@ void rijndaelDecryptRound(const u32 rk[/*4*(Nr + 1)*/], int Nr, u8 block[16], in
 	int r;
 	u32 s0, s1, s2, s3, t0, t1, t2, t3;
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * map byte array block to cipher state
 	 * and add initial round key:
@@ -1481,9 +1451,6 @@ void rijndaelDecryptRound(const u32 rk[/*4*(Nr + 1)*/], int Nr, u8 block[16], in
 	s3 = GETU32(block + 12) ^ rk[3];
     rk += 4;
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * Nr - 1 full rounds:
 	 */
@@ -1521,9 +1488,6 @@ void rijndaelDecryptRound(const u32 rk[/*4*(Nr + 1)*/], int Nr, u8 block[16], in
 
     }
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
     /*
 	 * complete the last round and
 	 * map cipher state to byte array block:
@@ -1630,7 +1594,13 @@ FUNC_STATIC void AES128_Decrypt_rcbc(void *block, int size)
 
 	// < app
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < 2; index++)
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int n = 0; n < 8; n++)
 	{
 		rawKey[index * 8 + n] = rk[index] >> n * 8 & 0xff;
@@ -1639,6 +1609,9 @@ FUNC_STATIC void AES128_Decrypt_rcbc(void *block, int size)
 
 #if LOG_ENABLED
 	LOG("rawKey: ");
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < 16; index++)
 	{
 		LOG("%02x", rawKey[index]);
@@ -1649,6 +1622,9 @@ FUNC_STATIC void AES128_Decrypt_rcbc(void *block, int size)
 	rijndaelKeySetupDec(ctx, rawKey, 128);
 	memset(&rawKey, 0x00, 16);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = size - 16; 16 <= index; index -= 16)
 	{
 		rijndaelDecrypt(ctx, 10, (uchar *)block + index, (uchar *)block + index);
@@ -1679,6 +1655,9 @@ int aes128_decrypt_extend(void *block, int &size, int tweek) // ret: ? 成功
 	size -= 16;
 	autoList<uchar> *hash = sha512_block((uchar *)block, size);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(memcmp((uchar *)block + size, hash->ElementAt(0), 16) != 0) // ? ハッシュ不一致
 	{
 		delete hash;
@@ -1688,6 +1667,9 @@ int aes128_decrypt_extend(void *block, int &size, int tweek) // ret: ? 成功
 	delete hash;
 	int padSize = ((uchar *)block)[size - 1];
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!m_isRange(padSize, 1, 16)) // ? 不正なパディング (規定のサイズではない)
 	{
 		LOGPOS();
@@ -1695,6 +1677,9 @@ int aes128_decrypt_extend(void *block, int &size, int tweek) // ret: ? 成功
 	}
 	size -= padSize + 4;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(size < 0) // ? 不正なパディング (ブロックサイズより大きい)
 	{
 		LOGPOS();
@@ -1706,6 +1691,9 @@ int aes128_decrypt_extend(void *block, int &size, int tweek) // ret: ? 成功
 		((uchar *)block)[size + 2] << 8 * 2 |
 		((uchar *)block)[size + 3] << 8 * 3;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(tweek != gotTweek) // ? リソース番号の不一致
 	{
 		LOGPOS();

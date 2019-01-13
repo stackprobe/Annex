@@ -13,6 +13,9 @@ static oneObject(autoQueue<SEInfo_t *>, new autoQueue<SEInfo_t *>(), GetPlayList
 */
 static void UpdateSEVolumeFunc(SEInfo_t *i)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < SE_HANDLE_MAX; index++)
 	{
 		SetVolume(i->HandleList[index], MixVolume(Gnd.SEVolume, i->Volume));
@@ -27,12 +30,18 @@ static SEInfo_t *LoadSE(autoList<uchar> *fileData)
 
 	i->HandleList[0] = LoadSound(fileData);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 1; index < SE_HANDLE_MAX; index++)
 	{
 		i->HandleList[index] = DuplSound(i->HandleList[0]);
 	}
 	i->Volume = 0.5; // 個別の音量のデフォルト 0.0 - 1.0
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	switch(RC_ResId) // seId
 	{
 	// app > @ post LoadSound
@@ -59,6 +68,9 @@ static void UnloadSE(SEInfo_t *i)
 {
 	GetPlayList()->Clear();
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < SE_HANDLE_MAX; index++)
 	{
 		UnloadSound(i->HandleList[index]);
@@ -81,6 +93,9 @@ int SEEachFrame(void) // ret: 効果音を処理した。
 {
 	SEInfo_t *i = GetPlayList()->Dequeue(NULL);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i)
 	{
 		switch(i->AlterCommand)
@@ -114,6 +129,9 @@ void SEPlay(int seId)
 	SEInfo_t *i = GetSERes()->GetHandle(seId);
 	int count = 0;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = GetPlayList()->GetTopIndex_DIRECT(); index < GetPlayList()->GetList_DIRECT()->GetCount(); index++)
 		if(GetPlayList()->GetList_DIRECT()->GetElement(index) == i && 2 <= ++count)
 			return;

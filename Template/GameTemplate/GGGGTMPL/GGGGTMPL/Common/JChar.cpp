@@ -15,6 +15,9 @@ static bitList *GetBitList(void)
 {
 	static bitList *list;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!list)
 	{
 		autoList<uchar> *fileData = GetEtcRes()->GetHandle(ETC_JCHAR);
@@ -53,9 +56,15 @@ int isJChar(int chr)
 */
 int isJChar(char *pChr) // ret: 0 == not JChar, 1-2 == ÉoÉCÉgêî
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(isJChar(*pChr))
 		return 1;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(*pChr && isJChar(*pChr << 8 | pChr[1]))
 		return 2;
 

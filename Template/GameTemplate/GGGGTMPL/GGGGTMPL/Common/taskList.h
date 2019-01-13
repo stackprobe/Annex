@@ -24,34 +24,55 @@ private:
 	int LastFrame;
 
 public:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	taskList()
 	{
 		this->List = new autoList<taskInfo_t>();
 		this->LastFrame = -1;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	taskList(const taskList &source)
 	{
 		error();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	~taskList()
 	{
 		this->Clear();
 		delete this->List;
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int GetCount()
 	{
 		return this->List->GetCount();
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void AddTask(taskInfo_t ti)
 	{
 		this->List->AddElement(ti);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void AddTopTask(taskInfo_t ti)
 	{
 		this->List->InsertElement(0, ti);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void ExecuteAllTask(int oncePerFrame = 1)
 	{
 		if(oncePerFrame)
@@ -81,6 +102,9 @@ public:
 		if(dead)
 			this->List->MultiDiscard(IsDeadTaskInfo);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Clear()
 	{
 		while(this->List->GetCount())
@@ -108,6 +132,9 @@ void AddTask(taskList *tl, int topMode, int (*tf)(Param_t *), Param_t *tp = NULL
 	ti.Param = (void *)tp;
 	ti.ReleaseParam = (void (*)(void *))tr;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(topMode)
 		tl->AddTopTask(ti);
 	else

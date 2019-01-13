@@ -85,9 +85,9 @@ static void ResetBlend(void)
 */
 static void SetBright(double cR, double cG, double cB) // (cR, cG, cB): 0.0 - 1.0 == ˆÃ`–¾
 {
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	/*
 		0 - 255 ‚ÆŠÔˆá‚¦‚Ä‚¢‚é etc.
 	*/
@@ -121,26 +121,44 @@ static void ResetBright(void)
 */
 static int DrawPicFunc(Param_t *i)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.PicRes)
 	{
 		SetPicRes(i->Extra.PicRes);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.AlphaOn)
 	{
 		SetBlend(DX_BLENDMODE_ALPHA, i->Extra.A);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	else if(i->Extra.BlendAddOn)
 	{
 		SetBlend(DX_BLENDMODE_ADD, i->Extra.A);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	else if(i->Extra.BlendInvOn)
 	{
 		SetBlend(DX_BLENDMODE_INVSRC, 1.0);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.MosaicOn)
 	{
 		SetDrawMode(DX_DRAWMODE_NEAREST);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.BrightOn)
 	{
 		SetBright(i->Extra.R, i->Extra.G, i->Extra.B);
@@ -148,11 +166,17 @@ static int DrawPicFunc(Param_t *i)
 
 	int grphHdl;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.GraphicHandleFlag)
 		grphHdl = i->PicId;
 	else
 		grphHdl = Pic(i->PicId);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	switch(i->Layout->Mode)
 	{
 	case 'F':
@@ -288,18 +312,30 @@ static int DrawPicFunc(Param_t *i)
 		error();
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.PicRes)
 	{
 		ResetPicRes();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.AlphaOn || i->Extra.BlendAddOn || i->Extra.BlendInvOn)
 	{
 		ResetBlend();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.MosaicOn)
 	{
 		SetDrawMode(DX_DRAWMODE_BILINEAR);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.BrightOn)
 	{
 		ResetBright();
@@ -326,6 +362,9 @@ static void DrawPic(int picId, Layout_t *layout_bind)
 	i->Layout = layout_bind;
 	i->Extra = DPE;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!i->Extra.TL)
 	{
 		DrawPicFunc(i);
@@ -445,6 +484,9 @@ void DrawBegin(int picId, double x, double y)
 	double w;
 	double h;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(DPE.GraphicHandleFlag)
 	{
 		w = DPE.GraphicSize.X;

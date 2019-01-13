@@ -11,6 +11,9 @@ autoList<char *> *tokenize(char *line, char *delimiters)
 	autoList<char *> *tokens = new autoList<char *>();
 	autoList<char> *token = new autoList<char>();
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(char *p = line; *p; p++)
 	{
 		char *d;
@@ -40,6 +43,9 @@ char *untokenize(autoList<char *> *tokens, char *separator)
 {
 	autoList<char> *buffer = new autoList<char>();
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < tokens->GetCount(); index++)
 	{
 		if(index)

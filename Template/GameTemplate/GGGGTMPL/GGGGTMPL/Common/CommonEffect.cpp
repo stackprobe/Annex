@@ -8,9 +8,9 @@
 */
 typedef struct CommonEffect_st
 {
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	/*
 		memAlloc_NC()‚È‚Ì‚Åƒƒ“ƒo[’Ç‰Á‚µ‚½‚Æ‚«’ˆÓI
 	*/
@@ -53,6 +53,9 @@ static int CommonEffectFunc(CommonEffect_t *i)
 {
 	int picId = i->PicId;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.EndPicId)
 	{
 		m_range(i->Extra.PicIdFrmPerInc, 1, IMAX);
@@ -61,6 +64,9 @@ static int CommonEffectFunc(CommonEffect_t *i)
 		if(i->Extra.EndPicId < picId)
 			return 0;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	else if(i->Extra.ModPicId)
 	{
 		m_range(i->Extra.PicIdFrmPerInc, 1, IMAX);
@@ -72,19 +78,31 @@ static int CommonEffectFunc(CommonEffect_t *i)
 	double drawX = i->X;
 	double drawY = i->Y;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!i->Extra.IgnoreCamera)
 	{
 		drawX -= CameraX;
 		drawY -= CameraY;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!i->Extra.BlendAddOn)
 		DPE_SetAlpha(i->A);
 	else
 		DPE_SetBlendAdd(i->A);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.BrightOn)
 		DPE_SetBright(i->Extra.Bright_R, i->Extra.Bright_G, i->Extra.Bright_B);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.GrphHdlFlag)
 		DPE_SetGraphicSize(i->Extra.GrphSize);
 

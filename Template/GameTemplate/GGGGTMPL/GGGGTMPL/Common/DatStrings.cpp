@@ -10,6 +10,9 @@ static autoList<char *> *GetDatStrings(void)
 {
 	static autoList<char *> *datStrings;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!datStrings)
 	{
 		autoList<uchar> *fileData = GetEtcRes()->GetHandle(ETC_DATSTRINGS);

@@ -13,6 +13,9 @@ static int KeyStatus[KEY_MAX];
 */
 void KeyEachFrame(void)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(WindowIsActive)
 	{
 		static uchar statusMap[KEY_MAX];

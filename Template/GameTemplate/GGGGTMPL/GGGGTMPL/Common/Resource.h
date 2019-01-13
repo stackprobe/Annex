@@ -36,6 +36,9 @@ private:
 	int ResMode;
 	autoList<char *> *FileList;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoList<uchar> *LoadFileData(int resId)
 	{
 		if(!this->ResMode)
@@ -80,6 +83,9 @@ private:
 
 public:
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	resCluster(char *clusterFile, char *fileListFile, int resCount, int firstTweek, Handle_t (*resLoader)(autoList<uchar> *), void (*resUnloader)(Handle_t))
 	{
 		errorCase(m_isEmpty(clusterFile));
@@ -101,15 +107,24 @@ public:
 		this->FileList = NULL;
 		this->DerHandleList = NULL;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	resCluster(const resCluster &source)
 	{
 		error();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	~resCluster()
 	{
 		1; // このクラスはプロセス寿命、プロセス終了時以外の破棄を想定しない。
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Handle_t GetHandle(int resId)
 	{
 		errorCase(resId < 0 || this->ResCount <= resId);
@@ -126,6 +141,9 @@ public:
 		}
 		return this->HandleList[resId];
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void UnloadAllHandle()
 	{
 		UnloadAllDer(this->GetDerHandleList()); // for Derivation.cpp
@@ -140,6 +158,9 @@ public:
 		}
 		this->LoadedList->Clear();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void CallAllLoadedHandle(void (*func)(Handle_t))
 	{
 		for(int resId = 0; resId < this->ResCount; resId++)
@@ -152,6 +173,9 @@ public:
 		}
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoList<int> *GetDerHandleList() // for Derivation.cpp
 	{
 		if(!this->DerHandleList)

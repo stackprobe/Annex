@@ -31,9 +31,15 @@ SubScreen_t *CreateSubScreen(int w, int h, int aFlag)
 */
 void ReleaseSubScreen(SubScreen_t *i)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i == NULL)
 		return;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < GetSubScreenList()->GetCount(); index++)
 	{
 		if(GetSubScreenList()->GetElement(index) == i)
@@ -45,6 +51,9 @@ void ReleaseSubScreen(SubScreen_t *i)
 	error(); // not found
 endDesert:
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Handle != -1)
 		errorCase(DeleteGraph(i->Handle)); // ? 失敗
 
@@ -60,6 +69,9 @@ int GetHandle(SubScreen_t *i)
 {
 	errorCase(i == NULL);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Handle == -1)
 	{
 		i->Handle = MakeScreen(i->W, i->H, i->AFlag ? TRUE : FALSE);
@@ -137,6 +149,9 @@ void UnloadAllSubScreenHandle(void)
 {
 	ChangeDrawScreen(DX_SCREEN_BACK); // これから開放するハンドルであるとマズいので...
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < GetSubScreenList()->GetCount(); index++)
 	{
 		SubScreen_t *i = GetSubScreenList()->GetElement(index);

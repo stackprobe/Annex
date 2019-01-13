@@ -41,6 +41,9 @@ void getFileList(char *dir, autoList<char *> *subDirs, autoList<char *> *files)
 	intptr_t h = _findfirst(wCard, &lastFindData);
 	memFree(wCard);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(h != -1)
 	{
 		do
@@ -97,6 +100,9 @@ char *refLocalPath(char *path)
 {
 	char *p = mbs_strrchr(path, '\\');
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(p)
 		return p + 1;
 
@@ -123,9 +129,15 @@ void deleteDir(char *dir)
 	getFileList(dir, subDirs, files);
 	addCwd(dir);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < subDirs->GetCount(); index++)
 		deleteDir(subDirs->GetElement(index));
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < files->GetCount(); index++)
 		remove(files->GetElement(index));
 
@@ -190,6 +202,9 @@ static char *GetSystemTempDir(void)
 {
 	static char *dir;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!dir)
 	{
 		dir = getenv("TMP");
@@ -216,6 +231,9 @@ char *getAppTempDir(void)
 {
 	static char *dir;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!dir)
 	{
 		dir = combine(GetSystemTempDir(), APP_TEMP_DIR_UUID);

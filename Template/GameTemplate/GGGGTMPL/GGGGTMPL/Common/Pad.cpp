@@ -28,6 +28,9 @@ int GetPadCount(void)
 {
 	static int num = -1;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(num == -1)
 	{
 		num = GetJoypadNum();
@@ -40,6 +43,9 @@ int GetPadCount(void)
 */
 void PadEachFrame(void)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int padId = 0; padId < GetPadCount(); padId++)
 	{
 		uint status;
@@ -78,9 +84,15 @@ void PadEachFrame(void)
 */
 int GetPadInput(int padId, int btnId)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(padId == -1) // ? –¢Š„‚è“–‚Ä
 		padId = 0;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(btnId == -1) // ? Š„‚è“–‚ÄƒiƒV
 		return 0;
 

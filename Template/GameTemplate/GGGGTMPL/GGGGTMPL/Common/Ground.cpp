@@ -110,6 +110,9 @@ static char *SD_ReadLine(void) // ret: bind
 	memFree(line);
 	line = readLine(SaveData, SDIndex);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!line)
 		line = strx("");
 
@@ -160,6 +163,9 @@ static void SD_ReadBitList(bitList *dest)
 
 	char *line = SD_ReadLine();
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; line[index]; index++)
 	{
 		switch(line[index])
@@ -188,6 +194,9 @@ static void SD_ReadLines(autoList<char *> *lines)
 
 	lines->BufferExtend(count);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < count; index++)
 	{
 		lines->AddElement(strx(SD_ReadLine()));
@@ -238,6 +247,9 @@ static void SD_WriteBitList(bitList *src)
 	autoList<char> *buff = new autoList<char>();
 	int finalBitPos = src->GetFinalBitPos();
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index <= finalBitPos; index++)
 	{
 		buff->AddElement(src->RefBit(index) ? '1' : '0');
@@ -253,6 +265,9 @@ static void SD_WriteLines(autoList<char *> *lines)
 {
 	SD_WriteInt(lines->GetCount());
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < lines->GetCount(); index++)
 	{
 		SD_WriteLine(lines->GetElement(index));
@@ -292,9 +307,9 @@ static int *PPadBtns[] =
 */
 static void AntiPadBtnIdConflict(void)
 {
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	/*
 		重複して割り当てられていた場合、両方 -1 にする。
 	*/
@@ -316,9 +331,9 @@ static void AntiPadBtnIdConflict(void)
 */
 void UnassignAllPadBtnId(void)
 {
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	/*
 		全て割り当てナシにする。
 	*/
@@ -333,6 +348,9 @@ void UnassignAllPadBtnId(void)
 */
 void ImportSaveData(void)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!accessible(SAVE_FILE))
 	{
 		LOG("セーブデータファイル無し\n");
@@ -341,6 +359,9 @@ void ImportSaveData(void)
 	SaveData = readFile(SAVE_FILE);
 
 #if LOG_ENABLED == 0
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!Jammer(SaveData, 0)) // ? セーブデータ破損
 	{
 		delete SaveData;
@@ -349,6 +370,9 @@ void ImportSaveData(void)
 #endif
 	SDIndex = 0;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(strcmp(SD_ReadLine(), SAVEDATA_SIGNATURE) != 0) // ? セーブデータ破損
 	{
 		LOG("セーブデータファイル_Signature不一致\n");

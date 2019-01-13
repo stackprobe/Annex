@@ -8,6 +8,9 @@ private:
 	int Width;
 
 public:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	bitTable(int w)
 	{
 		errorCase(w < 1 || IMAX < w);
@@ -15,20 +18,32 @@ public:
 		this->List = new bitList();
 		this->Width = w;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	bitTable(const bitTable &source)
 	{
 		error();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	~bitTable()
 	{
 		delete this->List;
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Clear()
 	{
 		this->List->Clear();
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void PutBit(int x, int y, int value)
 	{
 		errorCase(x < 0);
@@ -38,6 +53,9 @@ public:
 
 		return this->List->PutBit(x + y * this->Width, value);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int RefBit(int x, int y)
 	{
 		errorCase(x < 0);

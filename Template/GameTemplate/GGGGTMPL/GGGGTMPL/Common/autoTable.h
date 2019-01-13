@@ -10,6 +10,9 @@ private:
 	void (*ReleaseCellFunc)(Element_t);
 
 public:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoTable(Element_t (*createCellFunc)(void), void (*releaseCellFunc)(Element_t), int w = 1, int h = 1)
 	{
 		errorCase(!createCellFunc);
@@ -20,10 +23,16 @@ public:
 		this->ReleaseCellFunc = releaseCellFunc;
 		this->Resize(w, h);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoTable(const autoTable &source)
 	{
 		error();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	~autoTable()
 	{
 		while(this->Rows->GetCount())
@@ -39,6 +48,9 @@ public:
 		delete this->Rows;
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void SetCallBack(Element_t (*createCellFunc)(void), void (*releaseCellFunc)(Element_t) = NULL)
 	{
 		if(createCellFunc)
@@ -47,6 +59,9 @@ public:
 		if(releaseCellFunc)
 			this->ReleaseCellFunc = releaseCellFunc;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Change(autoTable<Element_t> *otherTable, int withCallBack = 0)
 	{
 		m_swap(this->Rows, otherTable->Rows, void *);
@@ -58,6 +73,9 @@ public:
 		}
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Resize(int w, int h)
 	{
 		errorCase(w < 1 || IMAX < w);
@@ -92,15 +110,24 @@ public:
 		}
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int GetWidth()
 	{
 		return this->Rows->GetElement(0)->GetCount();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int GetHeight()
 	{
 		return this->Rows->GetCount();
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Element_t *CellAt(int x, int y)
 	{
 		errorCase(x < 0 || this->GetWidth() <= x);
@@ -108,15 +135,24 @@ public:
 
 		return this->Rows->GetElement(y)->ElementAt(x);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Element_t GetCell(int x, int y)
 	{
 		return *this->CellAt(x, y);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void SetCell(int x, int y, Element_t e)
 	{
 		*this->CellAt(x, y) = e;
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void SetSmallestSize(int w, int h)
 	{
 		m_maxim(w, this->GetWidth());
@@ -124,11 +160,17 @@ public:
 
 		this->Resize(w, h);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Element_t *RefCellAt(int x, int y)
 	{
 		this->SetMinimal(x + 1, y + 1);
 		return this->CellAt(x, y);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Element_t RefCell(int x, int y, Element_t dummyElement)
 	{
 		if(
@@ -140,22 +182,34 @@ public:
 		}
 		return this->GetCell(x, y);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Element_t RefCellEx(int x, int y)
 	{
 		this->SetSmallestSize(x + 1, y + 1);
 		return this->GetCell(x, y);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void PutCell(int x, int y, Element_t e)
 	{
 		this->SetSmallestSize(x + 1, y + 1);
 		return this->SetCell(x, y, e);
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Reset(int x, int y)
 	{
 		this->ReleaseCellFunc(this->GetCell(x, y));
 		this->SetCell(x, y, this->CreateCellFunc());
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Reset(int l, int t, int w, int h)
 	{
 		for(int x = 0; x < w; x++)
@@ -164,10 +218,16 @@ public:
 			this->Reset(l + x, t + y);
 		}
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Reset()
 	{
 		this->Reset(0, 0, this->GetWidth(), this->GetHeight());
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Clear(int w, int h)
 	{
 		this->Resize(w, h);
@@ -179,9 +239,9 @@ public:
 			);
 	}
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	/*
 		è„â∫îΩì]
 	*/

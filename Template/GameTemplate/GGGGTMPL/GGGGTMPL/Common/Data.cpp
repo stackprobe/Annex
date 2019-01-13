@@ -23,6 +23,9 @@ int d2i(double value)
 */
 int s2i(char *line, int minval, int maxval, int defval)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(m_isEmpty(line) || !strchr("-0123456789", *line))
 	{
 		return defval;
@@ -121,6 +124,9 @@ d2D_t makeD2D(double x, double y)
 */
 void my_memset(void *block, int fillValue, int size)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index < size; index++)
 	{
 		((uchar *)block)[index] = fillValue;
@@ -150,6 +156,9 @@ double getAngle(double x, double y)
 	double t = y / x;
 	double rm;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int c = 1; ; c++)
 	{
 		rm = (r1 + r2) / 2.0;

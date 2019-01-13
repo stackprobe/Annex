@@ -16,10 +16,16 @@ private:
 	int BlockSize;
 	MBStock *Next;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int GetBlockCount()
 	{
 		return CLUSTER_SIZE / this->BlockSize;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int Block2Index(uchar *block)
 	{
 		errorCase(block < this->Cluster);
@@ -31,6 +37,9 @@ private:
 
 		return offset / this->BlockSize;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	uchar *Index2Block(int index)
 	{
 		errorCase(index < 0);
@@ -42,6 +51,9 @@ private:
 	}
 
 public:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	MBStock(int blockSize)
 	{
 /*
@@ -67,15 +79,24 @@ LOG("[MBS.ctor] %d\n", blockSize);
 			this->GivenList[index] = 0;
 		}
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	MBStock(const MBStock &source)
 	{
 		error();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	~MBStock()
 	{
 		1; // 貸し出し中のブロック未回収のまま開放出来ない。memAlloc() とかどこで呼ばれるか分からない。-> 開放しない。
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void *GetBlock()
 	{
 		uchar *block;
@@ -95,6 +116,9 @@ LOG("[MBS.ctor] %d\n", blockSize);
 		}
 		return (void *)block;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int IsGivenBlock(void *v_block, int tryTake)
 	{
 		uchar *block = (uchar *)v_block;
@@ -124,10 +148,16 @@ notGiven:
 
 		return 0;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int IsGivenBlock(void *v_block)
 	{
 		return this->IsGivenBlock(v_block, 0);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int TryTakeBlock(void *v_block)
 	{
 		return this->IsGivenBlock(v_block, 1);

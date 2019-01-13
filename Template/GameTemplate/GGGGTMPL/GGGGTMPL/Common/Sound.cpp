@@ -36,6 +36,9 @@ void UnloadSound(int h)
 */
 void SoundPlay(int h, int once_mode, int resume_mode)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	switch(CheckSoundMem(h))
 	{
 	case 1: // ? çƒê∂íÜ

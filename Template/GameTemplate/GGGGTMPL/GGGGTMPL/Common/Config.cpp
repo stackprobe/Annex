@@ -23,6 +23,9 @@ void ImportConfig(void)
 {
 	char *confFile = "Config.conf";
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(accessible(confFile))
 	{
 		autoList<uchar> *fileData = readFile(confFile);
@@ -47,6 +50,9 @@ void ImportConfig(void)
 */
 char *neReadCfgLine(autoList<uchar> *fileData, int &rIndex)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(; ; )
 	{
 		char *line = neReadLine(fileData, rIndex);

@@ -55,16 +55,25 @@ private:
 	unsigned long *mt;
 	int mti;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Enter()
 	{
 		enterRnd(this->mt, this->mti);
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void Leave()
 	{
 		leaveRnd(&this->mti);
 	}
 
 public:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Random(int seed)
 	{
 		this->mt = (unsigned long *)memAlloc_NC(MT19937_N * sizeof(unsigned long));
@@ -72,10 +81,16 @@ public:
 		initRnd(seed);
 		this->Leave();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Random(const Random &source)
 	{
 		error();
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	~Random()
 	{
 		memFree(this->mt);
@@ -90,12 +105,33 @@ public:
 		return retval; \
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	WRAPPER(int, int Rnd(int modulo), rnd(modulo))
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	WRAPPER(int, int BRnd(int minval, int maxval), bRnd(minval, maxval))
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	WRAPPER(int, int SRnd(), sRnd())
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	WRAPPER(double, double DRnd(), dRnd())
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	WRAPPER(double, double ERnd(), eRnd())
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	WRAPPER(int, int RndPct(int pct), rndPct(pct))
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	WRAPPER(int, int RndPermil(int permil), rndPermil(permil))
 
 #undef WRAPPER

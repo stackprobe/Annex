@@ -19,9 +19,9 @@ typedef struct Gnd_st
 	int RealScreen_W;
 	int RealScreen_H;
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	/*
 		音量
 		0.0 - 1.0
@@ -30,9 +30,9 @@ typedef struct Gnd_st
 	double MusicVolume;
 	double SEVolume;
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	/*
 		-1 == 割り当てナシ
 		0 - (PAD_BUTTON_MAX - 1) == 割り当てボタンID

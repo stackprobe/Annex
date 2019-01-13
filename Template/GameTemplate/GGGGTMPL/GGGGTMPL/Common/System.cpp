@@ -27,6 +27,9 @@ void error2(char *file, int lineno, char *function)
 
 	LOG("[ERROR] %s %d %s\n", file, lineno, function);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(DxLibInited)
 	{
 		printfDx("Sorry! An error has occurred @ %s %d %s\n", refLocalPath(file), lineno, function);
@@ -58,6 +61,9 @@ FILE *GetLogFp(void)
 {
 	static FILE *fp;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!fp)
 	{
 		if(!accessible(LOG_DIR))
@@ -87,6 +93,9 @@ int hasArgs(int count)
 */
 int argIs(char *spell)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(ArgIndex < __argc)
 	{
 		if(!_stricmp(__argv[ArgIndex], spell))
@@ -134,6 +143,9 @@ __int64 GetCurrTime(void)
 	static uint lastCount;
 	uint currCount = (uint)GetNowCount();
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(currCount < lastCount) // ? GetNowCount()のカンスト(オーバーフロー)
 	{
 		baseTime += (__int64)_UI32_MAX + 1;

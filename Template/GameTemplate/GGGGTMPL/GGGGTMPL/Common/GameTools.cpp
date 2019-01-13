@@ -60,6 +60,9 @@ int LastCurtainFrame = -1;
 */
 void CurtainEachFrame(int oncePerFrame) // EachFrame()前に呼び出しても可
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(oncePerFrame)
 	{
 		if(ProcFrame <= LastCurtainFrame)
@@ -73,11 +76,17 @@ void CurtainEachFrame(int oncePerFrame) // EachFrame()前に呼び出しても可
 
 	CurrCurtainWhiteLevel = wl;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(wl == 0.0)
 		return;
 
 	int darkMode;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(wl < 0.0)
 	{
 		wl = abs(wl);
@@ -88,6 +97,9 @@ void CurtainEachFrame(int oncePerFrame) // EachFrame()前に呼び出しても可
 
 	DPE_SetAlpha(wl);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(darkMode)
 		DPE_SetBright(0.0, 0.0, 0.0);
 
@@ -105,11 +117,17 @@ void SetCurtain(int frameMax, double destWhiteLevel, double startWhiteLevel)
 
 	GetCurtainQueue()->Clear();
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!frameMax)
 	{
 		GetCurtainQueue()->Enqueue(destWhiteLevel);
 		return;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int frmcnt = 0; frmcnt <= frameMax; frmcnt++)
 	{
 		double wl;
@@ -166,6 +184,9 @@ void PE_Reset(void)
 */
 static int PrintFunc(PrintInfo_t *i)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i->Extra.Border)
 	{
 		for(int xc = -1; xc <= 1; xc++)
@@ -249,6 +270,9 @@ void Print_x(char *token)
 	i->Token = token; // bind
 	i->Extra = PE;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!PE.TL)
 	{
 		PrintFunc(i);
@@ -271,6 +295,9 @@ void DrawCurtain(double whiteLevel)
 {
 	m_range(whiteLevel, -1.0, 1.0);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(whiteLevel < 0.0)
 	{
 		DPE_SetAlpha(-whiteLevel);
@@ -292,17 +319,26 @@ int RotDir(int dir, int rot) // dir: 2468-1379-5, rot: -n == 反時計周りに n*45°
 {
 	errorCase(dir < 1 || 9 < dir);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(dir == 5)
 		return 5;
 
 	int rotL[] = { -1, 2, 3, 6, 1, -1, 9, 4, 7, 8 };
 	int rotR[] = { -1, 4, 1, 2, 7, -1, 3, 8, 9, 6 };
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	while(rot < 0)
 	{
 		dir = rotL[dir];
 		rot++;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	while(0 < rot)
 	{
 		dir = rotR[dir];

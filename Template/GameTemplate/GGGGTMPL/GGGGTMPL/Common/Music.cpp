@@ -59,6 +59,9 @@ static MusicInfo_t *LoadMusic(autoList<uchar> *fileData)
 	i->Handle = LoadSound(fileData);
 	i->Volume = 0.5; // 個別の音量のデフォルト 0.0 - 1.0
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	switch(RC_ResId) // musId
 	{
 	// app > @ post LoadSound
@@ -109,6 +112,9 @@ void MusicEachFrame(void)
 {
 	PlayInfo_t *i = GetPlayList()->Dequeue(NULL);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(i)
 	{
 		switch(i->Command)
@@ -140,6 +146,9 @@ void MusicPlay(int musId, int once_mode, int resume_mode, double volumeRate, int
 
 	MusicInfo_t *i = GetMusRes()->GetHandle(musId);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(CurrDestMusic)
 	{
 		if(CurrDestMusic == i)
@@ -163,6 +172,9 @@ void MusicPlay(int musId, int once_mode, int resume_mode, double volumeRate, int
 */
 void MusicFade(int frameMax, double destVRate, double startVRate)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!CurrDestMusic)
 		return;
 
@@ -170,6 +182,9 @@ void MusicFade(int frameMax, double destVRate, double startVRate)
 	m_range(destVRate, 0.0, 1.0);
 	m_range(startVRate, 0.0, 1.0);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int frmcnt = 0; frmcnt <= frameMax; frmcnt++)
 	{
 		double vRate;
@@ -185,6 +200,9 @@ void MusicFade(int frameMax, double destVRate, double startVRate)
 	}
 	CurrDestMusicVolumeRate = destVRate;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(destVRate == 0.0) // ? フェード目標音量ゼロ -> 曲停止
 	{
 		MusicStop();
@@ -195,6 +213,9 @@ void MusicFade(int frameMax, double destVRate, double startVRate)
 */
 void MusicStop(void)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!CurrDestMusic)
 		return;
 

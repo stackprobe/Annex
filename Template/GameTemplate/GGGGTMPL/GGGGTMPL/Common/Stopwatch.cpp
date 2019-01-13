@@ -91,6 +91,9 @@ void SW_End2(char *source, int lineNo, char *function)
 
 	double freq = (double)GetPerformanceFrequency();
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int index = 0; index <= LapIndex[TimeIndex]; index++)
 	{
 		LapTime_t *lt = TimeTable[TimeIndex] + index;
@@ -127,6 +130,9 @@ __int64 GetPerformanceFrequency(void)
 {
 	static __int64 freq;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(freq == 0i64)
 	{
 		LARGE_INTEGER i;

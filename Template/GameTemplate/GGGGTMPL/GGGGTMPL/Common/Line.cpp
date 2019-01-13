@@ -13,6 +13,9 @@ char *xcout(char *format, ...)
 
 	va_start(marker, format);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int size = strlen(format) + 128; ; size *= 2)
 	{
 		errorCase(IMAX < size);
@@ -93,6 +96,9 @@ char *mbs_strrchr(char *str, int chr)
 {
 	char *ret = NULL;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(char *p = str; *p; p = mbsNext(p))
 		if(*p == chr)
 			ret = p;
@@ -110,6 +116,9 @@ static int ReplacedFlag;
 */
 void replaceChar(char *str, int srcChr, int destChr) // mbs_
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(char *p = str; *p; p = mbsNext(p))
 		if(*p == srcChr)
 			*p = destChr;
@@ -126,6 +135,9 @@ char *replaceLine(char *str, char *srcPtn, char *destPtn, int ignoreCase) // ret
 	errorCase(srcPtnLen < 1);
 	ReplacedFlag = 0;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(char *p = str; *p; )
 	{
 		if((ignoreCase ? _strnicmp : strncmp)(p, srcPtn, srcPtnLen) == 0)
@@ -152,6 +164,9 @@ char *replaceLine(char *str, char *srcPtn, char *destPtn, int ignoreCase) // ret
 */
 char *replaceLineLoop(char *str, char *srcPtn, char *destPtn, int ignoreCase, int loopMax) // ret: strr()
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(int c = 0; c < loopMax; c++)
 	{
 		str = replaceLine(str, srcPtn, destPtn, ignoreCase);
@@ -235,6 +250,9 @@ void reverseLine(char *line)
 	char *l = line;
 	char *r = strchr(line, '\0');
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(l < r)
 	{
 		r--;
@@ -260,6 +278,9 @@ char *thousandComma(char *line) // ret: strr(line)
 
 	reverseLine(line);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	for(index = 3; index < strlen(line); index += 4)
 	{
 		line = insertChar(line, index, ',');
@@ -282,12 +303,18 @@ static uchar *TokDelims;
 */
 void tokinit(char *str, char *delims)
 {
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(str)
 	{
 		TokPtr = str;
 		memFree(TokDelims);
 		TokDelims = NULL;
 	}
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(delims)
 	{
 		char *p;
@@ -325,11 +352,17 @@ char *toknext(char *str, char *delims)
 
 	tokinit(str, delims);
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(!TokPtr)
 		return NULL;
 
 	ret = TokPtr;
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	if(TokDelims)
 	{
 		char *p;
