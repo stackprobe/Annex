@@ -1618,12 +1618,13 @@ FUNC_STATIC void AES128_Decrypt_rcbc(void *block, int size)
 
 	INIT_RK();
 	COMPLEX('C');
-	COMPLEX('O');
-	COMPLEX('D');
 	COMPLEX('E');
-	COMPLEX('V');
-	COMPLEX('I');
+	COMPLEX('R');
+	COMPLEX('U');
 	COMPLEX('L');
+	COMPLEX('E');
+	COMPLEX('A');
+	COMPLEX('N');
 
 #undef COMPLEX
 

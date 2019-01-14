@@ -7,9 +7,6 @@ enum
 
 	// app > @ SE_
 
-	SE_PAUSE_IN,
-	SE_PAUSE_OUT,
-
 	// < app
 
 	SE_MAX, // num of member
