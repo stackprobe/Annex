@@ -16,7 +16,13 @@
 
 #include "all.h"
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define TIMETABLE_MAX 5
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define LAPTIME_MAX 10000
 
 /*

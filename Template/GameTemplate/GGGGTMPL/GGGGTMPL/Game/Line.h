@@ -4,15 +4,24 @@
 #define m_isEmpty(line) \
 	(!(line) || !*(line))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define isMbc1(c) ( \
 	'\x81' <= (c) && (c) <= '\x9f' || \
 	'\xe0' <= (c) && (c) <= '\xfc')
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define isMbc(p) \
 	(isMbc1((p)[0]) && (p)[1])
 //	(_ismbblead((p)[0]) && (p)[1])
 //	(_ismbblead((p)[0]) && _ismbbtrail((p)[1]))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define mbsNext(p) \
 	(p + (isMbc(p) ? 2 : 1))
 

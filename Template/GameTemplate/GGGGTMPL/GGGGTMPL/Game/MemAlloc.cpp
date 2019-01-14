@@ -35,6 +35,9 @@ void REAL_memFree(void *block)
 	free(block);
 }
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define HUGEBLOCK_NUMMAX 1024
 
 /*
@@ -61,10 +64,25 @@ static int GetHugeBlockIndex(void *block)
 	return -1; // not found
 }
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define K1 1024
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define K4 4096
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define K16 16384
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define K64 65536
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define K256 262144
 
 /*

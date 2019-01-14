@@ -49,6 +49,9 @@ ex.
 		sceneLeave();
 */
 // frameMax: (1 Å` *)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define forscene(frameMax) \
 	for(sceneEnter(), sc_denom = (frameMax), sc_numer = 0; sc_numer <= (frameMax) && (sc_rate = (double)sc_numer / sc_denom, 1); sc_numer++)
 
@@ -95,13 +98,22 @@ ex.
 		sceneLeave();
 */
 // frameMax: (1 Å` *), count: (0 Å` *)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define ifsceneBegin(frameMax, count) \
 	if(sceneEnter(), sc_numer = (count), 0) { } ifscene((frameMax))
 
 // frameMax: (1 Å` *)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define ifscene(frameMax) \
 	else if(sc_numer <= (frameMax) ? (sc_denom = (frameMax), sc_rate = (double)sc_numer / sc_denom, 1) : (sc_numer -= (frameMax) + 1, 0))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define ifsceneEnd \
 	else
 

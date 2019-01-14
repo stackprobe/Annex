@@ -70,6 +70,9 @@ const char SHA512_version[]="SHA-512" OPENSSL_VERSION_PTEXT;
     defined(__x86_64) || defined(_M_AMD64) || defined(_M_X64) || \
     defined(__s390__) || defined(__s390x__) || \
     defined(SHA512_ASM)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA512_BLOCK_CAN_MANAGE_UNALIGNED_DATA
 #endif
 
@@ -319,6 +322,9 @@ int SHA384_Update (SHA512_CTX *c, const void *data, size_t len)
 void SHA512_Transform (SHA512_CTX *c, const unsigned char *data)
 {   sha512_block_data_order (c,data,1);  }
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define OPENSSL_cleanse(c, s) 1 // noop
 
 /*
@@ -471,20 +477,47 @@ static const SHA_LONG64 K512[80] = {
 #endif
 
 #ifndef PULL64
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define B(x,j)    (((SHA_LONG64)(*(((const unsigned char *)(&x))+j)))<<((7-j)*8))
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define PULL64(x) (B(x,0)|B(x,1)|B(x,2)|B(x,3)|B(x,4)|B(x,5)|B(x,6)|B(x,7))
 #endif
 
 #ifndef ROTR
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define ROTR(x,s)	(((x)>>s) | (x)<<(64-s))
 #endif
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define Sigma0(x)	(ROTR((x),28) ^ ROTR((x),34) ^ ROTR((x),39))
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define Sigma1(x)	(ROTR((x),14) ^ ROTR((x),18) ^ ROTR((x),41))
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define sigma0(x)	(ROTR((x),1)  ^ ROTR((x),8)  ^ ((x)>>7))
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define sigma1(x)	(ROTR((x),19) ^ ROTR((x),61) ^ ((x)>>6))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define Ch(x,y,z)	(((x) & (y)) ^ ((~(x)) & (z)))
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define Maj(x,y,z)	(((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
 
 

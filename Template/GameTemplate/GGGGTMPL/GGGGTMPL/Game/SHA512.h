@@ -60,6 +60,9 @@
  */
 
 #ifndef HEADER_SHA_H
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define HEADER_SHA_H
 
 // #include <openssl/e_os2.h>
@@ -77,6 +80,9 @@ extern "C" {
 #endif
 
 #if defined(OPENSSL_FIPS)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define FIPS_SHA_SIZE_T size_t
 #endif
 
@@ -91,19 +97,43 @@ extern "C" {
  */
 
 #if defined(__LP32__)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LONG unsigned long
 #elif defined(OPENSSL_SYS_CRAY) || defined(__ILP64__)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LONG unsigned long
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LONG_LOG2 3
 #else
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LONG unsigned int
 #endif
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LBLOCK	16
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_CBLOCK	(SHA_LBLOCK*4)	/* SHA treats input data as a
 					 * contiguous array of 32 bit
 					 * wide big-endian values. */
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LAST_BLOCK  (SHA_CBLOCK-8)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_DIGEST_LENGTH 20
 
 /*
@@ -162,10 +192,19 @@ unsigned char *SHA1(const unsigned char *d, size_t n, unsigned char *md);
 void SHA1_Transform(SHA_CTX *c, const unsigned char *data);
 #endif
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA256_CBLOCK	(SHA_LBLOCK*4)	/* SHA-256 treats input data as a
 					 * contiguous array of 32 bit
 					 * wide big-endian values. */
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA224_DIGEST_LENGTH	28
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA256_DIGEST_LENGTH	32
 
 /*
@@ -218,7 +257,13 @@ unsigned char *SHA256(const unsigned char *d, size_t n,unsigned char *md);
 void SHA256_Transform(SHA256_CTX *c, const unsigned char *data);
 #endif
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA384_DIGEST_LENGTH	48
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA512_DIGEST_LENGTH	64
 
 #ifndef OPENSSL_NO_SHA512
@@ -230,17 +275,38 @@ void SHA256_Transform(SHA256_CTX *c, const unsigned char *data);
  * being exactly 64-bit wide. See Implementation Notes in sha512.c
  * for further details.
  */
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA512_CBLOCK	(SHA_LBLOCK*8)	/* SHA-512 treats input data as a
 					 * contiguous array of 64 bit
 					 * wide big-endian values. */
 #if (defined(_WIN32) || defined(_WIN64)) && !defined(__MINGW32__)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LONG64 unsigned __int64
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_U64(C) C##UI64
 #elif defined(__arch64__)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LONG64 unsigned long
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_U64(C) C##UL
 #else
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_LONG64 unsigned long long
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SHA_U64(C) C##ULL
 #endif
 

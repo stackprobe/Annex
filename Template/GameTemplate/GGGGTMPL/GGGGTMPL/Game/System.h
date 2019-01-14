@@ -3,6 +3,9 @@
 */
 void termination(int errorLevel = 0);
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define errorCase(status) \
 	do { \
 	if((status)) { \
@@ -10,6 +13,9 @@ void termination(int errorLevel = 0);
 	} \
 	} while(0)
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define error() \
 	error2(__FILE__, __LINE__, __FUNCTION__)
 
@@ -24,11 +30,20 @@ void error2(char *file, int lineno, char *function);
 FILE *GetLogFp(void);
 
 #if LOG_ENABLED
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define LOG(format, ...) (fprintf(GetLogFp(), format, ## __VA_ARGS__), fflush(GetLogFp()))
 #else
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define LOG(format, ...) 1
 #endif
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define LOGPOS() \
 	LOG("[POS] %s %d %s\n", __FILE__, __LINE__, __FUNCTION__)
 

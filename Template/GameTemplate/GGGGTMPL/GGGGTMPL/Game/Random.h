@@ -99,6 +99,9 @@ public:
 		memFree(this->mt);
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 #define WRAPPER(RET_TYPE, DEF_FUNC, CALL_FUNC) \
 	DEF_FUNC \
 	{ \

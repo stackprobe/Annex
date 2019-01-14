@@ -3,7 +3,13 @@
 */
 #include "all.h"
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define POUND_FIRST_DELAY 17
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define POUND_DELAY 4
 
 /*

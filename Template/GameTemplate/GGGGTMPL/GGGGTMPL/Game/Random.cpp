@@ -48,10 +48,25 @@
 //#include <stdio.h>
 
 /* Period parameters */
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define N MT19937_N // 624
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define M 397
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define MATRIX_A 0x9908b0dfUL   /* constant vector a */
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define UPPER_MASK 0x80000000UL /* most significant w-r bits */
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define LOWER_MASK 0x7fffffffUL /* least significant r bits */
 
 /*

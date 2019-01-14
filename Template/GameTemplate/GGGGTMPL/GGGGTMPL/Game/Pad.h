@@ -19,7 +19,13 @@ enum // SANWA Pad Btnno
 	SNWPB_DSTART, // 下スタート
 };
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define PAD_MAX 16
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define PAD_BUTTON_MAX 32
 
 /*

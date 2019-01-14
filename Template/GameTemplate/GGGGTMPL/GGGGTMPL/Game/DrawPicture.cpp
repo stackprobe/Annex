@@ -500,6 +500,9 @@ void DrawRotate(double rot)
 
 	Layout_t *i = DB_L;
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define ROTATE(x, y) \
 	w = x * cos(rot) - y * sin(rot); \
 	y = x * sin(rot) + y * cos(rot); \

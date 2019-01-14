@@ -48,7 +48,13 @@ void error2(char *file, int lineno, char *function)
 	termination(1);
 }
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define LOG_DIR "C:\\tmp"
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define LOG_FILE LOG_DIR "\\Game.log"
 
 /*

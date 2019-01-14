@@ -88,7 +88,13 @@ void Gnd_FNLZ(void)
 
 // ---- SaveData ----
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SAVE_FILE "SaveData.dat"
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SAVEDATA_SIGNATURE "__Codevil__SaveData " __DATE__ " " __TIME__
 
 /*

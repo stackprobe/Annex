@@ -35,7 +35,13 @@ static void KRK(autoList<uchar> *block, int downFlag)
 	Kaisa(block, downFlag);
 }
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define MULTIVAL 157
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define POWERVAL 31
 
 /*

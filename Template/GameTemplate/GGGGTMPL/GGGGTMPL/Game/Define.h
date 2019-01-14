@@ -38,14 +38,38 @@
 
 // < app
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 typedef unsigned char uchar;
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 typedef unsigned __int16 uint16;
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 typedef unsigned __int32 uint;
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 typedef unsigned __int64 uint64;
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define IMAX 1000000000
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define IMAX_64 1000000000000000000i64
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define PI     3.141592653589793
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define ROOT_2 1.414213562373095
 
 // app > @ define SCREEN_WH
@@ -55,49 +79,97 @@ typedef unsigned __int64 uint64;
 
 // < app
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SCREEN_CENTER_X (SCREEN_W / 2)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SCREEN_CENTER_Y (SCREEN_H / 2)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SCREEN_W_MAX (SCREEN_W * 5)
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define SCREEN_H_MAX (SCREEN_H * 5)
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define MONITOR_MAX 10
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 /*
 	‰¹Šy‚ÆŒø‰Ê‰¹‚Ì‰Šúƒ{ƒŠƒ…[ƒ€
 	0.0 - 1.0
 */
 #define DEFAULT_VOLUME 0.45
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define lengthof(list) \
 	(sizeof((list)) / sizeof(*(list)))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_isEmpty(str) \
 	(!(str) || !*(str))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_min(value1, value2) \
 	((value1) < (value2) ? (value1) : (value2))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_max(value1, value2) \
 	((value1) < (value2) ? (value2) : (value1))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_minim(var, value) \
 	((var) = m_min((var), (value)))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_maxim(var, value) \
 	((var) = m_max((var), (value)))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_range(var, minval, maxval) \
 	do { \
 	m_maxim((var), (minval)); \
 	m_minim((var), (maxval)); \
 	} while(0)
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_isRange(value, minval, maxval) \
 	((minval) <= (value) && (value) <= (maxval))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_iSign(value) \
 	((value) < 0 ? -1 : 0 < (value) ? 1 : 0)
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define ENUM_RANGE(enum_member, num) \
 	enum_member, \
 	enum_member##_END = enum_member + (num) - 1,
@@ -119,6 +191,9 @@ typedef unsigned __int64 uint64;
 		return p; \
 	}
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define oneObjectProto(type_t, getter) \
 	type_t *(getter)(void)
 
@@ -137,9 +212,15 @@ typedef unsigned __int64 uint64;
 		(counter) = 0 < (counter) ? -1 : 0; \
 	}
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_countDown(var) \
 	((var) < 0 ? (var)++ : 0 < (var) ? (var)-- : (var))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_approach(var, dest, rate) \
 	do { \
 	(var) -= (dest); \
@@ -147,6 +228,9 @@ typedef unsigned __int64 uint64;
 	(var) += (dest); \
 	} while(0)
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_iApproach(var, dest, rateNumer, rateDenom) \
 	do { \
 	(var) -= (dest); \
@@ -155,6 +239,9 @@ typedef unsigned __int64 uint64;
 	(var) += (dest); \
 	} while(0)
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_constApproach(var, dest, speed) \
 	do { \
 	(var) -= (dest); \
@@ -196,6 +283,9 @@ typedef struct d2D_st
 }
 d2D_t;
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_swap(var1, var2, TYPE_T) \
 	do { \
 	TYPE_T tmp = (TYPE_T)var1; \
@@ -203,15 +293,27 @@ d2D_t;
 	*(TYPE_T *)&var2 = (TYPE_T)tmp; \
 	} while(0)
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_simpleComp(v1, v2) \
 	((v1) < (v2) ? -1 : ((v2) < (v1) ? 1 : 0))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_color(r, g, b) \
 	((r) << 16 | (g) << 8 | (b))
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_01(value) \
 	((value) == 0 ? 0 : 1)
 
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 #define m_10(value) \
 	((value) == 0 ? 1 : 0)
 
