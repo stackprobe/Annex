@@ -70,9 +70,6 @@ autoTable<uint> *readBmpFile(autoList<uchar> *fileData)
 
 	hiSign = 0x80000000 & Bfi.Height;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(hiSign)
 		Bfi.Height = (Bfi.Height ^ 0xffffffff) + 1;
 
@@ -82,9 +79,6 @@ autoTable<uint> *readBmpFile(autoList<uchar> *fileData)
 
 	table->Resize(Bfi.Width, Bfi.Height);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	switch(Bfi.BitCount)
 	{
 	case 1: colPalCnt = 2; break;
@@ -97,9 +91,6 @@ autoTable<uint> *readBmpFile(autoList<uchar> *fileData)
 	default:
 		error();
 	}
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	while(colPalCnt)
 	{
 		uchar cR;
@@ -115,9 +106,6 @@ autoTable<uint> *readBmpFile(autoList<uchar> *fileData)
 		colorPallet->AddElement(cR << 16 | cG << 8 | cB);
 		colPalCnt--;
 	}
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(y = 0; y < Bfi.Height; y++)
 	{
 		if(Bfi.BitCount <= 8)
@@ -163,9 +151,6 @@ autoTable<uint> *readBmpFile(autoList<uchar> *fileData)
 			}
 		}
 	}
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(!hiSign)
 		table->Reverse(); // 0 <= Bfi.Height ‚È‚çA‰º‚©‚çã (¶‚©‚ç‰E) ‚É•À‚ÔB
 
@@ -218,9 +203,6 @@ void writeBmpFile(autoList<uchar> *fileData, autoTable<uint> *bmp)
 	writeUI32(fileData, 0);
 	writeUI32(fileData, 0);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int y = h - 1; 0 <= y; y--)
 	{
 		for(int x = 0; x < w; x++)

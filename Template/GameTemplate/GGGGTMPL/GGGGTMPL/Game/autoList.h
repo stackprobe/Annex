@@ -5,8 +5,17 @@ template <class Element_t>
 class autoList
 {
 private:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int Count;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int ListSize;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Element_t *List;
 
 	/*
@@ -492,9 +501,6 @@ void releaseList(autoList<Element_t> *list, void (*func)(Element_t e))
 {
 	errorCase(!func);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(!list)
 		return;
 

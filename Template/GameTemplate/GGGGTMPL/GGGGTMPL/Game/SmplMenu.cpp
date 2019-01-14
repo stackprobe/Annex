@@ -40,9 +40,6 @@ int SmplMenu(char *menuTitle, char **menuItems, int selectMax, int selectIndex)
 	SetCurtain();
 	FreezeInput();
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(; ; )
 	{
 		if(GetPound(INP_A))
@@ -139,9 +136,6 @@ void SmplPadConfig(void)
 	};
 
 	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
-	/*
 		NULL == 使用していない。
 	*/
 	char *BTN_LIST[INP_MAX] =
@@ -169,9 +163,6 @@ void SmplPadConfig(void)
 	PadBtnIdBkup = memClone(&Gnd.PadBtnId, sizeof(Gnd.PadBtnId));
 	GetEndProcFinalizers()->AddFunc(RestorePadBtnId);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int c = 0; c < INP_MAX; c++)
 		*BtnPList[c] = -1;
 
@@ -180,9 +171,6 @@ void SmplPadConfig(void)
 
 	int currBtnIndex = 0;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	while(currBtnIndex < INP_MAX)
 	{
 		if(!BTN_LIST[currBtnIndex])
@@ -301,9 +289,6 @@ void SmplWindowSizeConfig(void)
 
 	int selectIndex = 0;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(; ; )
 	{
 		selectIndex = SmplMenu("ウィンドウサイズ設定", MENU_ITEMS, lengthof(MENU_ITEMS), selectIndex);
@@ -404,9 +389,6 @@ double SmplVolumeConfig(char *menuTitle, double rate, int minval, int maxval, in
 	SetCurtain();
 	FreezeInput();
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(; ; )
 	{
 		int chgval = 0;

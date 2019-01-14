@@ -3,17 +3,32 @@
 */
 #define CLUSTER_SIZE 0x400000
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 class MBStock
 {
 private:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	uchar *Cluster;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	uchar **StockList;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	uchar *GivenList;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int StockCount;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int BlockSize;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	MBStock *Next;
 
 	/*
@@ -56,9 +71,6 @@ public:
 	*/
 	MBStock(int blockSize)
 	{
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 LOG("[MBS.ctor] %d\n", blockSize);
 		errorCase(blockSize < 1);
 		errorCase(CLUSTER_SIZE < blockSize);

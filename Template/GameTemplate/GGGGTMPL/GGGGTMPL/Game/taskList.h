@@ -14,13 +14,16 @@ taskInfo_t;
 */
 int IsDeadTaskInfo(taskInfo_t *i);
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 class taskList
 {
 private:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoList<taskInfo_t> *List;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int LastFrame;
 
 public:
@@ -132,9 +135,6 @@ void AddTask(taskList *tl, int topMode, int (*tf)(Param_t *), Param_t *tp = NULL
 	ti.Param = (void *)tp;
 	ti.ReleaseParam = (void (*)(void *))tr;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(topMode)
 		tl->AddTopTask(ti);
 	else

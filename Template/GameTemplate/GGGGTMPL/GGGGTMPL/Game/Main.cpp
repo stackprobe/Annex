@@ -51,9 +51,6 @@ static void ReleaseProcMtxHdl(void)
 */
 static void PostSetScreenSize(int w, int h)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(Monitor_W == w && Monitor_H == h)
 	{
 		SetScreenPosition(Monitor_L, Monitor_T);
@@ -70,9 +67,6 @@ void EndProc(void)
 	ReleaseAllFontHandle(); // Finalizers に RemoveAllFontFile() が入っている。EndProcFinalizers じゃないので、ここで良い！
 	Gnd_FNLZ();
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(DxLibInited)
 	{
 		DxLibInited = 0;
@@ -87,9 +81,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 	memAlloc_INIT();
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	/*
 		APP_TEMP_DIR_UUID は shared_uuid
 	*/
@@ -106,9 +97,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	initRnd((int)time(NULL));
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(argIs("/L"))
 	{
 		termination(LOG_ENABLED ? 1 : 0);
@@ -145,9 +133,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	SetWindowIconID(333); // ウィンドウ左上のアイコン
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(Conf_DisplayIndex != -1)
 		SetUseDirectDrawDeviceIndex(Conf_DisplayIndex);
 
@@ -224,9 +209,6 @@ static void DxPrv_SetMouseDispMode(int mode)
 */
 static void UnloadGraph(int &hdl)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(hdl != -1)
 	{
 		errorCase(DeleteGraph(hdl)); // ? 失敗
@@ -283,9 +265,6 @@ void SetScreenSize(int w, int h)
 	m_range(w, SCREEN_W, SCREEN_W_MAX);
 	m_range(h, SCREEN_H, SCREEN_H_MAX);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(Gnd.RealScreen_W != w || Gnd.RealScreen_H != h)
 	{
 		Gnd.RealScreen_W = w;

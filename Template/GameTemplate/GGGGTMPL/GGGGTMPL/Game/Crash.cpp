@@ -30,9 +30,6 @@ void MakeXYSpeed(double x, double y, double destX, double destY, double speed, d
 
 	double distance = GetDistance(speedX, speedY);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(distance < distanceMin)
 	{
 		speedX = speed;
@@ -77,9 +74,6 @@ int IsCrashed_Circle_Rect(
 	double l, double t, double r, double b
 	)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(x < l) // ¶
 	{
 		if(y < t) // ¶ã
@@ -95,9 +89,6 @@ int IsCrashed_Circle_Rect(
 			return l < x + rCir;
 		}
 	}
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	else if(r < x) // ‰E
 	{
 		if(y < t) // ‰Eã

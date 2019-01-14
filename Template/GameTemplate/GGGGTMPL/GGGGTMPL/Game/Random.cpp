@@ -278,9 +278,6 @@ int rnd(int modulo) // ret: 0 - (modulo - 1)
 {
 	errorCase(modulo < 1 || IMAX < modulo);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(modulo == 1)
 	{
 		return 0;

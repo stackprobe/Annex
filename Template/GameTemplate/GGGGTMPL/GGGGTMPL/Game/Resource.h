@@ -25,15 +25,45 @@ template <class Handle_t>
 class resCluster
 {
 private:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	char *ClusterFile;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	char *FileListFile;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int ResCount;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int FirstTweek;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Handle_t (*ResLoader)(autoList<uchar> *);
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void (*ResUnloader)(Handle_t);
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Handle_t *HandleList;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	bitList *LoadedList;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int ResMode;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoList<char *> *FileList;
 
 	/*
@@ -79,6 +109,9 @@ private:
 		return fileData;
 	}
 
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoList<int> *DerHandleList; // for Derivation.cpp
 
 public:

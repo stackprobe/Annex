@@ -46,13 +46,16 @@ int rndPct(int pct);
 */
 int rndPermil(int permil);
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 class Random
 {
 private:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	unsigned long *mt;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int mti;
 
 	/*

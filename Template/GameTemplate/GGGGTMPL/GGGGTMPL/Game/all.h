@@ -1,7 +1,9 @@
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-#include "..\Common\all.h"
+#pragma once
+
+#include "..\all.h"
 
 #include "Define.h"
 #include "System.h"

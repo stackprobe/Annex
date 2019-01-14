@@ -38,21 +38,9 @@
 
 // < app
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 typedef unsigned char uchar;
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 typedef unsigned __int16 uint16;
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 typedef unsigned __int32 uint;
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 typedef unsigned __int64 uint64;
 
 #define IMAX 1000000000
@@ -74,9 +62,6 @@ typedef unsigned __int64 uint64;
 
 #define MONITOR_MAX 10
 
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
 /*
 	‰¹Šy‚ÆŒø‰Ê‰¹‚Ì‰Šúƒ{ƒŠƒ…[ƒ€
 	0.0 - 1.0

@@ -1593,13 +1593,7 @@ FUNC_STATIC void AES128_Decrypt_rcbc(void *block, int size)
 
 	// < app
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int index = 0; index < 2; index++)
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int n = 0; n < 8; n++)
 	{
 		rawKey[index * 8 + n] = rk[index] >> n * 8 & 0xff;
@@ -1608,9 +1602,6 @@ FUNC_STATIC void AES128_Decrypt_rcbc(void *block, int size)
 
 #if LOG_ENABLED
 	LOG("rawKey: ");
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int index = 0; index < 16; index++)
 	{
 		LOG("%02x", rawKey[index]);
@@ -1621,9 +1612,6 @@ FUNC_STATIC void AES128_Decrypt_rcbc(void *block, int size)
 	rijndaelKeySetupDec(ctx, rawKey, 128);
 	memset(&rawKey, 0x00, 16);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int index = size - 16; 16 <= index; index -= 16)
 	{
 		rijndaelDecrypt(ctx, 10, (uchar *)block + index, (uchar *)block + index);
@@ -1654,9 +1642,6 @@ int aes128_decrypt_extend(void *block, int &size, int tweek) // ret: ? 成功
 	size -= 16;
 	autoList<uchar> *hash = sha512_block((uchar *)block, size);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(memcmp((uchar *)block + size, hash->ElementAt(0), 16) != 0) // ? ハッシュ不一致
 	{
 		delete hash;
@@ -1666,9 +1651,6 @@ int aes128_decrypt_extend(void *block, int &size, int tweek) // ret: ? 成功
 	delete hash;
 	int padSize = ((uchar *)block)[size - 1];
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(!m_isRange(padSize, 1, 16)) // ? 不正なパディング (規定のサイズではない)
 	{
 		LOGPOS();
@@ -1676,9 +1658,6 @@ int aes128_decrypt_extend(void *block, int &size, int tweek) // ret: ? 成功
 	}
 	size -= padSize + 4;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(size < 0) // ? 不正なパディング (ブロックサイズより大きい)
 	{
 		LOGPOS();
@@ -1690,9 +1669,6 @@ int aes128_decrypt_extend(void *block, int &size, int tweek) // ret: ? 成功
 		((uchar *)block)[size + 2] << 8 * 2 |
 		((uchar *)block)[size + 3] << 8 * 3;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(tweek != gotTweek) // ? リソース番号の不一致
 	{
 		LOGPOS();

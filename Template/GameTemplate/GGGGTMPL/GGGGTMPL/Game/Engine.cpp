@@ -43,9 +43,6 @@ static void CheckHz(void)
 	__int64 currTime = GetCurrTime();
 	__int64 diffTime = currTime - FrameStartTime;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(diffTime < 15 || 18 < diffTime) // ? frame rate drop
 		FrameRateDropCount++;
 	else
@@ -64,9 +61,6 @@ int InnerDrawScrHdl = -1;
 */
 void EachFrame(void)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(!SEEachFrame())
 	{
 		MusicEachFrame();
@@ -74,9 +68,6 @@ void EachFrame(void)
 	Gnd.EL->ExecuteAllTask();
 	CurtainEachFrame();
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(Gnd.MainScreen && CurrDrawScreenHandle == GetHandle(Gnd.MainScreen))
 	{
 		ChangeDrawScreen(DX_SCREEN_BACK);
@@ -96,9 +87,6 @@ void EachFrame(void)
 
 	ScreenFlip();
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(!IgnoreEscapeKey && CheckHitKey(KEY_INPUT_ESCAPE) == 1 || ProcessMessage() == -1)
 	{
 		EndProc();
@@ -118,9 +106,6 @@ void EachFrame(void)
 	InputEachFrame();
 	MouseEachFrame();
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(Gnd.RealScreen_W != SCREEN_W || Gnd.RealScreen_H != SCREEN_H)
 	{
 		if(!Gnd.MainScreen)

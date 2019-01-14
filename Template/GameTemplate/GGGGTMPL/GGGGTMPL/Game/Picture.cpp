@@ -185,9 +185,6 @@ resCluster<PicInfo_t *> *CreatePicRes(PicInfo_t *(*picLoader)(autoList<uchar> *)
 */
 void UnloadAllPicResHandle(void) // スクリーンモード切り替え直前に呼ぶこと。
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int index = 0; index < GetPicResList()->GetCount(); index++)
 	{
 		GetPicResList()->GetElement(index)->UnloadAllHandle();
@@ -211,9 +208,6 @@ void SetPicRes(resCluster<PicInfo_t *> *resclu) // resclu: NULL == reset
 */
 resCluster<PicInfo_t *> *GetPicRes(void)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(!CurrPicRes)
 		return GetStdPicRes();
 
@@ -232,9 +226,6 @@ void ResetPicRes(void)
 */
 int Pic(int picId)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(picId & DTP)
 		return Der(GetPicRes(), picId & ~DTP);
 
@@ -245,9 +236,6 @@ int Pic(int picId)
 */
 int Pic_W(int picId)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(picId & DTP)
 		return Der_W(picId & ~DTP);
 
@@ -258,9 +246,6 @@ int Pic_W(int picId)
 */
 int Pic_H(int picId)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(picId & DTP)
 		return Der_H(picId & ~DTP);
 

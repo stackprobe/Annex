@@ -66,9 +66,6 @@ autoList<uchar> *LoadFileDataFromCluster(char *clusterFile, int resId, int tweek
 	errorCase(num <= resId);
 	__int64 pos = (num + 1) * 4;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int count = 0; count < resId; count++)
 	{
 		pos += Res_ReadInt(fp);

@@ -20,9 +20,6 @@ void MouseEachFrame(void)
 {
 	int status;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(WindowIsActive)
 	{
 		MouseRot = GetMouseWheelRotVol();
@@ -123,9 +120,6 @@ void UpdateMouseMove(void)
 
 	ApplyMousePos();
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(lastFrame + 1 < ProcFrame) // ? 1フレーム以上更新しなかった。
 	{
 		MouseMoveX = 0;

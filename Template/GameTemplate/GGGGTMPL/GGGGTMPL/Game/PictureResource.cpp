@@ -30,13 +30,7 @@ static PicInfo_t *LoadInvPic(autoList<uchar> *fileData)
 
 	Pic_GetSoftImageSize(si_h, w, h);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int x = 0; x < w; x++)
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int y = 0; y < h; y++)
 	{
 		Pic_GetSIPixel(si_h, x, y);
@@ -64,13 +58,7 @@ static PicInfo_t *LoadMirrorPic(autoList<uchar> *fileData)
 
 	int new_si_h = Pic_CreateSoftImage(w * 2, h);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int x = 0; x < w; x++)
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int y = 0; y < h; y++)
 	{
 		Pic_GetSIPixel(si_h, x, y);

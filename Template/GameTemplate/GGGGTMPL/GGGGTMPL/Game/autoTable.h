@@ -5,8 +5,17 @@ template <class Element_t>
 class autoTable
 {
 private:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoList<autoList<Element_t> *> *Rows;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	Element_t (*CreateCellFunc)(void);
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	void (*ReleaseCellFunc)(Element_t);
 
 public:

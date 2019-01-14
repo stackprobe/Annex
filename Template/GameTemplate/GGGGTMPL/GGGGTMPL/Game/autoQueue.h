@@ -10,7 +10,13 @@ template <class Element_t>
 class autoQueue
 {
 private:
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	autoList<Element_t> *List;
+	/*
+		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	*/
 	int TopIndex;
 
 public:

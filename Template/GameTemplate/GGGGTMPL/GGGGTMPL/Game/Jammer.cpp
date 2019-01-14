@@ -10,9 +10,6 @@ static void Kaisa(autoList<uchar> *block, int downFlag)
 {
 	uchar *buffer = block->ElementAt(0);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(downFlag)
 	{
 		for(int index = block->GetCount() - 1; 1 <= index; index--)
@@ -62,9 +59,6 @@ static int SingleJammer(autoList<uchar> *block, int encodeFlag)
 {
 	int tznum = UnaddTrailZero(block);
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(block->GetCount() == 0)
 	{
 		if(encodeFlag)
@@ -79,9 +73,6 @@ static int SingleJammer(autoList<uchar> *block, int encodeFlag)
 			tznum--;
 		}
 	}
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	else if(encodeFlag)
 	{
 		int value = 0;
@@ -117,9 +108,6 @@ static int SingleJammer(autoList<uchar> *block, int encodeFlag)
 */
 static int MultiJammer(autoList<uchar> *block, int encodeFlag)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int count = 0; count < POWERVAL; count++)
 		if(!SingleJammer(block, encodeFlag))
 			return 0;
@@ -133,9 +121,6 @@ int Jammer(autoList<uchar> *block, int encodeFlag) // ret: ? ê¨å˜
 {
 	int retval;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(encodeFlag)
 	{
 		errorCase(!MultiJammer(block, 1));

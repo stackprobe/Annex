@@ -51,9 +51,6 @@ static int HugeBlockCount;
 */
 static int GetHugeBlockIndex(void *block)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int index = 0; index < HugeBlockCount; index++)
 	{
 		if(HugeBlocks[index] == block)
@@ -175,9 +172,6 @@ void *memAlloc_NC(int size)
 */
 void *memRealloc(void *block, int size)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(!block)
 		return memAlloc(size);
 
@@ -202,9 +196,6 @@ void *memRealloc(void *block, int size)
 		return block;
 	}
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(bSize < size)
 	{
 		void *newBlock = memAlloc_NC(size);
@@ -220,9 +211,6 @@ void *memRealloc(void *block, int size)
 */
 void memFree(void *block)
 {
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if(!block)
 		return;
 

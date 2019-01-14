@@ -158,9 +158,6 @@ int SHA512_Final (unsigned char *md, SHA512_CTX *c)
 
 	p[n]=0x80;	/* There always is a room for one */
 	n++;
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if (n > (sizeof(c->u)-16))
 		memset (p+n,0,sizeof(c->u)-n), n=0,
 		sha512_block_data_order (c,p,1);
@@ -195,9 +192,6 @@ int SHA512_Final (unsigned char *md, SHA512_CTX *c)
 #if defined(SHA512_ASM) && (defined(__arm__) || defined(__arm))
 	/* recall assembler dword order... */
 	n = c->md_len;
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if (n == SHA384_DIGEST_LENGTH || n == SHA512_DIGEST_LENGTH)
 		{
 		unsigned int *h = (unsigned int *)c->h, t;
@@ -213,9 +207,6 @@ int SHA512_Final (unsigned char *md, SHA512_CTX *c)
 		}
 	else	return 0;
 #else
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	switch (c->md_len)
 		{
 		/* Let compiler decide if it's appropriate to unroll... */
@@ -278,9 +269,6 @@ int SHA512_Update (SHA512_CTX *c, const void *_data, size_t len)
 	if (sizeof(len)>=8)	c->Nh+=(((SHA_LONG64)len)>>61);
 	c->Nl=l;
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if (c->num != 0)
 		{
 		size_t n = sizeof(c->u) - c->num;
@@ -297,9 +285,6 @@ int SHA512_Update (SHA512_CTX *c, const void *_data, size_t len)
 			}
 		}
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	if (len >= sizeof(c->u))
 		{
 #ifndef SHA512_BLOCK_CAN_MANAGE_UNALIGNED_DATA
@@ -529,9 +514,6 @@ static void sha512_block_data_order (SHA512_CTX *ctx, const void *in, size_t num
 	E    = ctx->h[4];	F[5] = ctx->h[5];
 	F[6] = ctx->h[6];	F[7] = ctx->h[7];
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for (i=0;i<16;i++,F--)
 		{
 #ifdef B_ENDIAN
@@ -547,9 +529,6 @@ static void sha512_block_data_order (SHA512_CTX *ctx, const void *in, size_t num
 		A    = T + Sigma0(A) + Maj(A,F[1],F[2]);
 		}
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for (;i<80;i++,F--)
 		{
 		T    = sigma0(F[8+16-1]);
@@ -590,9 +569,6 @@ static void sha512_block_data_order (SHA512_CTX *ctx, const void *in, size_t num
 	a = ctx->h[0];	b = ctx->h[1];	c = ctx->h[2];	d = ctx->h[3];
 	e = ctx->h[4];	f = ctx->h[5];	g = ctx->h[6];	h = ctx->h[7];
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for (i=0;i<16;i++)
 		{
 #ifdef B_ENDIAN
@@ -606,9 +582,6 @@ static void sha512_block_data_order (SHA512_CTX *ctx, const void *in, size_t num
 		d = c;	c = b;	b = a;	a = T1 + T2;
 		}
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for (;i<80;i++)
 		{
 		s0 = X[(i+1)&0x0f];	s0 = sigma0(s0);
@@ -633,18 +606,12 @@ static void sha512_block_data_order (SHA512_CTX *ctx, const void *in, size_t num
 #define	ROUND_00_15(i,a,b,c,d,e,f,g,h)		do {	\
 	T1 += h + Sigma1(e) + Ch(e,f,g) + K512[i];	\
 	h = Sigma0(a) + Maj(a,b,c);			\
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	d += T1;	h += T1;		} while (0)
 
 #define	ROUND_16_80(i,j,a,b,c,d,e,f,g,h,X)	do {	\
 	s0 = X[(j+1)&0x0f];	s0 = sigma0(s0);	\
 	s1 = X[(j+14)&0x0f];	s1 = sigma1(s1);	\
 	T1 = X[(j)&0x0f] += s0 + s1 + X[(j+9)&0x0f];	\
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	ROUND_00_15(i+j,a,b,c,d,e,f,g,h);		} while (0)
 
 /*
@@ -698,9 +665,6 @@ static void sha512_block_data_order (SHA512_CTX *ctx, const void *in, size_t num
 	T1 = X[15] = PULL64(W[15]);	ROUND_00_15(15,b,c,d,e,f,g,h,a);
 #endif
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for (i=16;i<80;i+=16)
 		{
 		ROUND_16_80(i, 0,a,b,c,d,e,f,g,h,X);
@@ -790,9 +754,6 @@ void sha512_expand(autoList<uchar> *block, int exnum) // exnum: 0- (0 as noop)
 
 	SHA512_Update(&ctx, block->ElementAt(0), block->GetCount());
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(int index = 0; index < exnum; index++)
 	{
 		if(index)
@@ -817,9 +778,6 @@ autoList<uchar> *sha512_expand(char *line, int exnum)
 {
 	autoList<uchar> *block = new autoList<uchar>(strlen(line));
 
-	/*
-		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	*/
 	for(char *p = line; *p; p++)
 	{
 		block->AddElement(*p);
