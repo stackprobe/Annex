@@ -86,6 +86,26 @@ void updateFindData(char *path)
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
+static int App_mkdir(char *dir) // ret: ? é∏îs
+{
+	for(int c = 1; ; c++)
+	{
+		if(_mkdir(dir) == 0) // ? ê¨å˜
+			return 0;
+
+		LOG("Failed _mkdir \"%s\", %d-th trial. LastError: %08x\n", dir, c, GetLastError());
+
+		if(10 <= c)
+			break;
+
+		Sleep(100);
+	}
+	return 1;
+}
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 int accessible(char *path)
 {
 	return !_access(path, 0);
@@ -108,7 +128,7 @@ char *refLocalPath(char *path)
 void createDir(char *dir)
 {
 	errorCase(m_isEmpty(dir));
-	errorCase(_mkdir(dir)); // ? é∏îs
+	errorCase(App_mkdir(dir)); // ? é∏îs
 }
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
