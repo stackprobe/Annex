@@ -203,7 +203,7 @@ public:
 			else
 				this->ListSize *= 2;
 
-			errorCase(this->ListSize < this->Count + 1); // 2bs
+			errorCase(this->ListSize <= this->Count); // 2bs
 			errorCase(IMAX / sizeof(Element_t) < this->ListSize);
 
 			this->List = (Element_t *)memRealloc(this->List, this->ListSize * sizeof(Element_t));
