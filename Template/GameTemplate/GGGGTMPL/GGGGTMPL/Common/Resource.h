@@ -85,7 +85,7 @@ private:
 		case RC_RESMD_FILELIST:
 			if(!this->FileList)
 			{
-				this->FileList = readLines_x(readFile(this->FileListFile));
+				this->FileList = readLines_x(readAllBytes(this->FileListFile));
 				errorCase(this->FileList->GetCount() != this->ResCount);
 
 				for(int index = 0; index < this->FileList->GetCount(); index++)
@@ -100,7 +100,7 @@ private:
 					}
 				}
 			}
-			fileData = readFile(this->FileList->GetElement(resId));
+			fileData = readAllBytes(this->FileList->GetElement(resId));
 			break;
 
 		default:

@@ -52,3 +52,16 @@ void unaddCwd(void);
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 char *getAppTempDir(void);
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+__int64 getFileSizeFP(FILE *fp);
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+__int64 getFileSizeFPSS(FILE *fp);
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+__int64 getFileSize(char *file);

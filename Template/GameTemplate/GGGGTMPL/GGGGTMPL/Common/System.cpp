@@ -154,3 +154,19 @@ __int64 GetCurrTime(void)
 	lastTime = currTime;
 	return currTime;
 }
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void execute(char *command)
+{
+	system(command);
+}
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void execute_x(char *command)
+{
+	execute(command);
+	memFree(command);
+}

@@ -242,7 +242,7 @@ void writeBmpFile(char *file, autoTable<uint> *bmp)
 {
 	autoList<uchar> *fileData = new autoList<uchar>();
 	writeBmpFile(fileData, bmp);
-	writeFile_cx(file, fileData);
+	writeAllBytes_cx(file, fileData);
 }
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

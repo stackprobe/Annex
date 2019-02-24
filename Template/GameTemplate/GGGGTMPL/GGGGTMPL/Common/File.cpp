@@ -86,21 +86,19 @@ void updateFindData(char *path)
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-static int App_mkdir(char *dir) // ret: ? Ž¸”s
+static int Game_mkdir(char *dir) // ret: ? Ž¸”s
 {
-	for(int c = 1; ; c++)
+	if(CreateDirectory(dir, NULL) == 0) // ? Ž¸”s
 	{
-		if(_mkdir(dir) == 0) // ? ¬Œ÷
+		if(accessible(dir))
 			return 0;
 
-		LOG("Failed _mkdir \"%s\", %d-th trial. LastError: %08x\n", dir, c, GetLastError());
+		execute_x(xcout("MD \"%s\"", dir));
 
-		if(10 <= c)
-			break;
-
-		Sleep(100);
+		if(!accessible(dir))
+			return 1;
 	}
-	return 1;
+	return 0;
 }
 
 /*
@@ -128,7 +126,7 @@ char *refLocalPath(char *path)
 void createDir(char *dir)
 {
 	errorCase(m_isEmpty(dir));
-	errorCase(App_mkdir(dir)); // ? Ž¸”s
+	errorCase(Game_mkdir(dir)); // ? Ž¸”s
 }
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -250,4 +248,39 @@ char *getAppTempDir(void)
 		GetFinalizers()->AddFunc(DeleteAppTempDir);
 	}
 	return dir;
+}
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+__int64 getFileSizeFP(FILE *fp)
+{
+	errorCase(_fseeki64(fp, 0I64, SEEK_END) != 0); // ? Ž¸”s
+
+	__int64 size = _ftelli64(fp);
+
+	errorCase(size < 0I64);
+	return size;
+}
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+__int64 getFileSizeFPSS(FILE *fp)
+{
+	__int64 size = getFileSizeFP(fp);
+
+	errorCase(_fseeki64(fp, 0I64, SEEK_SET) != 0); // ? Ž¸”s
+	return size;
+}
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+__int64 getFileSize(char *file)
+{
+	FILE *fp = fileOpen(file, "rb");
+
+	__int64 size = getFileSizeFP(fp);
+
+	fileClose(fp);
+	return size;
 }
