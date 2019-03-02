@@ -70,16 +70,11 @@ void replaceChar(char *str, int srcChr, int destChr);
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *replaceLine(char *str, char *srcPtn, char *destPtn, int ignoreCase = 0);
+char *replacePtn(char *str, char *srcPtn, char *destPtn, int ignoreCase = 0);
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *replaceLineLoop(char *str, char *srcPtn, char *destPtn, int ignoreCase = 0, int loopMax = 20);
-
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-char *combine(char *path1, char *path2);
+char *replacePtnLoop(char *str, char *srcPtn, char *destPtn, int ignoreCase = 0, int loopMax = 30);
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -105,6 +100,27 @@ void reverseLine(char *line);
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 char *thousandComma(char *line);
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trimLead(char *line, int delimChr);
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trimTrail(char *line, int delimChr);
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trimSequ(char *line, int delimChr);
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trim(char *line, int delimChr);
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trimEdge(char *line, int delimChr);
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

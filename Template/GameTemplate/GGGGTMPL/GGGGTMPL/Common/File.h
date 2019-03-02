@@ -1,6 +1,11 @@
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
+// ---- getFileList ----
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 extern struct _finddata_t lastFindData;
 
 /*
@@ -13,6 +18,11 @@ void getFileList(char *dir, autoList<char *> *subDirs, autoList<char *> *files);
 void updateFindData(char *path);
 
 // ----
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+char *combine(char *path1, char *path2);
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

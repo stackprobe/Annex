@@ -86,7 +86,7 @@ public:
 	/*
 		copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 	*/
-	autoList<Element_t> *Ecdysis()
+	autoList<Element_t> *Molt()
 	{
 		autoList<Element_t> *list_ret = new autoList<Element_t>();
 
@@ -507,3 +507,23 @@ void releaseList(autoList<Element_t> *list, void (*func)(Element_t e))
 	list->CallAllElement(func);
 	delete list;
 }
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+template <class Element_t>
+Element_t *unbindBlock(autoList<Element_t> *list)
+{
+	Element_t *block = list->UnbindBuffer();
+	delete list;
+	return block;
+}
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+char *unbindBlock2Line(autoList<char> *list);
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+char *unbindBlock2Line_NR(autoList<char> *list);

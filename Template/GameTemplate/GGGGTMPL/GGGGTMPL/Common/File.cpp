@@ -3,6 +3,8 @@
 */
 #include "all.h"
 
+// ---- getFileList ----
+
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
@@ -82,6 +84,25 @@ void updateFindData(char *path)
 }
 
 // ----
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+char *combine(char *path1, char *path2)
+{
+	char *path;
+
+	if(path1[0] && path1[1] == ':' && path1[2] == '\0')
+		path = xcout("%s.\\%s", path1, path2);
+	else
+		path = xcout("%s\\%s", path1, path2);
+
+	replaceChar(path, '\\', '/');
+	path = replacePtnLoop(path, "//", "/");
+	replaceChar(path, '/', '\\');
+
+	return path;
+}
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

@@ -117,7 +117,7 @@ void replaceChar(char *str, int srcChr, int destChr) // mbs_
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *replaceLine(char *str, char *srcPtn, char *destPtn, int ignoreCase) // ret: strr()
+char *replacePtn(char *str, char *srcPtn, char *destPtn, int ignoreCase) // ret: strr()
 {
 	autoList<char> *buff = new autoList<char>();
 	int srcPtnLen = strlen(srcPtn);
@@ -141,39 +141,21 @@ char *replaceLine(char *str, char *srcPtn, char *destPtn, int ignoreCase) // ret
 		}
 	}
 	memFree(str);
-
-	buff->AddElement('\0');
-	char *ret = buff->UnbindBuffer();
-	delete buff;
-	return ret;
+	return unbindBlock2Line(buff);
 }
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-char *replaceLineLoop(char *str, char *srcPtn, char *destPtn, int ignoreCase, int loopMax) // ret: strr()
+char *replacePtnLoop(char *str, char *srcPtn, char *destPtn, int ignoreCase, int loopMax) // ret: strr()
 {
 	for(int c = 0; c < loopMax; c++)
 	{
-		str = replaceLine(str, srcPtn, destPtn, ignoreCase);
+		str = replacePtn(str, srcPtn, destPtn, ignoreCase);
 
 		if(!ReplacedFlag)
 			break;
 	}
 	return str;
-}
-
-/*
-	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-*/
-char *combine(char *path1, char *path2)
-{
-	char *path = xcout("%s\\%s", path1, path2);
-
-	replaceChar(path, '\\', '/');
-	path = replaceLineLoop(path, "//", "/");
-	replaceChar(path, '/', '\\');
-
-	return path;
 }
 
 /*
@@ -266,6 +248,89 @@ char *thousandComma(char *line) // ret: strr(line)
 	}
 	reverseLine(line); // •œŒ³
 	return line;
+}
+
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trimLead(char *line, int delimChr)
+{
+	if(delimChr == '\0') return; // Factory‚Å‚ÍƒGƒ‰[‚É‚µ‚Ä‚¢‚È‚¢B
+
+	if(*line == delimChr)
+	{
+		char *p;
+
+		for(p = line + 1; *p == delimChr; p++);
+
+		for(char *w = line; *w = *p; w++, p++);
+	}
+}
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trimTrail(char *line, int delimChr)
+{
+	char *p;
+
+	for(p = strchr(line, '\0'); line < p; p--)
+		if(p[-1] != delimChr)
+			break;
+
+	*p = '\0';
+}
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trimSequ(char *line, int delimChr)
+{
+	char *n = line;
+
+	errorCase(delimChr == '\0');
+
+	while(n = strchr(n, delimChr))
+	{
+		n++;
+
+		if(*n == delimChr)
+		{
+			char *f = n;
+
+			do
+			{
+				f++;
+			}
+			while(*f == delimChr);
+
+			while(*f)
+			{
+				if(*f == delimChr)
+					while(f[1] == delimChr)
+						f++;
+
+				*n++ = *f++;
+			}
+			*n = '\0';
+			break;
+		}
+	}
+}
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trim(char *line, int delimChr)
+{
+	trimTrail(line, delimChr);
+	trimLead(line, delimChr);
+	trimSequ(line, delimChr);
+}
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+void trimEdge(char *line, int delimChr)
+{
+	trimTrail(line, delimChr);
+	trimLead(line, delimChr);
 }
 
 /*

@@ -248,9 +248,7 @@ static void SD_WriteBitList(bitList *src)
 	{
 		buff->AddElement(src->RefBit(index) ? '1' : '0');
 	}
-	buff->AddElement('\0');
-	SD_WriteLine_x(buff->UnbindBuffer());
-	delete buff;
+	SD_WriteLine_x(unbindBlock2Line(buff));
 }
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

@@ -91,6 +91,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Common\aes128.cpp" />
+    <ClCompile Include="Common\autoList.cpp" />
     <ClCompile Include="Common\bmp.cpp" />
     <ClCompile Include="Common\CommonEffect.cpp" />
     <ClCompile Include="Common\Compare.cpp" />
