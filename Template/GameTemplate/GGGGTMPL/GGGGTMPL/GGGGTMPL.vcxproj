@@ -105,6 +105,7 @@
     <ClCompile Include="Common\Etcetera.cpp" />
     <ClCompile Include="Common\File.cpp" />
     <ClCompile Include="Common\FileStream.cpp" />
+    <ClCompile Include="Common\FileStreamData.cpp" />
     <ClCompile Include="Common\Font.cpp" />
     <ClCompile Include="Common\GameTools.cpp" />
     <ClCompile Include="Common\GameTools2.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Common\Etcetera.h" />
     <ClInclude Include="Common\File.h" />
     <ClInclude Include="Common\FileStream.h" />
+    <ClInclude Include="Common\FileStreamData.h" />
     <ClInclude Include="Common\finalizers.h" />
     <ClInclude Include="Common\Font.h" />
     <ClInclude Include="Common\GameTools.h" />
