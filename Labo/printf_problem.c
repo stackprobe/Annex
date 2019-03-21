@@ -17,7 +17,7 @@
 
 int main(int argc, char **argv)
 {
-	static char text[18000];
+	static char text[18001];
 	int i;
 
 	for(i = 0; i < 1000; i++)
