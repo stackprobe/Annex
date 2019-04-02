@@ -1,6 +1,6 @@
 #include "all.h"
 
-void Logo(void)
+void Test0001(void)
 {
 	SetCurtain();
 	FreezeInput();

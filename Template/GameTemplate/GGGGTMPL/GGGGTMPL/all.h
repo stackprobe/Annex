@@ -2,5 +2,5 @@
 
 #include "Common\all.h"
 
-#include "Logo.h"
 #include "ProcMain.h"
+#include "Test0001.h"

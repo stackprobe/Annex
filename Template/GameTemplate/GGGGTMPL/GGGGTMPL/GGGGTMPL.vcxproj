@@ -135,7 +135,7 @@
     <ClCompile Include="Common\System.cpp" />
     <ClCompile Include="Common\System2.cpp" />
     <ClCompile Include="Common\taskList.cpp" />
-    <ClCompile Include="Logo.cpp" />
+    <ClCompile Include="Test0001.cpp" />
     <ClCompile Include="ProcMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -194,7 +194,7 @@
     <ClInclude Include="Common\System.h" />
     <ClInclude Include="Common\System2.h" />
     <ClInclude Include="Common\taskList.h" />
-    <ClInclude Include="Logo.h" />
+    <ClInclude Include="Test0001.h" />
     <ClInclude Include="ProcMain.h" />
   </ItemGroup>
   <ItemGroup>

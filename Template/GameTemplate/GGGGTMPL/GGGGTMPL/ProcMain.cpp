@@ -3,12 +3,12 @@
 void ProcMain(void)
 {
 #if !LOG_ENABLED
-	Logo();
+	Test0001();
 #elif 1 // test
-	Logo();
+	Test0001();
 #elif 1 // test
-	Logo();
+	Test0001();
 #else // test
-	Logo();
+	Test0001();
 #endif
 }
