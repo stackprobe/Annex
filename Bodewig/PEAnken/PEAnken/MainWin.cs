@@ -24,12 +24,17 @@ namespace Charlotte
 			// noop
 		}
 
+		private DetailDlg DetailDlg = null;
+
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
 			// -- 0001
 
 			this.MS_Init();
-			this.South.Text = "";
+			//this.South.Text = "";
+
+			this.DetailDlg = new DetailDlg();
+			this.DetailDlg.Show();
 
 			// ----
 
@@ -66,7 +71,8 @@ namespace Charlotte
 
 			// ----
 
-			// -- 9000
+			this.DetailDlg.Close();
+			this.DetailDlg = null;
 
 			// ----
 
@@ -77,6 +83,8 @@ namespace Charlotte
 		private bool MTBusy;
 		private long MTCount;
 
+		private Queue<Action> MTLiteEvents = new Queue<Action>();
+
 		private void MainTimer_Tick(object sender, EventArgs e)
 		{
 			if (this.MTEnabled == false || this.MTBusy)
@@ -86,7 +94,15 @@ namespace Charlotte
 
 			try
 			{
-				// -- 3001
+				NarrowDownEachTimer();
+
+				for (int count = Math.Max(1, MTLiteEvents.Count / 10); 0 < count; count--)
+					MTLiteEvents.Dequeue()();
+
+				this.South.Text = NarrowDownHitCount + " / " + this.MainSheet.RowCount +
+					", W=" + this.NarrowDownWords.Length +
+					", R=" + this.NarrowDownRowIndex +
+					", Q=" + this.MTLiteEvents.Count;
 			}
 			catch (Exception ex)
 			{
@@ -97,6 +113,63 @@ namespace Charlotte
 				this.MTBusy = false;
 				this.MTCount++;
 			}
+		}
+
+		private string[] NarrowDownWords = new string[0];
+		private int NarrowDownRowIndex = 0;
+		private int NarrowDownHitCount = 0;
+
+		private void NarrowDown_Reset()
+		{
+			this.NarrowDownWords = StringTools.Tokenize(this.FreeWord.Text, " ", false, true);
+			this.NarrowDownRowIndex = 0;
+			this.NarrowDownHitCount = 0;
+		}
+
+		private void NarrowDownEachTimer()
+		{
+			for (int c = 0; c < Consts.NARROW_DOWN_ROW_COUNT_EACH_TIMER; c++)
+			{
+				if (this.MainSheet.RowCount <= NarrowDownRowIndex)
+					break;
+
+				bool match = NarrowDown_IsRowMatch();
+
+				this.MainSheet.Rows[NarrowDownRowIndex].Visible = match;
+
+				if (match)
+					NarrowDownHitCount++;
+
+				NarrowDownRowIndex++;
+			}
+		}
+
+		private bool NarrowDown_IsRowMatch()
+		{
+			string[] words = NarrowDownWords;
+
+			if (words.Length == 0)
+				return true;
+
+			foreach (string word in words)
+				if (NarrowDown_IsRowMatchWord(word) == false)
+					return false;
+
+			return true;
+		}
+
+		private bool NarrowDown_IsRowMatchWord(string word)
+		{
+			int rowidx = NarrowDownRowIndex;
+
+			for (int colidx = 0; colidx < this.MainSheet.ColumnCount; colidx++)
+			{
+				string cell = "" + this.MainSheet.Rows[rowidx].Cells[colidx].Value;
+
+				if (StringTools.ContainsIgnoreCase(cell, word))
+					return true;
+			}
+			return false;
 		}
 
 		private void 終了ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -180,7 +253,9 @@ namespace Charlotte
 			this.MS_AutoResize();
 			this.MainSheet.ClearSelection();
 
-			this.South.Text = "" + this.MainSheet.RowCount;
+			//this.South.Text = "" + this.MainSheet.RowCount;
+
+			this.NarrowDown_Reset();
 		}
 
 		private void MS_AutoResize()
@@ -246,6 +321,61 @@ namespace Charlotte
 			{
 				return Comp((DataGridViewRow)a, (DataGridViewRow)b);
 			}
+		}
+
+		private int MS_GetSelectedRowIndex()
+		{
+			for (int rowidx = 0; rowidx < this.MainSheet.RowCount; rowidx++)
+				if (this.MainSheet.Rows[rowidx].Selected)
+					return rowidx;
+
+			return -1;
+		}
+
+		private void FreeWord_TextChanged(object sender, EventArgs e)
+		{
+			this.NarrowDown_Reset();
+		}
+
+		private void MainSheet_SelectionChanged(object sender, EventArgs e)
+		{
+			MTLiteEvents.Enqueue(MS_SelectionChangedMain);
+		}
+
+		private void MS_SelectionChangedMain()
+		{
+			int rowidx = MS_GetSelectedRowIndex();
+			string text;
+
+			if (rowidx != -1)
+				text = this.GetRowText(rowidx);
+			else
+				text = "";
+
+			if (this.DetailDlg.GetMainText() != text)
+				this.DetailDlg.SetMainText(text);
+		}
+
+		private string GetRowText(int rowidx)
+		{
+			List<string> lines = new List<string>();
+
+			for (int colidx = 0; colidx < this.MainSheet.ColumnCount; colidx++)
+			{
+				string cell = "" + this.MainSheet.Rows[rowidx].Cells[colidx].Value;
+
+				if (cell != "")
+				{
+					lines.Add("【" + this.MainSheet.Columns[colidx].HeaderText + "】");
+					lines.Add("　" + cell);
+				}
+			}
+			return string.Join("\r\n", lines);
+		}
+
+		private void 選択解除SToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.MainSheet.ClearSelection();
 		}
 	}
 }

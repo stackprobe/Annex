@@ -39,9 +39,13 @@
 			this.uRL読み込みToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.South = new System.Windows.Forms.ToolStripStatusLabel();
+			this.FreeWord = new System.Windows.Forms.TextBox();
+			this.MainSheetMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.選択解除SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.MainSheet)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
+			this.MainSheetMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MainTimer
@@ -58,15 +62,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MainSheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.MainSheet.Location = new System.Drawing.Point(12, 27);
+			this.MainSheet.ContextMenuStrip = this.MainSheetMenu;
+			this.MainSheet.Location = new System.Drawing.Point(12, 60);
 			this.MainSheet.Name = "MainSheet";
 			this.MainSheet.ReadOnly = true;
 			this.MainSheet.RowHeadersVisible = false;
 			this.MainSheet.RowTemplate.Height = 21;
 			this.MainSheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.MainSheet.Size = new System.Drawing.Size(560, 409);
+			this.MainSheet.Size = new System.Drawing.Size(560, 376);
 			this.MainSheet.TabIndex = 0;
 			this.MainSheet.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MainSheet_ColumnHeaderMouseClick);
+			this.MainSheet.SelectionChanged += new System.EventHandler(this.MainSheet_SelectionChanged);
 			// 
 			// menuStrip1
 			// 
@@ -105,7 +111,7 @@
 			// uRL読み込みToolStripMenuItem
 			// 
 			this.uRL読み込みToolStripMenuItem.Name = "uRL読み込みToolStripMenuItem";
-			this.uRL読み込みToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.uRL読み込みToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
 			this.uRL読み込みToolStripMenuItem.Text = "URL読み込み";
 			this.uRL読み込みToolStripMenuItem.Click += new System.EventHandler(this.URL読み込みToolStripMenuItem_Click);
 			// 
@@ -125,11 +131,37 @@
 			this.South.Size = new System.Drawing.Size(86, 17);
 			this.South.Text = "準備しています...";
 			// 
+			// FreeWord
+			// 
+			this.FreeWord.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.FreeWord.Location = new System.Drawing.Point(12, 27);
+			this.FreeWord.MaxLength = 300;
+			this.FreeWord.Name = "FreeWord";
+			this.FreeWord.Size = new System.Drawing.Size(560, 27);
+			this.FreeWord.TabIndex = 3;
+			this.FreeWord.TextChanged += new System.EventHandler(this.FreeWord_TextChanged);
+			// 
+			// MainSheetMenu
+			// 
+			this.MainSheetMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.選択解除SToolStripMenuItem});
+			this.MainSheetMenu.Name = "MainSheetMenu";
+			this.MainSheetMenu.Size = new System.Drawing.Size(153, 48);
+			// 
+			// 選択解除SToolStripMenuItem
+			// 
+			this.選択解除SToolStripMenuItem.Name = "選択解除SToolStripMenuItem";
+			this.選択解除SToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.選択解除SToolStripMenuItem.Text = "選択解除(&S)";
+			this.選択解除SToolStripMenuItem.Click += new System.EventHandler(this.選択解除SToolStripMenuItem_Click);
+			// 
 			// MainWin
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(584, 461);
+			this.Controls.Add(this.FreeWord);
 			this.Controls.Add(this.MainSheet);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.statusStrip1);
@@ -148,6 +180,7 @@
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
+			this.MainSheetMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -164,6 +197,9 @@
 		private System.Windows.Forms.ToolStripMenuItem uRL読み込みToolStripMenuItem;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel South;
+		private System.Windows.Forms.TextBox FreeWord;
+		private System.Windows.Forms.ContextMenuStrip MainSheetMenu;
+		private System.Windows.Forms.ToolStripMenuItem 選択解除SToolStripMenuItem;
 	}
 }
 

@@ -123,7 +123,7 @@ namespace Charlotte
 								cell = cell.Replace(" ", "");
 								cell = cell.Replace("　", "");
 								cell = cell.Replace("<br/>", " ");
-								cell = cell.Trim();
+								//cell = cell.Trim(); // moved -> Normalize
 
 								if (20 < title.Length)
 								{
@@ -207,8 +207,11 @@ namespace Charlotte
 					while (cells.Count < Header.Count)
 						cells.Add("");
 
-					Rows[rowidx] = cells.ToArray();
+					row = cells.ToArray();
+					Rows[rowidx] = row;
 				}
+				for (int colidx = 0; colidx < row.Length; colidx++)
+					row[colidx] = row[colidx].Trim();
 			}
 		}
 	}
