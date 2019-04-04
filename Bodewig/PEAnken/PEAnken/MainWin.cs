@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Charlotte.Tools;
 using Charlotte.Utils;
 using System.Collections;
+using System.IO;
 
 namespace Charlotte
 {
@@ -36,9 +37,36 @@ namespace Charlotte
 			this.DetailDlg = new DetailDlg();
 			this.DetailDlg.Show();
 
+			ProcMain.WriteLog = message => this.DetailDlg.SetMainText("" + message);
+
+			if (File.Exists(Consts.ResourceTextFile_絞り込み))
+			{
+				foreach (string line in File.ReadAllLines(Consts.ResourceTextFile_絞り込み, StringTools.ENCODING_SJIS))
+				{
+					Add絞り込みItem(line);
+				}
+			}
+			else
+			{
+				// サンプル
+				Add絞り込みItem("Java C#");
+				Add絞り込みItem("Java Web");
+				Add絞り込みItem("Java Web Spring");
+			}
+
 			// ----
 
 			this.MTEnabled = true;
+		}
+
+		private void Add絞り込みItem(string word)
+		{
+			ToolStripMenuItem item = new ToolStripMenuItem();
+
+			item.Text = word;
+			item.Click += new EventHandler((sender, e) => this.FreeWord.Text = word);
+
+			this.絞り込みMenu.DropDownItems.Add(item);
 		}
 
 		private void MainWin_FormClosing(object sender, FormClosingEventArgs e)
@@ -71,6 +99,8 @@ namespace Charlotte
 
 			// ----
 
+			ProcMain.WriteLog = message => { };
+
 			this.DetailDlg.Close();
 			this.DetailDlg = null;
 
@@ -96,10 +126,10 @@ namespace Charlotte
 			{
 				NarrowDownEachTimer();
 
-				for (int count = Math.Max(1, MTLiteEvents.Count / 10); 0 < count; count--)
+				for (int count = MTLiteEvents.Count; 0 < count; count -= 10) // 少なくとも1/10を処理する。
 					MTLiteEvents.Dequeue()();
 
-				this.South.Text = NarrowDownHitCount + " / " + this.MainSheet.RowCount +
+				this.South.Text = NarrowDownHitCount + " (" + this.MainSheet.SelectedRows.Count + ") / " + this.MainSheet.RowCount +
 					", W=" + this.NarrowDownWords.Length +
 					", R=" + this.NarrowDownRowIndex +
 					", Q=" + this.MTLiteEvents.Count;
@@ -192,6 +222,9 @@ namespace Charlotte
 						at.AddText(f.RetText);
 
 						MS_Load(at.GetTable());
+
+						//if (this.FreeWord.Text == "")
+						//this.FreeWord.Text = "800,000 C#";
 					}
 					catch (Exception ex)
 					{
@@ -295,12 +328,32 @@ namespace Charlotte
 
 		private void MS_Sort(int colidx, SortOrder order)
 		{
-			MS_Sort((a, b) =>
-				StringTools.CompIgnoreCase(
-					"" + a.Cells[colidx].Value,
-					"" + b.Cells[colidx].Value
-					) * (order == SortOrder.Ascending ? 1 : -1)
-				);
+			MS_Sort((a, b) => MS_CellComp(
+				"" + a.Cells[colidx].Value,
+				"" + b.Cells[colidx].Value
+				) * (order == SortOrder.Ascending ? 1 : -1));
+		}
+
+		private int MS_CellComp(string a, string b)
+		{
+			int ret = VariantTools.Comp(a, b, value =>
+			{
+				if (StringTools.LiteValidate(value, StringTools.DECIMAL + ",円"))
+				{
+					value = new string(value.Where(chr => StringTools.DECIMAL.Contains(chr)).ToArray());
+
+					if (1 <= value.Length && value.Length <= 9) // ? 0 ～ 999,999,999
+					{
+						return int.Parse(value);
+					}
+				}
+				return IntTools.IMAX;
+			});
+
+			if (ret == 0)
+				ret = StringTools.CompIgnoreCase(a, b);
+
+			return ret;
 		}
 
 		private void MS_Sort(Comparison<DataGridViewRow> comp)

@@ -31,6 +31,8 @@ namespace Charlotte
 		public DetailDlg()
 		{
 			InitializeComponent();
+
+			this.MinimumSize = this.Size;
 		}
 
 		private void DetailDlg_Load(object sender, EventArgs e)

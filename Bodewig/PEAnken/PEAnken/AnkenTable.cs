@@ -200,6 +200,9 @@ namespace Charlotte
 			{
 				string[] row = Rows[rowidx];
 
+				if (Header.Count < row.Length)
+					throw null;
+
 				if (row.Length < Header.Count)
 				{
 					List<string> cells = new List<string>(row);
@@ -212,6 +215,70 @@ namespace Charlotte
 				}
 				for (int colidx = 0; colidx < row.Length; colidx++)
 					row[colidx] = row[colidx].Trim();
+			}
+
+			{
+				string[] sonotaColumn = ArrayTools.Repeat("", Rows.Count).ToArray();
+
+				for (int colidx = 0; colidx < Header.Count; colidx++)
+				{
+					if (Rows.Count(row => row[colidx] != "") <= Rows.Count * 0.03) // ? とても少ない。-> その他にまとめる。
+					{
+						for (int rowidx = 0; rowidx < Rows.Count; rowidx++)
+						{
+							if (Rows[rowidx][colidx] != "")
+							{
+								sonotaColumn[rowidx] += "【" + Header[colidx] + "】" + Rows[rowidx][colidx];
+								Rows[rowidx][colidx] = "";
+							}
+						}
+					}
+				}
+
+				Header.Add("その他");
+
+				for (int rowidx = 0; rowidx < Rows.Count; rowidx++)
+				{
+					List<string> row = new List<string>(Rows[rowidx]);
+					row.Add(sonotaColumn[rowidx]);
+					Rows[rowidx] = row.ToArray();
+				}
+			}
+
+			{
+				List<int> karappoColumnIndexes = new List<int>();
+
+				for (int colidx = 0; colidx < Header.Count; colidx++)
+					if (Rows.Count(row => row[colidx] != "") == 0)
+						karappoColumnIndexes.Add(colidx);
+
+				karappoColumnIndexes.Reverse();
+
+				Action<List<string>> removeKarappoColumns = row =>
+				{
+					foreach (int colidx in karappoColumnIndexes)
+						row.RemoveAt(colidx);
+				};
+
+				removeKarappoColumns(Header);
+
+				for (int rowidx = 0; rowidx < Rows.Count; rowidx++)
+				{
+					List<string> row = new List<string>(Rows[rowidx]);
+					removeKarappoColumns(row);
+					Rows[rowidx] = row.ToArray();
+				}
+			}
+
+			// 2bs check
+			{
+				for (int rowidx = 0; rowidx < Rows.Count; rowidx++)
+				{
+					string[] row = Rows[rowidx];
+
+					if (row.Length != Header.Count)
+						throw null;
+				}
 			}
 		}
 	}
