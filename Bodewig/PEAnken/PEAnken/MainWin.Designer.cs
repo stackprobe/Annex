@@ -40,13 +40,18 @@
 			this.編集ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.uRL読み込みToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.絞り込みMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.絞り込みクリアMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.South = new System.Windows.Forms.ToolStripStatusLabel();
 			this.FreeWord = new System.Windows.Forms.TextBox();
+			this.FreeWordMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.絞り込みクリアToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.MainSheet)).BeginInit();
 			this.MainSheetMenu.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
+			this.FreeWordMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MainTimer
@@ -59,9 +64,9 @@
 			this.MainSheet.AllowUserToAddRows = false;
 			this.MainSheet.AllowUserToDeleteRows = false;
 			this.MainSheet.AllowUserToResizeRows = false;
-			this.MainSheet.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.MainSheet.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.MainSheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.MainSheet.ContextMenuStrip = this.MainSheetMenu;
 			this.MainSheet.Location = new System.Drawing.Point(12, 60);
@@ -80,13 +85,13 @@
 			this.MainSheetMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.選択解除SToolStripMenuItem});
 			this.MainSheetMenu.Name = "MainSheetMenu";
-			this.MainSheetMenu.Size = new System.Drawing.Size(137, 26);
+			this.MainSheetMenu.Size = new System.Drawing.Size(123, 26);
 			// 
 			// 選択解除SToolStripMenuItem
 			// 
 			this.選択解除SToolStripMenuItem.Name = "選択解除SToolStripMenuItem";
-			this.選択解除SToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-			this.選択解除SToolStripMenuItem.Text = "選択解除(&S)";
+			this.選択解除SToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			this.選択解除SToolStripMenuItem.Text = "選択解除";
 			this.選択解除SToolStripMenuItem.Click += new System.EventHandler(this.選択解除SToolStripMenuItem_Click);
 			// 
 			// menuStrip1
@@ -133,9 +138,24 @@
 			// 
 			// 絞り込みMenu
 			// 
+			this.絞り込みMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.絞り込みクリアMenuItem,
+            this.toolStripMenuItem1});
 			this.絞り込みMenu.Name = "絞り込みMenu";
 			this.絞り込みMenu.Size = new System.Drawing.Size(62, 20);
 			this.絞り込みMenu.Text = "絞り込み";
+			// 
+			// 絞り込みクリアMenuItem
+			// 
+			this.絞り込みクリアMenuItem.Name = "絞り込みクリアMenuItem";
+			this.絞り込みクリアMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.絞り込みクリアMenuItem.Text = "クリア";
+			this.絞り込みクリアMenuItem.Click += new System.EventHandler(this.絞り込みクリアMenuItem_Click);
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// statusStrip1
 			// 
@@ -155,14 +175,29 @@
 			// 
 			// FreeWord
 			// 
-			this.FreeWord.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.FreeWord.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.FreeWord.ContextMenuStrip = this.FreeWordMenu;
 			this.FreeWord.Location = new System.Drawing.Point(12, 27);
 			this.FreeWord.MaxLength = 300;
 			this.FreeWord.Name = "FreeWord";
 			this.FreeWord.Size = new System.Drawing.Size(560, 27);
 			this.FreeWord.TabIndex = 3;
 			this.FreeWord.TextChanged += new System.EventHandler(this.FreeWord_TextChanged);
+			// 
+			// FreeWordMenu
+			// 
+			this.FreeWordMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.絞り込みクリアToolStripMenuItem});
+			this.FreeWordMenu.Name = "FreeWordMenu";
+			this.FreeWordMenu.Size = new System.Drawing.Size(101, 26);
+			// 
+			// 絞り込みクリアToolStripMenuItem
+			// 
+			this.絞り込みクリアToolStripMenuItem.Name = "絞り込みクリアToolStripMenuItem";
+			this.絞り込みクリアToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+			this.絞り込みクリアToolStripMenuItem.Text = "クリア";
+			this.絞り込みクリアToolStripMenuItem.Click += new System.EventHandler(this.絞り込みクリアToolStripMenuItem_Click);
 			// 
 			// MainWin
 			// 
@@ -189,6 +224,7 @@
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
+			this.FreeWordMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -209,6 +245,10 @@
 		private System.Windows.Forms.ContextMenuStrip MainSheetMenu;
 		private System.Windows.Forms.ToolStripMenuItem 選択解除SToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 絞り込みMenu;
+		private System.Windows.Forms.ContextMenuStrip FreeWordMenu;
+		private System.Windows.Forms.ToolStripMenuItem 絞り込みクリアToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 絞り込みクリアMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 	}
 }
 

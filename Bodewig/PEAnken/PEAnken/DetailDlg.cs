@@ -21,8 +21,10 @@ namespace Charlotte
 			const long SC_CLOSE = 0xF060L;
 
 			if (m.Msg == WM_SYSCOMMAND && (m.WParam.ToInt64() & 0xFFF0L) == SC_CLOSE)
+			{
+				MainWin.CloseWindowRequested = true;
 				return;
-
+			}
 			base.WndProc(ref m);
 		}
 

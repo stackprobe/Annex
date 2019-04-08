@@ -15,6 +15,8 @@ namespace Charlotte
 {
 	public partial class MainWin : Form
 	{
+		public static bool CloseWindowRequested = false;
+
 		public MainWin()
 		{
 			InitializeComponent();
@@ -124,6 +126,12 @@ namespace Charlotte
 
 			try
 			{
+				if (CloseWindowRequested)
+				{
+					CloseWindowRequested = false;
+					this.CloseWindow();
+					return;
+				}
 				NarrowDownEachTimer();
 
 				for (int count = MTLiteEvents.Count; 0 < count; count -= 10) // 少なくとも1/10を処理する。
@@ -209,6 +217,8 @@ namespace Charlotte
 
 		private void URL読み込みToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			this.BeforeDialog();
+
 			using (InputTextDlg f = new InputTextDlg())
 			{
 				f.ShowDialog();
@@ -239,6 +249,7 @@ namespace Charlotte
 					}
 				}
 			}
+			this.AfterDialog();
 		}
 
 		private void MS_Init()
@@ -429,6 +440,16 @@ namespace Charlotte
 		private void 選択解除SToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			this.MainSheet.ClearSelection();
+		}
+
+		private void 絞り込みクリアToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.FreeWord.Clear();
+		}
+
+		private void 絞り込みクリアMenuItem_Click(object sender, EventArgs e)
+		{
+			this.FreeWord.Clear();
 		}
 	}
 }
