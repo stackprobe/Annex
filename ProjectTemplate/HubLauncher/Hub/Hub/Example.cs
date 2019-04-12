@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Charlotte
 {
-	public class Test_0001
+	public class Example
 	{
 		public static void Test01()
 		{
-			Console.WriteLine("Test0001.Test01() OK!");
+			Console.WriteLine("Example.Test01() OK!");
 		}
 	}
 }

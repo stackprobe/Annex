@@ -1,3 +1,3 @@
 テスト実行
 
-	run Hub Test_0001 Test01 ;
+	run Hub Example Test01 ;
