@@ -5,9 +5,9 @@
 #include "C:\Factory\Common\Options\CRRandom.h"
 
 //#define WH 40 // èdÇ¢
-#define WH 35 // ë¨Ç¢
+//#define WH 35 // ë¨Ç¢
 //#define WH 30 // ÇﬂÇ¡ÇøÇ·ë¨Ç¢
-//#define WH 25 // íxÇ¢
+#define WH 25 // íxÇ¢
 //#define WH 20 // íxÇ¢
 //#define WH 15
 //#define WH 10
@@ -113,6 +113,43 @@ static void Resolve(void)
 		}
 	}
 }
+#elif 0 // ng
+static void Resolve(void)
+{
+	int i;
+	int x;
+	int y;
+
+	for(; ; )
+	{
+		PrintTable();
+
+		if(IsAllZero())
+			break;
+
+		{
+			autoList_t *pairs = createAutoList(WH * WH * 2);
+
+			for(x = 0; x < WH; x++)
+			for(y = 0; y < WH; y++)
+			{
+				if(getTableCell(Table, x, y))
+				{
+					addElement(pairs, x);
+					addElement(pairs, y);
+				}
+			}
+			for(i = 0; i < getCount(pairs); )
+			{
+				x = getElement(pairs, i++);
+				y = getElement(pairs, i++);
+
+				Kick(x, y);
+			}
+			releaseAutoList(pairs);
+		}
+	}
+}
 #else // ok
 static void Resolve(void)
 {
@@ -188,6 +225,8 @@ static void DoTest(void)
 }
 int main(int argc, char **argv)
 {
+	mt19937_initCRnd();
+
 	Table = newTable(getZero, noop_u);
 
 	while(!waitKey(0))
