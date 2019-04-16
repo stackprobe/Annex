@@ -33,7 +33,7 @@ namespace Charlotte
 
 		private void Test01()
 		{
-			foreach (string file in Directory.GetFiles(@"C:\wb\東京都地図", "*.xml", SearchOption.AllDirectories))
+			foreach (string file in Directory.GetFiles(@"C:\var2\res\GIS\東京都地図", "*.xml", SearchOption.AllDirectories))
 			{
 				Console.WriteLine("*1 " + file);
 				XmlNode.LoadFile(file);
@@ -49,7 +49,7 @@ namespace Charlotte
 			HashSet<string> subRootNames = new HashSet<string>();
 			HashSet<string> noEntitySubRootNames = new HashSet<string>();
 
-			foreach (string file in Directory.GetFiles(@"C:\wb\東京都地図", "FG-GML-*.xml", SearchOption.AllDirectories))
+			foreach (string file in Directory.GetFiles(@"C:\var2\res\GIS\東京都地図", "FG-GML-*.xml", SearchOption.AllDirectories))
 			{
 				Console.WriteLine("*1 " + file);
 				XmlNode root = XmlNode.LoadFile(file);

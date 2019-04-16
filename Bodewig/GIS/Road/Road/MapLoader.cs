@@ -15,23 +15,23 @@ namespace Charlotte
 			Map = new Map();
 
 #if !true // 日本測地系
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-08-01.0"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-09-01.0"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-10-01.0"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-11-01.0"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-12-01.0"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-13-01.0"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-14-01.0"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-19-01.0"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-08-01.0"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-09-01.0"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-10-01.0"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-11-01.0"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-12-01.0"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-13-01.0"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-14-01.0"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-19-01.0"));
 #else // 世界測地系
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-08-01.0a"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-09-01.0a"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-10-01.0a"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-11-01.0a"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-12-01.0a"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-13-01.0a"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-14-01.0a"));
-			Map.Prefs.Add(LoadDir(@"C:\wb\首都圏道路\txt\N01-07L-19-01.0a"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-08-01.0a"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-09-01.0a"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-10-01.0a"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-11-01.0a"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-12-01.0a"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-13-01.0a"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-14-01.0a"));
+			Map.Prefs.Add(LoadDir(@"C:\var2\res\GIS\首都圏道路\txt\N01-07L-19-01.0a"));
 #endif
 		}
 
