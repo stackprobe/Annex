@@ -82,8 +82,8 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 		restart:
 			//for (int c = 0; c < 1000000; c++)
 			//for (int c = 0; c < 100000; c++)
-			//for (int c = 0; c < 10000; c++)
-			for (int c = 0; c < 1000; c++)
+			for (int c = 0; c < 10000; c++)
+			//for (int c = 0; c < 1000; c++)
 			//for (int c = 0; c < 100; c++)
 			{
 				//foreach (string line in ml.ToStrings())

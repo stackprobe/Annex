@@ -92,9 +92,9 @@ namespace Charlotte.MultiLayerPerceptron
 		{
 			foreach (Layer[] layers in new Layer[][]
 			{
-				new Layer[] { this.InputLayer},
+				new Layer[] { this.InputLayer },
 				this.Layers.ToArray(),
-				new Layer[] { this.OutputLayer},
+				new Layer[] { this.OutputLayer },
 			})
 			{
 				foreach (Layer layer in layers)
@@ -120,7 +120,7 @@ namespace Charlotte.MultiLayerPerceptron
 			foreach (Layer[] layers in new Layer[][]
 			{
 				this.Layers.ToArray(),
-				new Layer[] { this.OutputLayer},
+				new Layer[] { this.OutputLayer },
 			})
 			{
 				foreach (Layer layer in layers)
@@ -151,7 +151,7 @@ namespace Charlotte.MultiLayerPerceptron
 			foreach (Layer[] layers in new Layer[][]
 			{
 				this.Layers.ToArray(),
-				new Layer[] { this.OutputLayer},
+				new Layer[] { this.OutputLayer },
 			})
 			{
 				foreach (Layer layer in layers)
@@ -163,7 +163,7 @@ namespace Charlotte.MultiLayerPerceptron
 			foreach (Layer[] layers in new Layer[][]
 			{
 				this.Layers.ToArray(),
-				new Layer[] { this.OutputLayer},
+				new Layer[] { this.OutputLayer },
 			})
 			{
 				foreach (Layer layer in layers)
