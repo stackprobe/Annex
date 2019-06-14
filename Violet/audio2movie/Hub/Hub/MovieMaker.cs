@@ -15,7 +15,13 @@ namespace Charlotte
 
 		public void Perform()
 		{
-			// TODO
+			MediaInfo mi = new MediaInfo(this.AudioFile);
+
+			this.PicList.TotalTimeCentisecond = mi.TotalTimeCentisecond;
+			this.PicList.Init();
+			this.PicList.Perform();
+
+			ffmpegUtils.MakeMovieFile(this.AudioFile, this.PicList.OutputDir, this.MovieFile);
 		}
 	}
 }

@@ -20,19 +20,29 @@ namespace Charlotte
 			ProcMain.CUIMain(new Program().Main2, APP_IDENT, APP_TITLE);
 
 #if DEBUG
-			Console.WriteLine("Press ENTER.");
-			Console.ReadLine();
+			if (ProcMain.CUIError)
+			{
+				Console.WriteLine("Press ENTER.");
+				Console.ReadLine();
+			}
 #endif
 		}
 
 		private void Main2(ArgsReader ar)
 		{
+			this.GoToHomeDir();
+
+#if DEBUG
+			new MovieMakerTest().Test01(); // test
+			//new PictureListTest().Test01(); // test
+#else
+			new Hub().Perform(ar);
+#endif
+		}
+
+		private void GoToHomeDir()
+		{
 			Directory.SetCurrentDirectory(ExtraTools.GetHomeDir("home.sig"));
-
-			// ----
-
-			new PictureListTest().Test01(); // test
-			//new Hub().Perform(ar);
 		}
 	}
 }

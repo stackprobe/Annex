@@ -13,11 +13,12 @@ namespace Charlotte
 	{
 		public string OutputDir = @"out\PictureList";
 		public string ImageFile = @"res\Singing.jpg";
-		public int TotalTimeCentisecond = 5000;
-		public string Title1 = "平成23年12月3日封切";
+		public int TotalTimeCentisecond = 500;
+		public string Title1 = "平成２３年１２月３日公開";
 		public string Title2 = "映画『けいおん』";
 		public string Title3 = "エンディングテーマ";
 		public string Title4 = "Singing!";
+		public int Title2Size = 128;
 
 		// <---- prm
 
@@ -123,19 +124,19 @@ namespace Charlotte
 
 				if (c == 0)
 				{
-					this.TitleBoxes.Add(new TitleBox(100.0, 300.0, this.Title1, 32));
+					this.TitleBoxes.Add(new TitleBox(100.0, 200.0, this.Title1, 32));
 				}
 				if (c == 5)
 				{
-					this.TitleBoxes.Add(new TitleBox(100.0, 400.0, this.Title2, 128));
+					this.TitleBoxes.Add(new TitleBox(100.0, 300.0, this.Title2, this.Title2Size));
 				}
 				if (c == 10)
 				{
-					this.TitleBoxes.Add(new TitleBox(100.0, 800.0, this.Title3, 48));
+					this.TitleBoxes.Add(new TitleBox(100.0, 700.0, this.Title3, 48));
 				}
 				if (c == 15)
 				{
-					this.TitleBoxes.Add(new TitleBox(100.0, 900.0, this.Title4, 256));
+					this.TitleBoxes.Add(new TitleBox(100.0, 800.0, this.Title4, 256));
 				}
 
 				for (int index = 0; index < this.TitleBoxes.Count; index++)
@@ -264,11 +265,13 @@ namespace Charlotte
 
 		private void DrawHalfCurtain(double alpha)
 		{
+			int w = (int)(Consts.PICTURE_W * 0.666) - this.Frame;
+
 			alpha *= 0.8;
 
 			using (Graphics g = Graphics.FromImage(this.Picture))
 			{
-				g.FillRectangle(new SolidBrush(Color.FromArgb((int)(alpha * 255.0), 0, 0, 64)), 0, 0, (int)(Consts.PICTURE_W * 0.666), Consts.PICTURE_H);
+				g.FillRectangle(new SolidBrush(Color.FromArgb((int)(alpha * 255.0), 0, 0, 64)), 0, 0, w, Consts.PICTURE_H);
 			}
 		}
 

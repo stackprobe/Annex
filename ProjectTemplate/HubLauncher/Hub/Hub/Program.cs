@@ -26,20 +26,14 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			GoToHomeSig();
+			this.GoToHomeDir();
 
 			new Hub().Perform(ar);
 		}
 
-		private void GoToHomeSig()
+		private void GoToHomeDir()
 		{
-			while (File.Exists("home.sig") == false)
-			{
-				if (Directory.GetCurrentDirectory().Length <= 3)
-					throw new Exception("no home.sig");
-
-				Directory.SetCurrentDirectory("..");
-			}
+			Directory.SetCurrentDirectory(ExtraTools.GetHomeDir("home.sig"));
 		}
 	}
 }
