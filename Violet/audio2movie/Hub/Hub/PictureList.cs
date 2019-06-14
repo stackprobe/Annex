@@ -19,6 +19,8 @@ namespace Charlotte
 		public string Title3 = "エンディングテーマ";
 		public string Title4 = "Singing!";
 		public int Title2Size = 128;
+		public int Title4Size = 256;
+		public int HalfCurtainWPct = 70;
 
 		// <---- prm
 
@@ -112,31 +114,30 @@ namespace Charlotte
 					// noop
 				}
 
-				if (c < 60)
+				if (c < 70)
 				{
 					this.DrawHalfCurtain(1.0);
 				}
-				else if (c < 80)
+				else if (c < 90)
 				{
-					this.DrawHalfCurtain((80 - c) / 20.0);
+					this.DrawHalfCurtain((90 - c) / 20.0);
 				}
 
-
-				if (c == 0)
+				if (c == 10)
 				{
 					this.TitleBoxes.Add(new TitleBox(100.0, 200.0, this.Title1, 32));
 				}
-				if (c == 5)
+				if (c == 15)
 				{
 					this.TitleBoxes.Add(new TitleBox(100.0, 300.0, this.Title2, this.Title2Size));
 				}
-				if (c == 10)
+				if (c == 20)
 				{
 					this.TitleBoxes.Add(new TitleBox(100.0, 700.0, this.Title3, 48));
 				}
-				if (c == 15)
+				if (c == 25)
 				{
-					this.TitleBoxes.Add(new TitleBox(100.0, 800.0, this.Title4, 256));
+					this.TitleBoxes.Add(new TitleBox(100.0, 800.0, this.Title4, this.Title4Size));
 				}
 
 				for (int index = 0; index < this.TitleBoxes.Count; index++)
@@ -265,7 +266,7 @@ namespace Charlotte
 
 		private void DrawHalfCurtain(double alpha)
 		{
-			int w = (int)(Consts.PICTURE_W * 0.666) - this.Frame;
+			int w = (Consts.PICTURE_W * HalfCurtainWPct) / 100 - this.Frame;
 
 			alpha *= 0.8;
 
