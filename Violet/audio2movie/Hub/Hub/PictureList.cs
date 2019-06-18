@@ -14,13 +14,18 @@ namespace Charlotte
 		public string OutputDir = @"out\PictureList";
 		public string ImageFile = @"res\Singing.jpg";
 		public int TotalTimeCentisecond = 500;
-		public string Title1 = "平成２３年１２月３日公開";
+		public string Title1 = "２０１１年１２月３日公開";
 		public string Title2 = "映画『けいおん』";
 		public string Title3 = "エンディングテーマ";
 		public string Title4 = "Singing!";
 		public int Title2Size = 128;
 		public int Title4Size = 256;
 		public int HalfCurtainWPct = 70;
+		public string Singer1 = "放課後ティータイム";
+		public string Singer2 = "日笠陽子・豊崎愛生・佐藤聡美・寿美菜子・竹達彩奈";
+		public int Singer2Size = 64;
+		public int SingerCurtainHPct = 30;
+		public int SingerCurtainAPct = 50;
 
 		// <---- prm
 
@@ -56,10 +61,10 @@ namespace Charlotte
 			{
 				this.Frame++;
 
-				if (this.Frame == 70)
+				if (this.Frame == 80)
 					return true;
 
-				if (this.Frame == 40)
+				if (this.Frame == 50)
 				{
 					this.DestAlpha = 0.0;
 				}
@@ -94,9 +99,16 @@ namespace Charlotte
 
 		public void Perform()
 		{
+			// ---- フィールド初期化
+
+			this.SingerCurtainA = this.SingerCurtainAPct / 100.0;
+			this.SingerCurtainA_Real = this.SingerCurtainA;
+
+			// ----
+
 			int frameCount = (int)((this.TotalTimeCentisecond / 100.0) * Consts.FPS + 1);
 
-			for (int c = 0; c < 100; c++)
+			for (int c = 0; c < 210; c++)
 			{
 				this.CreatePicture();
 				this.DrawImage();
@@ -114,14 +126,25 @@ namespace Charlotte
 					// noop
 				}
 
-				if (c < 70)
+				if (c < 80)
 				{
 					this.DrawHalfCurtain(1.0);
 				}
-				else if (c < 90)
+				else if (c < 100)
 				{
-					this.DrawHalfCurtain((90 - c) / 20.0);
+					this.DrawHalfCurtain((100 - c) / 20.0);
 				}
+
+				if (c == 120)
+				{
+					this.SingerCurtainH = (Consts.PICTURE_H * this.SingerCurtainHPct) / 100.0;
+				}
+				if (c == 180)
+				{
+					//this.SingerCurtainH = 0.0;
+					this.SingerCurtainA = 0.0;
+				}
+				this.DrawSingerCurtain();
 
 				if (c == 10)
 				{
@@ -138,6 +161,15 @@ namespace Charlotte
 				if (c == 25)
 				{
 					this.TitleBoxes.Add(new TitleBox(100.0, 800.0, this.Title4, this.Title4Size));
+				}
+
+				if (c == 120)
+				{
+					this.TitleBoxes.Add(new TitleBox(100.0, 20.0, this.Singer1, 128));
+				}
+				if (c == 125)
+				{
+					this.TitleBoxes.Add(new TitleBox(150.0, 250.0, this.Singer2, this.Singer2Size));
 				}
 
 				for (int index = 0; index < this.TitleBoxes.Count; index++)
@@ -273,6 +305,26 @@ namespace Charlotte
 			using (Graphics g = Graphics.FromImage(this.Picture))
 			{
 				g.FillRectangle(new SolidBrush(Color.FromArgb((int)(alpha * 255.0), 0, 0, 64)), 0, 0, w, Consts.PICTURE_H);
+			}
+		}
+
+		private double SingerCurtainH = 0.0;
+		private double SingerCurtainH_Real = 0.0;
+		private double SingerCurtainA;
+		private double SingerCurtainA_Real;
+
+		private void DrawSingerCurtain()
+		{
+			CommonUtils.Approach(ref this.SingerCurtainH_Real, this.SingerCurtainH, 0.9);
+			CommonUtils.Approach(ref this.SingerCurtainA_Real, this.SingerCurtainA, 0.9);
+
+			if (this.SingerCurtainH_Real < 1.0)
+				return;
+
+			using (Graphics g = Graphics.FromImage(this.Picture))
+			{
+				g.FillRectangle(new SolidBrush(Color.FromArgb((int)(this.SingerCurtainA_Real * 255.0), 0, 0, 0)),
+					0, 0, Consts.PICTURE_W, DoubleTools.ToInt(this.SingerCurtainH_Real));
 			}
 		}
 

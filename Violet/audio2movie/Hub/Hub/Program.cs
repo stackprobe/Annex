@@ -12,7 +12,7 @@ namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{ded4c1b1-732c-458b-be88-59ed69d19acb}";
+		public const string APP_IDENT = "{67161bec-afbf-40e9-9ba2-23dc7c292a8c}";
 		public const string APP_TITLE = "Hub";
 
 		static void Main(string[] args)
@@ -33,8 +33,8 @@ namespace Charlotte
 			this.GoToHomeDir();
 
 #if DEBUG
-			new MovieMakerTest().Test01(); // test
-			//new PictureListTest().Test01(); // test
+			//new MovieMakerTest().Test01(); // test
+			new PictureListTest().Test01(); // test
 #else
 			new Hub().Perform(ar);
 #endif
