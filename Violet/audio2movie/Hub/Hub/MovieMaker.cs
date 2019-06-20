@@ -7,7 +7,7 @@ namespace Charlotte
 {
 	public class MovieMaker
 	{
-		public string AudioFile = @"res\Singing.mp3";
+		public string AudioFile = @"C:\etc\oto\CD\K-ON - Singing!.mp3";
 		public PictureList PicList = new PictureList();
 		public string MovieFile = @"out\Movie.mp4"; // 出力
 
