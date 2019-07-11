@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.IO;
+using System.Windows.Forms;
 
 namespace AutoBall4
 {
@@ -26,7 +27,7 @@ namespace AutoBall4
 
 		/// <summary>
 		/// http://www.gamedesign.jp/flash/balls/balls_jp.html
-		/// 1. chromeで開いて、プライマリモニタで最大化する。
+		/// 1. chromeで開いて、左上の座標が(0,0)のモニタで最大化する。(1920x1080のモニタであること)
 		/// 2. 自分のターンまで進めてから起動する。
 		/// 3. コンソールをゲーム画面から避ける。
 		/// </summary>
@@ -53,9 +54,9 @@ namespace AutoBall4
 
 					// ----
 				}
-				LClick_Bure(750, 344, 5);
+				LClick_Bure(1080, 570 - 210, 5);
 				Thread.Sleep(3000);
-				LClick_Bure(715, 520, 5);
+				LClick_Bure(1047, 747 - 210, 5);
 			}
 		}
 
@@ -66,13 +67,13 @@ namespace AutoBall4
 #else // old 遅い
 			//SystemTools.Execute(@"C:\app\kit\ImgTools\ImgTools.exe", "/WF 1.png /PRTSC");
 #endif
-			SystemTools.Execute(@"C:\app\kit\ImgToCsv\ImgToCsv.exe", "1.png 1.csv");
+			SystemTools.Execute(@"C:\app\kit\BmpToCsv\BmpToCsv.exe", "1.png 1.csv");
 
 			string[][] csv = FileTools.ReadCsvFile("1.csv");
 
 			// 試合終了チェック
 			{
-				string cell = csv[344][750];
+				string cell = csv[570 - 210][1080];
 
 				if (cell == "ffc9d988") // ? 試合終了
 					return null;
@@ -84,7 +85,7 @@ namespace AutoBall4
 			{
 				for (int x = 0; x < 7; x++)
 				{
-					string cell = csv[553 - y * 40][512 + x * 40];
+					string cell = csv[410 + 4 * 40 - y * 40][840 + x * 40];
 
 					if (cell == "ffc9d988") // 空き
 					{
@@ -175,7 +176,7 @@ namespace AutoBall4
 
 		private void PutStone(int x)
 		{
-			LClick_Bure(512 + x * 40, 393, 10);
+			LClick_Bure(840 + x * 40, 370, 10);
 		}
 
 		private Random _r = new Random();

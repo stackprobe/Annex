@@ -12,11 +12,16 @@ namespace AutoBall4
 	{
 		public static void PrintScreen(string outPngFile)
 		{
-			Bitmap bmp = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+			const int SCREEN_L = 0;
+			const int SCREEN_T = 0;
+			const int SCREEN_W = 1920;
+			const int SCREEN_H = 1080;
+
+			Bitmap bmp = new Bitmap(SCREEN_W, SCREEN_H);
 
 			using (Graphics g = Graphics.FromImage(bmp))
 			{
-				g.CopyFromScreen(new Point(0, 0), new Point(0, 0), bmp.Size);
+				g.CopyFromScreen(new Point(SCREEN_L, SCREEN_T), new Point(0, 0), bmp.Size);
 			}
 			bmp.Save(outPngFile, ImageFormat.Png);
 		}
