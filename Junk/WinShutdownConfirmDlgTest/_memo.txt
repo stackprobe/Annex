@@ -1,5 +1,5 @@
 ----
 
-����t�H�[���� Form_Closing �� MessageBox.Show(); -> �����ő҂A���� Form_Closing �͌Ă΂�Ȃ��B
+あるフォームの Form_Closing で MessageBox.Show(); -> そこで待つ、次の Form_Closing は呼ばれない。
 
-Closing �� MessageBox �\�����Ƀ��O�I�t -> Closing ���Ă΂��B== ���� Closing ���d�˂ČĂ΂��B
+Closing の MessageBox 表示中にログオフ -> Closing が呼ばれる。== 同じ Closing が重ねて呼ばれる。

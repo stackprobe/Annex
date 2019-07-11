@@ -6,7 +6,7 @@
 <!--
 body
 {
-	font-family: "ƒƒCƒŠƒI";
+	font-family: "ãƒ¡ã‚¤ãƒªã‚ª";
 	background-color: #223344;
 }
 body, a:link, a:visited, a:hover, a:active
@@ -17,7 +17,7 @@ body, a:link, a:visited, a:hover, a:active
 </style>
 </head>
 <body>
-<span style="font-size:150px">80¨8080</span>
+<span style="font-size:150px">80â†’8080</span>
 <hr/>
 <li>
 <li>
@@ -27,12 +27,12 @@ body, a:link, a:visited, a:hover, a:active
 
 <Div>
 <SPAN>
-ššš
+â˜…â˜…â˜…
 </div>
 </sPan>
 
-ˆêŽž“I‚Éƒ|[ƒg”Ô†‚ð8080‚É•ÏX‚µ‚Ä‚¢‚Ü‚·B<br/>
-”•bˆÈ“à‚ÉƒWƒƒƒ“ƒv‚µ‚Ü‚·B<br/>
-‚¢‚Â‚Ü‚Å‚àƒWƒƒƒ“ƒv‚µ‚È‚¢ê‡‚Í<a href="http://stackprobe.dip.jp:8080/" style="font-size:150%">‚±‚±</a>‚ðƒNƒŠƒbƒN‚µ‚Ä‰º‚³‚¢B
+ä¸€æ™‚çš„ã«ãƒãƒ¼ãƒˆç•ªå·ã‚’8080ã«å¤‰æ›´ã—ã¦ã„ã¾ã™ã€‚<br/>
+æ•°ç§’ä»¥å†…ã«ã‚¸ãƒ£ãƒ³ãƒ—ã—ã¾ã™ã€‚<br/>
+ã„ã¤ã¾ã§ã‚‚ã‚¸ãƒ£ãƒ³ãƒ—ã—ãªã„å ´åˆã¯<a href="http://stackprobe.dip.jp:8080/" style="font-size:150%">ã“ã“</a>ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦ä¸‹ã•ã„ã€‚
 </body>
 </html>

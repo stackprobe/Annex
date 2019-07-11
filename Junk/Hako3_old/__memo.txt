@@ -1,11 +1,11 @@
-ƒŠƒŠ[ƒXè‡
-	BootMenu ‚ğƒrƒ‹ƒh
-	Editor ‚ğƒrƒ‹ƒh
-	Shoot ‚ğƒrƒ‹ƒh
-	Tools ‚ğƒrƒ‹ƒh
-	_Release.bat ‚ğÀs -> out\
-	_ReleaseEditor.bat ‚ğÀs -> bin\
+ãƒªãƒªãƒ¼ã‚¹æ‰‹é †
+	BootMenu ã‚’ãƒ“ãƒ«ãƒ‰
+	Editor ã‚’ãƒ“ãƒ«ãƒ‰
+	Shoot ã‚’ãƒ“ãƒ«ãƒ‰
+	Tools ã‚’ãƒ“ãƒ«ãƒ‰
+	_Release.bat ã‚’å®Ÿè¡Œ -> out\
+	_ReleaseEditor.bat ã‚’å®Ÿè¡Œ -> bin\
 
-ŠO•”‚ÌƒtƒHƒ‹ƒ_
+å¤–éƒ¨ã®ãƒ•ã‚©ãƒ«ãƒ€
 	C:\appdata\HakoIIITileData ... TileData @ Editor
 	C:\appdata\HakoIIIStageData ... StageData @ BootMenu
