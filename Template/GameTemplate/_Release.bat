@@ -1,6 +1,9 @@
 C:\Factory\Tools\RDMD.exe /RC out
 
-SET RAWKEY=ae133d2791c4de47911b890b22bba7b9
+SET RAWKEY=ffffffffffffffffffffffffffffffff
+rem $_git:secretBegin
+///////////////////////////////////////////
+rem $_git:secretEnd
 
 C:\Factory\SubTools\makeAESCluster.exe Picture.txt     out\Picture.dat     %RAWKEY% 110000000
 C:\Factory\SubTools\makeAESCluster.exe Music.txt       out\Music.dat       %RAWKEY% 120000000
