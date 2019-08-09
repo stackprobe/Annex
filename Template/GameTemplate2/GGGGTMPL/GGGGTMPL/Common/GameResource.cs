@@ -9,16 +9,28 @@ namespace Charlotte.Common
 {
 	public static class GameResource
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool ReleaseMode;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public class ResInfo
 		{
 			public long Offset;
 			public int Size;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static Dictionary<string, ResInfo> File2ResInfo = DictionaryTools.CreateIgnoreCase<ResInfo>();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void INIT()
 		{
 			ReleaseMode = File.Exists(GameConsts.ResourceFile);
@@ -29,31 +41,43 @@ namespace Charlotte.Common
 
 				using (FileStream reader = new FileStream(GameConsts.ResourceFile, FileMode.Open, FileAccess.Read))
 				{
-					int size = BinTools.ToInt(FileTools.Read(reader, 4));
-
-					resInfos.Add(new ResInfo()
+					while (reader.Position < reader.Length)
 					{
-						Offset = reader.Position,
-						Size = size,
-					});
+						int size = BinTools.ToInt(FileTools.Read(reader, 4));
 
-					reader.Seek((long)size, SeekOrigin.Current);
+						if (size < 0)
+							throw new GameError();
+
+						resInfos.Add(new ResInfo()
+						{
+							Offset = reader.Position,
+							Size = size,
+						});
+
+						reader.Seek((long)size, SeekOrigin.Current);
+					}
 				}
 				string[] files = FileTools.TextToLines(StringTools.ENCODING_SJIS.GetString(LoadFile(resInfos[0])));
 
-				if (files.Length + 1 != resInfos.Count)
-					throw new Exception("リソースファイルのエントリー数に問題があります。" + files.Length + ", " + resInfos.Count);
+				if (files.Length != resInfos.Count)
+					throw new GameError(files.Length + ", " + resInfos.Count);
 
 				for (int index = 0; index < files.Length; index++)
-					File2ResInfo.Add(files[index], resInfos[index + 1]);
+					File2ResInfo.Add(files[index], resInfos[index]);
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void FNLZ()
 		{
 			// noop
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static byte[] LoadFile(long offset, int size)
 		{
 			using (FileStream reader = new FileStream(GameConsts.ResourceFile, FileMode.Open, FileAccess.Read))
@@ -64,11 +88,17 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static byte[] LoadFile(ResInfo resInfo)
 		{
 			return LoadFile(resInfo.Offset, resInfo.Size);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static byte[] Load(string file)
 		{
 			if (ReleaseMode)
@@ -81,11 +111,14 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Save(string file, byte[] fileData)
 		{
 			if (ReleaseMode)
 			{
-				throw new InvalidOperationException("リリースモードなのでファイルを保存出来ません。");
+				throw new GameError();
 			}
 			else
 			{
