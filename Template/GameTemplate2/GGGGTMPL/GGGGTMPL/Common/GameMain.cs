@@ -37,6 +37,7 @@ namespace Charlotte.Common
 				GameResource.INIT();
 				GameDatStrings.INIT();
 				GameUserDatStrings.INIT();
+				GameFontRegister.INIT();
 			}
 
 			GameSaveData.Load();
@@ -101,6 +102,12 @@ namespace Charlotte.Common
 
 			PostSetScreenSize(GameGround.RealScreen_W, GameGround.RealScreen_H);
 
+			// app > @ Font
+
+			//GameFontRegister.Add(@"Font\Genkai-Mincho-font\genkai-mincho.ttf");
+
+			// < app
+
 			GameGround.CommonResource = new GameResourceCommon();
 		}
 
@@ -110,6 +117,7 @@ namespace Charlotte.Common
 
 			// *.FNLZ
 			{
+				GameFontRegister.FNLZ();
 				GameUserDatStrings.FNLZ();
 				GameDatStrings.FNLZ();
 				GameResource.FNLZ();
@@ -171,7 +179,7 @@ namespace Charlotte.Common
 		{
 			bool mdm = GameDxUtils.GetMouseDispMode();
 
-			//GameDerivationUtils.UnloadAll(); // moved
+			//GameDerivationUtils.UnloadAll(); // -> GamePictureUtils.UnloadAll
 			GamePictureUtils.UnloadAll();
 			GameSubScreenUtils.UnloadAll();
 			GameFontUtils.UnloadAll();

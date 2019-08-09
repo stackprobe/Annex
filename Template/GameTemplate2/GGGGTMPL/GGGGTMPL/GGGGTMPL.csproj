@@ -71,8 +71,10 @@
     <Compile Include="Common\GameEngine.cs" />
     <Compile Include="Common\GameError.cs" />
     <Compile Include="Common\GameFont.cs" />
+    <Compile Include="Common\GameFontRegister.cs" />
     <Compile Include="Common\GameFontUtils.cs" />
     <Compile Include="Common\GameGround.cs" />
+    <Compile Include="Common\GameIEnumerableTask.cs" />
     <Compile Include="Common\GameInput.cs" />
     <Compile Include="Common\GameJammer.cs" />
     <Compile Include="Common\GameKey.cs" />
