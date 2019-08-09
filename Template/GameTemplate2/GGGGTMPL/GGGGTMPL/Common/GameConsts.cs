@@ -7,6 +7,9 @@ namespace Charlotte.Common
 {
 	public static class GameConsts
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public const string SaveDataFile = "SaveData.dat";
 
 		// app > @ Screen_WH
@@ -16,6 +19,9 @@ namespace Charlotte.Common
 
 		// < app
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public const double DefaultVolume = 0.45;
 	}
 }

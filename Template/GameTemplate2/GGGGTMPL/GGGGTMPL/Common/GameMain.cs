@@ -7,11 +7,17 @@ namespace Charlotte.Common
 {
 	public static class GameMain
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void GameStart()
 		{
 			// TODO
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void GameEnd()
 		{
 			// TODO

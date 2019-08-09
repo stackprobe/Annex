@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,18 +10,30 @@ namespace Charlotte.Common
 {
 	public static class GameSubScreenUtils
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static List<GameSubScreen> SubScreens = new List<GameSubScreen>();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Add(GameSubScreen subScreen)
 		{
 			SubScreens.Add(subScreen);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool Remove(GameSubScreen subScreen) // ret: ? ! Already removed
 		{
 			return GameUtils.FastDesertElement(SubScreens, i => i == subScreen) != null;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void UnloadAll()
 		{
 			foreach (GameSubScreen subScreen in SubScreens)
@@ -31,8 +42,14 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int CurrDrawScreenHandle = DX.DX_SCREEN_BACK;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void ChangeDrawScreen(int handle)
 		{
 			if (DX.SetDrawScreen(handle) != 0) // ? 失敗
@@ -41,16 +58,25 @@ namespace Charlotte.Common
 			CurrDrawScreenHandle = handle;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void ChangeDrawScreen(GameSubScreen subScreen)
 		{
 			ChangeDrawScreen(subScreen.GetHandle());
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void RestoreDrawScreen()
 		{
 			ChangeDrawScreen(GameGround.MainScreen != null ? GameGround.MainScreen.GetHandle() : DX.DX_SCREEN_BACK);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static Size GetDrawScreenSize() // ret: 描画領域のサイズ？
 		{
 			int w;
