@@ -8,9 +8,6 @@ namespace Charlotte.Common
 {
 	public static class GameJammer
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static byte[] Encode(byte[] data)
 		{
 			data = ZipTools.Compress(data);
@@ -18,9 +15,6 @@ namespace Charlotte.Common
 			return data;
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static byte[] Decode(byte[] data)
 		{
 			MaskGZData(data);
@@ -29,9 +23,6 @@ namespace Charlotte.Common
 			return ret;
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		private static void MaskGZData(byte[] data)
 		{
 			if (data.Length != 0)

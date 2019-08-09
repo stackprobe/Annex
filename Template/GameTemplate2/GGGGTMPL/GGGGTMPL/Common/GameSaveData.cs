@@ -9,9 +9,6 @@ namespace Charlotte.Common
 {
 	public static class GameSaveData
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void Save()
 		{
 			List<byte[]> blocks = new List<byte[]>();
@@ -28,8 +25,8 @@ namespace Charlotte.Common
 				lines.Add("" + GameGround.RealScreenDraw_W);
 				lines.Add("" + GameGround.RealScreenDraw_H);
 
-				lines.Add("" + GameGround.MusicVolume);
-				lines.Add("" + GameGround.SEVolume);
+				lines.Add("" + DoubleTools.ToLong(GameGround.MusicVolume * IntTools.IMAX));
+				lines.Add("" + DoubleTools.ToLong(GameGround.SEVolume * IntTools.IMAX));
 
 				lines.Add("" + GameInput.DIR_2.PadBtnId);
 				lines.Add("" + GameInput.DIR_4.PadBtnId);
@@ -82,9 +79,6 @@ namespace Charlotte.Common
 			File.WriteAllBytes(GameConsts.SaveDataFile, GameJammer.Encode(BinTools.SplittableJoin(blocks.ToArray())));
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void Load()
 		{
 			if (File.Exists(GameConsts.SaveDataFile) == false)
@@ -110,8 +104,8 @@ namespace Charlotte.Common
 				GameGround.RealScreenDraw_W = int.Parse(lines[c++]);
 				GameGround.RealScreenDraw_H = int.Parse(lines[c++]);
 
-				GameGround.MusicVolume = int.Parse(lines[c++]);
-				GameGround.SEVolume = int.Parse(lines[c++]);
+				GameGround.MusicVolume = long.Parse(lines[c++]) / (double)IntTools.IMAX;
+				GameGround.SEVolume = long.Parse(lines[c++]) / (double)IntTools.IMAX;
 
 				GameInput.DIR_2.PadBtnId = int.Parse(lines[c++]);
 				GameInput.DIR_4.PadBtnId = int.Parse(lines[c++]);

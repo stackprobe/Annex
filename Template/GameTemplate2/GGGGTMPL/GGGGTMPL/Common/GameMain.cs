@@ -11,9 +11,8 @@ namespace Charlotte.Common
 {
 	public static class GameMain
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
+		private static bool DxLibInited = false;
+
 		public static void GameStart()
 		{
 			GameConfig.Load(); // LogFile, LOG_ENABLED を含むので真っ先に
@@ -36,6 +35,7 @@ namespace Charlotte.Common
 			{
 				GameGround.INIT();
 				GameResource.INIT();
+				GameDatStrings.INIT();
 				GameUserDatStrings.INIT();
 			}
 
@@ -50,7 +50,7 @@ namespace Charlotte.Common
 
 			DX.SetAlwaysRunFlag(1); // ? 非アクティブ時に 1: 動く 0: 止まる
 
-			DX.SetMainWindowText(GameDatStrings.Title + " " + GameUserDatStrings.Version);
+			SetMainWindowTitle();
 
 			//DX.SetGraphMode(GameConsts.Screen_W, GameConsts.Screen_H, 32);
 			DX.SetGraphMode(GameGround.RealScreen_W, GameGround.RealScreen_H, 32);
@@ -58,7 +58,7 @@ namespace Charlotte.Common
 
 			//DX.SetFullSceneAntiAliasingMode(4, 2); // 適当な値が分からん。フルスクリーン廃止したので不要
 
-			// TODO Icon
+			DX.SetWindowIconHandle(GetAppIcon()); // ウィンドウ左上のアイコン
 
 			if (GameConfig.DisplayIndex != -1)
 				DX.SetUseDirectDrawDeviceIndex(GameConfig.DisplayIndex);
@@ -66,7 +66,9 @@ namespace Charlotte.Common
 			if (DX.DxLib_Init() != 0) // ? 失敗
 				throw new GameError();
 
-			SetMouseDisplayMode(GameGround.RO_MouseDispMode); // ? マウスを表示する。
+			DxLibInited = true;
+
+			GameDxUtils.SetMouseDispMode(GameGround.RO_MouseDispMode); // ? マウスを表示する。
 			DX.SetWindowSizeChangeEnableFlag(0); // ウィンドウの右下をドラッグで伸縮 1: する 0: しない
 
 			DX.SetDrawScreen(DX.DX_SCREEN_BACK);
@@ -94,15 +96,14 @@ namespace Charlotte.Common
 					)
 					throw new GameError();
 
-				GameGround.MonitorRect = new Rectangle(l, t, w, h);
+				GameGround.MonitorRect = new I4Rect(l, t, w, h);
 			}
 
 			PostSetScreenSize(GameGround.RealScreen_W, GameGround.RealScreen_H);
+
+			GameGround.CommonResource = new GameResourceCommon();
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void GameEnd()
 		{
 			GameSaveData.Save();
@@ -110,25 +111,103 @@ namespace Charlotte.Common
 			// *.FNLZ
 			{
 				GameUserDatStrings.FNLZ();
+				GameDatStrings.FNLZ();
 				GameResource.FNLZ();
 				GameGround.FNLZ();
 			}
+
+			if (DX.DxLib_End() != 0)
+				throw new GameError();
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		private static void SetMouseDisplayMode(bool mode)
+		public static void GameErrorEnd()
 		{
-			throw null; // TODO
+			if (DxLibInited)
+			{
+				DX.DxLib_End();
+			}
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		private static void PostSetScreenSize(int w, int h)
+		public static void SetMainWindowTitle()
 		{
-			throw null; // TODO
+			DX.SetMainWindowText(GameDatStrings.Title + " " + GameUserDatStrings.Version);
+		}
+
+		private static IntPtr GetAppIcon()
+		{
+			using (MemoryStream mem = new MemoryStream(GameResource.Load("game_app.ico")))
+			{
+				return new Icon(mem).Handle;
+			}
+		}
+
+		public static void SetScreenSize(int w, int h)
+		{
+			if (
+				w < GameConsts.Screen_W_Min || GameConsts.Screen_W_Max < w ||
+				h < GameConsts.Screen_H_Min || GameConsts.Screen_H_Max < h
+				)
+				throw new GameError();
+
+			GameGround.RealScreenDraw_W = -1; // 無効化
+
+			if (GameGround.RealScreen_W != w || GameGround.RealScreen_H != h)
+			{
+				GameGround.RealScreen_W = w;
+				GameGround.RealScreen_H = h;
+
+				ApplyScreenSize();
+
+				PostSetScreenSize(w, h);
+			}
+		}
+
+		public static void ApplyScreenSize()
+		{
+			ApplyScreenSize(GameGround.RealScreen_W, GameGround.RealScreen_H);
+		}
+
+		public static void ApplyScreenSize(int w, int h)
+		{
+			bool mdm = GameDxUtils.GetMouseDispMode();
+
+			//GameDerivationUtils.UnloadAll(); // moved
+			GamePictureUtils.UnloadAll();
+			GameSubScreenUtils.UnloadAll();
+			GameFontUtils.UnloadAll();
+
+			if (DX.SetGraphMode(w, h, 32) != DX.DX_CHANGESCREEN_OK)
+				throw new GameError();
+
+			DX.SetDrawScreen(DX.DX_SCREEN_BACK);
+			DX.SetDrawMode(DX.DX_DRAWMODE_BILINEAR);
+
+			GameDxUtils.SetMouseDispMode(mdm);
+		}
+
+		public static void PostSetScreenSize(int w, int h)
+		{
+			if (GameGround.MonitorRect.W == w && GameGround.MonitorRect.H == h)
+			{
+				SetScreenPosition(GameGround.MonitorRect.L, GameGround.MonitorRect.T);
+			}
+		}
+
+		public static void SetScreenPosition(int l, int t)
+		{
+			DX.SetWindowPosition(l, t);
+
+			GameWin32.POINT p;
+
+			p.X = 0;
+			p.Y = 0;
+
+			GameWin32.ClientToScreen(GameWin32.GetMainWindowHandle(), out p);
+
+			int pToTrgX = l - (int)p.X;
+			int pToTrgY = t - (int)p.Y;
+
+			DX.SetWindowPosition(l + pToTrgX, t + pToTrgY);
 		}
 	}
 }

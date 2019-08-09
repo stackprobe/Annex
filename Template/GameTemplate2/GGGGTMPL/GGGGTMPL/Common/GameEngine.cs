@@ -10,33 +10,15 @@ namespace Charlotte.Common
 {
 	public static class GameEngine
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static long FrameStartTime;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static long LangolierTime;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static int ProcFrame;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static int FreezeInputFrame;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static bool WindowIsActive;
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		private static void CheckHz()
 		{
-			long currTime = GameSystem.GetCurrTime();
+			long currTime = GameDxUtils.GetCurrTime();
 
 			LangolierTime += 16L; // 16.666 == 60Hz
 			LangolierTime = LongTools.Range(LangolierTime, currTime - 100L, currTime + 100L);
@@ -51,23 +33,20 @@ namespace Charlotte.Common
 
 				if (DX.ProcessMessage() == -1)
 				{
-					throw new GameError("終了要求");
+					throw new GameCoffeeBreak();
 				}
 
 				// < DxLib
 
-				currTime = GameSystem.GetCurrTime();
+				currTime = GameDxUtils.GetCurrTime();
 			}
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void EachFrame()
 		{
-			if (GameSE.EachFrame() == false)
+			if (GameSEUtils.EachFrame() == false)
 			{
-				GameMusic.EachFrame();
+				GameMusicUtils.EachFrame();
 			}
 			GameGround.EL.ExecuteAllTask();
 			GameCurtain.EachFrame();
@@ -105,7 +84,7 @@ namespace Charlotte.Common
 
 			if (DX.CheckHitKey(DX.KEY_INPUT_ESCAPE) == 1 || DX.ProcessMessage() == -1)
 			{
-				throw new GameError("終了要求");
+				throw new GameCoffeeBreak();
 			}
 
 			// < DxLib
@@ -118,7 +97,7 @@ namespace Charlotte.Common
 
 			ProcFrame++;
 			GameUtils.CountDown(ref FreezeInputFrame);
-			WindowIsActive = GameSystem.IsWindowActive();
+			WindowIsActive = GameDxUtils.IsWindowActive();
 
 			if (IntTools.IMAX < ProcFrame) // 192.9日程度でカンスト
 			{
@@ -152,9 +131,6 @@ namespace Charlotte.Common
 			// < app
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void FreezeInput(int frame = 1) // frame: 1 == このフレームのみ, 2 == このフレームと次のフレーム ...
 		{
 			if (frame < 1 || IntTools.IMAX < frame)

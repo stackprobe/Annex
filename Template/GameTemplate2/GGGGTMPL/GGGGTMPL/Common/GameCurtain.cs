@@ -2,38 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Charlotte.Tools;
 
 namespace Charlotte.Common
 {
 	public static class GameCurtain
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static double CurrWhiteLevel = 0.0;
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void EachFrame()
 		{
-			throw null; // TODO
+			// TODO
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void SetCurtain(int frameMax, double destWhiteLevel)
 		{
 			SetCurtain(frameMax, destWhiteLevel, CurrWhiteLevel);
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void SetCurtain(int frameMax, double destWhiteLevel, double startWhiteLevel)
 		{
-			throw null; // TODO
+			// TODO
+		}
+
+		public static void DrawCurtain(double whiteLevel = -1.0)
+		{
+			whiteLevel = DoubleTools.Range(whiteLevel, -1.0, 1.0);
+
+			if (whiteLevel < 0.0)
+			{
+				GameDraw.SetAlpha(-whiteLevel);
+				GameDraw.SetBright(0.0, 0.0, 0.0);
+			}
+			else
+				GameDraw.SetAlpha(whiteLevel);
+
+			GameDraw.DrawRect(GameGround.CommonResource.WhiteBox, 0, 0, GameConsts.Screen_W, GameConsts.Screen_H);
+			GameDraw.Reset();
 		}
 	}
 }

@@ -9,28 +9,16 @@ namespace Charlotte.Common
 {
 	public static class GameResource
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static bool ReleaseMode;
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public class ResInfo
 		{
 			public long Offset;
 			public int Size;
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static Dictionary<string, ResInfo> File2ResInfo = DictionaryTools.CreateIgnoreCase<ResInfo>();
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void INIT()
 		{
 			ReleaseMode = File.Exists(GameConsts.ResourceFile);
@@ -67,17 +55,11 @@ namespace Charlotte.Common
 			}
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void FNLZ()
 		{
 			// noop
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		private static byte[] LoadFile(long offset, int size)
 		{
 			using (FileStream reader = new FileStream(GameConsts.ResourceFile, FileMode.Open, FileAccess.Read))
@@ -88,17 +70,11 @@ namespace Charlotte.Common
 			}
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		private static byte[] LoadFile(ResInfo resInfo)
 		{
 			return LoadFile(resInfo.Offset, resInfo.Size);
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static byte[] Load(string file)
 		{
 			if (ReleaseMode)
@@ -111,9 +87,6 @@ namespace Charlotte.Common
 			}
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void Save(string file, byte[] fileData)
 		{
 			if (ReleaseMode)

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Charlotte.Common
 {
-	public static class GameKey
+	public static class GameFontUtils
 	{
-		public static void EachFrame()
+		public static void UnloadAll()
 		{
-			// TODO
+			throw null; // TODO
 		}
 	}
 }

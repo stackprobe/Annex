@@ -7,25 +7,10 @@ namespace Charlotte.Common
 {
 	public static class GameConsts
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public const string ConfigFile = "Config.conf";
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public const string SaveDataFile = "SaveData.dat";
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public const string ResourceFile = "Resource.dat";
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public const string ResourceDir = @"..\..\..\..\Resource";
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public const string UserDatStringsFile = "Properties.dat";
 
 		// app > @ Screen_WH
@@ -35,9 +20,11 @@ namespace Charlotte.Common
 
 		// < app
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
+		public const int Screen_W_Min = 100;
+		public const int Screen_H_Min = 100;
+		public const int Screen_W_Max = 4000;
+		public const int Screen_H_Max = 3000;
+
 		public const double DefaultVolume = 0.45;
 	}
 }

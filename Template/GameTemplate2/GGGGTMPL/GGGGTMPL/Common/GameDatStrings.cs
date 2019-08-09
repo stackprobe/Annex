@@ -36,7 +36,7 @@ namespace Charlotte.Common
 		private static string GetValue(string name)
 		{
 			if (Name2Value.ContainsKey(name) == false)
-				throw new GameError();
+				throw new GameError(name);
 
 			return Name2Value[name];
 		}
@@ -57,10 +57,6 @@ namespace Charlotte.Common
 		{
 			get { return GetValue("Copyright"); }
 		}
-
-		// app > @ Accessor
-
-		// < app
 
 		// < Accessor
 	}

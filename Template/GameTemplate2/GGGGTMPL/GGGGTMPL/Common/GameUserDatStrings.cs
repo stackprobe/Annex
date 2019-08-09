@@ -13,6 +13,9 @@ namespace Charlotte.Common
 
 		public static void INIT()
 		{
+			if (File.Exists(GameConsts.UserDatStringsFile) == false)
+				return;
+
 			IEnumerable<string> lines = File.ReadAllLines(GameConsts.UserDatStringsFile, StringTools.ENCODING_SJIS).Select(line => line.Trim()).Where(line => line != "" && line[0] != ';');
 
 			foreach (string line in lines)
@@ -48,10 +51,6 @@ namespace Charlotte.Common
 		{
 			get { return GetValue("Version", "0.00"); }
 		}
-
-		// app > @ Accessor
-
-		// < app
 
 		// < Accessor
 	}

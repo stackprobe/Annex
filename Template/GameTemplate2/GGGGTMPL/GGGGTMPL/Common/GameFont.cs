@@ -5,11 +5,8 @@ using System.Text;
 
 namespace Charlotte.Common
 {
-	public static class GameKey
+	public class GameFont
 	{
-		public static void EachFrame()
-		{
-			// TODO
-		}
+		// TODO
 	}
 }

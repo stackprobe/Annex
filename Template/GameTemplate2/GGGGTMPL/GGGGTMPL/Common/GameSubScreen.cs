@@ -8,31 +8,13 @@ using System.Drawing;
 
 namespace Charlotte.Common
 {
-	//
-	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	//
 	public class GameSubScreen : IDisposable
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		private int W;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
+		private int W; // -1 == Disposed
 		private int H;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		private bool AFlag;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		private int Handle = -1; // -1 == 未設定
+		private int Handle = -1; // -1 == Unloaded
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public GameSubScreen(int w, int h, bool aFlag = false)
 		{
 			this.W = w;
@@ -43,22 +25,20 @@ namespace Charlotte.Common
 			GameSubScreenUtils.Add(this);
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public void Dispose()
 		{
-			if (GameSubScreenUtils.Remove(this) == false) // ? Already disposed
+			if (this.W == -1) // ? Already disposed
 				return;
 
-			if (this.Handle != -1)
-				if (DX.DeleteGraph(this.Handle) != 0) // ? 失敗
-					throw new GameError();
+			GameSubScreenUtils.Remove(this);
+
+			this.Unload();
+
+			this.W = -1;
+			this.H = -1;
+			this.AFlag = false;
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public void Unload()
 		{
 			if (this.Handle != -1)
@@ -70,9 +50,6 @@ namespace Charlotte.Common
 			}
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public int GetHandle()
 		{
 			if (this.Handle == -1)
@@ -85,20 +62,14 @@ namespace Charlotte.Common
 			return this.Handle;
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public void ChangeDrawScreen()
 		{
 			GameSubScreenUtils.ChangeDrawScreen(this);
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		public Size GetSize()
+		public I2Size GetSize()
 		{
-			return new Size(this.W, this.H);
+			return new I2Size(this.W, this.H);
 		}
 	}
 }
