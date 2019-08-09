@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte
 {
-	public class Consts
+	public static class Consts
 	{
 		public const double LAT_MIN = 20.0;
 		public const double LAT_MAX = 46.0;

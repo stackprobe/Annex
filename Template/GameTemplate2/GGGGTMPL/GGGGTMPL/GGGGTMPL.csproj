@@ -63,8 +63,11 @@
     <Compile Include="Common\GameGround.cs" />
     <Compile Include="Common\GameInput.cs" />
     <Compile Include="Common\GameJammer.cs" />
+    <Compile Include="Common\GameKey.cs" />
     <Compile Include="Common\GameMain.cs" />
+    <Compile Include="Common\GameMouse.cs" />
     <Compile Include="Common\GameMusic.cs" />
+    <Compile Include="Common\GamePad.cs" />
     <Compile Include="Common\GamePrint.cs" />
     <Compile Include="Common\GameSaveData.cs" />
     <Compile Include="Common\GameSE.cs" />

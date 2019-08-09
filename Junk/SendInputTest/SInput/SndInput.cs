@@ -8,7 +8,7 @@ using Charlotte.Tools;
 
 namespace Charlotte
 {
-	public class SndInput
+	public static class SndInput
 	{
 		[StructLayout(LayoutKind.Sequential)]
 		private struct MOUSEINPUT

@@ -60,7 +60,7 @@ namespace Editor
 		}
 	}
 
-	public class Tools
+	public static class Tools
 	{
 		private static string _UIFontName = null;
 

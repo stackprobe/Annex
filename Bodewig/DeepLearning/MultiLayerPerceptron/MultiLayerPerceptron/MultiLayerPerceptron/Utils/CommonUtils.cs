@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte.MultiLayerPerceptron.Utils
 {
-	public class CommonUtils
+	public static class CommonUtils
 	{
 		public static string ToString<T>(T value)
 		{

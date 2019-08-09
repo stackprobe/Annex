@@ -5,7 +5,7 @@ using System.Text;
 
 namespace a
 {
-	public class NumTools
+	public static class NumTools
 	{
 		public static bool IsRange(int value, int minval, int maxval)
 		{
@@ -15,7 +15,7 @@ namespace a
 		}
 	}
 
-	public class StringTools
+	public static class StringTools
 	{
 		public static string ZPad(string sVal, int len)
 		{

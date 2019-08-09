@@ -23,7 +23,7 @@ namespace WinShutdownConfirmDlgTest
 		}
 	}
 
-	public class Common
+	public static class Common
 	{
 		private static object SYNCROOT = new object();
 		private static bool WL_NotFirst = false;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte
 {
-	public class Consts
+	public static class Consts
 	{
 		public const int WHEEL_LEVEL_MIN = -100;
 		public const int WHEEL_LEVEL_MAX = 100;

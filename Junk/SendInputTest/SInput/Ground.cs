@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte
 {
-	public class Gnd
+	public static class Gnd
 	{
 		public static string Dummy = "Dummy";
 	}

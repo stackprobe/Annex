@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Charlotte.Tools
 {
-	public class DebugTools
+	public static class DebugTools
 	{
 		private static object LogStrm_SYNCROOT = new object();
 		private static FileStream LogStrm;

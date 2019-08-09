@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace BusyDlg
 {
-	public class Tools
+	public static class Tools
 	{
 		public static string GetString(string[] list, int index, string defval)
 		{

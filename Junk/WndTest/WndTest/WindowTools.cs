@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace WndTest
 {
-	public class WindowTools
+	public static class WindowTools
 	{
 		private delegate bool EnumWindowsCallBack_d(IntPtr hWnd, IntPtr lParam);
 

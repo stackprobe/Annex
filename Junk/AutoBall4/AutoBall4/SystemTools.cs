@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace AutoBall4
 {
-	public class SystemTools
+	public static class SystemTools
 	{
 		public static void Execute(string file, string args)
 		{

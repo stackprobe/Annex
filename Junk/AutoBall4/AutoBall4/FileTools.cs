@@ -6,7 +6,7 @@ using System.IO;
 
 namespace AutoBall4
 {
-	public class FileTools
+	public static class FileTools
 	{
 		public static string[][] ReadCsvFile(string csvFile)
 		{

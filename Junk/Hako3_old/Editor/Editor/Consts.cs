@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Editor
 {
-	public class Consts
+	public static class Consts
 	{
 		public const string DATA_DIR = "..\\..\\..\\..\\EditorData";
 		public const string RESOURCE_DIR = "C:\\appdata\\HakoIIITileData";

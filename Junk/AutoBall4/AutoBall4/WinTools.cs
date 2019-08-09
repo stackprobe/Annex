@@ -8,7 +8,7 @@ using System.Drawing.Imaging;
 
 namespace AutoBall4
 {
-	public class WinTools
+	public static class WinTools
 	{
 		public static void PrintScreen(string outPngFile)
 		{

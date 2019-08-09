@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte.Utils
 {
-	public class CommonUtils
+	public static class CommonUtils
 	{
 		public static int IndexOf<T>(List<T> list, Func<T, bool> predicate, int defval = -1)
 		{

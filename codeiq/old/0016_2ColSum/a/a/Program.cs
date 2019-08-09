@@ -480,7 +480,7 @@ namespace a
 		}
 	}
 
-	public class ArrayTools
+	public static class ArrayTools
 	{
 		public static List<T> GetClone<T>(List<T> src)
 		{
@@ -494,7 +494,7 @@ namespace a
 		}
 	}
 
-	public class StringTools
+	public static class StringTools
 	{
 		public static string Reverse(string str)
 		{

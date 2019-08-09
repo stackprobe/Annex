@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Charlotte
 {
-	public class Utils
+	public static class Utils
 	{
 		public delegate void operation_d();
 

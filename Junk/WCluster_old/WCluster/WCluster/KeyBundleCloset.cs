@@ -7,7 +7,7 @@ using Charlotte.Tools;
 
 namespace Charlotte
 {
-	public class KeyBundleCloset
+	public static class KeyBundleCloset
 	{
 		public static string closetDir
 		{

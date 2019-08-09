@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace WndTest
 {
-	public class MouseTools
+	public static class MouseTools
 	{
 		private struct POINT
 		{

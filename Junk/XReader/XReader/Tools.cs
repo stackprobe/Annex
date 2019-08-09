@@ -5,7 +5,7 @@ using System.Text;
 
 namespace XReader
 {
-	public class Tools
+	public static class Tools
 	{
 		public static bool ContainsIgnoreCase(string str, string ptn)
 		{

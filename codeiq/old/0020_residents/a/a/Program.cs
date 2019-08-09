@@ -192,7 +192,7 @@ namespace a
 		}
 	}
 
-	public class Tools
+	public static class Tools
 	{
 		public static double GetDistance(double x1, double y1, double x2, double y2)
 		{

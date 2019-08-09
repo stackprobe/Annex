@@ -6,7 +6,7 @@ using Charlotte.Tools;
 
 namespace Charlotte
 {
-	public class Consts
+	public static class Consts
 	{
 		public const int FORM_INITED_TIMER_COUNT = 3;
 

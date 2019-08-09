@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte
 {
-	public class Consts
+	public static class Consts
 	{
 #if true
 		public const int V_倍 = 2;

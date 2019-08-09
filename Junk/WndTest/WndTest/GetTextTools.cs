@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace WndTest
 {
-	public class GetTextTools
+	public static class GetTextTools
 	{
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, StringBuilder lParam);

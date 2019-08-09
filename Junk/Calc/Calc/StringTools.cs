@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Calc
 {
-	public class StringTools
+	public static class StringTools
 	{
 		public static string Reverse(string str)
 		{

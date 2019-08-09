@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte
 {
-	public class Example
+	public static class Example
 	{
 		public static void Test01()
 		{

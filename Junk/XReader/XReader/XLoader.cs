@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace XReader
 {
-	public class XLoader
+	public static class XLoader
 	{
 		public static XNode Load(string xmlFile)
 		{

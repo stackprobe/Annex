@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte.Utils
 {
-	public class CrashUtils
+	public static class CrashUtils
 	{
 		public static double GetDistance(GeoPoint a, GeoPoint b)
 		{

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace WndTest
 {
-	public class KeyboardTools
+	public static class KeyboardTools
 	{
 		[DllImport("user32.dll")]
 		private static extern short GetAsyncKeyState(int vKey);

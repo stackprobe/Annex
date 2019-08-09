@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Charlotte.Tools
 {
-	public class SecurityTools
+	public static class SecurityTools
 	{
 		private static RandomNumberGenerator cRandom = RNGCryptoServiceProvider.Create();
 

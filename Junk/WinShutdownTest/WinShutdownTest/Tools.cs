@@ -6,7 +6,7 @@ using System.IO;
 
 namespace WinFrmApp1
 {
-	public class Tools
+	public static class Tools
 	{
 		public static void WriteLog(string message)
 		{

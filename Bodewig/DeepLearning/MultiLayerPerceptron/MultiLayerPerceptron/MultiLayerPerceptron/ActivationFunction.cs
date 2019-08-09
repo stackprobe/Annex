@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Charlotte.MultiLayerPerceptron
 {
-	public class ActivationFunction
+	public static class ActivationFunction
 	{
 		public static double GetOutput(double value)
 		{
