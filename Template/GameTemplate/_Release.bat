@@ -11,6 +11,8 @@ C:\Factory\SubTools\makeAESCluster.exe SoundEffect.txt out\SoundEffect.dat %RAWK
 C:\Factory\SubTools\makeAESCluster.exe Etcetera.txt    out\Etcetera.dat    %RAWKEY% 140000000
 C:\Factory\SubTools\makeAESClusterForSH.exe Storehouse out\Storehouse.dat  %RAWKEY% 150000000
 
+SET RAWKEY=
+
 COPY /B GGGGTMPL\Release\GGGGTMPL.exe out\GGGGTMPL.exe
 
 out\GGGGTMPL.exe /L
