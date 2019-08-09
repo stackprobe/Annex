@@ -7,14 +7,8 @@ using System.IO;
 
 namespace Charlotte.Common
 {
-	//
-	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	//
 	public class GameSaveData
 	{
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void Save()
 		{
 			List<byte[]> blocks = new List<byte[]>();
@@ -85,9 +79,6 @@ namespace Charlotte.Common
 			File.WriteAllBytes(GameConsts.SaveDataFile, GameJammer.Encode(BinTools.SplittableJoin(blocks.ToArray())));
 		}
 
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public static void Load()
 		{
 			if (File.Exists(GameConsts.SaveDataFile) == false)

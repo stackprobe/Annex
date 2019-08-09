@@ -169,7 +169,7 @@ void EachFrame(void)
 	InputEachFrame();
 	MouseEachFrame();
 
-	if(Gnd.RealScreen_W != SCREEN_W || Gnd.RealScreen_H != SCREEN_H)
+	if(Gnd.RealScreen_W != SCREEN_W || Gnd.RealScreen_H != SCREEN_H || Gnd.RealScreenDraw_W == -1)
 	{
 		if(!Gnd.MainScreen)
 			Gnd.MainScreen = CreateSubScreen(SCREEN_W, SCREEN_H);

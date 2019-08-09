@@ -5,14 +5,9 @@ using System.Text;
 
 namespace Charlotte.Common
 {
-	public class GameMain
+	public class GamePad
 	{
-		public static void GameStart()
-		{
-			// TODO
-		}
-
-		public static void GameEnd()
+		public static void EachFrame()
 		{
 			// TODO
 		}
