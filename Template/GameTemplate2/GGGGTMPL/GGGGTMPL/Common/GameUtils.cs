@@ -9,6 +9,9 @@ namespace Charlotte.Common
 	//
 	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 	//
+	/// <summary>
+	/// その他の機能の寄せ集め、そのうち DxLib に関係無いもの。関係有るものは GameSystem へ
+	/// </summary>
 	public class GameUtils
 	{
 		//
@@ -33,6 +36,18 @@ namespace Charlotte.Common
 		public static void Noop(params object[] dummyPrms)
 		{
 			// noop
+		}
+
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public static T FastDesertElement<T>(List<T> list, Predicate<T> match, T defval = default(T))
+		{
+			for (int index = 0; index < list.Count; index++)
+				if (match(list[index]))
+					return ExtraTools.FastDesertElement(list, index);
+
+			return defval;
 		}
 	}
 }
