@@ -11,6 +11,14 @@ namespace Charlotte.Common
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
 		public const string SaveDataFile = "SaveData.dat";
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public const string ResourceFile = "Resource.dat";
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public const string ResourceDir = @"..\..\..\..\Resource";
 
 		// app > @ Screen_WH
 

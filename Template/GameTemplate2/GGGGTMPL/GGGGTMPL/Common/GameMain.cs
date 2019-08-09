@@ -12,7 +12,11 @@ namespace Charlotte.Common
 		//
 		public static void GameStart()
 		{
-			// TODO
+			// *.INIT
+			{
+				GameGround.INIT();
+				GameResource.INIT();
+			}
 		}
 
 		//
@@ -20,7 +24,11 @@ namespace Charlotte.Common
 		//
 		public static void GameEnd()
 		{
-			// TODO
+			// *.FNLZ
+			{
+				GameResource.FNLZ();
+				GameGround.FNLZ();
+			}
 		}
 	}
 }
