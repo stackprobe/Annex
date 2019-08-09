@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using DxLibDLL;
+using Charlotte.Tools;
 
 namespace Charlotte.Common
 {
@@ -13,30 +16,62 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public long FrameStartTime;
+		public static long FrameStartTime;
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public long LangolierTime;
+		public static long LangolierTime;
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public int ProcFrame;
+		public static int ProcFrame;
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public int FreezeInputFrame;
+		public static int FreezeInputFrame;
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public bool WindowIsActive;
+		public static bool WindowIsActive;
+
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		private static void CheckHz()
+		{
+			long currTime = GameSystem.GetCurrTime();
+
+			LangolierTime += 16L;
+			LangolierTime = LongTools.Range(LangolierTime, currTime - 100L, currTime + 100L);
+
+			while (currTime < LangolierTime)
+			{
+				Thread.Sleep(1);
+
+				// DxLib >
+
+				DX.ScreenFlip();
+
+				if (DX.ProcessMessage() == -1)
+				{
+					throw new Exception("End");
+				}
+
+				// < DxLib
+
+				currTime = GameSystem.GetCurrTime();
+			}
+		}
 
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
 		public static void EachFrame()
 		{
-			// TODO
+			if (GameSE.EachFrame() == false)
+			{
+				GameMusic.EachFrame();
+			}
 		}
 	}
 }

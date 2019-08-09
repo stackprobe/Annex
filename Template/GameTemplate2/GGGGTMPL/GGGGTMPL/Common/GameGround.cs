@@ -49,6 +49,11 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
+		public static GameTaskList EL = new GameTaskList();
+
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void INIT()
 		{
 			GameInput.DIR_2.PadBtnId = 0;
