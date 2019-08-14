@@ -10,29 +10,80 @@ namespace Charlotte.Common
 {
 	public static class GameGround
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GameTaskList EL = new GameTaskList();
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int PrimaryPadId = -1; // -1 == 未設定
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GameSubScreen MainScreen = null; // null == 不使用
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static I4Rect MonitorRect;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int RealScreen_W = GameConsts.Screen_W;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int RealScreen_H = GameConsts.Screen_H;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int RealScreenDraw_L;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int RealScreenDraw_T;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int RealScreenDraw_W = -1; // -1 == RealScreenDraw_LTWH 不使用
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int RealScreenDraw_H;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static double MusicVolume = GameConsts.DefaultVolume;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static double SEVolume = GameConsts.DefaultVolume;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool RO_MouseDispMode = false;
 
-		public static GameResourceCommon CommonResource;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public static GameGeneralResource CommonResource;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static D2Point Camera;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static I2Point ICamera;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void INIT()
 		{
 			GameInput.DIR_2.BtnId = 0;
@@ -65,18 +116,15 @@ namespace Charlotte.Common
 			GameInput.PAUSE.KeyId = DX.KEY_INPUT_SPACE;
 			GameInput.START.KeyId = DX.KEY_INPUT_RETURN;
 
-			// app > @ INIT
-
-			//RO_MouseDispMode = true;
-
-			// < app
+			GameAdditionalEvents.Ground_INIT();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void FNLZ()
 		{
-			// app > @ FNLZ
-
-			// < app
+			GameAdditionalEvents.Ground_FNLZ();
 		}
 	}
 }

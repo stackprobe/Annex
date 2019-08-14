@@ -5,8 +5,14 @@ using System.Text;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public class GamePicture
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public class PictureInfo
 		{
 			public int Handle;
@@ -14,10 +20,22 @@ namespace Charlotte.Common
 			public int H;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private PictureInfo Info = null; // null == Unloaded
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private Func<PictureInfo> Loader;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private Action<PictureInfo> Unloader;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public GamePicture(Func<PictureInfo> loader, Action<PictureInfo> unloader, Action<GamePicture> adder)
 		{
 			this.Loader = loader;
@@ -26,6 +44,9 @@ namespace Charlotte.Common
 			adder(this);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public void Unload()
 		{
 			// この画像を参照している GameDerivation を先に Unload しなければならない。
@@ -37,6 +58,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private PictureInfo GetInfo()
 		{
 			if (this.Info == null)
@@ -45,16 +69,25 @@ namespace Charlotte.Common
 			return this.Info;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public int GetHandle()
 		{
 			return this.GetInfo().Handle;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public int Get_W()
 		{
 			return this.GetInfo().W;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public int Get_H()
 		{
 			return this.GetInfo().H;

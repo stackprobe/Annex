@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\GameAdditionalEvents.cs" />
     <Compile Include="Common\GameCoffeeBreak.cs" />
     <Compile Include="Common\GameCommonEffect.cs" />
     <Compile Include="Common\GameConfig.cs" />

@@ -7,6 +7,9 @@ namespace Charlotte.Common
 {
 	public static class GamePictureLoaders
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GamePicture Standard(string file)
 		{
 			return new GamePicture(
@@ -16,6 +19,9 @@ namespace Charlotte.Common
 				);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GamePicture Inverse(string file)
 		{
 			return new GamePicture(
@@ -47,6 +53,9 @@ namespace Charlotte.Common
 				);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GamePicture Mirror(string file)
 		{
 			return new GamePicture(
@@ -82,6 +91,9 @@ namespace Charlotte.Common
 				);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GamePicture BgTrans(string file)
 		{
 			return new GamePicture(

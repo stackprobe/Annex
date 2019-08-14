@@ -9,12 +9,27 @@ namespace Charlotte.Common
 {
 	public static class GameMouse
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int Rot;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int L;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int R;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int M;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void EachFrame()
 		{
 			uint status;
@@ -36,29 +51,50 @@ namespace Charlotte.Common
 			GameUtils.UpdateInput(ref M, (status & (uint)DX.MOUSE_INPUT_MIDDLE) != 0u);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int GetInput(int status)
 		{
 			return 1 <= GameEngine.FreezeInputFrame ? 0 : status;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int Get_L()
 		{
 			return GetInput(L);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int Get_R()
 		{
 			return GetInput(R);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int Get_M()
 		{
 			return GetInput(M);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int X = (int)(GameConsts.Screen_W / 2.0);
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int Y = (int)(GameConsts.Screen_H / 2.0);
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void UpdatePos()
 		{
 			if (DX.GetMousePoint(out X, out Y) != 0) // ? 失敗
@@ -70,6 +106,9 @@ namespace Charlotte.Common
 			Y /= GameGround.RealScreen_H;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void ApplyPos()
 		{
 			int mx = X;
@@ -84,11 +123,23 @@ namespace Charlotte.Common
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int MoveX;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int MoveY;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int UM_LastFrame = -IntTools.IMAX;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void UpdateMove()
 		{
 			const int centerX = (int)(GameConsts.Screen_W / 2.0);

@@ -9,6 +9,9 @@ namespace Charlotte.Common
 {
 	public static class GamePrint
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private class PrintInfo
 		{
 			public GameTaskList TL = null;
@@ -23,35 +26,68 @@ namespace Charlotte.Common
 			public string Line;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static PrintInfo P_Info = new PrintInfo();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Reset()
 		{
 			P_Info = new PrintInfo();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetTaskList(GameTaskList tl)
 		{
 			P_Info.TL = tl;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetColor(I3Color color)
 		{
 			P_Info.Color = color;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetBorder(I3Color color, int width = 1)
 		{
 			P_Info.BorderColor = color;
 			P_Info.BorderWidth = width;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int P_BaseX;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int P_BaseY;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int P_YStep;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int P_X;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int P_Y;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetPrint(int x = 0, int y = 0, int yStep = 16)
 		{
 			P_BaseX = x;
@@ -61,12 +97,18 @@ namespace Charlotte.Common
 			P_Y = 0;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void PrintRet()
 		{
 			P_X = 0;
 			P_Y += P_YStep;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static void PrintMain(PrintInfo info)
 		{
 			if (info.BorderWidth != 0)
@@ -77,6 +119,9 @@ namespace Charlotte.Common
 			DX.DrawString(info.X, info.Y, info.Line, GameDxUtils.GetColor(info.Color), 0);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private class PrintTask : IGameTask
 		{
 			public PrintInfo Info;
@@ -93,6 +138,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Print(string line)
 		{
 			P_Info.X = P_BaseX + P_X;
@@ -111,7 +159,7 @@ namespace Charlotte.Common
 				});
 			}
 
-			int w = DX.GetDrawStringWidth(line, StringTools.ENCODING_SJIS.GetByteCount(line)); // FIXME これでいいのか？
+			int w = DX.GetDrawStringWidth(line, StringTools.ENCODING_SJIS.GetByteCount(line));
 
 			if (w < 0 || IntTools.IMAX < w)
 				throw new GameError();

@@ -9,8 +9,14 @@ namespace Charlotte.Common
 {
 	public static class GameUserDatStrings
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static Dictionary<string, string> Name2Value = DictionaryTools.Create<string>();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void INIT()
 		{
 			if (File.Exists(GameConsts.UserDatStringsFile) == false)
@@ -32,11 +38,17 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void FNLZ()
 		{
 			// noop
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static string GetValue(string name, string defval)
 		{
 			if (Name2Value.ContainsKey(name) == false)
@@ -47,6 +59,9 @@ namespace Charlotte.Common
 
 		// Accessor >
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static string Version
 		{
 			get { return GetValue("Version", "0.00"); }

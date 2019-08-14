@@ -8,8 +8,14 @@ namespace Charlotte.Common
 {
 	public static class GameDatStrings
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static Dictionary<string, string> Name2Value = DictionaryTools.Create<string>();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void INIT()
 		{
 			string[] lines = FileTools.TextToLines(StringTools.ENCODING_SJIS.GetString(GameResource.Load("DatStrings.txt")));
@@ -28,11 +34,17 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void FNLZ()
 		{
 			// noop
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static string GetValue(string name)
 		{
 			if (Name2Value.ContainsKey(name) == false)
@@ -43,16 +55,25 @@ namespace Charlotte.Common
 
 		// Accessor >
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static string Title
 		{
 			get { return GetValue("Title"); }
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static string Author
 		{
 			get { return GetValue("Author"); }
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static string Copyright
 		{
 			get { return GetValue("Copyright"); }

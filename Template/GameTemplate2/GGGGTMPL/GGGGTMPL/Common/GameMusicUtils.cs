@@ -8,13 +8,22 @@ namespace Charlotte.Common
 {
 	public static class GameMusicUtils
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static List<GameMusic> Musics = new List<GameMusic>();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Add(GameMusic music)
 		{
 			Musics.Add(music);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private class PlayInfo
 		{
 			public enum Command_e
@@ -40,8 +49,14 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static Queue<PlayInfo> PlayInfos = new Queue<PlayInfo>();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void EachFrame()
 		{
 			if (1 <= PlayInfos.Count)
@@ -71,9 +86,18 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GameMusic CurrDestMusic = null;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static double CurrDestVolume = 0.0;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Play(GameMusic music, bool once = false, bool resume = false, double volume = 1.0, int fadeFrameMax = 30)
 		{
 			if (CurrDestMusic != null) // ? 再生中
@@ -97,11 +121,17 @@ namespace Charlotte.Common
 			CurrDestVolume = volume;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Fade(int frameMax = 30, double destVolume = 0.0)
 		{
 			Fade(frameMax, destVolume, CurrDestVolume);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Fade(int frameMax, double destVolumeRate, double startVolumeRate)
 		{
 			if (CurrDestMusic == null)
@@ -128,6 +158,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Stop()
 		{
 			if (CurrDestMusic == null)

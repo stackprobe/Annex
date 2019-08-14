@@ -9,11 +9,17 @@ namespace Charlotte.Common
 {
 	public static class GamePictureLoaderUtils
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static byte[] File2FileData(string file)
 		{
 			return GameResource.Load(file);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int FileData2SoftImage(byte[] fileData)
 		{
 			int siHandle = -1;
@@ -47,6 +53,9 @@ namespace Charlotte.Common
 			return siHandle;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int SoftImage2GraphicHandle(int siHandle_binding)
 		{
 			int gHandle = DX.CreateGraphFromSoftImage(siHandle_binding);
@@ -60,6 +69,9 @@ namespace Charlotte.Common
 			return gHandle;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GamePicture.PictureInfo GraphicHandle2Info(int gHandle_binding)
 		{
 			int w;
@@ -75,6 +87,9 @@ namespace Charlotte.Common
 			};
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void GetSoftImageSize(int siHandle, out int w, out int h)
 		{
 			if (DX.GetSoftImageSize(siHandle, out w, out h) != 0)
@@ -87,6 +102,9 @@ namespace Charlotte.Common
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void GetGraphicHandleSize(int gHandle, out int w, out int h)
 		{
 			if (DX.GetGraphSize(gHandle, out w, out h) != 0)
@@ -99,6 +117,9 @@ namespace Charlotte.Common
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public class Dot
 		{
 			public int R;
@@ -107,6 +128,9 @@ namespace Charlotte.Common
 			public int A;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static Dot GetSoftImageDot(int siHandle, int x, int y)
 		{
 			Dot dot = new Dot();
@@ -125,6 +149,9 @@ namespace Charlotte.Common
 			return dot;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetSoftImageDot(int siHandle, int x, int y, Dot dot)
 		{
 			dot.R = IntTools.Range(dot.R, 0, 255);
@@ -136,6 +163,9 @@ namespace Charlotte.Common
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int CreateSoftImage(int w, int h)
 		{
 			if (
@@ -152,18 +182,27 @@ namespace Charlotte.Common
 			return siHandle;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void ReleaseSoftImage(int siHandle)
 		{
 			if (DX.DeleteSoftImage(siHandle) != 0) // ? 失敗
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void ReleaseGraphicHandle(int gHandle)
 		{
 			if (DX.DeleteGraph(gHandle) != 0) // ? 失敗
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void ReleaseInfo(GamePicture.PictureInfo info)
 		{
 			ReleaseGraphicHandle(info.Handle);

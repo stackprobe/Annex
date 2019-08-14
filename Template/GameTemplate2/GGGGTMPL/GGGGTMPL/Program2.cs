@@ -13,7 +13,7 @@ namespace Charlotte
 		{
 			try
 			{
-				this.Main3();
+				GameMain2.Perform(Main3);
 			}
 			catch (Exception e)
 			{
@@ -23,24 +23,10 @@ namespace Charlotte
 
 		private void Main3()
 		{
-			GameMain.GameStart();
-			try
+			for (; ; )
 			{
-				this.Main4();
+				GameEngine.EachFrame();
 			}
-			catch (Exception e)
-			{
-				ProcMain.WriteLog(e);
-			}
-			finally
-			{
-				GameMain.GameEnd();
-			}
-		}
-
-		private void Main4()
-		{
-			// TODO
 		}
 	}
 }

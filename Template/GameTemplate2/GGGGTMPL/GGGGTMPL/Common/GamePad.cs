@@ -8,14 +8,32 @@ namespace Charlotte.Common
 {
 	public static class GamePad
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private const int PAD_MAX = 16;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private const int PAD_BUTTON_MAX = 32;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int[] ButtonStatus = new int[PAD_MAX * PAD_BUTTON_MAX]; // [padId * PAD_BUTTON_MAX + btnId]
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static uint[] PadStatus = new uint[PAD_MAX];
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int PadCount = -1; // -1 == 未取得
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int GetPadCount()
 		{
 			if (PadCount == -1)
@@ -28,11 +46,17 @@ namespace Charlotte.Common
 			return PadCount;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static int PadId2InputType(int padId)
 		{
 			return padId + 1;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void EachFrame()
 		{
 			for (int padId = 0; padId < GetPadCount(); padId++)
@@ -62,6 +86,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int GetInput(int padId, int btnId)
 		{
 			if (padId == -1) // ? 未割り当て
@@ -73,6 +100,9 @@ namespace Charlotte.Common
 			return 1 <= GameEngine.FreezeInputFrame ? 0 : ButtonStatus[padId * PAD_BUTTON_MAX + btnId];
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool IsPound(int padId, int btnId)
 		{
 			return GameUtils.IsPound(GetInput(padId, btnId));

@@ -5,59 +5,49 @@ using System.Text;
 
 namespace Charlotte.Common
 {
-	//
-	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-	//
-	public class GameMusic
+	public static class GameAdditionalEvents
 	{
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public GameSound Sound;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		public double Volume = 0.5; // 0.0 ～ 1.0
-
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		public GameMusic(string file)
-			: this(new GameSound(file, 1))
-		{ }
-
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		public GameMusic(Func<byte[]> getFileData)
-			: this(new GameSound(getFileData, 1))
-		{ }
-
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		public GameMusic(GameSound sound_binding)
+		public static Action Ground_INIT = () =>
 		{
-			this.Sound = sound_binding;
-			this.Sound.PostLoaded = () => GameSoundUtils.SetVolume(this.Sound.GetHandle(0), 0.0); // ロードしたらミュートしておく。
-
-			GameMusicUtils.Add(this);
-		}
-
+			//GameGround.RO_MouseDispMode = true;
+		};
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public void Play(bool once = false, bool resume = false, double volume = 1.0, int fadeFrameMax = 30)
-		{
-			GameMusicUtils.Play(this, once, resume, volume, fadeFrameMax);
-		}
-
+		public static Action Ground_FNLZ = () => { };
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public void Touch()
+		public static Action Main_Font = () =>
 		{
-			this.Sound.GetHandle(0);
-		}
+			//GameFontRegister.Add(@"Font\Genkai-Mincho-font\genkai-mincho.ttf");
+		};
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public static Action PostMain_G2 = () => { };
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public static Action PostMain = () => { };
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public static Action<List<string>> Save = lines =>
+		{
+			lines.Add(DateTime.Now.ToString()); // Dummy
+		};
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public static Action<string[]> Load = lines =>
+		{
+			int c = 0;
+
+			GameUtils.Noop(lines[c++]); // Dummy
+		};
 	}
 }

@@ -8,11 +8,23 @@ namespace Charlotte.Common
 {
 	public static class GameCurtain
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static Queue<double> WhiteLevels = new Queue<double>();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static double CurrWhiteLevel = 0.0;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int LastFrame = -1;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void EachFrame(bool oncePerFrame = true) // EachFrame()前に呼び出しても可
 		{
 			if (oncePerFrame)
@@ -33,11 +45,17 @@ namespace Charlotte.Common
 			CurrWhiteLevel = wl;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetCurtain(int frameMax = 30, double destWhiteLevel = 0.0)
 		{
 			SetCurtain(frameMax, destWhiteLevel, CurrWhiteLevel);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetCurtain(int frameMax, double destWhiteLevel, double startWhiteLevel)
 		{
 			WhiteLevels.Clear();
@@ -64,6 +82,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void DrawCurtain(double whiteLevel = -1.0)
 		{
 			if (whiteLevel == 0.0)

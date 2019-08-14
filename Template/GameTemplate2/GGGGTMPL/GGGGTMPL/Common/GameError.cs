@@ -5,8 +5,14 @@ using System.Text;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public class GameError : Exception
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public GameError(string message = "Sorry, An error has occurred")
 			: base(message)
 		{ }

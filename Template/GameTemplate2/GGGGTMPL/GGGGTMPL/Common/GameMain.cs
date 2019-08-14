@@ -11,8 +11,14 @@ namespace Charlotte.Common
 {
 	public static class GameMain
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static bool DxLibInited = false;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void GameStart()
 		{
 			GameConfig.Load(); // LogFile, LOG_ENABLED を含むので真っ先に
@@ -45,7 +51,7 @@ namespace Charlotte.Common
 			// DxLib >
 
 			if (GameConfig.LOG_ENABLED)
-				DX.SetApplicationLogSaveDirectory(@"C:\tmp");
+				DX.SetApplicationLogSaveDirectory(GameConfig.ApplicationLogSaveDirectory);
 
 			DX.SetOutApplicationLogValidFlag(GameConfig.LOG_ENABLED ? 1 : 0); // DxLib のログを出力 1: する 0: しない
 
@@ -102,15 +108,20 @@ namespace Charlotte.Common
 
 			PostSetScreenSize(GameGround.RealScreen_W, GameGround.RealScreen_H);
 
-			// app > @ Font
+			GameAdditionalEvents.Main_Font();
 
-			//GameFontRegister.Add(@"Font\Genkai-Mincho-font\genkai-mincho.ttf");
+			GameGround.CommonResource = new GameGeneralResource();
 
-			// < app
+			//GameWin32.SetForegroundWindow(GameWin32.GetMainWindowHandle()); // このウィンドウを最前面に表示する。
+			//GameWin32.ActivateWindow(GameWin32.GetMainWindowHandle()); // このウィンドウをアクティブにする。
 
-			GameGround.CommonResource = new GameResourceCommon();
+			GameAdditionalEvents.PostMain_G2();
+			GameAdditionalEvents.PostMain();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void GameEnd()
 		{
 			GameSaveData.Save();
@@ -128,6 +139,9 @@ namespace Charlotte.Common
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void GameErrorEnd()
 		{
 			if (DxLibInited)
@@ -136,19 +150,28 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetMainWindowTitle()
 		{
 			DX.SetMainWindowText(GameDatStrings.Title + " " + GameUserDatStrings.Version);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static IntPtr GetAppIcon()
 		{
-			using (MemoryStream mem = new MemoryStream(GameResource.Load("game_app.ico")))
+			using (MemoryStream mem = new MemoryStream(GameResource.Load(@"General\game_app.ico")))
 			{
 				return new Icon(mem).Handle;
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetScreenSize(int w, int h)
 		{
 			if (
@@ -170,11 +193,17 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void ApplyScreenSize()
 		{
 			ApplyScreenSize(GameGround.RealScreen_W, GameGround.RealScreen_H);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void ApplyScreenSize(int w, int h)
 		{
 			bool mdm = GameDxUtils.GetMouseDispMode();
@@ -193,6 +222,9 @@ namespace Charlotte.Common
 			GameDxUtils.SetMouseDispMode(mdm);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void PostSetScreenSize(int w, int h)
 		{
 			if (GameGround.MonitorRect.W == w && GameGround.MonitorRect.H == h)
@@ -201,6 +233,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetScreenPosition(int l, int t)
 		{
 			DX.SetWindowPosition(l, t);

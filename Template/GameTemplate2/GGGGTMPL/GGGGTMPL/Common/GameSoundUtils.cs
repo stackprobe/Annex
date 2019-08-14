@@ -9,19 +9,31 @@ namespace Charlotte.Common
 {
 	public static class GameSoundUtils
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static List<GameSound> Sounds = new List<GameSound>();
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Add(GameSound sound)
 		{
 			Sounds.Add(sound);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void UnloadAll()
 		{
 			foreach (GameSound sound in Sounds)
 				sound.Unload();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Play(int handle, bool once = true, bool resume = false)
 		{
 			switch (DX.CheckSoundMem(handle))
@@ -42,12 +54,18 @@ namespace Charlotte.Common
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Stop(int handle)
 		{
 			if (DX.StopSoundMem(handle) != 0) // ? 失敗
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void SetVolume(int handle, double volume)
 		{
 			volume = DoubleTools.Range(volume, 0.0, 1.0);
@@ -61,6 +79,9 @@ namespace Charlotte.Common
 				throw new GameError();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static double MixVolume(double volume1, double volume2)
 		{
 			volume1 = DoubleTools.Range(volume1, 0.0, 1.0);

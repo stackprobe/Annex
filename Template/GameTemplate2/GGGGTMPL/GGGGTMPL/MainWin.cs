@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Charlotte.Common;
 
 namespace Charlotte
 {
@@ -24,7 +25,18 @@ namespace Charlotte
 
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
-			this.Visible = false;
+			// sync > @ G2_MainWin_Shown
+
+			bool[] aliving = new bool[] { true };
+
+			GameAdditionalEvents.PostMain_G2 = () =>
+			{
+				this.BeginInvoke((MethodInvoker)delegate
+				{
+					if (aliving[0])
+						this.Visible = false;
+				});
+			};
 
 			Thread th = new Thread(() =>
 			{
@@ -32,11 +44,14 @@ namespace Charlotte
 
 				this.BeginInvoke((MethodInvoker)delegate
 				{
+					aliving[0] = false;
 					this.Close();
 				});
 			});
 
 			th.Start();
+
+			// < sync
 		}
 
 		private void MainWin_FormClosing(object sender, FormClosingEventArgs e)

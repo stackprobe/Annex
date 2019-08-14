@@ -9,6 +9,9 @@ namespace Charlotte.Common
 {
 	public static class GameDerivations
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static GamePicture GetPicture(GamePicture picture, int l, int t, int w, int h)
 		{
 			if (

@@ -9,6 +9,9 @@ namespace Charlotte.Common
 {
 	public static class GameSaveData
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Save()
 		{
 			List<byte[]> blocks = new List<byte[]>();
@@ -67,11 +70,7 @@ namespace Charlotte.Common
 			{
 				List<string> lines = new List<string>();
 
-				// app > @ Save
-
-				lines.Add(DateTimeUnit.Now().ToString()); // Dummy
-
-				// < app
+				GameAdditionalEvents.Save(lines);
 
 				blocks.Add(GameUtils.SplitableJoin(lines.ToArray()));
 			}
@@ -79,6 +78,9 @@ namespace Charlotte.Common
 			File.WriteAllBytes(GameConsts.SaveDataFile, GameJammer.Encode(BinTools.SplittableJoin(blocks.ToArray())));
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Load()
 		{
 			if (File.Exists(GameConsts.SaveDataFile) == false)
@@ -147,13 +149,8 @@ namespace Charlotte.Common
 			try // for app
 			{
 				string[] lines = GameUtils.Split(blocks[bc++]);
-				int c = 0;
 
-				// app > @ Load
-
-				GameUtils.Noop(lines[c++]); // Dummy
-
-				// < app
+				GameAdditionalEvents.Load(lines);
 			}
 			catch (Exception e)
 			{

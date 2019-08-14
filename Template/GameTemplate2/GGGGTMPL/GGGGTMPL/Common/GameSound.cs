@@ -7,18 +7,39 @@ using Charlotte.Tools;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public class GameSound
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private Func<byte[]> Func_GetFileData;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private int HandleCount;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private int[] Handles = null; // null == Unloaded
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public Action PostLoaded = () => { };
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public GameSound(string file, int handleCount)
 			: this(() => GameResource.Load(file), handleCount)
 		{ }
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public GameSound(Func<byte[]> getFileData, int handleCount)
 		{
 			this.Func_GetFileData = getFileData;
@@ -27,6 +48,9 @@ namespace Charlotte.Common
 			GameSoundUtils.Add(this);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public void Unload()
 		{
 			if (this.Handles != null)
@@ -39,11 +63,17 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public bool IsLoaded()
 		{
 			return this.Handles != null;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public int GetHandle(int index)
 		{
 			if (this.Handles == null)

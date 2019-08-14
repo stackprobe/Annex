@@ -6,26 +6,41 @@ using Charlotte.Tools;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	/// <summary>
 	/// その他の機能の寄せ集め、そのうち DxLib に関係無いもの。関係有るものは GameDxUtils へ
 	/// </summary>
 	public static class GameUtils
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static byte[] SplitableJoin(string[] lines)
 		{
 			return BinTools.SplittableJoin(lines.Select(line => Encoding.UTF8.GetBytes(line)).ToArray());
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static string[] Split(byte[] data)
 		{
 			return BinTools.Split(data).Select(bLine => Encoding.UTF8.GetString(bLine)).ToArray();
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Noop(params object[] dummyPrms)
 		{
 			// noop
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static T FastDesertElement<T>(List<T> list, Predicate<T> match, T defval = default(T))
 		{
 			for (int index = 0; index < list.Count; index++)
@@ -35,6 +50,9 @@ namespace Charlotte.Common
 			return defval;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void CountDown(ref int count)
 		{
 			if (count < 0)
@@ -43,6 +61,9 @@ namespace Charlotte.Common
 				count--;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Approach(ref double value, double target, double rate)
 		{
 			value -= target;
@@ -50,6 +71,9 @@ namespace Charlotte.Common
 			value += target;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Rotate(ref double x, ref double y, double rot)
 		{
 			double w;
@@ -59,11 +83,17 @@ namespace Charlotte.Common
 			x = w;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static double GetDistance(double x, double y)
 		{
 			return Math.Sqrt(x * x + y * y);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static double GetDistance(D2Point pt)
 		{
 			return GetDistance(pt.X, pt.Y);
@@ -73,6 +103,9 @@ namespace Charlotte.Common
 		// 0.0 ～ Math.PI * 2.0
 		// 右真横(0,0 -> 1,0方向)を0.0として時計回り。(但し、X軸プラス方向を右、Y軸プラス方向を下)
 		// 1周は Math.PI * 2.0
+		//
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
 		public static double GetAngle(double x, double y)
 		{
@@ -104,11 +137,17 @@ namespace Charlotte.Common
 			return rm;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static double GetAngle(D2Point pt)
 		{
 			return GetDistance(pt.X, pt.Y);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static D2Point AngleToPoint(double angle, double distance)
 		{
 			return new D2Point(
@@ -117,6 +156,9 @@ namespace Charlotte.Common
 				);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		/// <summary>
 		/// 円1と円2が衝突しているか判定する。
 		/// </summary>
@@ -130,6 +172,9 @@ namespace Charlotte.Common
 			return GetDistance(pt1 - pt2) < r1 + r2;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		/// <summary>
 		/// 円1と点2が衝突しているか判定する。
 		/// </summary>
@@ -142,6 +187,9 @@ namespace Charlotte.Common
 			return GetDistance(pt1 - pt2) < r1;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		/// <summary>
 		/// 円1と矩形2が衝突しているか判定する。
 		/// </summary>
@@ -187,6 +235,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		/// <summary>
 		/// 矩形1と点2が衝突しているか判定する。
 		/// </summary>
@@ -200,6 +251,9 @@ namespace Charlotte.Common
 				rect1.T < pt2.Y && pt2.Y < rect1.B;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		/// <summary>
 		/// 矩形1と矩形2が衝突しているか判定する。
 		/// </summary>
@@ -213,6 +267,9 @@ namespace Charlotte.Common
 				rect1.T < rect2.B && rect2.T < rect1.B;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool IsOut(D2Point pt, D4Rect rect, double margin = 0.0)
 		{
 			return
@@ -220,16 +277,25 @@ namespace Charlotte.Common
 				pt.Y < rect.T - margin || rect.B + margin < pt.Y;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool IsOutOfScreen(D2Point pt, double margin = 0.0)
 		{
 			return IsOut(pt, new D4Rect(0, 0, GameConsts.Screen_W, GameConsts.Screen_H), margin);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool IsOutOfCamera(D2Point pt, double margin = 0.0)
 		{
 			return IsOut(pt, new D4Rect(GameGround.ICamera.X, GameGround.ICamera.Y, GameConsts.Screen_W, GameConsts.Screen_H), margin);
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void UpdateInput(ref int counter, bool status)
 		{
 			if (status)
@@ -241,9 +307,18 @@ namespace Charlotte.Common
 				counter = 0 < counter ? -1 : 0;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private const int POUND_FIRST_DELAY = 17;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private const int POUND_DELAY = 4;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool IsPound(int counter)
 		{
 			return counter == 1 || POUND_FIRST_DELAY < counter && (counter - POUND_FIRST_DELAY) % POUND_DELAY == 1;

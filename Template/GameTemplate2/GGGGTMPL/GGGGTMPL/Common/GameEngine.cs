@@ -10,12 +10,30 @@ namespace Charlotte.Common
 {
 	public static class GameEngine
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static long FrameStartTime;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static long LangolierTime;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int ProcFrame;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int FreezeInputFrame;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool WindowIsActive;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static void CheckHz()
 		{
 			long currTime = GameDxUtils.GetCurrTime();
@@ -42,6 +60,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void EachFrame()
 		{
 			if (GameSEUtils.EachFrame() == false)
@@ -74,9 +95,8 @@ namespace Charlotte.Common
 				}
 			}
 
-			// app > @ before ScreenFlip
-
-			// < app
+			if (GameEngine.ProcFrame % 120 == 0)
+				GC.Collect(0);
 
 			// DxLib >
 
@@ -88,10 +108,6 @@ namespace Charlotte.Common
 			}
 
 			// < DxLib
-
-			// app > @ after ScreenFlip
-
-			// < app
 
 			CheckHz();
 
@@ -125,12 +141,11 @@ namespace Charlotte.Common
 					GameGround.MainScreen = null;
 				}
 			}
-
-			// app > @ post EachFrame
-
-			// < app
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void FreezeInput(int frame = 1) // frame: 1 == このフレームのみ, 2 == このフレームと次のフレーム ...
 		{
 			if (frame < 1 || IntTools.IMAX < frame)

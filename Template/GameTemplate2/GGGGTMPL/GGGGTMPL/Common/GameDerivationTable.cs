@@ -6,10 +6,19 @@ using Charlotte.Tools;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public class GameDerivationTable
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private AutoTable<GamePicture> DerTable;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public GameDerivationTable(GamePicture picture, int x, int y, int w, int h, int xNum, int yNum, int xStep = -1, int yStep = -1)
 		{
 			if (xStep == -1) xStep = w;
@@ -26,6 +35,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public GamePicture this[int x, int y]
 		{
 			get

@@ -5,17 +5,32 @@ using System.Text;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public class GameIEnumerableTask : IGameTask
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private IEnumerator<bool> Sequencer;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private Action EndRoutine;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public GameIEnumerableTask(IEnumerable<bool> routine, Action endRoutine)
 		{
 			this.Sequencer = routine.GetEnumerator();
 			this.EndRoutine = endRoutine;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public bool Routine()
 		{
 			if (this.Sequencer != null && (this.Sequencer.MoveNext() == false || this.Sequencer.Current == false))
@@ -26,6 +41,9 @@ namespace Charlotte.Common
 			return this.Sequencer != null;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public void Dispose()
 		{
 			if (this.EndRoutine != null)

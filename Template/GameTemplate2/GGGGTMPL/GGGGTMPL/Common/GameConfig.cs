@@ -11,6 +11,9 @@ namespace Charlotte.Common
 	{
 		// 設定項目 >
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		/// <summary>
 		/// -1 == デフォルト
 		/// 0  == 最初のモニタ
@@ -20,11 +23,24 @@ namespace Charlotte.Common
 		/// </summary>
 		public static int DisplayIndex = 1;
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static string LogFile = @"C:\tmp\Game.log";
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static bool LOG_ENABLED = true;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public static string ApplicationLogSaveDirectory = @"C:\tmp";
 
 		// < 設定項目
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static void Load()
 		{
 			if (File.Exists(GameConsts.ConfigFile) == false)
@@ -41,6 +57,7 @@ namespace Charlotte.Common
 			DisplayIndex = int.Parse(lines[c++]);
 			LogFile = lines[c++];
 			LOG_ENABLED = int.Parse(lines[c++]) != 0;
+			ApplicationLogSaveDirectory = lines[c++];
 
 			// < 設定項目
 		}
