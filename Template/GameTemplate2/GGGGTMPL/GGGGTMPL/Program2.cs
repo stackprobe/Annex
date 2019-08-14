@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Charlotte.Tools;
+using DxLibDLL;
 using Charlotte.Common;
+using Charlotte.Tools;
+using Charlotte.Tests;
 
 namespace Charlotte
 {
@@ -25,21 +27,27 @@ namespace Charlotte
 		{
 			GameAdditionalEvents.Ground_INIT = () =>
 			{
+				ProcMain.WriteLog("Ground_INIT");
+
 				//GameGround.RO_MouseDispMode = true;
 			};
 
 			GameAdditionalEvents.Ground_FNLZ = () =>
 			{
-				// noop
+				ProcMain.WriteLog("Ground_FNLZ");
 			};
 
 			GameAdditionalEvents.PostGameStart = () =>
 			{
+				ProcMain.WriteLog("PostGameStart");
+
 				// Font >
 
 				//GameFontRegister.Add(@"Font\Genkai-Mincho-font\genkai-mincho.ttf");
 
 				// < Font
+
+				Ground.I = new Ground();
 			};
 
 			GameAdditionalEvents.Save = lines =>
@@ -59,10 +67,7 @@ namespace Charlotte
 
 		private void Main4()
 		{
-			for (; ; )
-			{
-				GameEngine.EachFrame();
-			}
+			new Test0001().Test01();
 		}
 	}
 }

@@ -278,6 +278,8 @@ void SmplWindowSizeConfig(void)
 {
 	char *MENU_ITEMS[] =
 	{
+		// app > @ WindowSize_MENU_ITEMS_0_10
+
 		"800 x 600 (デフォルト)",
 		"900 x 675",
 		"1000 x 750",
@@ -289,6 +291,9 @@ void SmplWindowSizeConfig(void)
 		"1600 x 1200",
 		"1700 x 1275",
 		"1800 x 1350",
+
+		// < app
+
 		"フルスクリーン",
 		"フルスクリーン (縦横比維持)",
 		"フルスクリーン (黒背景)",
@@ -303,6 +308,9 @@ void SmplWindowSizeConfig(void)
 
 		switch(selectIndex)
 		{
+
+		// app > @ WindowSize_switch_case_0_10
+
 		case 0: SetScreenSize(800, 600); break;
 		case 1: SetScreenSize(900, 675); break;
 		case 2: SetScreenSize(1000, 750); break;
@@ -314,6 +322,9 @@ void SmplWindowSizeConfig(void)
 		case 8: SetScreenSize(1600, 1200); break;
 		case 9: SetScreenSize(1700, 1275); break;
 		case 10: SetScreenSize(1800, 1350); break;
+
+		// < app
+
 		case 11: SetScreenSize(Gnd.MonitorRect.W, Gnd.MonitorRect.H); break;
 		case 12:
 			{
