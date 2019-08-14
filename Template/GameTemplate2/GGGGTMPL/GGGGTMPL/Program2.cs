@@ -27,20 +27,16 @@ namespace Charlotte
 		{
 			GameAdditionalEvents.Ground_INIT = () =>
 			{
-				ProcMain.WriteLog("Ground_INIT");
-
 				//GameGround.RO_MouseDispMode = true;
 			};
 
 			GameAdditionalEvents.Ground_FNLZ = () =>
 			{
-				ProcMain.WriteLog("Ground_FNLZ");
+				// none
 			};
 
 			GameAdditionalEvents.PostGameStart = () =>
 			{
-				ProcMain.WriteLog("PostGameStart");
-
 				// Font >
 
 				//GameFontRegister.Add(@"Font\Genkai-Mincho-font\genkai-mincho.ttf");
@@ -53,12 +49,16 @@ namespace Charlotte
 			GameAdditionalEvents.Save = lines =>
 			{
 				lines.Add(DateTime.Now.ToString()); // Dummy
+				lines.Add(DateTime.Now.ToString()); // Dummy
+				lines.Add(DateTime.Now.ToString()); // Dummy
 			};
 
 			GameAdditionalEvents.Load = lines =>
 			{
 				int c = 0;
 
+				GameUtils.Noop(lines[c++]); // Dummy
+				GameUtils.Noop(lines[c++]); // Dummy
 				GameUtils.Noop(lines[c++]); // Dummy
 			};
 

@@ -13,7 +13,7 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public GameError(string message = "Sorry, An error has occurred")
+		public GameError(string message = "エラーが発生しました。")
 			: base(message)
 		{ }
 	}

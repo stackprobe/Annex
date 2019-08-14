@@ -23,6 +23,9 @@ namespace Charlotte.Common
 			{
 				List<string> lines = new List<string>();
 
+				lines.Add(Program.APP_IDENT);
+				lines.Add(Program.APP_TITLE);
+
 				lines.Add("" + GameGround.RealScreen_W);
 				lines.Add("" + GameGround.RealScreen_H);
 
@@ -92,13 +95,19 @@ namespace Charlotte.Common
 			byte[][] blocks = BinTools.Split(GameJammer.Decode(File.ReadAllBytes(GameConsts.SaveDataFile)));
 			int bc = 0;
 
+			string[] lines = GameUtils.Split(blocks[bc++]);
+			int c = 0;
+
+			if (lines[c++] != Program.APP_IDENT)
+				throw new GameError();
+
+			if (lines[c++] != Program.APP_TITLE)
+				throw new GameError();
+
 			// 項目が増えた場合を想定して try ～ catch しておく。
 
 			try // for Donut2
 			{
-				string[] lines = GameUtils.Split(blocks[bc++]);
-				int c = 0;
-
 				// TODO int.Parse -> IntTools.ToInt
 
 				GameGround.RealScreen_W = int.Parse(lines[c++]);
@@ -151,7 +160,7 @@ namespace Charlotte.Common
 
 			try // for app
 			{
-				string[] lines = GameUtils.Split(blocks[bc++]);
+				lines = GameUtils.Split(blocks[bc++]);
 
 				GameAdditionalEvents.Load(lines);
 			}

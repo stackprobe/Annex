@@ -7,19 +7,49 @@ using DxLibDLL;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public class GameSimpleMenu
 	{
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public I3Color Color = null;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public I3Color BorderColor = null;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public I3Color WallColor = null;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public GamePicture WallPicture = null;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public double WallCurtain = 0.0; // -1.0 ～ 1.0
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public int X = 16;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public int Y = 16;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public int YStep = 32;
 
 		// <---- prm
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public int Perform(string title, string[] items, int selectIndex)
 		{
 			GameCurtain.SetCurtain();
@@ -86,6 +116,9 @@ namespace Charlotte.Common
 			return selectIndex;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private class ButtonInfo
 		{
 			public GameInput.Button Button;
@@ -98,6 +131,9 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public void PadConfig()
 		{
 			ButtonInfo[] btnInfos = new ButtonInfo[]
@@ -224,29 +260,33 @@ namespace Charlotte.Common
 			}
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public void WindowSizeConfig()
 		{
+			if (GameConsts.Screen_W % 8 != 0) throw new GameError();
+			if (GameConsts.Screen_H % 8 != 0) throw new GameError();
+
+			const int W8 = GameConsts.Screen_W / 8;
+			const int H8 = GameConsts.Screen_H / 8;
+
 			string[] items = new string[]
 			{
-				// app > @ WindowSize_items_0_10
-
-				"800 x 600 (デフォルト)",
-				"900 x 675",
-				"1000 x 750",
-				"1100 x 825",
-				"1200 x 900",
-				"1300 x 975",
-				"1400 x 1050",
-				"1500 x 1125",
-				"1600 x 1200",
-				"1700 x 1275",
-				"1800 x 1350",
-
-				// < app
-
-				"フルスクリーン",
-				"フルスクリーン (縦横比維持)",
-				"フルスクリーン (黒背景)",
+				string.Format("{0} x {1} (デフォルト)", GameConsts.Screen_W, GameConsts.Screen_H),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  1, GameConsts.Screen_H + H8 *  1),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  2, GameConsts.Screen_H + H8 *  2),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  3, GameConsts.Screen_H + H8 *  3),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  4, GameConsts.Screen_H + H8 *  4),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  5, GameConsts.Screen_H + H8 *  5),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  6, GameConsts.Screen_H + H8 *  6),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  7, GameConsts.Screen_H + H8 *  7),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  8, GameConsts.Screen_H + H8 *  8),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 *  9, GameConsts.Screen_H + H8 *  9),
+				string.Format("{0} x {1}", GameConsts.Screen_W + W8 * 10, GameConsts.Screen_H + H8 * 10),
+				"フルスクリーン 画面に合わせる",
+				"フルスクリーン 縦横比維持",
+				"フルスクリーン 黒背景 (推奨)",
 				"戻る",
 			};
 
@@ -258,23 +298,24 @@ namespace Charlotte.Common
 
 				switch (selectIndex)
 				{
-					// app > @ WindowSize_switch_case_0_10
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+					case 10:
+						GameMain.SetScreenSize(GameConsts.Screen_W + W8 * selectIndex, GameConsts.Screen_H + H8 * selectIndex);
+						break;
 
-					case 0: GameMain.SetScreenSize(800, 600); break;
-					case 1: GameMain.SetScreenSize(900, 675); break;
-					case 2: GameMain.SetScreenSize(1000, 750); break;
-					case 3: GameMain.SetScreenSize(1100, 825); break;
-					case 4: GameMain.SetScreenSize(1200, 900); break;
-					case 5: GameMain.SetScreenSize(1300, 975); break;
-					case 6: GameMain.SetScreenSize(1400, 1050); break;
-					case 7: GameMain.SetScreenSize(1500, 1125); break;
-					case 8: GameMain.SetScreenSize(1600, 1200); break;
-					case 9: GameMain.SetScreenSize(1700, 1275); break;
-					case 10: GameMain.SetScreenSize(1800, 1350); break;
+					case 11:
+						GameMain.SetScreenSize(GameGround.MonitorRect.W, GameGround.MonitorRect.H);
+						break;
 
-					// < app
-
-					case 11: GameMain.SetScreenSize(GameGround.MonitorRect.W, GameGround.MonitorRect.H); break;
 					case 12:
 						{
 							int w = GameGround.MonitorRect.W;
@@ -325,11 +366,17 @@ namespace Charlotte.Common
 			;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		private static double VolumeValueToRate(int value, int minval, int valRange)
 		{
 			return (double)(value - minval) / valRange;
 		}
 
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public double VolumeConfig(string title, double rate, int minval, int maxval, int valStep, int valFastStep, Action<double> valChanged, Action pulse)
 		{
 			const int PULSE_FRM = 60;
