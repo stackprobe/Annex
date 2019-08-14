@@ -470,7 +470,7 @@ void LoadFromDatFile(void)
 
 	delete SaveData;
 
-	// app > @ post LoadFromDatFile
+	// app > @ LoadFromDatFile data loaded
 
 	AntiPadBtnIdConflict();
 

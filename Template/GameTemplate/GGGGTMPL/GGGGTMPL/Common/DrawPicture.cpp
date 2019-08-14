@@ -118,6 +118,10 @@ static void ResetBright(void)
 */
 static int DrawPicFunc(Param_t *i)
 {
+	// app > @ enter DrawPicFunc
+
+	// < app
+
 	if(i->Extra.PicRes)
 	{
 		SetPicRes(i->Extra.PicRes);
@@ -302,7 +306,7 @@ static int DrawPicFunc(Param_t *i)
 		ResetBright();
 	}
 
-	// app > @ post draw picture
+	// app > @ leave DrawPicFunc
 
 	// < app
 

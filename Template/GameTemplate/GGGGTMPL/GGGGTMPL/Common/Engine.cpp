@@ -58,6 +58,10 @@ static void CheckHz(void)
 */
 void EachFrame(void)
 {
+	// app > @ enter EachFrame
+
+	// < app
+
 	if(!SEEachFrame())
 	{
 		MusicEachFrame();
@@ -133,7 +137,7 @@ void EachFrame(void)
 		}
 	}
 
-	// app > @ post EachFrame
+	// app > @ leave EachFrame
 
 	// < app
 }
