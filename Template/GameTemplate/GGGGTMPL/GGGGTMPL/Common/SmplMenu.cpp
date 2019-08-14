@@ -93,7 +93,7 @@ int SmplMenu(char *menuTitle, char **menuItems, int selectMax, int selectIndex)
 
 		for(int c = 0; c < selectMax; c++)
 		{
-			Print_x(xcout("[%c]@%s\n", selectIndex == c ? '>' : ' ', menuItems[c]));
+			Print_x(xcout("[%c]@%s", selectIndex == c ? '>' : ' ', menuItems[c]));
 			PrintRet();
 		}
 		PE_Reset();
@@ -406,7 +406,7 @@ endLoop:;
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-static double SVC_ValueToRate(double value, double minval, double valRange)
+static double SVC_ValueToRate(int value, int minval, int valRange)
 {
 	return (double)(value - minval) / valRange;
 }

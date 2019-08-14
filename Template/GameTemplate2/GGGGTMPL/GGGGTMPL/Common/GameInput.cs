@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public static class GameInput
 	{
 		//
@@ -19,19 +22,31 @@ namespace Charlotte.Common
 
 			public int Status = 0;
 
-			public bool IsPress()
+			public int GetInput()
 			{
-				return this.Status == 1;
+				return 1 <= GameEngine.FreezeInputFrame ? 0 : this.Status;
 			}
 
-			public bool IsHold()
+			public bool IsPound()
 			{
-				return 1 <= this.Status;
+				return GameUtils.IsPound(this.GetInput());
 			}
 
-			public bool IsRelease()
+			private int[] BackupData = null;
+
+			public void Backup()
 			{
-				return this.Status == -1;
+				this.BackupData = new int[] { this.BtnId, this.KeyId };
+			}
+
+			public void Restore()
+			{
+				int c = 0;
+
+				this.BtnId = this.BackupData[c++];
+				this.KeyId = this.BackupData[c++];
+
+				this.BackupData = null;
 			}
 		}
 

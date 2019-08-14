@@ -14,10 +14,6 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public GameTaskList TL = GameGround.EL;
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
 		public List<GamePicture> Pictures = new List<GamePicture>();
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -113,7 +109,6 @@ namespace Charlotte.Common
 				double drawX = this.X - GameGround.ICamera.X;
 				double drawY = this.Y - GameGround.ICamera.Y;
 
-				GameDraw.SetTaskList(this.TL);
 				GameDraw.SetAlpha(this.A);
 				GameDraw.DrawBegin(this.Pictures[(frame / this.FramePerPicture) % this.Pictures.Count], drawX, drawY);
 				GameDraw.DrawRotate(this.R);
@@ -156,6 +151,22 @@ namespace Charlotte.Common
 		public IGameTask GetTask()
 		{
 			return new GameIEnumerableTask(this.GetRoutine(), () => { });
+		}
+
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public void Fire()
+		{
+			this.Fire(GameGround.EL);
+		}
+
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public void Fire(GameTaskList tl)
+		{
+			tl.Add(this.GetTask());
 		}
 	}
 }

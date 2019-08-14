@@ -8,6 +8,9 @@ using DxLibDLL;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public static class GameGround
 	{
 		//
@@ -75,11 +78,11 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static D2Point Camera;
+		public static D2Point Camera = new D2Point();
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static I2Point ICamera;
+		public static I2Point ICamera = new I2Point();
 
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

@@ -15,7 +15,7 @@ namespace Charlotte.Tests
 
 			foreach (GameScene scene in GameSceneUtils.Create(600))
 			{
-				if (GameInput.A.IsPress())
+				if (GameInput.A.GetInput() == 1)
 				{
 					break;
 				}

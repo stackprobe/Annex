@@ -6,16 +6,19 @@ using DxLibDLL;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public static class GamePad
 	{
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		private const int PAD_MAX = 16;
+		public const int PAD_MAX = 16;
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		private const int PAD_BUTTON_MAX = 32;
+		public const int PAD_BUTTON_MAX = 32;
 
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c

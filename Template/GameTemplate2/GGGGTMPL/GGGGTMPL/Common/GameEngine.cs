@@ -8,6 +8,9 @@ using Charlotte.Tools;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public static class GameEngine
 	{
 		//
@@ -21,7 +24,7 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static long FrameProcessingMillis;
+		public static int FrameProcessingMillis;
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
@@ -48,21 +51,8 @@ namespace Charlotte.Common
 			while (currTime < LangolierTime)
 			{
 				Thread.Sleep(1);
-
-				// DxLib >
-
-				DX.ScreenFlip();
-
-				if (DX.ProcessMessage() == -1)
-				{
-					throw new GameCoffeeBreak();
-				}
-
-				// < DxLib
-
 				currTime = GameDxUtils.GetCurrTime();
 			}
-
 			FrameStartTime = currTime;
 		}
 
@@ -103,7 +93,7 @@ namespace Charlotte.Common
 
 			GC.Collect(0);
 
-			FrameProcessingMillis = GameDxUtils.GetCurrTime() - FrameStartTime;
+			FrameProcessingMillis = (int)(GameDxUtils.GetCurrTime() - FrameStartTime);
 
 			// DxLib >
 

@@ -6,6 +6,9 @@ using Charlotte.Tools;
 
 namespace Charlotte.Common
 {
+	//
+	//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+	//
 	public static class GameMusicUtils
 	{
 		//
@@ -177,6 +180,14 @@ namespace Charlotte.Common
 
 			CurrDestMusic = null;
 			CurrDestVolume = 0.0;
+		}
+
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
+		public static void UpdateVolume()
+		{
+			Fade(0, 1.0);
 		}
 	}
 }
