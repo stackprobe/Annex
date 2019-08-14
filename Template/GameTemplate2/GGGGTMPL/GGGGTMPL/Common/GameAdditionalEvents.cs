@@ -21,18 +21,17 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static Action Main_Font = () =>
+		public static Action PostGameStart = () =>
 		{
 			//GameFontRegister.Add(@"Font\Genkai-Mincho-font\genkai-mincho.ttf");
 		};
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
-		public static Action PostMain_G2 = () => { };
-		//
-		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
-		//
-		public static Action PostMain = () => { };
+		public static Action PostGameStart_G2 = () =>
+		{
+			//this.Visible = false;
+		};
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//

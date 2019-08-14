@@ -21,6 +21,10 @@ namespace Charlotte.Common
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 		//
+		public static long FrameProcessingMillis;
+		//
+		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+		//
 		public static int ProcFrame;
 		//
 		//	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -58,6 +62,8 @@ namespace Charlotte.Common
 
 				currTime = GameDxUtils.GetCurrTime();
 			}
+
+			FrameStartTime = currTime;
 		}
 
 		//
@@ -95,8 +101,9 @@ namespace Charlotte.Common
 				}
 			}
 
-			if (GameEngine.ProcFrame % 120 == 0)
-				GC.Collect(0);
+			GC.Collect(0);
+
+			FrameProcessingMillis = GameDxUtils.GetCurrTime() - FrameStartTime;
 
 			// DxLib >
 

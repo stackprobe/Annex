@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Charlotte.Tools;
 using Charlotte.Common;
 
 namespace Charlotte
@@ -27,9 +28,17 @@ namespace Charlotte
 		{
 			// sync > @ G2_MainWin_Shown
 
+			ProcMain.WriteLog = message =>
+			{
+				if (message is Exception)
+					throw new AggregateException((Exception)message);
+				else
+					throw new Exception("Bad log: " + message);
+			};
+
 			bool[] aliving = new bool[] { true };
 
-			GameAdditionalEvents.PostMain_G2 = () =>
+			GameAdditionalEvents.PostGameStart_G2 = () =>
 			{
 				this.BeginInvoke((MethodInvoker)delegate
 				{

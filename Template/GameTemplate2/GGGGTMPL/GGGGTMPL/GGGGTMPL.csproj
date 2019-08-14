@@ -74,6 +74,7 @@
     <Compile Include="Common\GameFont.cs" />
     <Compile Include="Common\GameFontRegister.cs" />
     <Compile Include="Common\GameFontUtils.cs" />
+    <Compile Include="Common\GameGeneralResource.cs" />
     <Compile Include="Common\GameGround.cs" />
     <Compile Include="Common\GameIEnumerableTask.cs" />
     <Compile Include="Common\GameInput.cs" />
@@ -94,6 +95,8 @@
     <Compile Include="Common\GameResource.cs" />
     <Compile Include="Common\GameResourceCommon.cs" />
     <Compile Include="Common\GameSaveData.cs" />
+    <Compile Include="Common\GameScene.cs" />
+    <Compile Include="Common\GameSceneUtils.cs" />
     <Compile Include="Common\GameSE.cs" />
     <Compile Include="Common\GameSEUtils.cs" />
     <Compile Include="Common\GameSimpleMenu.cs" />

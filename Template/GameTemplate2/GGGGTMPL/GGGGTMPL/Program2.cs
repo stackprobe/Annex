@@ -13,7 +13,7 @@ namespace Charlotte
 		{
 			try
 			{
-				GameMain2.Perform(Main3);
+				Main3();
 			}
 			catch (Exception e)
 			{
@@ -22,6 +22,42 @@ namespace Charlotte
 		}
 
 		private void Main3()
+		{
+			GameAdditionalEvents.Ground_INIT = () =>
+			{
+				//GameGround.RO_MouseDispMode = true;
+			};
+
+			GameAdditionalEvents.Ground_FNLZ = () =>
+			{
+				// noop
+			};
+
+			GameAdditionalEvents.PostGameStart = () =>
+			{
+				// Font >
+
+				//GameFontRegister.Add(@"Font\Genkai-Mincho-font\genkai-mincho.ttf");
+
+				// < Font
+			};
+
+			GameAdditionalEvents.Save = lines =>
+			{
+				lines.Add(DateTime.Now.ToString()); // Dummy
+			};
+
+			GameAdditionalEvents.Load = lines =>
+			{
+				int c = 0;
+
+				GameUtils.Noop(lines[c++]); // Dummy
+			};
+
+			GameMain2.Perform(Main4);
+		}
+
+		private void Main4()
 		{
 			for (; ; )
 			{
