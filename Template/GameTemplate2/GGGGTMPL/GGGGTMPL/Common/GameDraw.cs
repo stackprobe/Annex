@@ -365,6 +365,10 @@ namespace Charlotte.Common
 			{
 				ResetBright();
 			}
+
+			// app > @ post draw picture
+
+			// < app
 		}
 
 		//

@@ -51,6 +51,8 @@ namespace Charlotte
 				lines.Add(DateTime.Now.ToString()); // Dummy
 				lines.Add(DateTime.Now.ToString()); // Dummy
 				lines.Add(DateTime.Now.ToString()); // Dummy
+
+				// 新しい項目をここへ追加...
 			};
 
 			GameAdditionalEvents.Load = lines =>
@@ -60,6 +62,8 @@ namespace Charlotte
 				GameUtils.Noop(lines[c++]); // Dummy
 				GameUtils.Noop(lines[c++]); // Dummy
 				GameUtils.Noop(lines[c++]); // Dummy
+
+				// 新しい項目をここへ追加...
 			};
 
 			GameMain2.Perform(Main4);
