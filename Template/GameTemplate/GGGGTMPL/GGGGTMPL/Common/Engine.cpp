@@ -24,6 +24,14 @@ int FrameProcessingMillis;
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
+int FrameProcessingMillis_Worst;
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+int FrameProcessingMillis_WorstFrame;
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
 int ProcFrame;
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
@@ -93,6 +101,12 @@ void EachFrame(void)
 	// < app
 
 	FrameProcessingMillis = (int)(GetCurrTime() - FrameStartTime);
+
+	if(FrameProcessingMillis_Worst < FrameProcessingMillis || !m_countDown(FrameProcessingMillis_WorstFrame))
+	{
+		FrameProcessingMillis_Worst = FrameProcessingMillis;
+		FrameProcessingMillis_WorstFrame = 120;
+	}
 
 	// DxLib >
 

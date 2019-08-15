@@ -8,6 +8,6 @@ namespace Charlotte
 {
 	public class ResourcePicture
 	{
-		//public GamePicture Dummy = GamePictureLoaders.Standard("Dummy.png");
+		//public DDPicture Dummy = DDPictureLoaders.Standard("Dummy.png");
 	}
 }
