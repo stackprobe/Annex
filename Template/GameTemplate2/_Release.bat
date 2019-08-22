@@ -4,6 +4,7 @@ C:\Factory\SubTools\makeDDResourceFile.exe Resource out\Resource.dat
 
 C:\Factory\SubTools\CallConfuserCLI.exe GGGGTMPL\GGGGTMPL\bin\Release\GGGGTMPL.exe out\GGGGTMPL.exe
 rem COPY /B GGGGTMPL\GGGGTMPL\bin\Release\GGGGTMPL.exe out
+COPY /B GGGGTMPL\GGGGTMPL\bin\Release\Chocolate.dll out
 COPY /B GGGGTMPL\GGGGTMPL\bin\Release\DxLib.dll out
 COPY /B GGGGTMPL\GGGGTMPL\bin\Release\DxLib_x64.dll out
 COPY /B GGGGTMPL\GGGGTMPL\bin\Release\DxLibDotNet.dll out
