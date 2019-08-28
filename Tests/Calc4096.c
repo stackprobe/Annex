@@ -1,7 +1,7 @@
 #include "C:\Factory\Common\all.h"
 #include "C:\Factory\Common\Options\uintx\uint4096.h"
 
-static void ToUInt4096(char *line, uint4096_t *dest)
+static void ToUInt4096(char *line, UI4096_t *dest)
 {
 	uint src[128];
 	uint index;
@@ -17,15 +17,15 @@ static void ToUInt4096(char *line, uint4096_t *dest)
 	for(index = 0; index < 128; index++)
 		src[127 - index] = toValueDigits_xc(strxl(line + index * 8, 8), hexadecimal);
 
-	ToUI4096(src, dest);
+	*dest = ToUI4096(src);
 }
-static char *FromUInt4096(uint4096_t *a)
+static char *FromUInt4096(UI4096_t *a)
 {
 	char *line = strx("");
 	uint dest[128];
 	uint index;
 
-	UnUI4096(a, dest);
+	FromUI4096(*a, dest);
 
 	for(index = 0; index < 128; index++)
 		line = addLine_x(line, xcout("%08x", dest[127 - index]));
@@ -37,11 +37,11 @@ static char *FromUInt4096(uint4096_t *a)
 }
 int main(int argc, char **argv)
 {
-	uint4096_t a;
+	UI4096_t a;
 	int operator;
-	uint4096_t b;
-	uint4096_t ans;
-	uint4096_t dummy;
+	UI4096_t b;
+	UI4096_t ans;
+	UI4096_t dummy;
 	char *str;
 
 	ToUInt4096(nextArg(), &a);
@@ -53,19 +53,19 @@ int main(int argc, char **argv)
 	switch(operator)
 	{
 	case '+':
-		UI4096_Add(&a, &b, &ans);
+		ans = UI4096_Add(a, b, NULL);
 		break;
 
 	case '-':
-		UI4096_Sub(&a, &b, &ans);
+		ans = UI4096_Sub(a, b);
 		break;
 
 	case '*':
-		UI4096_Mul(&a, &b, &ans, &dummy);
+		ans = UI4096_Mul(a, b, NULL);
 		break;
 
 	case '/':
-		UI4096_Div(&a, &b, &ans);
+		ans = UI4096_Div(a, b, NULL);
 		break;
 
 	default:
