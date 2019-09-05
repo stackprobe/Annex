@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using Charlotte.Tools;
-using System.Threading;
 
 namespace Charlotte
 {
@@ -29,15 +29,21 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
+			if (ar.ArgIs("/L"))
+			{
+				Camera.ShowList();
+				return;
+			}
+
+			NamedEventUnit evStop = new NamedEventUnit(Consts.EV_STOP);
+
 			using (Mutex procMtx = MutexTools.CreateGlobal(Consts.PROC_MTX_NAME))
 			{
-				Ground.I = new Ground();
-
 				if (ar.ArgIs("/S"))
 				{
 					for (int millis = 0; ; millis = Math.Min(millis + 1, 100))
 					{
-						Ground.I.EvStop.Set();
+						evStop.Set();
 
 						if (procMtx.WaitOne(0))
 						{
@@ -49,15 +55,27 @@ namespace Charlotte
 				}
 				else
 				{
+					string cameraNamePtn = ar.NextArg();
+					string destDir = ar.NextArg();
+					int quality = int.Parse(ar.NextArg());
+
+					if (string.IsNullOrEmpty(cameraNamePtn))
+						throw new ArgumentException("cameraNamePtn is null or empty");
+
+					destDir = FileTools.MakeFullPath(destDir);
+
+					FileTools.CreateDir(destDir);
+
+					if (quality < 0 || 101 < quality)
+						throw new ArgumentException("quality is not 0 ～ 101");
+
 					if (procMtx.WaitOne(0))
 					{
 						{
-							Camera camera = new Camera();
+							Camera camera = new Camera(cameraNamePtn, destDir, quality);
 
 							camera.Start();
-
-							Ground.I.EvStop.WaitForever();
-
+							evStop.WaitForever();
 							camera.End();
 						}
 

@@ -15,27 +15,35 @@ namespace Charlotte
 {
 	public class Camera
 	{
+		private string CameraNamePtn;
+		private string DestDir;
+		private int Quality; // 0 ～ 100 : JPEG , 101 : PNG
+
 		private VideoCaptureDevice VCD;
 
-		public Camera()
+		public Camera(string cameraNamePtn, string destDir, int quality)
 		{
-			FileTools.Delete(Ground.I.DestDir);
-			FileTools.CreateDir(Ground.I.DestDir);
+			this.CameraNamePtn = cameraNamePtn;
+			this.DestDir = destDir;
+			this.Quality = quality;
+
+			//FileTools.Delete(destDir);
+			//FileTools.CreateDir(destDir);
 
 			FilterInfoCollection fic = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-			string monikerString = GetVideoCaptureDevice(fic).MonikerString;
+			string monikerString = this.GetVideoCaptureDevice(fic).MonikerString;
 			VideoCaptureDevice vcd = new VideoCaptureDevice(monikerString);
 
 			this.VCD = vcd;
 		}
 
-		private static FilterInfo GetVideoCaptureDevice(FilterInfoCollection fic)
+		private FilterInfo GetVideoCaptureDevice(FilterInfoCollection fic)
 		{
 			for (int index = 0; ; index++)
 			{
 				FilterInfo fi = fic[index];
 
-				if (StringTools.ContainsIgnoreCase(fi.Name, Ground.I.CameraNamePtn))
+				if (StringTools.ContainsIgnoreCase(fi.Name, this.CameraNamePtn))
 				{
 					return fi;
 				}
@@ -88,11 +96,18 @@ namespace Charlotte
 
 				this.Th = new Thread(() =>
 				{
-					this.NewFrameGotTh(bmp);
-
-					lock (SYNCROOT)
+					try
 					{
-						this.Th = null;
+						this.NewFrameGotTh(bmp);
+
+						lock (SYNCROOT)
+						{
+							this.Th = null;
+						}
+					}
+					catch (Exception e)
+					{
+						ProcMain.WriteLog(e);
 					}
 				});
 			}
@@ -198,7 +213,27 @@ namespace Charlotte
 				this.LDT_Millis = 0;
 				this.LastDateTime = dt;
 			}
-			bmp.Save(Path.Combine(Ground.I.DestDir, string.Format("{0}-{1:D3}.png", dt, this.LDT_Millis)), ImageFormat.Png);
+			string file = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}.png", dt, this.LDT_Millis));
+
+			if (this.Quality == 101)
+			{
+				bmp.Save(file, ImageFormat.Png);
+			}
+			else
+			{
+				using (EncoderParameters eps = new EncoderParameters(1))
+				using (EncoderParameter ep = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, (long)this.Quality))
+				{
+					eps.Param[0] = ep;
+					ImageCodecInfo ici = GetICI(ImageFormat.Jpeg);
+					bmp.Save(file, ici, eps);
+				}
+			}
+		}
+
+		private static ImageCodecInfo GetICI(ImageFormat imgFmt)
+		{
+			return (from ici in ImageCodecInfo.GetImageEncoders() where ici.FormatID == imgFmt.Guid select ici).ToList()[0];
 		}
 
 		public void End()
@@ -215,6 +250,16 @@ namespace Charlotte
 						break;
 				}
 				Thread.Sleep(millis);
+			}
+		}
+
+		public static void ShowList()
+		{
+			FilterInfoCollection fic = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+			foreach (FilterInfo fi in fic)
+			{
+				Console.WriteLine(fi.Name + " ====> " + fi.MonikerString);
 			}
 		}
 	}
