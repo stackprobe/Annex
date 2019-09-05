@@ -105,15 +105,15 @@ namespace Charlotte
 					try
 					{
 						this.NewFrameGotTh(bmp);
-
-						lock (SYNCROOT)
-						{
-							this.Th = null;
-						}
 					}
 					catch (Exception e)
 					{
 						ProcMain.WriteLog(e);
+					}
+
+					lock (SYNCROOT)
+					{
+						this.Th = null;
 					}
 				});
 			}
@@ -121,11 +121,21 @@ namespace Charlotte
 			this.Th.Start();
 		}
 
+		private class BmpInfo
+		{
+			public DateTime BmpDateTime;
+			public double DiffValue;
+			public Bitmap Bmp;
+		}
+
+		private const int FRAME_MARGIN_BACKWARD = 200;
+		private const int FRAME_MARGIN_FORWARD = 210; // FRAME_MARGIN_BACKWARD < であること。
+
 		private const int SW = 100;
 		private const int SH = 100;
 
 		private Bitmap LastSBmp = null;
-		private Queue<Bitmap> RecentlyBmps = new Queue<Bitmap>();
+		private Queue<BmpInfo> RecentlyBmps = new Queue<BmpInfo>();
 		private int DetectedFrameCount = 0;
 
 		private void NewFrameGotTh(Bitmap bmp)
@@ -146,7 +156,7 @@ namespace Charlotte
 					else
 						ProcMain.WriteLog("DETECTED");
 
-					this.DetectedFrameCount = 70;
+					this.DetectedFrameCount = FRAME_MARGIN_FORWARD;
 
 					MarkDetected(bmp);
 				}
@@ -158,7 +168,12 @@ namespace Charlotte
 				this.LastSBmp = sBmp;
 			}
 
-			this.RecentlyBmps.Enqueue(bmp);
+			this.RecentlyBmps.Enqueue(new BmpInfo()
+			{
+				BmpDateTime = DateTime.Now,
+				DiffValue = this.LastDiffValue,
+				Bmp = bmp,
+			});
 
 			if (1 <= this.DetectedFrameCount)
 			{
@@ -166,7 +181,7 @@ namespace Charlotte
 				this.SaveRecentlyBmp(); // 2
 				this.DetectedFrameCount--;
 			}
-			while (50 < this.RecentlyBmps.Count) // 2bs -> while
+			while (FRAME_MARGIN_BACKWARD < this.RecentlyBmps.Count) // 2bs -> while
 				this.RecentlyBmps.Dequeue();
 
 			GC.Collect();
@@ -178,7 +193,7 @@ namespace Charlotte
 			//return 0.00003 < this.GetDifferent(bmp1, bmp2);
 		}
 
-		private double LastDiffValue = -1.0;
+		private double LastDiffValue = 1.0;
 
 		private double GetDifferent(Bitmap bmp1, Bitmap bmp2)
 		{
@@ -222,8 +237,8 @@ namespace Charlotte
 			if (this.RecentlyBmps.Count == 0)
 				return;
 
-			Bitmap bmp = this.RecentlyBmps.Dequeue();
-			string dt = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+			BmpInfo info = this.RecentlyBmps.Dequeue();
+			string dt = info.BmpDateTime.ToString("yyyy-MM-dd_HH-mm-ss");
 
 			if (this.LastDateTime == dt)
 			{
@@ -234,11 +249,11 @@ namespace Charlotte
 				this.LDT_Millis = 0;
 				this.LastDateTime = dt;
 			}
-			string file = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}.png", dt, this.LDT_Millis));
+			string file = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-{2:F9}.png", dt, this.LDT_Millis, info.DiffValue));
 
 			if (this.Quality == 101)
 			{
-				bmp.Save(file, ImageFormat.Png);
+				info.Bmp.Save(file, ImageFormat.Png);
 			}
 			else
 			{
@@ -247,7 +262,7 @@ namespace Charlotte
 				{
 					eps.Param[0] = ep;
 					ImageCodecInfo ici = GetICI(ImageFormat.Jpeg);
-					bmp.Save(file, ici, eps);
+					info.Bmp.Save(file, ici, eps);
 				}
 			}
 		}
