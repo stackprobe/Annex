@@ -14,7 +14,7 @@
 
 	実行例)
 
-	START "KCamera" /MIN KCamera.exe /M Venus C:\tmp\KCamera 90 0.000003
+	START "KCamera" /MIN KCamera.exe /M Venus C:\tmp\KCamera 90 0.00001
 
 終了
 
