@@ -18,14 +18,16 @@ namespace Charlotte
 		private string CameraNamePtn;
 		private string DestDir;
 		private int Quality; // 0 ～ 100 : JPEG , 101 : PNG
+		private double DiffBorder;
 
 		private VideoCaptureDevice VCD;
 
-		public Camera(string cameraNamePtn, string destDir, int quality)
+		public Camera(string cameraNamePtn, string destDir, int quality, double diffBorder)
 		{
 			this.CameraNamePtn = cameraNamePtn;
 			this.DestDir = destDir;
 			this.Quality = quality;
+			this.DiffBorder = diffBorder;
 
 			//FileTools.Delete(destDir);
 			//FileTools.CreateDir(destDir);
@@ -52,6 +54,8 @@ namespace Charlotte
 
 		public void Start()
 		{
+			DiffValueLog.Clear();
+
 			this.VCD.NewFrame += (object sender, NewFrameEventArgs ea) =>
 			{
 				this.NewFrameGot(ea.Frame);
@@ -138,6 +142,8 @@ namespace Charlotte
 					ProcMain.WriteLog("DETECTED");
 
 					this.DetectedFrameCount = 70;
+
+					MarkDetected(bmp);
 				}
 				this.LastSBmp = sBmp;
 			}
@@ -158,7 +164,8 @@ namespace Charlotte
 
 		private bool IsDifferent(Bitmap bmp1, Bitmap bmp2)
 		{
-			return 0.0001 < this.GetDifferent(bmp1, bmp2);
+			return this.DiffBorder < this.GetDifferent(bmp1, bmp2);
+			//return 0.00003 < this.GetDifferent(bmp1, bmp2);
 		}
 
 		private double GetDifferent(Bitmap bmp1, Bitmap bmp2)
@@ -177,6 +184,8 @@ namespace Charlotte
 					diffValue += GetDifferent(color1.B, color2.B);
 				}
 			}
+			DiffValueLog.Add(diffValue);
+			//Console.WriteLine(diffValue.ToString("F9"));
 			return diffValue;
 		}
 
@@ -236,6 +245,17 @@ namespace Charlotte
 			return (from ici in ImageCodecInfo.GetImageEncoders() where ici.FormatID == imgFmt.Guid select ici).ToList()[0];
 		}
 
+		private static void MarkDetected(Bitmap bmp)
+		{
+			for (int x = 0; x < 5; x++)
+			{
+				for (int y = 0; y < 5; y++)
+				{
+					bmp.SetPixel(x, y, Color.Red);
+				}
+			}
+		}
+
 		public void End()
 		{
 			this.Ended = true;
@@ -251,6 +271,8 @@ namespace Charlotte
 				}
 				Thread.Sleep(millis);
 			}
+
+			DiffValueLog.WriteToFile(Path.Combine(this.DestDir, "DiffValueLog.log"));
 		}
 
 		public static void ShowList()
