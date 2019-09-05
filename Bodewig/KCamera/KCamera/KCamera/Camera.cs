@@ -153,7 +153,7 @@ namespace Charlotte
 			while (50 < this.RecentlyBmps.Count) // 2bs -> while
 				this.RecentlyBmps.Dequeue();
 
-			GC.Collect(0);
+			GC.Collect();
 		}
 
 		private bool IsDifferent(Bitmap bmp1, Bitmap bmp2)
