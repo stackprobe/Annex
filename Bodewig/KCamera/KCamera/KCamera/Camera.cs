@@ -20,16 +20,18 @@ namespace Charlotte
 		private int Quality; // 0 ～ 100 : JPEG , 101 : PNG
 		private double DiffValueBorder;
 		private bool DiffValueMonitoringMode;
+		private int MarginFrame;
 
 		private VideoCaptureDevice VCD;
 
-		public Camera(string cameraNamePtn, string destDir, int quality, double diffValueBorder, bool diffValueMonitoringMode)
+		public Camera(string cameraNamePtn, string destDir, int quality, double diffValueBorder, bool diffValueMonitoringMode, int marginFrame)
 		{
 			this.CameraNamePtn = cameraNamePtn;
 			this.DestDir = destDir;
 			this.Quality = quality;
 			this.DiffValueBorder = diffValueBorder;
 			this.DiffValueMonitoringMode = diffValueMonitoringMode;
+			this.MarginFrame = marginFrame;
 
 			//FileTools.Delete(destDir);
 			//FileTools.CreateDir(destDir);
@@ -128,9 +130,6 @@ namespace Charlotte
 			public Bitmap Bmp;
 		}
 
-		private const int FRAME_MARGIN_BACKWARD = 200;
-		private const int FRAME_MARGIN_FORWARD = 210; // FRAME_MARGIN_BACKWARD < であること。
-
 		private const int SW = 100;
 		private const int SH = 100;
 
@@ -156,7 +155,7 @@ namespace Charlotte
 					else
 						ProcMain.WriteLog("DETECTED");
 
-					this.DetectedFrameCount = FRAME_MARGIN_FORWARD;
+					this.DetectedFrameCount = this.MarginFrame;
 
 					MarkDetected(bmp);
 				}
@@ -181,7 +180,7 @@ namespace Charlotte
 				this.SaveRecentlyBmp(); // 2
 				this.DetectedFrameCount--;
 			}
-			while (FRAME_MARGIN_BACKWARD < this.RecentlyBmps.Count) // 2bs -> while
+			while (this.MarginFrame < this.RecentlyBmps.Count) // 2bs if -> while
 				this.RecentlyBmps.Dequeue();
 
 			GC.Collect();

@@ -61,6 +61,7 @@ namespace Charlotte
 					string destDir = ar.NextArg();
 					int quality = int.Parse(ar.NextArg());
 					double diffValueBorder = double.Parse(ar.NextArg());
+					int marginFrame = int.Parse(ar.NextArg());
 
 					if (string.IsNullOrEmpty(cameraNamePtn))
 						throw new ArgumentException("cameraNamePtn is null or empty");
@@ -72,10 +73,13 @@ namespace Charlotte
 					if (quality < 0 || 101 < quality)
 						throw new ArgumentException("quality is not 0 ～ 101");
 
+					if (marginFrame < 10 || IntTools.IMAX < marginFrame)
+						throw new ArgumentException("marginFrame is not 10 ～ IMAX");
+
 					if (procMtx.WaitOne(0))
 					{
 						{
-							Camera camera = new Camera(cameraNamePtn, destDir, quality, diffValueBorder, diffValueMonitoringMode);
+							Camera camera = new Camera(cameraNamePtn, destDir, quality, diffValueBorder, diffValueMonitoringMode, marginFrame);
 
 							camera.Start();
 
