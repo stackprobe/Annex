@@ -18,16 +18,18 @@ namespace Charlotte
 		private string CameraNamePtn;
 		private string DestDir;
 		private int Quality; // 0 ～ 100 : JPEG , 101 : PNG
-		private double DiffBorder;
+		private double DiffValueBorder;
+		private bool DiffValueMonitoringMode;
 
 		private VideoCaptureDevice VCD;
 
-		public Camera(string cameraNamePtn, string destDir, int quality, double diffBorder)
+		public Camera(string cameraNamePtn, string destDir, int quality, double diffValueBorder, bool diffValueMonitoringMode)
 		{
 			this.CameraNamePtn = cameraNamePtn;
 			this.DestDir = destDir;
 			this.Quality = quality;
-			this.DiffBorder = diffBorder;
+			this.DiffValueBorder = diffValueBorder;
+			this.DiffValueMonitoringMode = diffValueMonitoringMode;
 
 			//FileTools.Delete(destDir);
 			//FileTools.CreateDir(destDir);
@@ -139,11 +141,19 @@ namespace Charlotte
 
 				if (this.LastSBmp != null && this.IsDifferent(sBmp, this.LastSBmp))
 				{
-					ProcMain.WriteLog("DETECTED");
+					if (this.DiffValueMonitoringMode)
+						ProcMain.WriteLog(this.LastDiffValue.ToString("F9") + " ====> DETECTED");
+					else
+						ProcMain.WriteLog("DETECTED");
 
 					this.DetectedFrameCount = 70;
 
 					MarkDetected(bmp);
+				}
+				else
+				{
+					if (this.DiffValueMonitoringMode)
+						ProcMain.WriteLog(this.LastDiffValue.ToString("F9"));
 				}
 				this.LastSBmp = sBmp;
 			}
@@ -164,9 +174,11 @@ namespace Charlotte
 
 		private bool IsDifferent(Bitmap bmp1, Bitmap bmp2)
 		{
-			return this.DiffBorder < this.GetDifferent(bmp1, bmp2);
+			return this.DiffValueBorder < this.GetDifferent(bmp1, bmp2);
 			//return 0.00003 < this.GetDifferent(bmp1, bmp2);
 		}
+
+		private double LastDiffValue = -1.0;
 
 		private double GetDifferent(Bitmap bmp1, Bitmap bmp2)
 		{
@@ -185,7 +197,7 @@ namespace Charlotte
 				}
 			}
 			DiffValueLog.Add(diffValue);
-			//Console.WriteLine(diffValue.ToString("F9"));
+			this.LastDiffValue = diffValue;
 			return diffValue;
 		}
 

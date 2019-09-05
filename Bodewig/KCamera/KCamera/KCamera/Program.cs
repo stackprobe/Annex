@@ -55,10 +55,12 @@ namespace Charlotte
 				}
 				else
 				{
+					bool diffValueMonitoringMode = ar.ArgIs("/M");
+
 					string cameraNamePtn = ar.NextArg();
 					string destDir = ar.NextArg();
 					int quality = int.Parse(ar.NextArg());
-					double diffBorder = double.Parse(ar.NextArg());
+					double diffValueBorder = double.Parse(ar.NextArg());
 
 					if (string.IsNullOrEmpty(cameraNamePtn))
 						throw new ArgumentException("cameraNamePtn is null or empty");
@@ -73,7 +75,7 @@ namespace Charlotte
 					if (procMtx.WaitOne(0))
 					{
 						{
-							Camera camera = new Camera(cameraNamePtn, destDir, quality, diffBorder);
+							Camera camera = new Camera(cameraNamePtn, destDir, quality, diffValueBorder, diffValueMonitoringMode);
 
 							camera.Start();
 
