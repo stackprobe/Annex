@@ -126,7 +126,9 @@ namespace Charlotte
 		private class BmpInfo
 		{
 			public DateTime BmpDateTime;
-			public double DiffValue;
+			public double DiffValue1;
+			public double DiffValue2;
+			public Bitmap SBmp;
 			public Bitmap Bmp;
 		}
 
@@ -148,31 +150,41 @@ namespace Charlotte
 					g.DrawImage(bmp, 0, 0, SW, SH);
 				}
 
-				if (this.LastSBmp != null && this.IsDifferent(sBmp, this.LastSBmp))
+				if (
+					this.LastSBmp != null &&
+					this.IsDifferent(
+						sBmp,
+						this.LastSBmp,
+						1 <= this.RecentlyBmps.Count ? this.RecentlyBmps.Peek().SBmp : this.LastSBmp
+						)
+					)
 				{
 					if (this.DiffValueMonitoringMode)
-						ProcMain.WriteLog(this.LastDiffValue.ToString("F9") + " ====> DETECTED");
+						ProcMain.WriteLog(string.Format("{0:F9} {1:F9} ====> DETECTED", this.LastDiffValue1, this.LastDiffValue2));
 					else
 						ProcMain.WriteLog("DETECTED");
 
 					this.DetectedFrameCount = this.MarginFrame;
 
-					MarkDetected(bmp);
+					if (this.LastDifferent1) MarkDetected(bmp, 0);
+					if (this.LastDifferent2) MarkDetected(bmp, 1);
 				}
 				else
 				{
 					if (this.DiffValueMonitoringMode)
-						ProcMain.WriteLog(this.LastDiffValue.ToString("F9"));
+						ProcMain.WriteLog(string.Format("{0:F9} {1:F9}", this.LastDiffValue1, this.LastDiffValue2));
 				}
 				this.LastSBmp = sBmp;
-			}
 
-			this.RecentlyBmps.Enqueue(new BmpInfo()
-			{
-				BmpDateTime = DateTime.Now,
-				DiffValue = this.LastDiffValue,
-				Bmp = bmp,
-			});
+				this.RecentlyBmps.Enqueue(new BmpInfo()
+				{
+					BmpDateTime = DateTime.Now,
+					DiffValue1 = this.LastDiffValue1,
+					DiffValue2 = this.LastDiffValue2,
+					SBmp = sBmp,
+					Bmp = bmp,
+				});
+			}
 
 			if (1 <= this.DetectedFrameCount)
 			{
@@ -186,13 +198,20 @@ namespace Charlotte
 			GC.Collect();
 		}
 
-		private bool IsDifferent(Bitmap bmp1, Bitmap bmp2)
-		{
-			return this.DiffValueBorder < this.GetDifferent(bmp1, bmp2);
-			//return 0.00003 < this.GetDifferent(bmp1, bmp2);
-		}
+		private double LastDiffValue1 = 1.0;
+		private double LastDiffValue2 = 1.0;
+		private bool LastDifferent1 = false;
+		private bool LastDifferent2 = false;
 
-		private double LastDiffValue = 1.0;
+		private bool IsDifferent(Bitmap bmp, Bitmap bmp1, Bitmap bmp2)
+		{
+			this.LastDiffValue1 = this.GetDifferent(bmp, bmp1);
+			this.LastDiffValue2 = this.GetDifferent(bmp, bmp2);
+			this.LastDifferent1 = this.DiffValueBorder < this.LastDiffValue1;
+			this.LastDifferent2 = this.DiffValueBorder < this.LastDiffValue2;
+
+			return this.LastDifferent1 || this.LastDifferent2;
+		}
 
 		private double GetDifferent(Bitmap bmp1, Bitmap bmp2)
 		{
@@ -211,7 +230,6 @@ namespace Charlotte
 				}
 			}
 			DiffValueLog.Add(diffValue);
-			this.LastDiffValue = diffValue;
 			return diffValue;
 		}
 
@@ -248,7 +266,7 @@ namespace Charlotte
 				this.LDT_Millis = 0;
 				this.LastDateTime = dt;
 			}
-			string file = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-{2:F9}.png", dt, this.LDT_Millis, info.DiffValue));
+			string file = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-{2:F9}-{2:F9}.png", dt, this.LDT_Millis, info.DiffValue1, info.DiffValue2));
 
 			if (this.Quality == 101)
 			{
@@ -271,13 +289,18 @@ namespace Charlotte
 			return (from ici in ImageCodecInfo.GetImageEncoders() where ici.FormatID == imgFmt.Guid select ici).ToList()[0];
 		}
 
-		private static void MarkDetected(Bitmap bmp)
+		private static void MarkDetected(Bitmap bmp, int blockIndex)
 		{
-			for (int x = 0; x < 5; x++)
+			const int MARK_WH = 5;
+
+			int l = 0 + blockIndex * MARK_WH;
+			int t = 0;
+
+			for (int x = 0; x < MARK_WH; x++)
 			{
-				for (int y = 0; y < 5; y++)
+				for (int y = 0; y < MARK_WH; y++)
 				{
-					bmp.SetPixel(x, y, Color.Red);
+					bmp.SetPixel(l + x, t + y, Color.Red);
 				}
 			}
 		}
