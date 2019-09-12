@@ -2,13 +2,15 @@
 
 	KCamera.exe /L
 
+	名前の書式 ... MonikerString + "*" + Name
+
 開始
 
 	KCamera.exe [/C] [/M] カメラの名前 出力先 画像クオリティ しきい値 予備フレーム数 遅延比較フレーム数
 
 		/C                 ... 出力先をクリアする。
 		/M                 ... 差分評価値をモニターする。
-		カメラの名前       ... 部分一致
+		カメラの名前       ... カメラのリストで表示された名前との部分一致
 		出力先             ... ディレクトリ。存在しなければ作成する。
 		画像クオリティ     ... 0 ～ 101 (整数)
 		しきい値           ... 0 ～ INF (double)
@@ -17,7 +19,7 @@
 
 	実行例)
 
-	START "KCamera" /MIN KCamera.exe /C /M Venus C:\tmp\KCamera 90 0.00002 50 20
+	START "KCamera" /MIN KCamera.exe /C /M *Venus C:\tmp\KCamera 90 0.00002 50 20
 
 終了
 
