@@ -62,6 +62,7 @@ namespace Charlotte
 					writer.WriteLine("DiffValueBorder: " + this.DiffValueBorder.ToString("F9"));
 					writer.WriteLine("DiffValueMonitoringMode: " + this.DiffValueMonitoringMode);
 					writer.WriteLine("MarginFrame: " + this.MarginFrame);
+					writer.WriteLine("DelayCompareFrame: " + this.DelayCompareFrame);
 					writer.WriteLine("起動日時: " + DateTime.Now);
 				}
 			}
