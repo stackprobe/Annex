@@ -21,10 +21,14 @@ namespace Charlotte
 		private double DiffValueBorder;
 		private bool DiffValueMonitoringMode;
 		private int MarginFrame;
+		private int DelayCompareFrame;
 
 		private VideoCaptureDevice VCD;
 
-		public Camera(string cameraNamePtn, string destDir, int quality, double diffValueBorder, bool diffValueMonitoringMode, int marginFrame)
+		private DiffValueLog DiffValueLog1 = new DiffValueLog();
+		private DiffValueLog DiffValueLog2 = new DiffValueLog();
+
+		public Camera(string cameraNamePtn, string destDir, int quality, double diffValueBorder, bool diffValueMonitoringMode, int marginFrame, int delayCompFrame)
 		{
 			this.CameraNamePtn = cameraNamePtn;
 			this.DestDir = destDir;
@@ -32,6 +36,7 @@ namespace Charlotte
 			this.DiffValueBorder = diffValueBorder;
 			this.DiffValueMonitoringMode = diffValueMonitoringMode;
 			this.MarginFrame = marginFrame;
+			this.DelayCompareFrame = delayCompFrame;
 
 			//FileTools.Delete(destDir);
 			//FileTools.CreateDir(destDir);
@@ -41,6 +46,9 @@ namespace Charlotte
 			VideoCaptureDevice vcd = new VideoCaptureDevice(monikerString);
 
 			this.VCD = vcd;
+
+			this.DiffValueLog1.LogFile = Path.Combine(destDir, "DiffValueLog1.log");
+			this.DiffValueLog2.LogFile = Path.Combine(destDir, "DiffValueLog2.log");
 		}
 
 		private FilterInfo GetVideoCaptureDevice(FilterInfoCollection fic)
@@ -58,8 +66,6 @@ namespace Charlotte
 
 		public void Start()
 		{
-			DiffValueLog.Clear();
-
 			this.VCD.NewFrame += (object sender, NewFrameEventArgs ea) =>
 			{
 				this.NewFrameGot(ea.Frame);
@@ -128,7 +134,6 @@ namespace Charlotte
 			public DateTime BmpDateTime;
 			public double DiffValue1;
 			public double DiffValue2;
-			public Bitmap SBmp;
 			public Bitmap Bmp;
 		}
 
@@ -137,6 +142,7 @@ namespace Charlotte
 
 		private Bitmap LastSBmp = null;
 		private Queue<BmpInfo> RecentlyBmps = new Queue<BmpInfo>();
+		private Queue<Bitmap> DelayCompareSBmps = new Queue<Bitmap>();
 		private int DetectedFrameCount = 0;
 
 		private void NewFrameGotTh(Bitmap bmp)
@@ -152,10 +158,11 @@ namespace Charlotte
 
 				if (
 					this.LastSBmp != null &&
+					1 <= this.DelayCompareSBmps.Count &&
 					this.IsDifferent(
 						sBmp,
 						this.LastSBmp,
-						1 <= this.RecentlyBmps.Count ? this.RecentlyBmps.Peek().SBmp : this.LastSBmp
+						this.DelayCompareSBmps.Peek()
 						)
 					)
 				{
@@ -166,8 +173,8 @@ namespace Charlotte
 
 					this.DetectedFrameCount = this.MarginFrame;
 
-					if (this.LastDifferent1) MarkDetected(bmp, 0);
-					if (this.LastDifferent2) MarkDetected(bmp, 1);
+					if (this.LastDifferent1) MarkDetected(bmp, 0, Color.Red);
+					if (this.LastDifferent2) MarkDetected(bmp, 1, Color.Green);
 				}
 				else
 				{
@@ -175,13 +182,13 @@ namespace Charlotte
 						ProcMain.WriteLog(string.Format("{0:F9} {1:F9}", this.LastDiffValue1, this.LastDiffValue2));
 				}
 				this.LastSBmp = sBmp;
+				this.DelayCompareSBmps.Enqueue(sBmp);
 
 				this.RecentlyBmps.Enqueue(new BmpInfo()
 				{
 					BmpDateTime = DateTime.Now,
 					DiffValue1 = this.LastDiffValue1,
 					DiffValue2 = this.LastDiffValue2,
-					SBmp = sBmp,
 					Bmp = bmp,
 				});
 			}
@@ -195,6 +202,9 @@ namespace Charlotte
 			while (this.MarginFrame < this.RecentlyBmps.Count) // 2bs if -> while
 				this.RecentlyBmps.Dequeue();
 
+			while (this.DelayCompareFrame < this.DelayCompareSBmps.Count) // 2bs if -> while
+				this.DelayCompareSBmps.Dequeue();
+
 			GC.Collect();
 		}
 
@@ -207,8 +217,12 @@ namespace Charlotte
 		{
 			this.LastDiffValue1 = this.GetDifferent(bmp, bmp1);
 			this.LastDiffValue2 = this.GetDifferent(bmp, bmp2);
+
 			this.LastDifferent1 = this.DiffValueBorder < this.LastDiffValue1;
 			this.LastDifferent2 = this.DiffValueBorder < this.LastDiffValue2;
+
+			this.DiffValueLog1.Add(this.LastDiffValue1);
+			this.DiffValueLog2.Add(this.LastDiffValue2);
 
 			return this.LastDifferent1 || this.LastDifferent2;
 		}
@@ -229,7 +243,6 @@ namespace Charlotte
 					diffValue += GetDifferent(color1.B, color2.B);
 				}
 			}
-			DiffValueLog.Add(diffValue);
 			return diffValue;
 		}
 
@@ -289,7 +302,7 @@ namespace Charlotte
 			return (from ici in ImageCodecInfo.GetImageEncoders() where ici.FormatID == imgFmt.Guid select ici).ToList()[0];
 		}
 
-		private static void MarkDetected(Bitmap bmp, int blockIndex)
+		private static void MarkDetected(Bitmap bmp, int blockIndex, Color color)
 		{
 			const int MARK_WH = 5;
 
@@ -300,7 +313,7 @@ namespace Charlotte
 			{
 				for (int y = 0; y < MARK_WH; y++)
 				{
-					bmp.SetPixel(l + x, t + y, Color.Red);
+					bmp.SetPixel(l + x, t + y, color);
 				}
 			}
 		}
@@ -321,7 +334,8 @@ namespace Charlotte
 				Thread.Sleep(millis);
 			}
 
-			DiffValueLog.WriteToFile(Path.Combine(this.DestDir, "DiffValueLog.log"));
+			this.DiffValueLog1.WriteToFile(Path.Combine(this.DestDir, "DiffValueDistribution1.log"));
+			this.DiffValueLog2.WriteToFile(Path.Combine(this.DestDir, "DiffValueDistribution2.log"));
 		}
 
 		public static void ShowList()

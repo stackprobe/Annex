@@ -55,6 +55,7 @@ namespace Charlotte
 				}
 				else
 				{
+					bool clearDestDirFlag = ar.ArgIs("/C");
 					bool diffValueMonitoringMode = ar.ArgIs("/M");
 
 					string cameraNamePtn = ar.NextArg();
@@ -62,13 +63,10 @@ namespace Charlotte
 					int quality = int.Parse(ar.NextArg());
 					double diffValueBorder = double.Parse(ar.NextArg());
 					int marginFrame = int.Parse(ar.NextArg());
+					int delayCompFrame = int.Parse(ar.NextArg());
 
 					if (string.IsNullOrEmpty(cameraNamePtn))
 						throw new ArgumentException("cameraNamePtn is null or empty");
-
-					destDir = FileTools.MakeFullPath(destDir);
-
-					FileTools.CreateDir(destDir);
 
 					if (quality < 0 || 101 < quality)
 						throw new ArgumentException("quality is not 0 ～ 101");
@@ -76,20 +74,38 @@ namespace Charlotte
 					if (marginFrame < 10 || IntTools.IMAX < marginFrame)
 						throw new ArgumentException("marginFrame is not 10 ～ IMAX");
 
+					if (delayCompFrame < 10 || IntTools.IMAX < delayCompFrame)
+						throw new ArgumentException("delayCompFrame is not 10 ～ IMAX");
+
 					if (procMtx.WaitOne(0))
 					{
+						try
 						{
-							Camera camera = new Camera(cameraNamePtn, destDir, quality, diffValueBorder, diffValueMonitoringMode, marginFrame);
+							destDir = FileTools.MakeFullPath(destDir);
 
-							camera.Start();
+							FileTools.CreateDir(destDir);
 
-							while (Console.KeyAvailable == false && evStop.WaitForMillis(1000) == false)
-							{ }
+							if (clearDestDirFlag)
+							{
+								Console.WriteLine("clear dest dir");
+								FileTools.CleanupDir(destDir);
+							}
 
-							camera.End();
+							{
+								Camera camera = new Camera(cameraNamePtn, destDir, quality, diffValueBorder, diffValueMonitoringMode, marginFrame, delayCompFrame);
+
+								camera.Start();
+
+								while (Console.KeyAvailable == false && evStop.WaitForMillis(1000) == false)
+								{ }
+
+								camera.End();
+							}
 						}
-
-						procMtx.ReleaseMutex();
+						finally
+						{
+							procMtx.ReleaseMutex();
+						}
 					}
 				}
 			}
