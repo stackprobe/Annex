@@ -279,7 +279,7 @@ namespace Charlotte
 				this.LDT_Millis = 0;
 				this.LastDateTime = dt;
 			}
-			string file = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-{2:F9}-{2:F9}.png", dt, this.LDT_Millis, info.DiffValue1, info.DiffValue2));
+			string file = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-{2:F9}-{3:F9}.png", dt, this.LDT_Millis, info.DiffValue1, info.DiffValue2));
 
 			if (this.Quality == 101)
 			{
