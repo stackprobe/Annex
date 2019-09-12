@@ -57,7 +57,7 @@ namespace Charlotte
 			{
 				FilterInfo fi = fic[index];
 
-				if (StringTools.ContainsIgnoreCase(fi.Name, this.CameraNamePtn))
+				if (StringTools.ContainsIgnoreCase(GetDisplayName(fi), this.CameraNamePtn))
 				{
 					return fi;
 				}
@@ -344,8 +344,13 @@ namespace Charlotte
 
 			foreach (FilterInfo fi in fic)
 			{
-				Console.WriteLine(fi.Name + " ====> " + fi.MonikerString);
+				Console.WriteLine(GetDisplayName(fi));
 			}
+		}
+
+		private static string GetDisplayName(FilterInfo fi)
+		{
+			return string.Join("*", fi.MonikerString, fi.Name);
 		}
 	}
 }
