@@ -279,11 +279,11 @@ namespace Charlotte
 				this.LDT_Millis = 0;
 				this.LastDateTime = dt;
 			}
-			string file = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-{2:F9}-{3:F9}.png", dt, this.LDT_Millis, info.DiffValue1, info.DiffValue2));
+			string fileNoExt = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-{2:F9}-{3:F9}", dt, this.LDT_Millis, info.DiffValue1, info.DiffValue2));
 
 			if (this.Quality == 101)
 			{
-				info.Bmp.Save(file, ImageFormat.Png);
+				info.Bmp.Save(fileNoExt + ".png", ImageFormat.Png);
 			}
 			else
 			{
@@ -292,7 +292,7 @@ namespace Charlotte
 				{
 					eps.Param[0] = ep;
 					ImageCodecInfo ici = GetICI(ImageFormat.Jpeg);
-					info.Bmp.Save(file, ici, eps);
+					info.Bmp.Save(fileNoExt + ".jpg", ici, eps);
 				}
 			}
 		}
