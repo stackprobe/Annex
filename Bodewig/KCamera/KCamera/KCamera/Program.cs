@@ -71,11 +71,11 @@ namespace Charlotte
 					if (quality < 0 || 101 < quality)
 						throw new ArgumentException("quality is not 0 ～ 101");
 
-					if (marginFrame < 10 || IntTools.IMAX < marginFrame)
-						throw new ArgumentException("marginFrame is not 10 ～ IMAX");
+					if (marginFrame < 1 || IntTools.IMAX < marginFrame)
+						throw new ArgumentException("marginFrame is not 1 ～ IMAX");
 
-					if (delayCompFrame < 10 || IntTools.IMAX < delayCompFrame)
-						throw new ArgumentException("delayCompFrame is not 10 ～ IMAX");
+					if (delayCompFrame < 1 || IntTools.IMAX < delayCompFrame)
+						throw new ArgumentException("delayCompFrame is not 1 ～ IMAX");
 
 					if (procMtx.WaitOne(0))
 					{

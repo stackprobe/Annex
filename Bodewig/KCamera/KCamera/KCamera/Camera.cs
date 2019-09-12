@@ -49,19 +49,34 @@ namespace Charlotte
 
 			this.DiffValueLog1.LogFile = Path.Combine(destDir, "DiffValueLog1.log");
 			this.DiffValueLog2.LogFile = Path.Combine(destDir, "DiffValueLog2.log");
+
+			{
+				string logFile = Path.Combine(destDir, "BootStatus.log");
+
+				using (StreamWriter writer = new StreamWriter(logFile, false, Encoding.UTF8))
+				{
+					writer.WriteLine("---- KCamera 起動ステータス ----");
+					writer.WriteLine("CameraNamePtn: " + this.CameraNamePtn);
+					writer.WriteLine("DestDir: " + this.DestDir);
+					writer.WriteLine("Quality: " + this.Quality);
+					writer.WriteLine("DiffValueBorder: " + this.DiffValueBorder.ToString("F9"));
+					writer.WriteLine("DiffValueMonitoringMode: " + this.DiffValueMonitoringMode);
+					writer.WriteLine("MarginFrame: " + this.MarginFrame);
+					writer.WriteLine("起動日時: " + DateTime.Now);
+				}
+			}
 		}
 
 		private FilterInfo GetVideoCaptureDevice(FilterInfoCollection fic)
 		{
-			for (int index = 0; ; index++)
+			foreach (FilterInfo fi in fic)
 			{
-				FilterInfo fi = fic[index];
-
 				if (StringTools.ContainsIgnoreCase(GetDisplayName(fi), this.CameraNamePtn))
 				{
 					return fi;
 				}
 			}
+			throw new Exception("そんなカメラありません。");
 		}
 
 		public void Start()
@@ -134,6 +149,7 @@ namespace Charlotte
 			public DateTime BmpDateTime;
 			public double DiffValue1;
 			public double DiffValue2;
+			public int DetectedStatus;
 			public Bitmap Bmp;
 		}
 
@@ -171,7 +187,7 @@ namespace Charlotte
 					else
 						ProcMain.WriteLog("DETECTED");
 
-					this.DetectedFrameCount = this.MarginFrame;
+					this.DetectedFrameCount = this.MarginFrame + 1;
 
 					if (this.LastDifferent1) MarkDetected(bmp, 0, Color.Red);
 					if (this.LastDifferent2) MarkDetected(bmp, 1, Color.Green);
@@ -189,6 +205,7 @@ namespace Charlotte
 					BmpDateTime = DateTime.Now,
 					DiffValue1 = this.LastDiffValue1,
 					DiffValue2 = this.LastDiffValue2,
+					DetectedStatus = (this.LastDifferent1 ? 1 : 0) + (this.LastDifferent2 ? 2 : 0),
 					Bmp = bmp,
 				});
 			}
@@ -279,7 +296,7 @@ namespace Charlotte
 				this.LDT_Millis = 0;
 				this.LastDateTime = dt;
 			}
-			string fileNoExt = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-{2:F9}-{3:F9}", dt, this.LDT_Millis, info.DiffValue1, info.DiffValue2));
+			string fileNoExt = Path.Combine(this.DestDir, string.Format("{0}-{1:D3}-D{2}-{3:F9}-{4:F9}", dt, this.LDT_Millis, info.DetectedStatus, info.DiffValue1, info.DiffValue2));
 
 			if (this.Quality == 101)
 			{
