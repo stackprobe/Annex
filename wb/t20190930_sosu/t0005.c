@@ -10,7 +10,7 @@
 typedef unsigned __int32 uint;
 typedef unsigned __int64 uint64;
 
-#if 0
+#if 1
 
 // VC ---->
 

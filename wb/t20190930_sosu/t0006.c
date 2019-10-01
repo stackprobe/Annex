@@ -82,7 +82,7 @@ int main()
 {
 	uint c;
 
-	for(c = 5; c < UINT_MAX; c += 2)
+	for(c = 5; c < UINTMAX; c += 2)
 	{
 		if(!IsPrime(c))
 		{
