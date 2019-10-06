@@ -8,7 +8,7 @@ namespace Charlotte.Tests
 {
 	public class Test0001
 	{
-		public void Test01(string mode)
+		public void Test01()
 		{
 			DDCurtain.SetCurtain();
 			DDEngine.FreezeInput();
@@ -21,9 +21,6 @@ namespace Charlotte.Tests
 				}
 
 				DDCurtain.DrawCurtain();
-
-				DDPrint.SetPrint();
-				DDPrint.Print(mode + " MODE");
 
 				DDDraw.DrawBegin(DDGround.GeneralResource.Dummy, DDConsts.Screen_W / 2.0, DDConsts.Screen_H / 2.0);
 				DDDraw.DrawZoom(5.0);

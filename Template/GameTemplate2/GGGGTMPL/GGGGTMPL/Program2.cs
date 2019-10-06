@@ -78,12 +78,12 @@ namespace Charlotte
 
 		private void Main4_Debug()
 		{
-			new Test0001().Test01("DEBUG");
+			new Test0001().Test01();
 		}
 
 		private void Main4_Release()
 		{
-			new Test0001().Test01("RELEASE");
+			throw null;
 		}
 	}
 }
