@@ -13,7 +13,7 @@ static void WrStr(char *str)
 	{
 		if(GetLastError() == 0x299)
 		{
-			error_m("ERROR_FILE_SYSTEM_LIMITATION\nWin32 error code 665 (0x299)");
+			error_m("ERROR_FILE_SYSTEM_LIMITATION");
 		}
 		else
 		{
