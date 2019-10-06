@@ -66,7 +66,24 @@ namespace Charlotte
 
 		private void Main4()
 		{
-			new Test0001().Test01();
+			if (ProcMain.ArgsReader.ArgIs("/D"))
+			{
+				Main4_Debug();
+			}
+			else
+			{
+				Main4_Release();
+			}
+		}
+
+		private void Main4_Debug()
+		{
+			new Test0001().Test01("DEBUG");
+		}
+
+		private void Main4_Release()
+		{
+			new Test0001().Test01("RELEASE");
 		}
 	}
 }
