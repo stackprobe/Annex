@@ -59,6 +59,8 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="DiffValueLog.cs" />
+    <Compile Include="DVLogMonitor.cs" />
+    <Compile Include="DVLogMonitorPrm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

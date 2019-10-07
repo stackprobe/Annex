@@ -10,6 +10,7 @@ namespace Charlotte
 	public class DiffValueLog
 	{
 		public string LogFile;
+		public DVLogMonitor DVLogMonitor = null; // null == 無効
 
 		// <---- prm
 
@@ -51,10 +52,16 @@ namespace Charlotte
 			this.DiffValueAvgNumer += diffValue;
 			this.DiffValueAvgDenom++;
 
+			if (this.DVLogMonitor != null)
+				this.DVLogMonitor.CheckDifferent(diffValue);
+
 			DateTime currTime = DateTime.Now;
 
 			if (60 <= (currTime - this.LastLogWroteTime).TotalSeconds)
 			{
+				if (this.DVLogMonitor != null)
+					this.DVLogMonitor.AddValueMax(this.DiffValueMax);
+
 				using (StreamWriter writer = new StreamWriter(this.LogFile, true, Encoding.ASCII))
 				{
 					writer.WriteLine(string.Format("[{0} To {1}] Min={2:F9} Max={3:F9} Avg={4:F9} ({5})",
@@ -74,6 +81,11 @@ namespace Charlotte
 				this.DiffValueAvgNumer = 0.0;
 				this.DiffValueAvgDenom = 0L;
 			}
+		}
+
+		public bool DVLM_GetLastDifferent()
+		{
+			return this.DVLogMonitor == null ? false : this.DVLogMonitor.LastDifferent;
 		}
 	}
 }

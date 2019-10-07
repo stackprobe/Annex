@@ -28,7 +28,7 @@ namespace Charlotte
 		private DiffValueLog DiffValueLog1 = new DiffValueLog();
 		private DiffValueLog DiffValueLog2 = new DiffValueLog();
 
-		public Camera(string cameraNamePtn, string destDir, int quality, double diffValueBorder, bool diffValueMonitoringMode, int marginFrame, int delayCompFrame)
+		public Camera(string cameraNamePtn, string destDir, int quality, double diffValueBorder, bool diffValueMonitoringMode, int marginFrame, int delayCompFrame, DVLogMonitorPrm dvlmPrm)
 		{
 			this.CameraNamePtn = cameraNamePtn;
 			this.DestDir = destDir;
@@ -50,6 +50,12 @@ namespace Charlotte
 			this.DiffValueLog1.LogFile = Path.Combine(destDir, "DiffValueLog1.log");
 			this.DiffValueLog2.LogFile = Path.Combine(destDir, "DiffValueLog2.log");
 
+			if (dvlmPrm != null)
+			{
+				this.DiffValueLog1.DVLogMonitor = new DVLogMonitor() { Prm = dvlmPrm };
+				this.DiffValueLog2.DVLogMonitor = new DVLogMonitor() { Prm = dvlmPrm };
+			}
+
 			{
 				string logFile = Path.Combine(destDir, "BootStatus.log");
 
@@ -64,6 +70,11 @@ namespace Charlotte
 					writer.WriteLine("MarginFrame: " + this.MarginFrame);
 					writer.WriteLine("DelayCompareFrame: " + this.DelayCompareFrame);
 					writer.WriteLine("起動日時: " + DateTime.Now);
+
+					if (dvlmPrm != null)
+						writer.WriteLine(string.Format("DVLogMonitor: {0} 分前から 1 分前までの最大評価値の {1} 倍の評価値を検出すると、差分と見なします。", dvlmPrm.MonitorCount, dvlmPrm.DiffMagnifBorder));
+					else
+						writer.WriteLine("DVLogMonitor: none");
 				}
 			}
 		}
@@ -192,6 +203,7 @@ namespace Charlotte
 
 					if (this.LastDifferent1) MarkDetected(bmp, 0, Color.Red);
 					if (this.LastDifferent2) MarkDetected(bmp, 1, Color.Green);
+					if (this.LastDifferent3) MarkDetected(bmp, 2, Color.Blue);
 				}
 				else
 				{
@@ -206,7 +218,7 @@ namespace Charlotte
 					BmpDateTime = DateTime.Now,
 					DiffValue1 = this.LastDiffValue1,
 					DiffValue2 = this.LastDiffValue2,
-					DetectedStatus = (this.LastDifferent1 ? 1 : 0) + (this.LastDifferent2 ? 2 : 0),
+					DetectedStatus = (this.LastDifferent1 ? 1 : 0) + (this.LastDifferent2 ? 2 : 0) + (this.LastDifferent3 ? 4 : 0),
 					Bmp = bmp,
 				});
 			}
@@ -230,6 +242,7 @@ namespace Charlotte
 		private double LastDiffValue2 = 1.0;
 		private bool LastDifferent1 = false;
 		private bool LastDifferent2 = false;
+		private bool LastDifferent3 = false;
 
 		private bool IsDifferent(Bitmap bmp, Bitmap bmp1, Bitmap bmp2)
 		{
@@ -242,7 +255,11 @@ namespace Charlotte
 			this.DiffValueLog1.Add(this.LastDiffValue1);
 			this.DiffValueLog2.Add(this.LastDiffValue2);
 
-			return this.LastDifferent1 || this.LastDifferent2;
+			this.LastDifferent3 =
+				this.DiffValueLog1.DVLM_GetLastDifferent() ||
+				this.DiffValueLog2.DVLM_GetLastDifferent();
+
+			return this.LastDifferent1 || this.LastDifferent2 || this.LastDifferent3;
 		}
 
 		private double GetDifferent(Bitmap bmp1, Bitmap bmp2)

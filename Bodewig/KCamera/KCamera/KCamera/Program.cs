@@ -57,7 +57,20 @@ namespace Charlotte
 				{
 					bool clearDestDirFlag = ar.ArgIs("/C");
 					bool diffValueMonitoringMode = ar.ArgIs("/M");
+					DVLogMonitorPrm dvlmPrm = null;
 
+					if (ar.ArgIs("/E"))
+					{
+						dvlmPrm = new DVLogMonitorPrm();
+						dvlmPrm.MonitorCount = int.Parse(ar.NextArg());
+						dvlmPrm.DiffMagnifBorder = int.Parse(ar.NextArg());
+
+						if (dvlmPrm.MonitorCount < 1 || IntTools.IMAX < dvlmPrm.MonitorCount)
+							throw new ArgumentException("dvlmPrm.MonitorCount is not 1 ～ IMAX");
+
+						if (dvlmPrm.DiffMagnifBorder < 1 || IntTools.IMAX < dvlmPrm.DiffMagnifBorder)
+							throw new ArgumentException("dvlmPrm.DiffMagnifBorder is not 1 ～ IMAX");
+					}
 					string cameraNamePtn = ar.NextArg();
 					string destDir = ar.NextArg();
 					int quality = int.Parse(ar.NextArg());
@@ -92,7 +105,7 @@ namespace Charlotte
 							}
 
 							{
-								Camera camera = new Camera(cameraNamePtn, destDir, quality, diffValueBorder, diffValueMonitoringMode, marginFrame, delayCompFrame);
+								Camera camera = new Camera(cameraNamePtn, destDir, quality, diffValueBorder, diffValueMonitoringMode, marginFrame, delayCompFrame, dvlmPrm);
 
 								camera.Start();
 
