@@ -44,6 +44,12 @@ namespace Charlotte
 			Test01("\t", "\t");
 			Test01("\n\t", "\n\t");
 			Test01("\t\n", "\t\n");
+
+			Test02(@"C:\aaa");
+			Test02(@"C:\bbb\ccc日本語あいうえお");
+
+			Test02_Catch(@"C:\temp\ゆきだるま☃ゆきだるま⛄トレードマーク™");
+			Test02_Catch(@"C:\temp\..\..\..\****aaaa????bbbb////.txt");
 		}
 
 		private void Test01(string localPath, string dir)
@@ -52,6 +58,27 @@ namespace Charlotte
 
 			Console.WriteLine("localPath: [" + localPath + "]");
 			Console.WriteLine("dir: [" + dir + "]");
+			Console.WriteLine("ret: [" + ret + "]");
+			Console.WriteLine("");
+		}
+
+		private void Test02_Catch(string path)
+		{
+			try
+			{
+				Test02(path);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("cought_message: " + e.Message);
+			}
+		}
+
+		private void Test02(string path)
+		{
+			string ret = DenebolaToolkit.GetFairFullPath(path);
+
+			Console.WriteLine("path: [" + path + "]");
 			Console.WriteLine("ret: [" + ret + "]");
 			Console.WriteLine("");
 		}
