@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 
-	#define N 1875000000
+	#define N 1875000000 // 3.0E+10 / 16
 //	#define N 187500000
 //	#define N 18750000
 

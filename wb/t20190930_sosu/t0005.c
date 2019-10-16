@@ -46,10 +46,10 @@ static uint GetRandom(uint minval, uint maxval)
 {
 	uint64 v = rand();
 
-	v |= (uint64)rand() << 15;
-	v |= (uint64)rand() << 30;
-	v |= (uint64)rand() << 45;
-	v |= (uint64)rand() << 60;
+	v ^= (uint64)rand() << 15;
+	v ^= (uint64)rand() << 30;
+	v ^= (uint64)rand() << 45;
+	v ^= (uint64)rand() << 60;
 
 	return v % (maxval - minval + 1) + minval;
 }
@@ -123,21 +123,18 @@ static int IsPrime(uint n)
 	{
 		x = ModPow(GetRandom(2, n - 2), d, n);
 
-		if(x == 1)
-			continue;
-
-		if(x == n - 1)
-			continue;
-
-		for(s = r; ; s--)
+		if(x != 1 && x != n - 1)
 		{
-			if(!s)
-				return 0;
+			for(s = r; ; s--)
+			{
+				if(!s)
+					return 0;
 
-			x = ModPow(x, 2, n);
+				x = ModPow(x, 2, n);
 
-			if(x == n - 1)
-				break;
+				if(x == n - 1)
+					break;
+			}
 		}
 	}
 	return 1;

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 
-#define N 100000001 // 10^8 + 1
+#define N 100000000 // 10^8
 
 int main()
 {
