@@ -88,8 +88,8 @@ static uint GetVIndex(uint index)
 }
 static void Test01(char *str)
 {
+	int forward = 1;
 	uint index = 0;
-	int ahead = 1;
 
 	Ptn = str;
 	PtnLen = strlen(str);
@@ -98,11 +98,11 @@ static void Test01(char *str)
 
 	for(; ; )
 	{
-		if(ahead)
+		if(forward)
 		{
 			if(!Check())
 			{
-				ahead = 0;
+				forward = 0;
 			}
 			else if(index < PtnLen)
 			{
@@ -113,7 +113,7 @@ static void Test01(char *str)
 			else
 			{
 				Found();
-				ahead = 0;
+				forward = 0;
 			}
 		}
 		else
@@ -123,7 +123,7 @@ static void Test01(char *str)
 			if(Colors[vIdx] == 'B')
 			{
 				Colors[vIdx] = 'R';
-				ahead = 1;
+				forward = 1;
 			}
 			else
 			{
@@ -131,7 +131,7 @@ static void Test01(char *str)
 			}
 		}
 
-		if(ahead)
+		if(forward)
 		{
 			index++;
 		}

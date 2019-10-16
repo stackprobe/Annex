@@ -80,16 +80,16 @@ static int Check(int count)
 }
 static void Main2(void)
 {
+	int forward = 1;
 	uint index = 0;
-	int ahead = 1;
 
 	for(; ; )
 	{
-		if(ahead)
+		if(forward)
 		{
 			if(!Check(index))
 			{
-				ahead = 0;
+				forward = 0;
 			}
 			else if(index < lengthof(Arr))
 			{
@@ -98,7 +98,7 @@ static void Main2(void)
 			else
 			{
 				Found();
-				ahead = 0;
+				forward = 0;
 			}
 		}
 		else
@@ -106,7 +106,7 @@ static void Main2(void)
 			if(Arr[index] == 'W')
 			{
 				Arr[index] = 'S';
-				ahead = 1;
+				forward = 1;
 			}
 			else
 			{
@@ -114,7 +114,7 @@ static void Main2(void)
 			}
 		}
 
-		if(ahead)
+		if(forward)
 		{
 			index++;
 		}

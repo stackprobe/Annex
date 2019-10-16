@@ -39,14 +39,14 @@ static void Search(void)
 static void Search(void)
 {
 	bitList_t *selects = newBitList();
-	int ahead = 1;
+	int forward = 1;
 	uint index = 0;
 	uint ww = 0;
 	uint pp = 0;
 
 	for(; ; )
 	{
-		if(ahead)
+		if(forward)
 		{
 			if(index < getCount(Weights))
 			{
@@ -75,11 +75,11 @@ static void Search(void)
 					MaxCombi = copyAutoList(Combi);
 					MaxPrice = pp;
 				}
-				ahead = 0;
+				forward = 0;
 				index--;
 			}
 		}
-		else // !ahead
+		else // !forward
 		{
 			if(refBit(selects, index))
 			{
@@ -88,7 +88,7 @@ static void Search(void)
 
 				unaddElement(Combi);
 				putBit(selects, index, 0);
-				ahead = 1;
+				forward = 1;
 				index++;
 				ww -= w;
 				pp -= p;

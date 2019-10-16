@@ -1,1 +1,0 @@
----> https://github.com/stackprobe/CSharp/blob/master/Labo/Knapsack/Knapsack/Knapsack0001.cs
