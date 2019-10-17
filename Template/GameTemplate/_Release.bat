@@ -26,4 +26,4 @@ COPY /B C:\Dev\Game\Codevil\doc\Config.conf out
 C:\Factory\SubTools\zip.exe /G out GGGGTMPL
 C:\Factory\Tools\summd5.exe /M out
 
-PAUSE
+IF NOT "%1" == "/-P" PAUSE
