@@ -11,8 +11,8 @@ namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{6a3bf3aa-aad6-4564-b8b6-fc462731b1ca}";
-		public const string APP_TITLE = "c";
+		public const string APP_IDENT = "{302d8d2f-2eca-4484-9786-b6fc9ab53d99}";
+		public const string APP_TITLE = "ptn1024";
 
 		static void Main(string[] args)
 		{
@@ -29,11 +29,14 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			Test0001();
+			for (int pattern = 0; pattern < 1024; pattern++)
+			{
+				Test0001(pattern);
+			}
 		}
 
-		private const int W = 300;
-		private const int H = 200;
+		private const int W = 100;
+		private const int H = 100;
 
 		private AutoTable<int> Map = new AutoTable<int>(W, H);
 
@@ -57,8 +60,10 @@ namespace Charlotte
 			return count;
 		}
 
-		private void Test0001()
+		private void Test0001(int pattern)
 		{
+			Console.WriteLine("pattern: " + pattern); // test
+
 			for (int x = 0; x < W; x++)
 			{
 				for (int y = 0; y < H; y++)
@@ -66,37 +71,12 @@ namespace Charlotte
 					Map[x, y] = (int)SecurityTools.CRandom.GetRandom(2u);
 				}
 			}
-			for (int c = 0; c < W * H * 10; c++)
+			for (int c = 0; c < W * H * 30; c++)
 			{
 				int x = (int)SecurityTools.CRandom.GetRandom((uint)W);
 				int y = (int)SecurityTools.CRandom.GetRandom((uint)H);
 
-				if (y < 100)
-				{
-					if (x < 100)
-					{
-						Map[x, y] = GetArroundCount(x, y) <= 2 ? 1 : 0;
-					}
-					else if (x < 200)
-					{
-						Map[x, y] = GetArroundCount(x, y) <= 3 ? 1 : 0;
-					}
-					else
-					{
-						Map[x, y] = GetArroundCount(x, y) <= 4 ? 1 : 0;
-					}
-				}
-				else
-				{
-					if (x < 150)
-					{
-						Map[x, y] = new int[] { 2, 3, 5, 7 }.Contains(GetArroundCount(x, y)) ? 1 : 0; // 素数
-					}
-					else
-					{
-						Map[x, y] = new int[] { 2, 3, 5, 7 }.Contains(GetArroundCount(x, y)) == false ? 1 : 0; // ! 素数
-					}
-				}
+				Map[x, y] = (pattern & (1 << GetArroundCount(x, y))) != 0 ? 1 : 0;
 			}
 			Canvas canvas = new Canvas(W, H);
 
@@ -106,12 +86,10 @@ namespace Charlotte
 				{
 					int v = Map[x, y];
 
-					canvas.Set(x, y, Color.FromArgb(v * 255, v * 255, v * 255));
+					canvas.Set(x, y, Color.FromArgb(255 * v, 255 * v, 255 * v));
 				}
 			}
-			canvas.Save(@"C:\temp\x1.bmp");
-			EzExpand(canvas, 3).Save(@"C:\temp\x3.bmp");
-			EzExpand(canvas, 5).Save(@"C:\temp\x5.bmp");
+			EzExpand(canvas, 5).Save(@"C:\temp\P_" + pattern.ToString("D4") + ".bmp");
 		}
 
 		private Canvas EzExpand(Canvas src, int mul)
