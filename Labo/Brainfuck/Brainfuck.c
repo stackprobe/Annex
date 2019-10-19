@@ -72,11 +72,6 @@ static uint End(void)
 	termination(0);
 	return 0; // dummy
 }
-static uint Never(void)
-{
-	error(); // never
-	return 0; // dummy
-}
 
 typedef struct Command_st
 {
@@ -85,27 +80,13 @@ typedef struct Command_st
 }
 Command_t;
 
-static Command_t *GetNeverCommand(void)
-{
-	static Command_t *i;
-
-	if(!i)
-	{
-		i = nb(Command_t);
-
-		i->Method = Never;
-		i->Next[0] = i;
-		i->Next[1] = i;
-	}
-	return i;
-}
 static Command_t *MakeCommand(Command_t *p, uint (*method)(void))
 {
-	Command_t *i = nb(Command_t);
+	Command_t *i = memAlloc(sizeof(Command_t));
 
 	i->Method = method;
-	i->Next[0] = GetNeverCommand();
-	i->Next[1] = GetNeverCommand();
+	i->Next[0] = NULL;
+	i->Next[1] = NULL;
 
 	p->Next[0] = i;
 

@@ -145,5 +145,5 @@ int main()
 
 	for(c = 0; c < UINT_MAX; c++)
 		if(IsPrime(c))
-			printf("%d\n", c);
+			printf("%u\n", c);
 }
