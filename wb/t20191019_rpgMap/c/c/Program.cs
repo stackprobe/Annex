@@ -11,8 +11,8 @@ namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{5fad1910-bc76-45b8-a3f0-a7add8ffeeef}";
-		public const string APP_TITLE = "b";
+		public const string APP_IDENT = "{6a3bf3aa-aad6-4564-b8b6-fc462731b1ca}";
+		public const string APP_TITLE = "c";
 
 		static void Main(string[] args)
 		{
@@ -32,8 +32,8 @@ namespace Charlotte
 			Test0001();
 		}
 
-		private const int W = 200;
-		private const int H = 100;
+		private const int W = 400;
+		private const int H = 200;
 
 		private AutoTable<int> Map = new AutoTable<int>(W, H);
 
@@ -71,42 +71,40 @@ namespace Charlotte
 				int x = (int)SecurityTools.CRandom.GetRandom((uint)W);
 				int y = (int)SecurityTools.CRandom.GetRandom((uint)H);
 
-				Map[x, y] = 5 <= GetArroundCount(x, y) ? 1 : 0;
-			}
-			for (int x = 0; x < W; x++)
-			{
-				for (int y = 0; y < H; y++)
+				if (y < 100)
 				{
-					Map[x, y] *= 15;
+					if (x < 100)
+					{
+						Map[x, y] = GetArroundCount(x, y) <= 2 ? 1 : 0;
+					}
+					else if (x < 300)
+					{
+						Map[x, y] = GetArroundCount(x, y) <= 3 ? 1 : 0;
+					}
+					else
+					{
+						Map[x, y] = GetArroundCount(x, y) <= 4 ? 1 : 0;
+					}
 				}
-			}
-			for (int c = 0; c < W * H * 20; c++)
-			{
-				int x1 = (int)SecurityTools.CRandom.GetRandom((uint)W);
-				int x2 = x1;
-				int y1 = (int)SecurityTools.CRandom.GetRandom((uint)H);
-				int y2 = y1;
-
-				if (SecurityTools.CRandom.GetRandom(2) != 0)
-					x2 = (x2 + 1) % W;
 				else
-					y2 = (y2 + 1) % H;
-
-				int v1 = Map[x1, y1];
-				int v2 = Map[x2, y2];
-
-				if (v1 < v2)
 				{
-					v1++;
-					v2--;
+					if (x < 100)
+					{
+						Map[x, y] = GetArroundCount(x, y) % 2 == 0 ? 1 : 0; // 偶数
+					}
+					else if (x < 200)
+					{
+						Map[x, y] = GetArroundCount(x, y) % 2 == 1 ? 1 : 0; // 奇数
+					}
+					else if (x < 300)
+					{
+						Map[x, y] = new int[] { 2, 3, 5, 7 }.Contains(GetArroundCount(x, y)) ? 1 : 0; // 素数
+					}
+					else
+					{
+						Map[x, y] = new int[] { 2, 3, 5, 7 }.Contains(GetArroundCount(x, y)) == false ? 1 : 0; // ! 素数
+					}
 				}
-				else if (v2 < v1)
-				{
-					v1--;
-					v2++;
-				}
-				Map[x1, y1] = v1;
-				Map[x2, y2] = v2;
 			}
 			Canvas canvas = new Canvas(W, H);
 
@@ -115,40 +113,8 @@ namespace Charlotte
 				for (int y = 0; y < H; y++)
 				{
 					int v = Map[x, y];
-#if true
-					{
-						Color[] colors = new Color[]
-						{
-							Color.FromArgb(0, 0, 55),
-							Color.FromArgb(20, 20, 105),
-							Color.FromArgb(40, 40, 155),
-							Color.FromArgb(60, 60, 205),
-							Color.FromArgb(80, 80, 255),
-							Color.FromArgb(120, 80, 40),
-							Color.FromArgb(150, 100, 50),
-							Color.FromArgb(180, 120, 60),
-							Color.FromArgb(210, 140, 70),
-							Color.FromArgb(240, 160, 80),
-							Color.FromArgb(0, 180, 0),
-							Color.FromArgb(0, 150, 0),
-							Color.FromArgb(0, 120, 0),
-							Color.FromArgb(10, 90, 0),
-							Color.FromArgb(20, 60, 0),
-							Color.FromArgb(40, 30, 0),
-						};
 
-						canvas.Set(x, y, colors[v]);
-					}
-#elif true
-					canvas.Set(x, y, Color.FromArgb(
-						((v >> 0) & 1) * 255,
-						((v >> 1) & 1) * 255,
-						((v >> 2) & 1) * 255
-						));
-#else
-					v *= 17;
-					canvas.Set(x, y, Color.FromArgb(v, v, 255 - v));
-#endif
+					canvas.Set(x, y, Color.FromArgb(v * 255, v * 255, v * 255));
 				}
 			}
 			canvas.Save(@"C:\temp\x1.bmp");

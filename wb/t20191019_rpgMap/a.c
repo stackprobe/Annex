@@ -69,6 +69,28 @@ static int Judge_1007(uint x, uint y)
 {
 	return GetArroundCount(x, y) <= 7;
 }
+static int Judge_2001(uint x, uint y) // Šï”
+{
+	return GetArroundCount(x, y) % 2 == 1;
+}
+static int Judge_2002(uint x, uint y) // ‹ô”
+{
+	return GetArroundCount(x, y) % 2 == 0;
+}
+static int Judge_2003(uint x, uint y) // ‘f”
+{
+	uint count = GetArroundCount(x, y);
+
+	return
+		count == 2 ||
+		count == 3 ||
+		count == 5 ||
+		count == 7;
+}
+static int Judge_2004(uint x, uint y) // ! ‘f”
+{
+	return !Judge_2003(x, y);
+}
 
 static int (*Judge)(uint, uint);
 
@@ -92,6 +114,10 @@ int main(int argc, char **argv)
 	case 'E': Judge = Judge_1005; break; // ’¼ü‚Ì‘½‚¢–À˜HE•Ç‰ß‘½
 	case 'F': Judge = Judge_1006; break; // ’¼ü‚Ì‘½‚¢–À˜HE•Ç‰ß‘½^2
 	case 'G': Judge = Judge_1007; break; // ¬•”‰®‚¾‚ç‚¯
+	case '1': Judge = Judge_2001; break; // ‰½‚Æ‚à...
+	case '2': Judge = Judge_2002; break; // ‰½‚Æ‚à...
+	case 'P': Judge = Judge_2003; break; // ‰½‚Æ‚à...
+	case 'N': Judge = Judge_2004; break; // ‰½‚Æ‚à...
 
 	default:
 		error();
