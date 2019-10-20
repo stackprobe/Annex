@@ -83,7 +83,17 @@ namespace Charlotte
 					for (int c = 1; c <= 5; c++)
 					{
 						lines.Add("<td>");
+#if true
+						{
+							string file = Path.Combine(dir, "Output_" + pattern.ToString("D4") + "_" + c + ".png");
+
+							lines.Add("<img src=\"" + GetPngDataUrl(file) + "\"></img>");
+
+							FileTools.Delete(file); // 不要になったので削除する。
+						}
+#else
 						lines.Add("<img src=\"Output_" + pattern.ToString("D4") + "_" + c + ".png\"></img>");
+#endif
 						lines.Add("</td>");
 					}
 					lines.Add("</tr>");
@@ -104,6 +114,11 @@ namespace Charlotte
 				str = padding + str;
 
 			return str;
+		}
+
+		private string GetPngDataUrl(string file)
+		{
+			return "data:image/png;base64," + new Base64Unit().Encode(File.ReadAllBytes(file));
 		}
 
 		private Canvas EzExpand(Canvas src, int mul)
