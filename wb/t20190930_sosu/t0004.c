@@ -15,7 +15,7 @@ int main()
 	int i;
 
 	if(!t)
-		return 1; // fatal
+		return; // fatal
 
 	memset(t, 0x00, N_P13);
 
