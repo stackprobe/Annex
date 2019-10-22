@@ -11,6 +11,8 @@ namespace Charlotte.Tests.MultiLayerPerceptron2
 		public void Test01()
 		{
 			new MultiLayer(3, 2, new int[] { 8, 8, 8, 8, 8, 8, 8, 8 });
+
+			throw null; // TODO
 		}
 	}
 }

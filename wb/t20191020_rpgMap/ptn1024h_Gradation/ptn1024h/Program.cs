@@ -163,6 +163,7 @@ namespace Charlotte
 
 		public static void MakeLikeADungeonMap(int pattern) // pattern: -1 ～ 1023
 		{
+			// 左端と右端で密度が違うので左右はループしない。上下はループする。
 			// 左右の 100 px は緩衝地帯、後で除去する。
 
 			const int w = 700; // マップの幅
