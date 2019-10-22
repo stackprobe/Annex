@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Charlotte.Tools;
 
-namespace Charlotte.MultiLayerPerceptron2
+namespace Charlotte.MultiLayerPerceptron
 {
 	public class MultiLayer
 	{

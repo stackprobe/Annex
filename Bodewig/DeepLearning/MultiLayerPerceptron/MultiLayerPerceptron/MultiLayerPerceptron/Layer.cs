@@ -55,11 +55,11 @@ namespace Charlotte.MultiLayerPerceptron
 					{
 						double w = SecurityTools.CRandom.GetReal() * 0.2 - 0.1; // -0.1 ～ 0.1
 						wt += w;
-						n.Prevs[index].Weight = w; // not Bios
+						n.Prevs[index].Weight = w; // not Bias
 					}
 					else
 					{
-						n.Prevs[index].Weight = wt; // Bios
+						n.Prevs[index].Weight = wt; // Bias
 					}
 				}
 #else // old ???
