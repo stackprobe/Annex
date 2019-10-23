@@ -48,10 +48,10 @@ namespace Charlotte.MultiLayerPerceptron
 
 				for (int n = 0; n < outputLayer.Count; n++)
 				{
-					outputLayer.Inputs[n] = axonLayer.WeightTable[inputLayer.Count][n]; // バイアスからの入力
+					outputLayer.Inputs[n] = axonLayer.WeightTable[inputLayer.Count, n]; // バイアスからの入力
 
 					for (int p = 0; p < inputLayer.Count; p++)
-						outputLayer.Inputs[n] += inputLayer.Outputs[p] * axonLayer.WeightTable[p][n];
+						outputLayer.Inputs[n] += inputLayer.Outputs[p] * axonLayer.WeightTable[p, n];
 
 					outputLayer.Outputs[n] = ActivationFunction.GetOutput(outputLayer.Inputs[n]);
 				}

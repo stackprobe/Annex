@@ -11,41 +11,26 @@ namespace Charlotte.MultiLayerPerceptron
 	/// </summary>
 	public class AxonLayer
 	{
-		public double[][] WeightTable;
+		public double[,] WeightTable;
 
 		/// <summary>
 		/// 入力側ニューロン数
 		/// バイアスは含まない。
 		/// 直前のニューロンレイヤ(入力層又は隠れ層)のニューロンの個数と同じ。
 		/// </summary>
-		public int PrevCount
-		{
-			get
-			{
-				return this.WeightTable.Length - 1;
-			}
-		}
+		public int PrevCount;
 
 		/// <summary>
 		/// 出力側ニューロン数
 		/// 直後のニューロンレイヤ(出力層又は隠れ層)のニューロンの個数と同じ。
 		/// </summary>
-		public int NextCount
-		{
-			get
-			{
-				return this.WeightTable[0].Length;
-			}
-		}
+		public int NextCount;
 
 		public AxonLayer(int prevCount, int nextCount)
 		{
-			prevCount++; // バイアスの分
-
-			this.WeightTable = new double[prevCount][];
-
-			for (int index = 0; index < prevCount; index++)
-				this.WeightTable[index] = new double[nextCount];
+			this.WeightTable = new double[prevCount + 1, nextCount];
+			this.PrevCount = prevCount;
+			this.NextCount = nextCount;
 		}
 
 		/// <summary>
@@ -65,7 +50,7 @@ namespace Charlotte.MultiLayerPerceptron
 					wt += w;
 					//wwt += w * w;
 				}
-				this.WeightTable[this.PrevCount][n] = -wt; // 重みの平均が 0.0 になるようにバイアスで調整する。
+				this.WeightTable[this.PrevCount, n] = -wt; // 重みの平均が 0.0 になるようにバイアスで調整する。
 
 				// 重みの標準偏差を調整する必要があるか？
 			}

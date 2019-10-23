@@ -39,12 +39,10 @@ namespace Charlotte
 			const int h = 100; // マップの高さ
 
 			Random rand = new Random();
-			int[][] map = new int[w][];
+			int[,] map = new int[w, h];
 
 			for (int x = 0; x < w; x++)
 			{
-				map[x] = new int[h];
-
 				for (int y = 0; y < h; y++)
 				{
 					double dx = x - w / 2;
@@ -57,7 +55,7 @@ namespace Charlotte
 					//double r = 0.7 - 0.3 * d;
 					double r = 0.6 - 0.2 * d;
 
-					map[x][y] = rand.NextDouble() < r ? 1 : 0;
+					map[x, y] = rand.NextDouble() < r ? 1 : 0;
 				}
 			}
 			for (int c = 0; c < w * h * 10; c++)
@@ -70,10 +68,10 @@ namespace Charlotte
 				{
 					for (int yc = -1; yc <= 1; yc++)
 					{
-						count += map[(x + w + xc) % w][(y + h + yc) % h];
+						count += map[(x + w + xc) % w, (y + h + yc) % h];
 					}
 				}
-				map[x][y] = count / 5;
+				map[x, y] = count / 5;
 			}
 			using (Bitmap bmp = new Bitmap(w, h))
 			{
@@ -81,7 +79,7 @@ namespace Charlotte
 				{
 					for (int y = 0; y < h; y++)
 					{
-						bmp.SetPixel(x, y, map[x][y] == 0 ? Color.Turquoise : Color.Sienna);
+						bmp.SetPixel(x, y, map[x, y] == 0 ? Color.Turquoise : Color.Sienna);
 					}
 				}
 				bmp.Save(@"C:\temp\fm_0001.bmp", ImageFormat.Bmp); // 適当な場所にビットマップで出力する。
@@ -113,7 +111,7 @@ namespace Charlotte
 			{
 				for (int y = 0; y < h; y++)
 				{
-					map[x][y] *= tileColors.Length - 1;
+					map[x, y] *= tileColors.Length - 1;
 				}
 			}
 			for (int c = 0; c < w * h * 20; c++)
@@ -128,15 +126,15 @@ namespace Charlotte
 				else
 					y2 = (y2 + 1) % h;
 
-				if (map[x1][y1] < map[x2][y2])
+				if (map[x1, y1] < map[x2, y2])
 				{
-					map[x1][y1]++;
-					map[x2][y2]--;
+					map[x1, y1]++;
+					map[x2, y2]--;
 				}
-				else if (map[x2][y2] < map[x1][y1])
+				else if (map[x2, y2] < map[x1, y1])
 				{
-					map[x1][y1]--;
-					map[x2][y2]++;
+					map[x1, y1]--;
+					map[x2, y2]++;
 				}
 			}
 			using (Bitmap bmp = new Bitmap(w, h))
@@ -145,7 +143,7 @@ namespace Charlotte
 				{
 					for (int y = 0; y < h; y++)
 					{
-						bmp.SetPixel(x, y, tileColors[map[x][y]]);
+						bmp.SetPixel(x, y, tileColors[map[x, y]]);
 					}
 				}
 				bmp.Save(@"C:\temp\fm_0002.bmp", ImageFormat.Bmp); // 適当な場所にビットマップで出力する。

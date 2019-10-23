@@ -170,15 +170,13 @@ namespace Charlotte
 			const int h = 100; // マップの高さ
 
 			Random rand = new Random();
-			int[][] map = new int[w][];
+			int[,] map = new int[w, h];
 
 			for (int x = 0; x < w; x++)
 			{
-				map[x] = new int[h];
-
 				for (int y = 0; y < h; y++)
 				{
-					map[x][y] = rand.NextDouble() < (x - 100) * 1.0 / (w - 201) ? 1 : 0;
+					map[x, y] = rand.NextDouble() < (x - 100) * 1.0 / (w - 201) ? 1 : 0;
 				}
 			}
 			if (pattern != -1)
@@ -193,10 +191,10 @@ namespace Charlotte
 					{
 						for (int yc = -1; yc <= 1; yc++)
 						{
-							count += map[x + xc][(y + h + yc) % h];
+							count += map[x + xc, (y + h + yc) % h];
 						}
 					}
-					map[x][y] = (pattern >> count) & 1;
+					map[x, y] = (pattern >> count) & 1;
 				}
 			}
 			using (Bitmap bmp = new Bitmap(w - 200, h))
@@ -205,7 +203,7 @@ namespace Charlotte
 				{
 					for (int y = 0; y < h; y++)
 					{
-						bmp.SetPixel(x, y, map[x + 100][y] == 0 ? Color.Blue : Color.Yellow);
+						bmp.SetPixel(x, y, map[x + 100, y] == 0 ? Color.Blue : Color.Yellow);
 					}
 				}
 				bmp.Save(@"C:\temp\LikeADungeonMap_Gradation.bmp", ImageFormat.Bmp); // 適当な場所にビットマップで出力する。
