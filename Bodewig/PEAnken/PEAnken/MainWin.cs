@@ -54,6 +54,7 @@ namespace Charlotte
 				Add絞り込みItem("Java C#");
 				Add絞り込みItem("Java Web");
 				Add絞り込みItem("Java Web Spring");
+				Add絞り込みItem("Java -JavaScript");
 			}
 
 			// ----
@@ -200,14 +201,33 @@ namespace Charlotte
 		{
 			int rowidx = NarrowDownRowIndex;
 
-			for (int colidx = 0; colidx < this.MainSheet.ColumnCount; colidx++)
+			if (word.StartsWith("-"))
 			{
-				string cell = "" + this.MainSheet.Rows[rowidx].Cells[colidx].Value;
+				word = word.Substring(1);
 
-				if (StringTools.ContainsIgnoreCase(cell, word))
+				if (word == "")
 					return true;
+
+				for (int colidx = 0; colidx < this.MainSheet.ColumnCount; colidx++)
+				{
+					string cell = "" + this.MainSheet.Rows[rowidx].Cells[colidx].Value;
+
+					if (StringTools.ContainsIgnoreCase(cell, word))
+						return false;
+				}
+				return true;
 			}
-			return false;
+			else
+			{
+				for (int colidx = 0; colidx < this.MainSheet.ColumnCount; colidx++)
+				{
+					string cell = "" + this.MainSheet.Rows[rowidx].Cells[colidx].Value;
+
+					if (StringTools.ContainsIgnoreCase(cell, word))
+						return true;
+				}
+				return false;
+			}
 		}
 
 		private void 終了ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -440,6 +460,11 @@ namespace Charlotte
 		private void 選択解除SToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			this.MainSheet.ClearSelection();
+		}
+
+		private void 列の幅リセットToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.MS_AutoResize();
 		}
 
 		private void 絞り込みクリアToolStripMenuItem_Click(object sender, EventArgs e)

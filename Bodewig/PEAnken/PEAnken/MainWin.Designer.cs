@@ -47,6 +47,8 @@
 			this.FreeWord = new System.Windows.Forms.TextBox();
 			this.FreeWordMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.絞り込みクリアToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+			this.列の幅リセットToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.MainSheet)).BeginInit();
 			this.MainSheetMenu.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -83,14 +85,16 @@
 			// MainSheetMenu
 			// 
 			this.MainSheetMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.選択解除SToolStripMenuItem});
+            this.選択解除SToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.列の幅リセットToolStripMenuItem});
 			this.MainSheetMenu.Name = "MainSheetMenu";
-			this.MainSheetMenu.Size = new System.Drawing.Size(123, 26);
+			this.MainSheetMenu.Size = new System.Drawing.Size(153, 76);
 			// 
 			// 選択解除SToolStripMenuItem
 			// 
 			this.選択解除SToolStripMenuItem.Name = "選択解除SToolStripMenuItem";
-			this.選択解除SToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			this.選択解除SToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.選択解除SToolStripMenuItem.Text = "選択解除";
 			this.選択解除SToolStripMenuItem.Click += new System.EventHandler(this.選択解除SToolStripMenuItem_Click);
 			// 
@@ -148,14 +152,14 @@
 			// 絞り込みクリアMenuItem
 			// 
 			this.絞り込みクリアMenuItem.Name = "絞り込みクリアMenuItem";
-			this.絞り込みクリアMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.絞り込みクリアMenuItem.Size = new System.Drawing.Size(100, 22);
 			this.絞り込みクリアMenuItem.Text = "クリア";
 			this.絞り込みクリアMenuItem.Click += new System.EventHandler(this.絞り込みクリアMenuItem_Click);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(97, 6);
 			// 
 			// statusStrip1
 			// 
@@ -198,6 +202,18 @@
 			this.絞り込みクリアToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
 			this.絞り込みクリアToolStripMenuItem.Text = "クリア";
 			this.絞り込みクリアToolStripMenuItem.Click += new System.EventHandler(this.絞り込みクリアToolStripMenuItem_Click);
+			// 
+			// toolStripMenuItem2
+			// 
+			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+			// 
+			// 列の幅リセットToolStripMenuItem
+			// 
+			this.列の幅リセットToolStripMenuItem.Name = "列の幅リセットToolStripMenuItem";
+			this.列の幅リセットToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.列の幅リセットToolStripMenuItem.Text = "列の幅リセット";
+			this.列の幅リセットToolStripMenuItem.Click += new System.EventHandler(this.列の幅リセットToolStripMenuItem_Click);
 			// 
 			// MainWin
 			// 
@@ -249,6 +265,8 @@
 		private System.Windows.Forms.ToolStripMenuItem 絞り込みクリアToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 絞り込みクリアMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem 列の幅リセットToolStripMenuItem;
 	}
 }
 

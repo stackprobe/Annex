@@ -40,7 +40,7 @@ namespace Charlotte.MultiLayerPerceptron
 
 		public AxonLayer(int prevCount, int nextCount)
 		{
-			prevCount++; // Bias
+			prevCount++; // バイアスの分
 
 			this.WeightTable = new double[prevCount][];
 

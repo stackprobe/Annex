@@ -6,7 +6,7 @@ using System.Text;
 namespace Charlotte.MultiLayerPerceptron
 {
 	/// <summary>
-	/// 教師
+	/// トレーナー
 	/// </summary>
 	public class Trainer
 	{
@@ -22,8 +22,11 @@ namespace Charlotte.MultiLayerPerceptron
 			if (values.Length != this.ML.NeuronLayers[0].Count)
 				throw new ArgumentException();
 
+			if (values.Any(value => value < -1.0 || 1.0 < value))
+				throw new ArgumentException();
+
 			for (int index = 0; index < values.Length; index++)
-				this.ML.NeuronLayers[0].Inputs[index] = values[index];
+				this.ML.NeuronLayers[0].Outputs[index] = values[index]; // 入力は活性化関数を通さないので Outputs に直接セットする。
 		}
 
 		private void GetOutputs(double[] values)
@@ -37,7 +40,22 @@ namespace Charlotte.MultiLayerPerceptron
 
 		private void Activate()
 		{
-			throw null; // TODO
+			for (int index = 0; index < this.ML.AxonLayers.Length; index++)
+			{
+				NeuronLayer inputLayer = this.ML.NeuronLayers[index];
+				AxonLayer axonLayer = this.ML.AxonLayers[index];
+				NeuronLayer outputLayer = this.ML.NeuronLayers[index + 1];
+
+				for (int n = 0; n < outputLayer.Count; n++)
+				{
+					outputLayer.Inputs[n] = axonLayer.WeightTable[inputLayer.Count][n]; // バイアスからの入力
+
+					for (int p = 0; p < inputLayer.Count; p++)
+						outputLayer.Inputs[n] += inputLayer.Outputs[p] * axonLayer.WeightTable[p][n];
+
+					outputLayer.Outputs[n] = ActivationFunction.GetOutput(outputLayer.Inputs[n]);
+				}
+			}
 		}
 
 		private void BackPropagation(double[] expectedOutputs)
@@ -52,7 +70,7 @@ namespace Charlotte.MultiLayerPerceptron
 		}
 
 		/// <summary>
-		/// 評価する。
+		/// 評価させる。
 		/// </summary>
 		/// <param name="inputs">入力値</param>
 		/// <param name="outputs">出力値の出力先</param>
@@ -64,7 +82,7 @@ namespace Charlotte.MultiLayerPerceptron
 		}
 
 		/// <summary>
-		/// 教育する。
+		/// 学習させる。
 		/// </summary>
 		/// <param name="inputs">入力値</param>
 		/// <param name="expectedOutputs">期待される出力値</param>
