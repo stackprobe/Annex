@@ -6,10 +6,13 @@ using Charlotte.Tools;
 
 namespace Charlotte.MultiLayerPerceptron
 {
+	/// <summary>
+	/// 入力層・隠れ層・出力層 と 各層の間にある軸索層 の集まり
+	/// </summary>
 	public class MultiLayer
 	{
-		private NeuronLayer[] NeuronLayers;
-		private AxonLayer[] AxonLayers;
+		public NeuronLayer[] NeuronLayers;
+		public AxonLayer[] AxonLayers;
 
 		public MultiLayer(int inputCount, int outputCount, int[] hiddenCounts)
 		{

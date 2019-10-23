@@ -41,7 +41,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,9 +51,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\MultiLayerPerceptron\MultiLayerTest.cs" />
-    <Compile Include="Tests\MultiLayerPerceptron\Test0001.cs" />
-    <Compile Include="Tests\MultiLayerPerceptron\Test0002.cs" />
-    <Compile Include="Tests\MultiLayerPerceptron\Test0003.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultiLayerPerceptron\MultiLayerPerceptron.csproj">
@@ -62,7 +58,6 @@
       <Name>MultiLayerPerceptron</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

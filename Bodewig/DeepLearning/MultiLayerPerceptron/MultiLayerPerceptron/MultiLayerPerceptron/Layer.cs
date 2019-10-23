@@ -59,7 +59,7 @@ namespace Charlotte.MultiLayerPerceptron
 					}
 					else
 					{
-						n.Prevs[index].Weight = wt; // Bias
+						n.Prevs[index].Weight = -wt; // Bias
 					}
 				}
 #else // old ???

@@ -9,27 +9,23 @@ namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{f3540861-9696-4caa-9c28-114eb83e9ca9}";
+		public const string APP_IDENT = "{398d8920-6be3-453d-b78d-12dd82f26796}";
 		public const string APP_TITLE = "MultiLayerPerceptron";
 
 		static void Main(string[] args)
 		{
 			ProcMain.CUIMain(new Program().Main2, APP_IDENT, APP_TITLE);
 
-			Console.WriteLine("Press ENTER.");
-			Console.ReadLine();
+			//if (ProcMain.CUIError)
+			{
+				Console.WriteLine("Press ENTER.");
+				Console.ReadLine();
+			}
 		}
 
 		private void Main2(ArgsReader ar)
 		{
-			//new MultiLayerTest().Test01();
-			//new MultiLayerTest().Test02();
-			//new Test0001().Test01();
-			//new Test0001().Test02();
-			//new Test0002().Test01();
-			//new Test0002().Test01b();
-			//new Test0003().Test01();
-			new Test0003().Test02();
+			new MultiLayerTest().Test01();
 		}
 	}
 }
