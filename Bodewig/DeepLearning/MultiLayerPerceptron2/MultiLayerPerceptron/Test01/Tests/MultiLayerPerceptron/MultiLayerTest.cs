@@ -10,7 +10,12 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 	{
 		public void Test01()
 		{
-			new MultiLayer(3, 2, new int[] { 8, 8, 8, 8, 8, 8, 8, 8 });
+			new MultiLayer(new int[] { 6, 7, 7, 4 });
+		}
+
+		public void Test02()
+		{
+			Trainer trainer = new Trainer(new int[] { 2, 3, 3, 3, 2 });
 		}
 	}
 }

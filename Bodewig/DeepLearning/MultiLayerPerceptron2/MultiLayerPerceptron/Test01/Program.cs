@@ -25,7 +25,8 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			new MultiLayerTest().Test01();
+			//new MultiLayerTest().Test01();
+			new MultiLayerTest().Test02();
 		}
 	}
 }

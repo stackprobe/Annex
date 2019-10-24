@@ -46,9 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MultiLayerPerceptron\ActivationFunction.cs" />
-    <Compile Include="MultiLayerPerceptron\AxonLayer.cs" />
+    <Compile Include="MultiLayerPerceptron\Axon.cs" />
+    <Compile Include="MultiLayerPerceptron\Layer.cs" />
     <Compile Include="MultiLayerPerceptron\MultiLayer.cs" />
-    <Compile Include="MultiLayerPerceptron\NeuronLayer.cs" />
+    <Compile Include="MultiLayerPerceptron\Neuron.cs" />
     <Compile Include="MultiLayerPerceptron\Trainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

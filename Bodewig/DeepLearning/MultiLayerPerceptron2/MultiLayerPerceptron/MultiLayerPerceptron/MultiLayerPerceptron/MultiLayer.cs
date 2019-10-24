@@ -11,36 +11,60 @@ namespace Charlotte.MultiLayerPerceptron
 	/// </summary>
 	public class MultiLayer
 	{
-		public NeuronLayer[] NeuronLayers;
-		public AxonLayer[] AxonLayers;
+		public Layer[] Layers;
 
-		public MultiLayer(int inputCount, int outputCount, int[] hiddenCounts)
+		public MultiLayer(int[] neuronCounts)
 		{
-			if (inputCount < 1 || IntTools.IMAX < inputCount)
-				throw new ArgumentException();
+			this.Layers = new Layer[neuronCounts.Length];
 
-			if (outputCount < 1 || IntTools.IMAX < outputCount)
-				throw new ArgumentException();
+			for (int index = 0; index + 1 < this.Layers.Length; index++)
+			{
+				this.Layers[index] = new Layer()
+				{
+					Neurons = new Neuron[neuronCounts[index]],
+					Axons = new Axon[neuronCounts[index] + 1, neuronCounts[index + 1]],
+				};
 
-			if (hiddenCounts.Length < 1 || IntTools.IMAX < hiddenCounts.Length)
-				throw new ArgumentException();
+				for (int c = 0; c < neuronCounts[index]; c++)
+					this.Layers[index].Neurons[c] = new Neuron();
 
-			foreach (int hiddenCount in hiddenCounts)
-				if (hiddenCount < 1 || IntTools.IMAX < hiddenCount)
-					throw new ArgumentException();
+				for (int c = 0; c < neuronCounts[index] + 1; c++)
+					for (int n = 0; n < neuronCounts[index + 1]; n++)
+						this.Layers[index].Axons[c, n] = new Axon();
+			}
 
-			this.NeuronLayers = new NeuronLayer[hiddenCounts.Length + 2];
-			this.AxonLayers = new AxonLayer[hiddenCounts.Length + 1];
+			{
+				int index = neuronCounts.Length - 1;
 
-			this.NeuronLayers[0] = new NeuronLayer(inputCount);
+				this.Layers[index] = new Layer()
+				{
+					Neurons = new Neuron[neuronCounts[index]],
+					Axons = null,
+				};
 
-			for (int index = 0; index < hiddenCounts.Length; index++)
-				this.NeuronLayers[index + 1] = new NeuronLayer(hiddenCounts[index]);
+				for (int c = 0; c < neuronCounts[index]; c++)
+					this.Layers[index].Neurons[c] = new Neuron();
+			}
+		}
 
-			this.NeuronLayers[this.NeuronLayers.Length - 1] = new NeuronLayer(outputCount);
+		public void Randomize()
+		{
+			for (int index = 1; index < this.Layers.Length; index++)
+			{
+				Layer cl = this.Layers[index - 1];
+				Layer nl = this.Layers[index];
 
-			for (int index = 0; index < this.AxonLayers.Length; index++)
-				this.AxonLayers[index] = new AxonLayer(this.NeuronLayers[index].Count, this.NeuronLayers[index + 1].Count);
+				for (int n = 0; n < nl.Neurons.Length; n++)
+				{
+					double wt = 0.0;
+
+					for (int c = 0; c < cl.Neurons.Length; c++)
+					{
+						wt += cl.Axons[c, n].Weight = SecurityTools.CRandom.GetReal() * 2.0 - 1.0;
+					}
+					cl.Axons[cl.Neurons.Length, n].Weight = -wt;
+				}
+			}
 		}
 	}
 }
