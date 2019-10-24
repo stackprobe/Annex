@@ -22,7 +22,7 @@ namespace Charlotte.MultiLayerPerceptron
 			if (values.Length != this.ML.NeuronLayers[0].Count)
 				throw new ArgumentException();
 
-			if (values.Any(value => value < -1.0 || 1.0 < value))
+			if (values.Any(value => value < 0.0 || 1.0 < value))
 				throw new ArgumentException();
 
 			for (int index = 0; index < values.Length; index++)
@@ -63,7 +63,7 @@ namespace Charlotte.MultiLayerPerceptron
 			if (expectedOutputs.Length != this.ML.NeuronLayers[this.ML.NeuronLayers.Length - 1].Count)
 				throw new ArgumentException();
 
-			if (expectedOutputs.Any(value => value < -1.0 || 1.0 < value))
+			if (expectedOutputs.Any(value => value < 0.0 || 1.0 < value))
 				throw new ArgumentException();
 
 			throw null; // TODO
