@@ -15,7 +15,7 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 
 		public void Test02()
 		{
-			Trainer trainer = new Trainer(new int[] { 2, 3, 3, 3, 2 });
+			Teacher trainer = new Teacher(new int[] { 2, 3, 3, 3, 2 });
 		}
 	}
 }

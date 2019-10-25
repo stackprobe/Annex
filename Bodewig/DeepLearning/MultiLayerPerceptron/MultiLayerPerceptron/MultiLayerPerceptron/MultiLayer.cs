@@ -133,14 +133,14 @@ namespace Charlotte.MultiLayerPerceptron
 
 							for (int index = 0; index < correctOutputs.Length; index++)
 							{
-								double d = outputs[index] - correctOutputs[index];
+								double d = correctOutputs[index] - outputs[index];
 								d *= a.GetDifferentialCoefficient_Weight_Output(this.OutputLayer.Neurons[index]);
 								d *= 0.1; // 学習係数
 
 								if (double.IsNaN(d))
 									throw null;
 
-								w -= d;
+								w += d;
 							}
 							a.WeightNew = w;
 						}

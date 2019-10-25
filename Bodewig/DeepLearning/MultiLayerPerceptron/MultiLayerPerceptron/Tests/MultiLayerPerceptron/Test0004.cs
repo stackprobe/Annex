@@ -12,6 +12,7 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 		public void Test01()
 		{
 			MultiLayer ml = new MultiLayer(4, 3, new int[] { 5, 5 });
+			int testCnt = 0;
 
 		restart:
 			for (int c = 0; c < 1000; c++)
@@ -67,13 +68,14 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 						correct++;
 				}
 			}
-			Console.WriteLine("correct: " + correct);
+			Console.WriteLine("[" + (++testCnt) + "] correct: " + correct);
 			goto restart;
 		}
 
 		public void Test02()
 		{
 			MultiLayer ml = new MultiLayer(6, 4, new int[] { 7, 7 });
+			int testCnt = 0;
 
 		restart:
 			for (int c = 0; c < 1000; c++)
@@ -141,7 +143,7 @@ namespace Charlotte.Tests.MultiLayerPerceptron
 						correct++;
 				}
 			}
-			Console.WriteLine("correct: " + correct);
+			Console.WriteLine("[" + (++testCnt) + "] correct: " + correct);
 			goto restart;
 		}
 	}

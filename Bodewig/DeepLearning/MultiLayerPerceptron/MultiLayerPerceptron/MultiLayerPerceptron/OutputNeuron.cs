@@ -16,12 +16,14 @@ namespace Charlotte.MultiLayerPerceptron
 				value += prev.GetOutput();
 			}
 			this.Input = value;
-			this.Output = value;
+			this.Output = value; // 最後は恒等関数(P.107)
+			//this.Output = ActivationFunction.GetOutput(value);
 		}
 
 		public override double GetDifferentialCoefficient()
 		{
-			return 1.0;
+			return 1.0; // 最後は恒等関数(P.107)
+			//return ActivationFunction.GetDifferentialCoefficient(this.Input.Value);
 		}
 	}
 }
