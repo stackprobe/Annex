@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Charlotte.Tools;
 using Charlotte.Tests.MultiLayerPerceptron;
+using Charlotte.Tests;
 
 namespace Charlotte
 {
@@ -26,7 +27,10 @@ namespace Charlotte
 		private void Main2(ArgsReader ar)
 		{
 			//new MultiLayerTest().Test01();
-			new MultiLayerTest().Test02();
+			//new MultiLayerTest().Test02();
+			//new Test0001().Test01();
+			//new Test0001().Test02();
+			new Test0001().Test03();
 		}
 	}
 }

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Charlotte.MultiLayerPerceptron
 {
+	/// <summary>
+	/// ニューロン
+	/// </summary>
 	public class Neuron
 	{
 		public double InputValue;

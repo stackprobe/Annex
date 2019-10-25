@@ -7,9 +7,9 @@ using Charlotte.Tools;
 namespace Charlotte.MultiLayerPerceptron
 {
 	/// <summary>
-	/// 教師
+	/// 評価・学習可能なマルチレイヤ
 	/// </summary>
-	public class Teacher
+	public class TrainableML
 	{
 		/// <summary>
 		/// 評価用
@@ -21,7 +21,7 @@ namespace Charlotte.MultiLayerPerceptron
 		/// </summary>
 		private MultiLayer BP;
 
-		public Teacher(int[] neuronCounts)
+		public TrainableML(int[] neuronCounts)
 		{
 			if (neuronCounts.Length < 3 || IntTools.IMAX < neuronCounts.Length)
 				throw new ArgumentException();
@@ -53,11 +53,11 @@ namespace Charlotte.MultiLayerPerceptron
 		/// </summary>
 		/// <param name="inputs">入力値</param>
 		/// <param name="expectedOutputs">期待される出力値</param>
-		public void Train(double[] inputs, double[] expectedOutputs)
+		public void Train(double[] inputs, double[] expectedOutputs, double learningRate)
 		{
 			this.SetInputs(inputs);
 			this.Activate();
-			this.Teach(expectedOutputs);
+			this.Teach(expectedOutputs, learningRate);
 		}
 
 		private void SetInputs(double[] values)
@@ -100,7 +100,7 @@ namespace Charlotte.MultiLayerPerceptron
 			}
 		}
 
-		private void Teach(double[] expectedOutputs)
+		private void Teach(double[] expectedOutputs, double learningRate)
 		{
 			if (expectedOutputs.Length != this.ML.Layers[this.ML.Layers.Length - 1].Neurons.Length)
 				throw new ArgumentException();
@@ -108,10 +108,13 @@ namespace Charlotte.MultiLayerPerceptron
 			if (expectedOutputs.Any(value => value < 0.0 || 1.0 < value))
 				throw new ArgumentException();
 
+			if (learningRate < 0.0 || 1.0 < learningRate)
+				throw new ArgumentException();
+
 			for (int index = 0; index < this.ML.Layers[this.ML.Layers.Length - 1].Neurons.Length; index++)
 			{
 				this.MakeRateOfChangeTable(this.BP, this.ML.Layers[this.ML.Layers.Length - 1].Neurons[index], index);
-				this.ChangeWeight_Output(this.BP, index, expectedOutputs[index]);
+				this.ChangeWeight_Output(this.BP, index, expectedOutputs[index], learningRate);
 			}
 		}
 
@@ -119,12 +122,12 @@ namespace Charlotte.MultiLayerPerceptron
 		{
 			int li = bp.Layers.Length - 2;
 
-			//bp.Layers[li + 1].Neurons[outputIndex].InputValue = 1.0;
+			//bp.Layers[li + 1].Neurons[outputIndex].InputValue = 1.0; // 恒等関数の変化率 == 1.0 は明らかなので不要
 
 			for (int c = 0; c < bp.Layers[li].Neurons.Length; c++)
 			{
 				double t = this.ML.Layers[li].Axons[c, outputIndex].Weight;
-				double x = this.ML.Layers[li].Neurons[outputIndex].InputValue;
+				double x = this.ML.Layers[li].Neurons[c].InputValue;
 				double r = ActivationFunction.GetRateOfChange(x);
 
 				bp.Layers[li].Neurons[c].OutputValue = t;
@@ -162,14 +165,12 @@ namespace Charlotte.MultiLayerPerceptron
 			}
 		}
 
-		private const double LEARNING_RATE = 0.1;
-
-		private void ChangeWeight_Output(MultiLayer bp, int outputIndex, double expectedOutputValue)
+		private void ChangeWeight_Output(MultiLayer bp, int outputIndex, double expectedOutputValue, double learningRate)
 		{
 			double currentOutputValue = this.ML.Layers[this.ML.Layers.Length - 1].Neurons[outputIndex].InputValue;
 			double d = expectedOutputValue - currentOutputValue; // 誤差
 
-			d *= LEARNING_RATE;
+			d *= learningRate;
 
 			int li = bp.Layers.Length - 2;
 

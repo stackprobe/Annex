@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Charlotte.MultiLayerPerceptron
 {
+	/// <summary>
+	/// 入力層・隠れ層・出力層 のいずれかと 次の層との間にある軸索層 の組み合わせ
+	/// </summary>
 	public class Layer
 	{
 		/// <summary>
