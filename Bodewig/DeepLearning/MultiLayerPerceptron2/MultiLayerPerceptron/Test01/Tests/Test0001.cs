@@ -169,10 +169,15 @@ namespace Charlotte.Tests
 		public void Test03()
 		{
 			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 11, 11, 6 }); // 深すぎる？
-			TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 11, 6 }); // 丁度いい
-			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 6 }); // ちょっと浅い
+			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 11, 6 }); // 良い？
+			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 6 }); // ちょっと浅い？
 			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 6 }); // 浅い
 			//TrainableML tml = new TrainableML(new int[] { 10, 11, 6 }); // 浅い
+
+			//TrainableML tml = new TrainableML(new int[] { 10, 16, 16, 16, 6 }); // 良い？
+			//TrainableML tml = new TrainableML(new int[] { 10, 16, 16, 6 }); // 浅い
+
+			TrainableML tml = new TrainableML(new int[] { 10, 20, 20, 20, 6 }); // 良い？
 
 			for (int testCnt = 0; ; testCnt++)
 			{
