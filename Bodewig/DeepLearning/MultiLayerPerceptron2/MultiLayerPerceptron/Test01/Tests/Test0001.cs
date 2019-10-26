@@ -9,6 +9,8 @@ namespace Charlotte.Tests
 {
 	public class Test0001
 	{
+		private const double LEARNING_RATE = 0.1;
+
 		/// <summary>
 		/// 全加算器
 		/// </summary>
@@ -61,7 +63,7 @@ namespace Charlotte.Tests
 							(a + b) / 2,
 							(a + b) % 2,
 						},
-						0.1
+						LEARNING_RATE
 						);
 				}
 			}
@@ -156,7 +158,7 @@ namespace Charlotte.Tests
 							(v & 4) == 0 ? 0.0 : 1.0,
 							(v & 8) == 0 ? 0.0 : 1.0,
 						},
-						0.1
+						LEARNING_RATE
 						);
 				}
 			}
@@ -231,7 +233,7 @@ namespace Charlotte.Tests
 							if (correct)
 								correctCnt++;
 
-							//*
+							/*
 							Console.WriteLine(a.ToString("D2") + " + " + b.ToString("D2") + " = " + v.ToString("D2") + " ==> " + (correct ? "正解" : "違う") + " " +
 								(ret[0] + 0.5).ToString("F3") + " " +
 								(ret[1] + 0.5).ToString("F3") + " " +
@@ -239,7 +241,7 @@ namespace Charlotte.Tests
 								(ret[3] + 0.5).ToString("F3") + " " +
 								(ret[4] + 0.5).ToString("F3") + " " +
 								(ret[5] + 0.5).ToString("F3") + " " +
-								w.ToString("F9")); //*/
+								w.ToString("F9")); */
 						}
 					}
 					Console.WriteLine("correctCnt: " + correctCnt);
@@ -277,7 +279,7 @@ namespace Charlotte.Tests
 							(v & 16) == 0 ? 0.0 : 1.0,
 							(v & 32) == 0 ? 0.0 : 1.0,
 						},
-						0.1
+						LEARNING_RATE
 						);
 				}
 			}
@@ -380,7 +382,7 @@ namespace Charlotte.Tests
 							(v & 4) == 0 ? 0.0 : 1.0,
 							(v & 8) == 0 ? 0.0 : 1.0,
 						},
-						0.1
+						LEARNING_RATE
 						);
 				}
 			}

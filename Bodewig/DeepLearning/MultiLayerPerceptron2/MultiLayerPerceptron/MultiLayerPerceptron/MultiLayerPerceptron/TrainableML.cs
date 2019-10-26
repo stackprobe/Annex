@@ -176,24 +176,44 @@ namespace Charlotte.MultiLayerPerceptron
 
 			for (int c = 0; c < bp.Layers[li].Neurons.Length; c++)
 			{
-				double v = this.ML.Layers[li].Neurons[c].OutputValue;
+				double v = d;
 
-				v *= d;
+				v *= this.ML.Layers[li].Neurons[c].OutputValue;
 
 				this.ML.Layers[li].Axons[c, outputIndex].Weight += v;
 			}
+
+			// バイアスの重みの更新
+			{
+				double v = d;
+
+				this.ML.Layers[li].Axons[bp.Layers[li].Neurons.Length, outputIndex].Weight += v;
+			}
+
 			while (0 <= --li)
 			{
 				for (int c = 0; c < bp.Layers[li].Neurons.Length; c++)
 				{
 					for (int n = 0; n < bp.Layers[li + 1].Neurons.Length; n++)
 					{
-						double v = this.ML.Layers[li].Neurons[c].OutputValue;
+						double v = d;
 
+						v *= this.ML.Layers[li].Neurons[c].OutputValue;
 						v *= bp.Layers[li + 1].Neurons[n].InputValue;
-						v *= d;
 
 						this.ML.Layers[li].Axons[c, n].Weight += v;
+					}
+				}
+
+				// バイアスの重みの更新
+				{
+					for (int n = 0; n < bp.Layers[li + 1].Neurons.Length; n++)
+					{
+						double v = d;
+
+						v *= bp.Layers[li + 1].Neurons[n].InputValue;
+
+						this.ML.Layers[li].Axons[bp.Layers[li].Neurons.Length, n].Weight += v;
 					}
 				}
 			}
