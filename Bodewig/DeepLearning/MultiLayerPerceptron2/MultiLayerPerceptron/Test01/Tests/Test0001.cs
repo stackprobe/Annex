@@ -168,16 +168,16 @@ namespace Charlotte.Tests
 		/// </summary>
 		public void Test03()
 		{
-			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 11, 11, 6 }); // 深すぎる？
-			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 11, 6 }); // 良い？
-			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 6 }); // ちょっと浅い？
-			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 6 }); // 浅い
-			//TrainableML tml = new TrainableML(new int[] { 10, 11, 6 }); // 浅い
+			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 11, 11, 6 }); // ng
+			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 11, 6 }); // good
+			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 11, 6 }); // not bad
+			//TrainableML tml = new TrainableML(new int[] { 10, 11, 11, 6 }); // ng
+			//TrainableML tml = new TrainableML(new int[] { 10, 11, 6 }); // ng
 
-			//TrainableML tml = new TrainableML(new int[] { 10, 16, 16, 16, 6 }); // 良い？
-			//TrainableML tml = new TrainableML(new int[] { 10, 16, 16, 6 }); // 浅い
+			//TrainableML tml = new TrainableML(new int[] { 10, 16, 16, 16, 6 }); // good
+			//TrainableML tml = new TrainableML(new int[] { 10, 16, 16, 6 }); // ng
 
-			TrainableML tml = new TrainableML(new int[] { 10, 20, 20, 20, 6 }); // 良い？
+			TrainableML tml = new TrainableML(new int[] { 10, 20, 20, 20, 6 }); // good
 
 			for (int testCnt = 0; ; testCnt++)
 			{
@@ -231,15 +231,15 @@ namespace Charlotte.Tests
 							if (correct)
 								correctCnt++;
 
-							/*
-							Console.WriteLine(a + " + " + b + " = " + v.ToString("D2") + " ==> " + (correct ? "正解" : "違う") + " " +
+							//*
+							Console.WriteLine(a.ToString("D2") + " + " + b.ToString("D2") + " = " + v.ToString("D2") + " ==> " + (correct ? "正解" : "違う") + " " +
 								(ret[0] + 0.5).ToString("F3") + " " +
 								(ret[1] + 0.5).ToString("F3") + " " +
 								(ret[2] + 0.5).ToString("F3") + " " +
 								(ret[3] + 0.5).ToString("F3") + " " +
 								(ret[4] + 0.5).ToString("F3") + " " +
 								(ret[5] + 0.5).ToString("F3") + " " +
-								w.ToString("F9")); */
+								w.ToString("F9")); //*/
 						}
 					}
 					Console.WriteLine("correctCnt: " + correctCnt);
@@ -276,6 +276,109 @@ namespace Charlotte.Tests
 							(v &  8) == 0 ? 0.0 : 1.0,
 							(v & 16) == 0 ? 0.0 : 1.0,
 							(v & 32) == 0 ? 0.0 : 1.0,
+						},
+						0.1
+						);
+				}
+			}
+		}
+
+		/// <summary>
+		/// FizzBuzz
+		/// 数値, 'Fizz', 'Buzz', 'FizzBuzz' の4通りを答えさせる。
+		/// 数値そのものは出力させない。3の倍数と5の倍数と15の倍数を同時に判定するだけとも言える。
+		/// ★学習データは 101 ～ 1023 を与え、評価は 1 ～ 100 で行う。
+		/// </summary>
+		public void Test04()
+		{
+			//TrainableML tml = new TrainableML(new int[] { 10, 100, 4 }); // not bad
+			//TrainableML tml = new TrainableML(new int[] { 10, 30, 30, 30, 4 }); // good
+			//TrainableML tml = new TrainableML(new int[] { 10, 20, 20, 20, 4 }); // good
+			TrainableML tml = new TrainableML(new int[] { 10, 10, 10, 10, 4 }); // not bad
+
+			for (int testCnt = 0; ; testCnt++)
+			{
+				// 評価
+				{
+					Console.WriteLine("testCnt: " + testCnt);
+
+					int correctCnt = 0;
+
+					for (int a = 1; a <= 100; a++)
+					{
+						double[] ret = new double[4];
+
+						tml.Fire(
+							new double[]
+							{
+								(a &    1) == 0 ? 0.0 : 1.0,
+								(a &    2) == 0 ? 0.0 : 1.0,
+								(a &    4) == 0 ? 0.0 : 1.0,
+								(a &    8) == 0 ? 0.0 : 1.0,
+								(a &   16) == 0 ? 0.0 : 1.0,
+								(a &   32) == 0 ? 0.0 : 1.0,
+								(a &   64) == 0 ? 0.0 : 1.0,
+								(a &  128) == 0 ? 0.0 : 1.0,
+								(a &  256) == 0 ? 0.0 : 1.0,
+								(a &  512) == 0 ? 0.0 : 1.0,
+							},
+							ret
+							);
+
+						int x = 1;
+						if (a % 3 == 0) x <<= 1;
+						if (a % 5 == 0) x <<= 2;
+
+						int v =
+							(ret[0] < 0.5 ? 0 : 1) +
+							(ret[1] < 0.5 ? 0 : 2) +
+							(ret[2] < 0.5 ? 0 : 4) +
+							(ret[3] < 0.5 ? 0 : 8);
+
+						bool correct = x == v;
+
+						if (correct)
+							correctCnt++;
+
+						Console.WriteLine(a.ToString("D3") + " ==> " + v.ToString("D2") + " (" + x.ToString("D2") + ") ==> " + (correct ? "正解" : "違う") + " " +
+							(ret[0] + 0.5).ToString("F9") + " " +
+							(ret[1] + 0.5).ToString("F9") + " " +
+							(ret[2] + 0.5).ToString("F9") + " " +
+							(ret[3] + 0.5).ToString("F9"));
+					}
+					Console.WriteLine("correctCnt: " + correctCnt);
+				}
+
+				//Console.WriteLine("Press ENTER to continue.");
+				//Console.ReadLine();
+
+				for (int c = 0; c < 100000; c++) // 学習
+				{
+					int a = (int)SecurityTools.CRandom.GetRange(101, 1023);
+					int v = 1;
+					if (a % 3 == 0) v <<= 1;
+					if (a % 5 == 0) v <<= 2;
+
+					tml.Train(
+						new double[]
+						{
+							(a &    1) == 0 ? 0.0 : 1.0,
+							(a &    2) == 0 ? 0.0 : 1.0,
+							(a &    4) == 0 ? 0.0 : 1.0,
+							(a &    8) == 0 ? 0.0 : 1.0,
+							(a &   16) == 0 ? 0.0 : 1.0,
+							(a &   32) == 0 ? 0.0 : 1.0,
+							(a &   64) == 0 ? 0.0 : 1.0,
+							(a &  128) == 0 ? 0.0 : 1.0,
+							(a &  256) == 0 ? 0.0 : 1.0,
+							(a &  512) == 0 ? 0.0 : 1.0,
+						},
+						new double[]
+						{
+							(v & 1) == 0 ? 0.0 : 1.0,
+							(v & 2) == 0 ? 0.0 : 1.0,
+							(v & 4) == 0 ? 0.0 : 1.0,
+							(v & 8) == 0 ? 0.0 : 1.0,
 						},
 						0.1
 						);
