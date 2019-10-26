@@ -295,8 +295,8 @@ namespace Charlotte.Tests
 		{
 			//TrainableML tml = new TrainableML(new int[] { 10, 100, 4 }); // not bad
 			//TrainableML tml = new TrainableML(new int[] { 10, 30, 30, 30, 4 }); // good
-			//TrainableML tml = new TrainableML(new int[] { 10, 20, 20, 20, 4 }); // good
-			TrainableML tml = new TrainableML(new int[] { 10, 10, 10, 10, 4 }); // not bad
+			TrainableML tml = new TrainableML(new int[] { 10, 20, 20, 20, 4 }); // good
+			//TrainableML tml = new TrainableML(new int[] { 10, 10, 10, 10, 4 }); // not bad
 
 			for (int testCnt = 0; ; testCnt++)
 			{
