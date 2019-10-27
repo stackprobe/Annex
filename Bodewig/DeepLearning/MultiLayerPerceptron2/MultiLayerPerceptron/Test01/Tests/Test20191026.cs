@@ -8,15 +8,18 @@ using System.IO;
 
 namespace Charlotte.Tests
 {
-	public class Test0002
+	public class Test20191026
 	{
-		private StringBuilder OutBuff;
+		private StreamWriter Writer;
 
-		public void Test01_TestForHatena()
+		public void Perform()
 		{
-			OutBuff = new StringBuilder();
+			string outDir = ExtraTools.MakeFreeDir();
+			string outFile = Path.Combine(outDir, "Result.txt");
 
-			Test01_a("テスト0001 - 全加算器", 10, 10, 1000, new int[] { 2, 3, 2 }, tml =>
+			Writer = new StreamWriter(outFile, false, Encoding.UTF8);
+
+			DoTest("テスト0001 - 全加算器", 10, 10, 1000, new int[] { 2, 3, 2 }, tml =>
 			{
 				int a = (int)SecurityTools.CRandom.GetRandom(2);
 				int b = (int)SecurityTools.CRandom.GetRandom(2);
@@ -41,7 +44,7 @@ namespace Charlotte.Tests
 				{
 					for (int b = 0; b < 2; b++)
 					{
-						r(FireDoTest(
+						r(FireTest(
 							tml,
 							new double[]
 							{
@@ -58,7 +61,7 @@ namespace Charlotte.Tests
 				}
 			});
 
-			Test01_a("テスト0002 - 3ビット加算器", 10, 10, 10000, new int[] { 6, 7, 7, 7, 4 }, tml =>
+			DoTest("テスト0002 - 3ビット加算器", 10, 10, 10000, new int[] { 6, 7, 7, 7, 4 }, tml =>
 			{
 				int a = (int)SecurityTools.CRandom.GetRandom(8);
 				int b = (int)SecurityTools.CRandom.GetRandom(8);
@@ -89,7 +92,7 @@ namespace Charlotte.Tests
 				{
 					for (int b = 0; b < 8; b++)
 					{
-						r(FireDoTest(
+						r(FireTest(
 							tml,
 							new double[]
 							{
@@ -112,7 +115,7 @@ namespace Charlotte.Tests
 				}
 			});
 
-			Test01_a("テスト0003 - 5ビット加算器", 10, 10, 20000, new int[] { 10, 20, 20, 20, 6 }, tml =>
+			DoTest("テスト0003 - 5ビット加算器", 10, 10, 20000, new int[] { 10, 20, 20, 20, 6 }, tml =>
 			{
 				int a = (int)SecurityTools.CRandom.GetRandom(32);
 				int b = (int)SecurityTools.CRandom.GetRandom(32);
@@ -149,7 +152,7 @@ namespace Charlotte.Tests
 				{
 					for (int b = 0; b < 32; b++)
 					{
-						r(FireDoTest(
+						r(FireTest(
 							tml,
 							new double[]
 							{
@@ -178,7 +181,7 @@ namespace Charlotte.Tests
 				}
 			});
 
-			Test01_a("テスト0004 - FizzBuzz", 10, 10, 100000, new int[] { 10, 30, 30, 30, 4 }, tml =>
+			DoTest("テスト0004 - FizzBuzz", 10, 10, 100000, new int[] { 10, 30, 30, 30, 4 }, tml =>
 			{
 				int a = (int)SecurityTools.CRandom.GetRange(101, 1023);
 				int x = 1;
@@ -217,7 +220,7 @@ namespace Charlotte.Tests
 					if (a % 3 == 0) x <<= 1;
 					if (a % 5 == 0) x <<= 2;
 
-					r(FireDoTest(
+					r(FireTest(
 						tml,
 						new double[]
 						{
@@ -243,17 +246,13 @@ namespace Charlotte.Tests
 				}
 			});
 
-			{
-				string dir = ExtraTools.MakeFreeDir();
-				string file = Path.Combine(dir, "MLPTestOutput.txt");
+			Writer.Dispose();
+			Writer = null;
 
-				File.WriteAllLines(file, FileTools.TextToLines(OutBuff.ToString()), Encoding.UTF8);
-
-				ProcessTools.Batch(new string[] { "START " + dir });
-			}
+			ProcessTools.Batch(new string[] { "START " + outDir });
 		}
 
-		private bool FireDoTest(TrainableML tml, double[] inputs, int[] expectedOutputs)
+		private bool FireTest(TrainableML tml, double[] inputs, int[] expectedOutputs)
 		{
 			double[] ret = new double[expectedOutputs.Length];
 
@@ -275,22 +274,24 @@ namespace Charlotte.Tests
 			return true;
 		}
 
-		private void Test01_a(string title, int testCount, int loopCount, int trainingCount, int[] neuronCounts, Action<TrainableML> train, Action<TrainableML, Action<bool>> testRtn)
+		private void DoTest(string title, int testCount, int loopCount, int trainingCount, int[] neuronCounts, Action<TrainableML> train, Action<TrainableML, Action<bool>> testRtn)
 		{
-			OutBuff.Append("*** " + title + " - 正答率\n");
-			OutBuff.Append("|*テストNo. ＼ 学習回数|");
+			//trainingCount /= 100; // test
+
+			Writer.WriteLine("*** " + title + " - 正答率");
+			Writer.Write("|*テストNo. ＼ 学習回数|");
 
 			for (int c = 0; c <= loopCount; c++)
 			{
-				OutBuff.Append("*" + (c * trainingCount) + "|");
+				Writer.Write("*" + (c * trainingCount) + "|");
 			}
-			OutBuff.Append("\n");
+			Writer.WriteLine("");
 
 			for (int t = 0; t < testCount; t++)
 			{
 				TrainableML tml = new TrainableML(neuronCounts);
 
-				OutBuff.Append("|*" + (t + 1) + "|");
+				Writer.Write("|*" + (t + 1) + "|");
 
 				for (int c = 0; c <= loopCount; c++)
 				{
@@ -305,7 +306,7 @@ namespace Charlotte.Tests
 						denom++;
 					});
 
-					OutBuff.Append((numer * 1.0 / denom).ToString("F3") + "|");
+					Writer.Write((numer * 1.0 / denom).ToString("F3") + "|");
 
 					for (int n = 0; n < trainingCount; n++)
 					{
@@ -314,10 +315,10 @@ namespace Charlotte.Tests
 
 					Console.Write("*");
 				}
-				OutBuff.Append("\n");
+				Writer.WriteLine("");
 			}
-			OutBuff.Append(" \n");
-			OutBuff.Append(" \n");
+			Writer.WriteLine(" ");
+			Writer.WriteLine(" ");
 
 			Console.WriteLine("");
 		}

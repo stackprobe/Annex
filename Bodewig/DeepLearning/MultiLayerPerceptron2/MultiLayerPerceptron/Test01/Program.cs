@@ -32,7 +32,7 @@ namespace Charlotte
 			//new Test0001().Test02();
 			//new Test0001().Test03();
 			//new Test0001().Test04();
-			new Test0002().Test01_TestForHatena();
+			new Test20191026().Perform();
 		}
 	}
 }
