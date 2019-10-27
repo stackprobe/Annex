@@ -290,7 +290,7 @@ namespace Charlotte.Tests
 			{
 				TrainableML tml = new TrainableML(neuronCounts);
 
-				OutBuff.Append("|*" + t + "|");
+				OutBuff.Append("|*" + (t + 1) + "|");
 
 				for (int c = 0; c <= loopCount; c++)
 				{
