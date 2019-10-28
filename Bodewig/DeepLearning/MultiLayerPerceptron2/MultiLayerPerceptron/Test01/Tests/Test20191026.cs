@@ -61,7 +61,7 @@ namespace Charlotte.Tests
 				}
 			});
 
-			DoTest("テスト0002 - 3ビット加算器", 10, 10, 10000, new int[] { 6, 7, 7, 7, 4 }, tml =>
+			DoTest("テスト0002 - 3ビット加算器", 10, 10, 30000, new int[] { 6, 7, 7, 7, 4 }, tml =>
 			{
 				int a = (int)SecurityTools.CRandom.GetRandom(8);
 				int b = (int)SecurityTools.CRandom.GetRandom(8);
@@ -115,7 +115,7 @@ namespace Charlotte.Tests
 				}
 			});
 
-			DoTest("テスト0003 - 5ビット加算器", 10, 10, 20000, new int[] { 10, 20, 20, 20, 6 }, tml =>
+			DoTest("テスト0003 - 5ビット加算器", 10, 10, 30000, new int[] { 10, 20, 20, 20, 6 }, tml =>
 			{
 				int a = (int)SecurityTools.CRandom.GetRandom(32);
 				int b = (int)SecurityTools.CRandom.GetRandom(32);
