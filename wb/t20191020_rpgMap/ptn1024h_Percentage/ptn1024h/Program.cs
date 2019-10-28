@@ -110,7 +110,7 @@ namespace Charlotte
 								FileTools.Delete(file); // 不要になったので削除する。
 							}
 #else
-							lines.Add("<img src=\"Output_" + pattern.ToString("D4") + "_" + c + ".png\"></img>");
+							lines.Add("<img src=\"Output_" + pattern.ToString("D4") + "_" + pct.ToString("D3") + "_" + c + ".png\"></img>");
 #endif
 							lines.Add("</td>");
 						}
