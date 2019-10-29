@@ -10,11 +10,11 @@ namespace Charlotte
 	{
 		public void Test01()
 		{
-			int[,] map = ExternUtils.MakeLikeADungeonMap(24);
+			int[,] map = ExternalUtils.MakeLikeADungeonMap(24);
 
 			for (; ; )
 			{
-				ExternUtils.WriteMap(map);
+				ExternalUtils.WriteMap(map);
 
 				// 最小の閉路を選択する。
 				{
@@ -58,7 +58,7 @@ namespace Charlotte
 					}
 				}
 
-				ExternUtils.WriteMap(map);
+				ExternalUtils.WriteMap(map);
 
 				{
 					I2Point[] pts = AllXY().Where(p =>
@@ -113,7 +113,7 @@ namespace Charlotte
 					map[pt.X, pt.Y] = 0;
 				}
 
-				ExternUtils.WriteMap(map);
+				ExternalUtils.WriteMap(map);
 
 				{
 					I2Point pt = AllXY().Where(p => map[p.X, p.Y] == 2).First();
@@ -121,16 +121,16 @@ namespace Charlotte
 					FillSame(map, pt.X, pt.Y, 0);
 					FillSame(map, pt.X, pt.Y, 2);
 
-					ExternUtils.WriteMap(map);
+					ExternalUtils.WriteMap(map);
 
 					FillSame(map, pt.X, pt.Y, 0);
 				}
 			}
-			ExternUtils.WriteMap(map);
+			ExternalUtils.WriteMap(map);
 
 			Putスタートとゴール(map);
 
-			ExternUtils.WriteMap(map);
+			ExternalUtils.WriteMap(map);
 		}
 
 		private IEnumerable<I2Point> AllXY()
@@ -190,7 +190,7 @@ namespace Charlotte
 				map[goalPt.X, goalPt.Y] = 2;
 				foreach (I2Point nextPt in nextPts) map[nextPt.X, nextPt.Y] = 2;
 
-				ExternUtils.WriteMap(map);
+				ExternalUtils.WriteMap(map);
 
 				map[startPt.X, startPt.Y] = 0;
 				map[goalPt.X, goalPt.Y] = 0;

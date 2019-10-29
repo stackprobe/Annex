@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using Charlotte.Tools;
+using System.Drawing.Imaging;
 
 namespace Charlotte
 {
-	public static class ExternUtils
+	public static class ExternalUtils
 	{
 		public static int[,] MakeLikeADungeonMap(int pattern) // pattern: 0 ～ 1023
 		{
@@ -64,7 +65,11 @@ namespace Charlotte
 				}
 			}
 			canvas = EzExpand(canvas, 3);
-			canvas.Save(string.Format(@"C:\temp\{0}.png", (++WMIndex).ToString("D4")));
+#if !true
+			canvas.Save(string.Format(@"C:\temp\{0}.png", (WMIndex++).ToString("D4")));
+#else
+			canvas.Save(string.Format(@"C:\temp\{0}.jpg", (WMIndex++).ToString("D4")), ImageFormat.Jpeg, 100);
+#endif
 		}
 
 		private static Canvas EzExpand(Canvas src, int mul)
