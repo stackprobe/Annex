@@ -2,7 +2,8 @@
 
 // ---- Items ----
 
-uint MillerRabin_K;
+uint64 MillerRabin_Lmt;
+uint   MillerRabin_K;
 
 // ----
 
@@ -13,7 +14,8 @@ void LoadConfig(void)
 
 	// ---- Items ----
 
-	MillerRabin_K = toValue(getLine(lines, c++));
+	MillerRabin_Lmt = toValue64(getLine(lines, c++));
+	MillerRabin_K   = toValue  (getLine(lines, c++));
 
 	// ----
 
@@ -21,6 +23,7 @@ void LoadConfig(void)
 
 	// ---- Check Items ----
 
+	// MillerRabin_Lmt
 	errorCase(!m_isRange(MillerRabin_K, 1, IMAX));
 
 	// ----

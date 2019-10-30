@@ -100,7 +100,8 @@ static int S_IsPrime(UI4096_t val)
 	               return S_IsPrime4096(arr);
 }
 
-#define MILLER_RABIN_LMT 10000000000000000ui64 // 10^16
+//#define MILLER_RABIN_LMT 10000000000000000ui64 // 10^16
+#define MILLER_RABIN_LMT (MillerRabin_Lmt)
 
 int A_IsPrime(UI4096_t val, int r_flg)
 {
