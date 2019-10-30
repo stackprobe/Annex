@@ -3,7 +3,7 @@
 #include "C:\Factory\Common\all.h"
 #include "C:\Factory\Common\Options\Prime.h"
 #include "C:\Factory\Common\Options\Prime2.h"
-#include "C:\Factory\Common\Options\Prime3.h"
+#include "C:\Factory\Common\Options\Prime3_v1.h"
 #include "C:\Factory\Common\Options\uintx\uint64.h"
 #include "C:\Factory\Common\Options\uintx\uint128.h"
 #include "C:\Factory\Common\Options\uintx\uint256.h"
