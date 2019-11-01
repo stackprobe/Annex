@@ -19,7 +19,7 @@ namespace Charlotte
 			ProcMain.CUIMain(new Program().Main2, APP_IDENT, APP_TITLE);
 
 #if DEBUG
-			//if (ProcMain.CUIError)
+			if (ProcMain.CUIError)
 			{
 				Console.WriteLine("Press ENTER.");
 				Console.ReadLine();
@@ -49,12 +49,10 @@ namespace Charlotte
 					{
 						double rate = (x + y) * 1.0 / (w + h - 2);
 
-						rate = 1.0 - rate;
-
 						color = Color.FromArgb(
-							(int)(40 + 10 * rate),
-							(int)(40 + 20 * rate),
-							(int)(40 + 30 * rate)
+							(int)(40 - 10 * rate),
+							(int)(60 - 40 * rate),
+							(int)(80 - 70 * rate)
 							);
 					}
 					wCanvas.Set(x, y, color);
