@@ -90,9 +90,9 @@ static void TestMain(void)
 	p *= q / e;
 
 regen_e:
-	do e = CRand16() | 1; while(op(e)); // odd prime -> e
+	do e = CRand16() | 1; while(op(e) || ExtGCD(e, p) != 1); // odd prime -> e
 
-	if(ExtGCD(e, p) != 1 || EG_A < 0) // ‚±‚±‚Ç‚¤‚·‚ñ‚ÌH
+	if(EG_A < 0) // ‚±‚±‚Ç‚¤‚·‚ñ‚ÌH
 		goto regen_e;
 
 	d = (uint)EG_A;
