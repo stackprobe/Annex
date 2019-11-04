@@ -85,17 +85,32 @@ static void TestMain(void)
 	p--;
 	q--;
 
-	for(e = p, d = q; e != d; e < d ? (d -= e) : (e -= d));
+#if 1
+	for(e = p, d = q; d; e %= d, c = e, e = d, d = c); // GCD(p, q) -> e
+#else // old
+	for(e = p, d = q; e != d; e < d ? (d -= e) : (e -= d)); // GCD(p, q) -> e
+#endif
 
 	p *= q / e;
 
-regen_e:
 	do e = CRand16() | 1; while(op(e) || ExtGCD(e, p) != 1); // odd prime -> e
 
-	if(EG_A < 0) // ‚±‚±‚Ç‚¤‚·‚ñ‚ÌH
-		goto regen_e;
+	cout("%d %u\n", EG_A, p);
 
-	d = (uint)EG_A;
+	{
+		sint sd = EG_A;
+
+#if 1
+		sd %= (sint)p;
+		sd += p;
+		sd %= p;
+#else // smpl_same
+		while(sd < 0)
+			sd += p;
+#endif
+
+		d = (uint)sd;
+	}
 
 	// ----
 
