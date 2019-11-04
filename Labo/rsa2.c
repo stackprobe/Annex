@@ -1,17 +1,26 @@
 #include "C:\Factory\Common\all.h"
 #include "C:\Factory\Common\Options\CRandom.h"
 
-// ==== 拡張ユークリッド互除法 ====
+static uint GCD(uint x, uint y)
+{
+	while(y)
+	{
+		x %= y;
 
-static sint EG_A;
-static sint EG_B;
-static sint EG_AB_MOD;
+		m_swap(x, y, uint);
+	}
+	return x;
+}
 
-/*
-	g_ret: EG_A * x + EG_B * y == GCD(x, y)
+// ---- ExtGCD ----
 
-	ret: GCD(x, y)
-*/
+static uint EG_A;
+static uint EG_B;
+static uint EG_AB_MOD;
+
+//static sint64 SS_A;
+//static sint64 SS_B;
+
 static uint ExtGCD(uint x, uint y)
 {
 	uint ret;
@@ -20,10 +29,19 @@ static uint ExtGCD(uint x, uint y)
 	{
 		ret = ExtGCD(y, x % y);
 
-		m_swap(EG_A, EG_B, sint);
+		m_swap(EG_A, EG_B, uint);
 
-		EG_B -= (x / y) * EG_A;
-//		EG_B %= EG_AB_MOD;
+		EG_B += EG_AB_MOD - ((uint64)(x / y) * EG_A) % EG_AB_MOD;
+		EG_B %= EG_AB_MOD;
+
+//		m_swap(SS_A, SS_B, sint64);
+
+//		SS_B -= (x / y) * SS_A;
+
+//		cout("%I64d %I64d / %u %u\n", SS_A, SS_B, EG_A, EG_B);
+
+//		errorCase((SS_A % EG_AB_MOD + EG_AB_MOD) % EG_AB_MOD != EG_A);
+//		errorCase((SS_B % EG_AB_MOD + EG_AB_MOD) % EG_AB_MOD != EG_B);
 	}
 	else
 	{
@@ -31,11 +49,16 @@ static uint ExtGCD(uint x, uint y)
 
 		EG_A = 1;
 		EG_B = 0;
+
+//		SS_A = 1;
+//		SS_B = 0;
+
+//		cout("%u\n", EG_AB_MOD);
 	}
 	return ret;
 }
 
-// ====
+// ----
 
 static uint16 CRand16(void)
 {
@@ -59,7 +82,14 @@ static uint ModPow(uint v, uint e, uint m)
 	}
 	return r;
 }
-static void TestMain(void)
+
+// ---- GenKey ----
+
+static uint GK_E;
+static uint GK_D;
+static uint GK_M;
+
+static void GenKey(void)
 {
 	static uchar ops[0x1000];
 	uint c, p, q, m, e, d; // 32 bit
@@ -87,11 +117,7 @@ static void TestMain(void)
 	p--;
 	q--;
 
-#if 1
-	for(e = p, d = q; d; e %= d, c = e, e = d, d = c); // GCD(p, q) -> e
-#else // old
-	for(e = p, d = q; e != d; e < d ? (d -= e) : (e -= d)); // GCD(p, q) -> e
-#endif
+	e = GCD(p, q);
 
 	p *= q / e;
 
@@ -99,42 +125,44 @@ static void TestMain(void)
 
 	do e = CRand16() | 1; while(op(e) || ExtGCD(e, p) != 1); // odd prime -> e
 
-	EG_AB_MOD = -1; // clear
+	EG_AB_MOD = 0; // clear
+	d = EG_A;
 
-//	cout("%d %u\n", EG_A, p);
+	GK_E = e;
+	GK_D = d;
+	GK_M = m;
+}
 
-	{
-		sint sd = EG_A;
+// ----
 
-#if 1
-		sd %= (sint)p;
-		sd += p;
-		sd %= p;
-#else // smpl_same
-		while(sd < 0)
-			sd += p;
-#endif
+static void TestMain(void)
+{
+	uint e;
+	uint d;
+	uint m;
+	uint testCnt;
 
-		d = (uint)sd;
-	}
+	GenKey();
 
-	// ----
+	e = GK_E;
+	d = GK_D;
+	m = GK_M;
 
 	cout("%u %u %u\n", e, d, m);
 
+	for(testCnt = 100; testCnt; testCnt--)
 	{
-		uint i;
+		uint p = CRand16();
+		uint c;
+		uint q;
 
-		for(i = 0; i < 100; i++)
-		{
-			p = CRand16();
-			c = ModPow(p, e, m);
-			q = ModPow(c, d, m);
+		c = ModPow(p, e, m);
+		q = ModPow(c, d, m);
 
-//			cout("%u %u %u\n", p, c, q);
+		cout("%u -> %u -> ...\n", p, c);
+		cout("%u\n", q);
 
-			errorCase(p != q);
-		}
+		errorCase(p != q);
 	}
 }
 int main(int argc, char **argv)
