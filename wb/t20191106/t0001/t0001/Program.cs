@@ -216,7 +216,7 @@ namespace Charlotte
 				foreach (string file in Directory.GetFiles(@"C:\temp"))
 				{
 					Canvas canvas = new Canvas(file);
-					canvas = ExpandNearest(canvas, 3);
+					canvas = ExpandNearest(canvas, 5);
 					canvas.Save(Path.Combine(imgDir, Path.GetFileNameWithoutExtension(file) + ".jpg"), ImageFormat.Jpeg, 100);
 				}
 
