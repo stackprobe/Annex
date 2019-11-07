@@ -163,28 +163,28 @@ namespace Charlotte
 				{
 					Pt = new Point(la.W / 2 - D, la.H / 2 - D),
 					Direction = 0,
-					Color = Color.FromArgb(50, 0, 50),
+					Color = Color.FromArgb(105, 0, 45),
 				});
 
 				la.Ants.Add(new LangtonAnt.Ant()
 				{
 					Pt = new Point(la.W / 2 - D, la.H / 2 + D),
 					Direction = 1,
-					Color = Color.FromArgb(100, 0, 100),
+					Color = Color.FromArgb(155, 0, 115),
 				});
 
 				la.Ants.Add(new LangtonAnt.Ant()
 				{
 					Pt = new Point(la.W / 2 + D, la.H / 2 + D),
 					Direction = 2,
-					Color = Color.FromArgb(200, 0, 200),
+					Color = Color.FromArgb(255, 0, 255),
 				});
 
 				la.Ants.Add(new LangtonAnt.Ant()
 				{
 					Pt = new Point(la.W / 2 + D, la.H / 2 - D),
 					Direction = 3,
-					Color = Color.FromArgb(150, 0, 150),
+					Color = Color.FromArgb(205, 0, 185),
 				});
 			});
 		}
@@ -195,6 +195,8 @@ namespace Charlotte
 		{
 			ProcessTools.Batch(new string[] { @"C:\home\bat\onboot\clean_temp.bat" }); // Clear C:\temp
 
+			Console.WriteLine("*1");
+
 			{
 				LangtonAnt la = new LangtonAnt();
 
@@ -202,6 +204,8 @@ namespace Charlotte
 
 				la.Perform();
 			}
+
+			Console.WriteLine("*2");
 
 			using (WorkingDir wd = new WorkingDir())
 			{
@@ -224,6 +228,8 @@ namespace Charlotte
 				);
 			}
 			OutputIndex++;
+
+			Console.WriteLine("*3");
 		}
 
 		private Canvas ExpandNearest(Canvas src, int mul)

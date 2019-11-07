@@ -13,18 +13,21 @@ namespace Charlotte
 			public Point Pt;
 			public int Direction; // 0-3 == north, west, south, east
 			public Color Color;
+
+			public Point LastPt;
+			public Color? ColorNew;
 		}
 
 		public int W = 100;
 		public int H = 100;
 		public Color BackColor = Color.Black;
 		public List<Ant> Ants = new List<Ant>();
-		public int ImageCount = 6000;
-		public int Skip = 20;
+		public int ImageCount = 600;
+		public int Skip = 100;
 
 		public void Perform()
 		{
-			Ant[,] map = new Ant[this.W, this.H];
+			Color?[,] map = new Color?[this.W, this.H];
 
 			for (int count = 0; count < this.ImageCount; count++)
 			{
@@ -32,15 +35,17 @@ namespace Charlotte
 				{
 					foreach (Ant ant in this.Ants)
 					{
+						ant.LastPt = ant.Pt;
+
 						if (map[ant.Pt.X, ant.Pt.Y] == null)
 						{
 							ant.Direction++;
-							map[ant.Pt.X, ant.Pt.Y] = ant;
+							ant.ColorNew = ant.Color;
 						}
 						else
 						{
 							ant.Direction += 3;
-							map[ant.Pt.X, ant.Pt.Y] = null;
+							ant.ColorNew = null;
 						}
 						ant.Direction %= 4;
 
@@ -56,12 +61,14 @@ namespace Charlotte
 						ant.Pt.Y += this.H;
 						ant.Pt.Y %= this.H;
 					}
+					foreach (Ant ant in this.Ants)
+						map[ant.LastPt.X, ant.LastPt.Y] = ant.ColorNew;
 				}
 				DrawImage(map, count);
 			}
 		}
 
-		private void DrawImage(Ant[,] map, int count)
+		private void DrawImage(Color?[,] map, int count)
 		{
 			using (Bitmap bmp = new Bitmap(this.W, this.H))
 			{
@@ -69,7 +76,7 @@ namespace Charlotte
 				{
 					for (int y = 0; y < this.H; y++)
 					{
-						bmp.SetPixel(x, y, map[x, y] == null ? this.BackColor : map[x, y].Color);
+						bmp.SetPixel(x, y, map[x, y] == null ? BackColor : map[x, y].Value);
 					}
 				}
 				bmp.Save(string.Format(@"C:\temp\{0}.bmp", count));
