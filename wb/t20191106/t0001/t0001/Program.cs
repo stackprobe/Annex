@@ -159,6 +159,8 @@ namespace Charlotte
 
 			Test01_a(la =>
 			{
+				la.ImageCount = 1200 * 6; // 6 min
+
 				la.Ants.Add(new LangtonAnt.Ant()
 				{
 					Pt = new Point(la.W / 2 - D, la.H / 2 - D),
