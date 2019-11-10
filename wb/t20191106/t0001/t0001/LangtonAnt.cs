@@ -24,7 +24,7 @@ namespace Charlotte
 		public int H = 100;
 		public Color BackColor = Color.Black;
 		public List<Ant> Ants = new List<Ant>();
-		public int ImageCount = 1200;
+		public int ImageCount = 1800;
 		public int StepPerImage = 100;
 
 		// <---- prm
