@@ -218,5 +218,10 @@ namespace Charlotte.MultiLayerPerceptron
 				}
 			}
 		}
+
+		public MultiLayer GetInnerML()
+		{
+			return this.ML;
+		}
 	}
 }

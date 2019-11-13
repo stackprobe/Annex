@@ -33,7 +33,9 @@ namespace Charlotte
 			//new Test0001().Test03();
 			//new Test0001().Test04();
 			//new Test20191026().Perform();
-			new Test0002().Test01();
+			//new Test0002().Test01();
+			//new Test0002().Test01_B();
+			new Test0002B().Test01();
 			//new Test0002().Test02(); // ng
 		}
 	}
