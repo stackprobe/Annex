@@ -48,7 +48,7 @@ namespace Charlotte.Tests
 							ret
 							);
 
-						Console.WriteLine(value + " = " + (IsPrime(value) ? 1 : 0) + " --> " + (ret[0] + 0.5).ToString("F9"));
+						//Console.WriteLine(value + " = " + (IsPrime(value) ? 1 : 0) + " --> " + (ret[0] + 0.5).ToString("F9"));
 
 						if (IsPrime(value))
 						{
