@@ -25,7 +25,7 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			//new GeoAreaStorageTest().Test01();
+			new GeoAreaStorageTest().Test01();
 			new GeoRoadStorageTest().Test01();
 		}
 	}

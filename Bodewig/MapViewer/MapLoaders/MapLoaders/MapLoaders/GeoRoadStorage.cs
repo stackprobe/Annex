@@ -152,31 +152,31 @@ namespace Charlotte.MapLoaders
 		{
 			try
 			{
-				using (StreamWriter writer = new StreamWriter(Consts.ROAD_CACHE_FILE, false, Encoding.UTF8))
+				using (FileStream writer = new FileStream(Consts.ROAD_CACHE_FILE, FileMode.Create, FileAccess.Write))
 				{
-					writer.WriteLine(this.Roads.Count);
+					Common.WriteInt(writer, this.Roads.Count);
 
 					foreach (GeoRoad road in this.Roads)
 					{
-						writer.WriteLine(road.RoadTypeCode);
-						writer.WriteLine(road.RouteName);
-						writer.WriteLine(road.LineName);
-						writer.WriteLine(road.PopularName);
-						writer.WriteLine(road.GeoLines.Count);
+						Common.WriteString(writer, road.RoadTypeCode);
+						Common.WriteString(writer, road.RouteName);
+						Common.WriteString(writer, road.LineName);
+						Common.WriteString(writer, road.PopularName);
+						Common.WriteInt(writer, road.GeoLines.Count);
 
 						foreach (GeoLine geoLine in road.GeoLines)
 						{
-							writer.WriteLine(Common.GeoValueToString(geoLine.A.Pt.X));
-							writer.WriteLine(Common.GeoValueToString(geoLine.A.Pt.Y));
-							writer.WriteLine(Common.GeoValueToString(geoLine.B.Pt.X));
-							writer.WriteLine(Common.GeoValueToString(geoLine.B.Pt.Y));
+							Common.WriteDouble(writer, geoLine.A.Pt.X);
+							Common.WriteDouble(writer, geoLine.A.Pt.Y);
+							Common.WriteDouble(writer, geoLine.B.Pt.X);
+							Common.WriteDouble(writer, geoLine.B.Pt.Y);
 						}
 					}
 				}
 			}
 			catch
 			{
-				//FileTools.Delete(Consts.ROAD_CACHE_FILE);
+				FileTools.Delete(Consts.ROAD_CACHE_FILE); // FIXME デバッグ用に退避する？
 				throw;
 			}
 		}
@@ -185,9 +185,9 @@ namespace Charlotte.MapLoaders
 		{
 			try
 			{
-				using (StreamReader reader = new StreamReader(Consts.ROAD_CACHE_FILE, Encoding.UTF8))
+				using (FileStream reader = new FileStream(Consts.ROAD_CACHE_FILE, FileMode.Open, FileAccess.Read))
 				{
-					int roadCount = int.Parse(reader.ReadLine());
+					int roadCount = Common.ReadInt(reader);
 
 					this.Roads = new List<GeoRoad>(roadCount);
 
@@ -195,26 +195,26 @@ namespace Charlotte.MapLoaders
 					{
 						GeoRoad road = new GeoRoad();
 
-						string prm1 = reader.ReadLine();
-						string prm2 = reader.ReadLine();
-						string prm3 = reader.ReadLine();
-						string prm4 = reader.ReadLine();
+						string prm1 = Common.ReadString(reader);
+						string prm2 = Common.ReadString(reader);
+						string prm3 = Common.ReadString(reader);
+						string prm4 = Common.ReadString(reader);
 
 						road.RoadTypeCode = prm1;
 						road.RouteName = prm2;
 						road.LineName = prm3;
 						road.PopularName = prm4;
 
-						int geoLineCount = int.Parse(reader.ReadLine());
+						int geoLineCount = Common.ReadInt(reader);
 
 						road.GeoLines = new List<GeoLine>(geoLineCount);
 
 						for (int geoLineIndex = 0; geoLineIndex < geoLineCount; geoLineIndex++)
 						{
-							double pt1 = double.Parse(reader.ReadLine());
-							double pt2 = double.Parse(reader.ReadLine());
-							double pt3 = double.Parse(reader.ReadLine());
-							double pt4 = double.Parse(reader.ReadLine());
+							double pt1 = Common.ReadDouble(reader);
+							double pt2 = Common.ReadDouble(reader);
+							double pt3 = Common.ReadDouble(reader);
+							double pt4 = Common.ReadDouble(reader);
 
 							road.GeoLines.Add(new GeoLine()
 							{
@@ -222,6 +222,7 @@ namespace Charlotte.MapLoaders
 								B = new GeoPoint() { Pt = new D2Point(pt3, pt4) },
 							});
 						}
+						this.Roads.Add(road);
 					}
 				}
 			}

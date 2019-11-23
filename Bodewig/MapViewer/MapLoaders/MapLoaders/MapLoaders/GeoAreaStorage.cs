@@ -176,32 +176,32 @@ namespace Charlotte.MapLoaders
 		{
 			try
 			{
-				using (StreamWriter writer = new StreamWriter(Consts.AREA_CACHE_FILE, false, Encoding.UTF8))
+				using (FileStream writer = new FileStream(Consts.AREA_CACHE_FILE, FileMode.Create, FileAccess.Write))
 				{
-					writer.WriteLine(this.Areas.Count);
+					Common.WriteInt(writer, this.Areas.Count);
 
 					foreach (GeoArea area in this.Areas)
 					{
-						writer.WriteLine(area.PrefectureName);
-						writer.WriteLine(area.SubPrefectureName);
-						writer.WriteLine(area.CountyName);
-						writer.WriteLine(area.CityName);
-						writer.WriteLine(area.AdministrativeAreaCode);
-						writer.WriteLine(area.GeoLines.Count);
+						Common.WriteString(writer, area.PrefectureName);
+						Common.WriteString(writer, area.SubPrefectureName);
+						Common.WriteString(writer, area.CountyName);
+						Common.WriteString(writer, area.CityName);
+						Common.WriteString(writer, area.AdministrativeAreaCode);
+						Common.WriteInt(writer, area.GeoLines.Count);
 
 						foreach (GeoLine geoLine in area.GeoLines)
 						{
-							writer.WriteLine(Common.GeoValueToString(geoLine.A.Pt.X));
-							writer.WriteLine(Common.GeoValueToString(geoLine.A.Pt.Y));
-							writer.WriteLine(Common.GeoValueToString(geoLine.B.Pt.X));
-							writer.WriteLine(Common.GeoValueToString(geoLine.B.Pt.Y));
+							Common.WriteDouble(writer, geoLine.A.Pt.X);
+							Common.WriteDouble(writer, geoLine.A.Pt.Y);
+							Common.WriteDouble(writer, geoLine.B.Pt.X);
+							Common.WriteDouble(writer, geoLine.B.Pt.Y);
 						}
 					}
 				}
 			}
 			catch
 			{
-				//FileTools.Delete(Consts.AREA_CACHE_FILE);
+				FileTools.Delete(Consts.AREA_CACHE_FILE); // FIXME デバッグ用に退避する？
 				throw;
 			}
 		}
@@ -210,9 +210,9 @@ namespace Charlotte.MapLoaders
 		{
 			try
 			{
-				using (StreamReader reader = new StreamReader(Consts.AREA_CACHE_FILE, Encoding.UTF8))
+				using (FileStream reader = new FileStream(Consts.AREA_CACHE_FILE, FileMode.Open, FileAccess.Read))
 				{
-					int areaCount = int.Parse(reader.ReadLine());
+					int areaCount = Common.ReadInt(reader);
 
 					this.Areas = new List<GeoArea>(areaCount);
 
@@ -220,11 +220,11 @@ namespace Charlotte.MapLoaders
 					{
 						GeoArea area = new GeoArea();
 
-						string prm1 = reader.ReadLine();
-						string prm2 = reader.ReadLine();
-						string prm3 = reader.ReadLine();
-						string prm4 = reader.ReadLine();
-						string prm5 = reader.ReadLine();
+						string prm1 = Common.ReadString(reader);
+						string prm2 = Common.ReadString(reader);
+						string prm3 = Common.ReadString(reader);
+						string prm4 = Common.ReadString(reader);
+						string prm5 = Common.ReadString(reader);
 
 						area.PrefectureName = prm1;
 						area.SubPrefectureName = prm2;
@@ -232,16 +232,16 @@ namespace Charlotte.MapLoaders
 						area.CityName = prm4;
 						area.AdministrativeAreaCode = prm5;
 
-						int geoLineCount = int.Parse(reader.ReadLine());
+						int geoLineCount = Common.ReadInt(reader);
 
 						area.GeoLines = new List<GeoLine>(geoLineCount);
 
 						for (int geoLineIndex = 0; geoLineIndex < geoLineCount; geoLineIndex++)
 						{
-							double pt1 = double.Parse(reader.ReadLine());
-							double pt2 = double.Parse(reader.ReadLine());
-							double pt3 = double.Parse(reader.ReadLine());
-							double pt4 = double.Parse(reader.ReadLine());
+							double pt1 = Common.ReadDouble(reader);
+							double pt2 = Common.ReadDouble(reader);
+							double pt3 = Common.ReadDouble(reader);
+							double pt4 = Common.ReadDouble(reader);
 
 							area.GeoLines.Add(new GeoLine()
 							{
@@ -249,6 +249,7 @@ namespace Charlotte.MapLoaders
 								B = new GeoPoint() { Pt = new D2Point(pt3, pt4) },
 							});
 						}
+						this.Areas.Add(area);
 					}
 				}
 			}
