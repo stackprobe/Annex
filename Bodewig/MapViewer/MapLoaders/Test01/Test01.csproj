@@ -50,7 +50,8 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\MapLoaders\MapLoaders0001Test.cs" />
+    <Compile Include="Tests\MapLoaders\GeoAreaStorageTest.cs" />
+    <Compile Include="Tests\MapLoaders\GeoRoadStorageTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MapLoaders\MapLoaders.csproj">

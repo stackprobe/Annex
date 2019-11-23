@@ -7,5 +7,10 @@ namespace Charlotte.MapLoaders
 {
 	public class GeoRoad
 	{
+		public List<GeoLine> GeoLines;
+		public string RoadTypeCode;
+		public string RouteName;
+		public string LineName;
+		public string PopularName;
 	}
 }

@@ -51,6 +51,8 @@
     <Compile Include="MapLoaders\GeoPoint.cs" />
     <Compile Include="MapLoaders\GeoRoad.cs" />
     <Compile Include="MapLoaders\GeoRoadStorage.cs" />
+    <Compile Include="MapLoaders\Internal\Common.cs" />
+    <Compile Include="MapLoaders\Internal\Consts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

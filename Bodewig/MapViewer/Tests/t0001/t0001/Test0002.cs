@@ -44,6 +44,8 @@ namespace Charlotte
 		{
 			// ==== Load Roads ====
 
+			DateTime stTm = DateTime.Now;
+
 			using (StreamReader reader = new StreamReader(@"C:\var2\res\国土数値情報\N01-07L-48-01.0a_GML\N01-07L-jgd.xml", Encoding.UTF8))
 			{
 				RoadInfo currRoad = null;
@@ -57,7 +59,7 @@ namespace Charlotte
 
 					line = line.Trim();
 
-					if (line.StartsWith("<gml:Curve"))
+					if (line.StartsWith("<gml:Curve "))
 					{
 						string location = StringTools.GetEnclosed(line, "\"", "\"").Inner;
 
@@ -103,7 +105,7 @@ namespace Charlotte
 						}
 						currRoad = null;
 					}
-					else if (line.StartsWith("<ksj:Road"))
+					else if (line.StartsWith("<ksj:Road "))
 					{
 						string location = StringTools.GetEnclosed(reader.ReadLine(), "#", "\"").Inner;
 						string prm1 = StringTools.GetEnclosed(reader.ReadLine(), ">", "<").Inner;
@@ -121,7 +123,11 @@ namespace Charlotte
 				}
 			}
 
+			Console.WriteLine("t: " + (DateTime.Now - stTm).TotalMilliseconds);
+
 			// ==== Load Areas ====
+
+			stTm = DateTime.Now;
 
 			using (StreamReader reader = new StreamReader(@"C:\var2\res\国土数値情報\N03-190101_GML\N03-19_190101.xml", Encoding.UTF8))
 			{
@@ -138,7 +144,7 @@ namespace Charlotte
 
 					line = line.Trim();
 
-					if (line.StartsWith("<gml:Curve"))
+					if (line.StartsWith("<gml:Curve "))
 					{
 						curveLocation = StringTools.GetEnclosed(line, "\"", "\"").Inner;
 					}
@@ -184,7 +190,7 @@ namespace Charlotte
 						}
 						curveLocation = null;
 					}
-					else if (line.StartsWith("<gml:Surface"))
+					else if (line.StartsWith("<gml:Surface "))
 					{
 						string bound = StringTools.GetEnclosed(line, "\"", "\"").Inner;
 
@@ -202,7 +208,7 @@ namespace Charlotte
 							Areas.Add(bound, currArea);
 						}
 					}
-					else if (line.StartsWith("<gml:curveMember"))
+					else if (line.StartsWith("<gml:curveMember "))
 					{
 						string location = StringTools.GetEnclosed(line, "#", "\"").Inner;
 						List<GeoLineInfo> geoLines = curves[location];
@@ -211,7 +217,7 @@ namespace Charlotte
 
 						//currArea = null; // interior, exterior 両方ある場合があるので
 					}
-					else if (line.StartsWith("<ksj:AdministrativeBoundary"))
+					else if (line.StartsWith("<ksj:AdministrativeBoundary "))
 					{
 						string bound = StringTools.GetEnclosed(reader.ReadLine(), "#", "\"").Inner;
 						string prm1 = StringTools.GetEnclosed(reader.ReadLine(), ">", "<").Inner;
@@ -230,6 +236,8 @@ namespace Charlotte
 					}
 				}
 			}
+
+			Console.WriteLine("t: " + (DateTime.Now - stTm).TotalMilliseconds);
 
 			// ==== Load ここまで
 

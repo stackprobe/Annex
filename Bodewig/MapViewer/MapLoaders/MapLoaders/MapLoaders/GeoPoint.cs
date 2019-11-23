@@ -8,7 +8,6 @@ namespace Charlotte.MapLoaders
 {
 	public class GeoPoint
 	{
-		public D2Point X;
-		public D2Point Y;
+		public D2Point Pt;
 	}
 }

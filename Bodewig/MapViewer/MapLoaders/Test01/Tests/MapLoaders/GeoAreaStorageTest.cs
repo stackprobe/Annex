@@ -6,16 +6,11 @@ using Charlotte.MapLoaders;
 
 namespace Charlotte.Tests.MapLoaders
 {
-	public class MapLoaders0001Test // -- 0001
+	public class GeoAreaStorageTest
 	{
 		public void Test01()
 		{
-			string message = "MapLoaders9999";
-
-			if (new MapLoaders0001().Echo(message) != message)
-				throw null;
-
-			Console.WriteLine("OK!");
+			new GeoAreaStorage().Load();
 		}
 	}
 }
