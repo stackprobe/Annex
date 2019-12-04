@@ -93,8 +93,8 @@ namespace Charlotte.MapLoaders
 							{
 								Pt = new D2Point()
 								{
-									X = double.Parse(tokens[0]),
-									Y = double.Parse(tokens[1]),
+									X = double.Parse(tokens[1]), // 順序注意
+									Y = double.Parse(tokens[0]),
 								},
 							});
 						}
