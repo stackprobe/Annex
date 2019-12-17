@@ -10,7 +10,7 @@ namespace Charlotte
 	class Program
 	{
 		public const string APP_IDENT = "{4fb854cf-8318-4e4d-ac8d-d1a8eabf0a12}";
-		public const string APP_TITLE = "MapDrawers";
+		public const string APP_TITLE = "MapDrawer";
 
 		static void Main(string[] args)
 		{
