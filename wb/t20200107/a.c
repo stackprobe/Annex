@@ -1,3 +1,4 @@
+// bug
 #include <stdio.h>
 
 main()
