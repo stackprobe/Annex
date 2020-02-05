@@ -29,7 +29,7 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			Test01(@"C:\var2\res\img\GameFrame.png", @"C:\temp\GameFrame.png");
+			Test01(@"C:\wb2\20191204_GameFrame\GameFrame.png", @"C:\temp\GameFrame.png");
 		}
 
 		private void Test01(string rFile, string wFile)

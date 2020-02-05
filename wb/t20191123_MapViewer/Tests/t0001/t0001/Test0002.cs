@@ -46,7 +46,7 @@ namespace Charlotte
 
 			DateTime stTm = DateTime.Now;
 
-			using (StreamReader reader = new StreamReader(@"C:\var2\res\国土数値情報\N01-07L-48-01.0a_GML\N01-07L-jgd.xml", Encoding.UTF8))
+			using (StreamReader reader = new StreamReader(@"C:\wb2\20191123_国土数値情報\N01-07L-48-01.0a_GML\N01-07L-jgd.xml", Encoding.UTF8))
 			{
 				RoadInfo currRoad = null;
 
@@ -129,7 +129,7 @@ namespace Charlotte
 
 			stTm = DateTime.Now;
 
-			using (StreamReader reader = new StreamReader(@"C:\var2\res\国土数値情報\N03-190101_GML\N03-19_190101.xml", Encoding.UTF8))
+			using (StreamReader reader = new StreamReader(@"C:\wb2\20191123_国土数値情報\N03-190101_GML\N03-19_190101.xml", Encoding.UTF8))
 			{
 				Dictionary<string, List<GeoLineInfo>> curves = new Dictionary<string, List<GeoLineInfo>>();
 				string curveLocation = null;

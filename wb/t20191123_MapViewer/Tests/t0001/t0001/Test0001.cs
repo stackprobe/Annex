@@ -11,7 +11,7 @@ namespace Charlotte
 	{
 		public void Test01()
 		{
-			using (StreamReader reader = new StreamReader(@"C:\var2\res\国土数値情報\N01-07L-48-01.0a_GML\N01-07L-jgd.xml", Encoding.UTF8))
+			using (StreamReader reader = new StreamReader(@"C:\wb2\20191123_国土数値情報\N01-07L-48-01.0a_GML\N01-07L-jgd.xml", Encoding.UTF8))
 			{
 				while (reader.ReadLine().ToString() != "<!-- 空間属性 -->")
 				{ }
@@ -58,7 +58,7 @@ namespace Charlotte
 				if (reader.ReadLine() != null)
 					throw null;
 			}
-			using (StreamReader reader = new StreamReader(@"C:\var2\res\国土数値情報\N03-190101_GML\N03-19_190101.xml", Encoding.UTF8))
+			using (StreamReader reader = new StreamReader(@"C:\wb2\20191123_国土数値情報\N03-190101_GML\N03-19_190101.xml", Encoding.UTF8))
 			{
 				while (reader.ReadLine().ToString() != "\t<!--  図形 --> ") // 図形の前に空白が2つ, 行末に空白が1つ
 				{ }
