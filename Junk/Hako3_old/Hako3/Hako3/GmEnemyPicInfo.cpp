@@ -44,7 +44,7 @@ EnemyPicInfo_t *GetEnemyPicInfo(int resno)
 
 	errorCase(DeleteSoftImage(h) != 0); // ? Ž¸”s
 
-	epi = nb(EnemyPicInfo_t);
+	epi = nb_(EnemyPicInfo_t);
 	epi->Silhouette = silhouette;
 	epi->STSilhouette = new bitSubTable(silhouette, 0, 0, x_size, y_size);
 	epi->NoTrans = noTrans;

@@ -146,10 +146,11 @@ namespace Charlotte
 						throw new Exception("フォルダは存在しません。" + dir);
 
 					this.TV.Nodes.Clear();
-					this.TV.SuspendLayout();
-					this.AddTo(this.TV.Nodes, dir);
-					this.TV.ResumeLayout();
 
+					using (new Utils.UISuspend(this.TV))
+					{
+						this.AddTo(this.TV.Nodes, dir);
+					}
 					Ground.RootDir = dir;
 				}
 			}

@@ -5,7 +5,7 @@ Service_t *HTT_CreateService(char *name, char *command)
 	errorCase(m_isEmpty(name));
 	errorCase(m_isEmpty(command));
 
-	Service_t *i = nb(Service_t);
+	Service_t *i = nb_(Service_t);
 
 	i->Name = strx(name);
 	i->Command = strx(command);

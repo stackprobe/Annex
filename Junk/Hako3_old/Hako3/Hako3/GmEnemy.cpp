@@ -9,7 +9,7 @@ EnemyCommonData_t *CreateEnemyCommonData(
 	int start_hp
 	)
 {
-	EnemyCommonData_t *i = nb(EnemyCommonData_t);
+	EnemyCommonData_t *i = nb_(EnemyCommonData_t);
 
 	m_range(haichiX, (double)ENEMY_X_MIN, (double)ENEMY_X_MAX);
 	m_range(start_hp, -1, IMAX);
@@ -42,7 +42,7 @@ Enemy_t *CreateEnemy_ved(
 	void *extraData
 	)
 {
-	Enemy_t *i = nb(Enemy_t);
+	Enemy_t *i = nb_(Enemy_t);
 
 	errorCase(!funcProc);
 	errorCase(!funcDraw);

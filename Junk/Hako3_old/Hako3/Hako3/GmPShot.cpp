@@ -2,7 +2,7 @@
 
 PShot_t *CreatePShot(PShTyp_t pShTyp, double x, double y, double r)
 {
-	PShot_t *i = nb(PShot_t);
+	PShot_t *i = nb_(PShot_t);
 
 	i->PShTyp = pShTyp;
 	i->X = x;

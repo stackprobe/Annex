@@ -4,7 +4,7 @@
 
 ED_Wall_t *CreateED_Wall(int picIndex, int picXPos, int picYPos)
 {
-	ED_Wall_t *i = nb(ED_Wall_t);
+	ED_Wall_t *i = nb_(ED_Wall_t);
 
 	/*
 		背景は気付きにくいのでエラー扱い。
@@ -80,7 +80,7 @@ void EDraw_Wall(Enemy_t *i, ED_Wall_t *ed)
 
 ED_Fei_t *CreateED_Fei(double speed, double rot, double rotSpeed, double rotZoom, int shotfrm)
 {
-	ED_Fei_t *i = nb(ED_Fei_t);
+	ED_Fei_t *i = nb_(ED_Fei_t);
 
 	m_range(speed, 1.0 / 60, 1000.0);
 	m_range(rot, -1000.0, 1000.0);
@@ -138,7 +138,7 @@ void EDraw_Fei(Enemy_t *i, ED_Fei_t *ed)
 
 ED_EShot_t *CreateED_EShot(double xSpeed, double ySpeed, int sm, int colorIdx)
 {
-	ED_EShot_t *i = nb(ED_EShot_t);
+	ED_EShot_t *i = nb_(ED_EShot_t);
 
 	m_range(xSpeed, -1000.0, 1000.0);
 	m_range(ySpeed, -1000.0, 1000.0);
@@ -258,7 +258,7 @@ ED_Hikaru_t *CreateED_Hikaru(
 	double ridatsu_yKasokudo
 	)
 {
-	ED_Hikaru_t *i = nb(ED_Hikaru_t);
+	ED_Hikaru_t *i = nb_(ED_Hikaru_t);
 
 	m_range(sekkin_frm, 1, 1000);
 	m_range(sekkin_rate, 0.0, 1.0);
@@ -360,7 +360,7 @@ void EDraw_Hikaru(Enemy_t *i, ED_Hikaru_t *ed)
 
 ED_Lina_t *CreateED_Lina(int sakasa_mode, int shot_cycle)
 {
-	ED_Lina_t *i = nb(ED_Lina_t);
+	ED_Lina_t *i = nb_(ED_Lina_t);
 
 	m_range(shot_cycle, 1, 1000);
 
@@ -437,7 +437,7 @@ void EDraw_Lina(Enemy_t *i, ED_Lina_t *ed)
 
 ED_Ningyo_t *CreateED_Ningyo(int jump_mode, int jump_frm)
 {
-	ED_Ningyo_t *i = nb(ED_Ningyo_t);
+	ED_Ningyo_t *i = nb_(ED_Ningyo_t);
 
 	m_range(jump_frm, 0, 1000);
 
@@ -565,7 +565,7 @@ void EDraw_Ningyo(Enemy_t *i, ED_Ningyo_t *ed)
 
 ED_NingyoDead_t *CreateED_NingyoDead(void)
 {
-	return nb(ED_NingyoDead_t);
+	return nb_(ED_NingyoDead_t);
 }
 void ReleaseED_NingyoDead(ED_NingyoDead_t *i)
 {

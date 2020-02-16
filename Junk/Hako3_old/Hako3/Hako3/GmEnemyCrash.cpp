@@ -21,7 +21,7 @@ void PutEnemyCrashArea(Enemy_t *e, bitSubTable *silhouette, double x, double y, 
 	errorCase(!silhouette);
 	errorCase(z <= 0.0);
 
-	Info_t *i = nb(Info_t);
+	Info_t *i = nb_(Info_t);
 
 	i->Enemy = e;
 	i->Silhouette = silhouette;

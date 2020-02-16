@@ -38,7 +38,7 @@ void PutPShotCrashCircle(PShot_t *ps, double x, double y, double r)
 	errorCase(!ps);
 	errorCase(r < 0.0);
 
-	Info_t *i = nb(Info_t);
+	Info_t *i = nb_(Info_t);
 
 	i->PS = ps;
 	i->IsRect = 0;
@@ -58,7 +58,7 @@ void PutPShotCrashRect(PShot_t *ps, double l, double t, double w, double h)
 	errorCase(w <= 0.0);
 	errorCase(h <= 0.0);
 
-	Info_t *i = nb(Info_t);
+	Info_t *i = nb_(Info_t);
 
 	i->PS = ps;
 	i->IsRect = 1;

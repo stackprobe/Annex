@@ -77,7 +77,7 @@ void GTSetFullScreenMode(int mode)
 
 DPOE_t *CreateDPOE(void)
 {
-	DPOE_t *i = nb(DPOE_t);
+	DPOE_t *i = nb_(DPOE_t);
 
 	i->PicResno = P_DUMMY; // 2bs
 	i->A = 1.0;

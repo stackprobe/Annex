@@ -37,7 +37,7 @@ double PL_ReadDouble(autoList<char *> *lines, int index, double defaultValue)
 
 MapCellData_t *CreateMapCellData(char *bind_line, autoList<char *> *bind_cpl, autoList<char *> *bind_pl)
 {
-	MapCellData_t *i = nb(MapCellData_t);
+	MapCellData_t *i = nb_(MapCellData_t);
 
 	i->TopLine = bind_line;
 	i->CommonParamLines = bind_cpl;

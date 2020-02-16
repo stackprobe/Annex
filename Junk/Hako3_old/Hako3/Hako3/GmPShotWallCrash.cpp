@@ -15,7 +15,7 @@ static singleton_VTI(InfoList, autoList<Info_t *>, new autoList<Info_t *>())
 */
 void PutPShotWallCrash(PShot_t *ps, double x, double y)
 {
-	Info_t *i = nb(Info_t);
+	Info_t *i = nb_(Info_t);
 
 	i->PS = ps;
 	i->X = x;
