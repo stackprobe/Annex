@@ -146,7 +146,9 @@ namespace Charlotte
 						throw new Exception("フォルダは存在しません。" + dir);
 
 					this.TV.Nodes.Clear();
+					this.TV.SuspendLayout();
 					this.AddTo(this.TV.Nodes, dir);
+					this.TV.ResumeLayout();
 
 					Ground.RootDir = dir;
 				}
@@ -278,6 +280,11 @@ namespace Charlotte
 					q.Enqueue(node.Nodes);
 				}
 			}
+		}
+
+		private void TV_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			// noop
 		}
 	}
 }

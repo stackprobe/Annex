@@ -32,20 +32,20 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWin));
 			this.MainTimer = new System.Windows.Forms.Timer(this.components);
 			this.TV = new System.Windows.Forms.TreeView();
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.アプリToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.フォルダを開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.TVMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.全選択ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.全選択解除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.アプリToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.フォルダを開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.ファイルに保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ファイルから読み込みToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-			this.menuStrip1.SuspendLayout();
+			this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.TVMenu.SuspendLayout();
+			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MainTimer
@@ -64,6 +64,29 @@
 			this.TV.Name = "TV";
 			this.TV.Size = new System.Drawing.Size(260, 209);
 			this.TV.TabIndex = 0;
+			this.TV.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TV_AfterSelect);
+			// 
+			// TVMenu
+			// 
+			this.TVMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.全選択ToolStripMenuItem,
+            this.全選択解除ToolStripMenuItem});
+			this.TVMenu.Name = "TVMenu";
+			this.TVMenu.Size = new System.Drawing.Size(135, 48);
+			// 
+			// 全選択ToolStripMenuItem
+			// 
+			this.全選択ToolStripMenuItem.Name = "全選択ToolStripMenuItem";
+			this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+			this.全選択ToolStripMenuItem.Text = "全選択";
+			this.全選択ToolStripMenuItem.Click += new System.EventHandler(this.全選択ToolStripMenuItem_Click);
+			// 
+			// 全選択解除ToolStripMenuItem
+			// 
+			this.全選択解除ToolStripMenuItem.Name = "全選択解除ToolStripMenuItem";
+			this.全選択解除ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+			this.全選択解除ToolStripMenuItem.Text = "全選択解除";
+			this.全選択解除ToolStripMenuItem.Click += new System.EventHandler(this.全選択解除ToolStripMenuItem_Click);
 			// 
 			// menuStrip1
 			// 
@@ -74,14 +97,6 @@
 			this.menuStrip1.Size = new System.Drawing.Size(284, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
-			// 
-			// statusStrip1
-			// 
-			this.statusStrip1.Location = new System.Drawing.Point(0, 239);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(284, 22);
-			this.statusStrip1.TabIndex = 2;
-			this.statusStrip1.Text = "statusStrip1";
 			// 
 			// アプリToolStripMenuItem
 			// 
@@ -96,13 +111,6 @@
 			this.アプリToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
 			this.アプリToolStripMenuItem.Text = "アプリ";
 			// 
-			// 終了ToolStripMenuItem
-			// 
-			this.終了ToolStripMenuItem.Name = "終了ToolStripMenuItem";
-			this.終了ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-			this.終了ToolStripMenuItem.Text = "終了";
-			this.終了ToolStripMenuItem.Click += new System.EventHandler(this.終了ToolStripMenuItem_Click);
-			// 
 			// フォルダを開くToolStripMenuItem
 			// 
 			this.フォルダを開くToolStripMenuItem.Name = "フォルダを開くToolStripMenuItem";
@@ -114,28 +122,6 @@
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
 			this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
-			// 
-			// TVMenu
-			// 
-			this.TVMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.全選択ToolStripMenuItem,
-            this.全選択解除ToolStripMenuItem});
-			this.TVMenu.Name = "TVMenu";
-			this.TVMenu.Size = new System.Drawing.Size(153, 70);
-			// 
-			// 全選択ToolStripMenuItem
-			// 
-			this.全選択ToolStripMenuItem.Name = "全選択ToolStripMenuItem";
-			this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.全選択ToolStripMenuItem.Text = "全選択";
-			this.全選択ToolStripMenuItem.Click += new System.EventHandler(this.全選択ToolStripMenuItem_Click);
-			// 
-			// 全選択解除ToolStripMenuItem
-			// 
-			this.全選択解除ToolStripMenuItem.Name = "全選択解除ToolStripMenuItem";
-			this.全選択解除ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.全選択解除ToolStripMenuItem.Text = "全選択解除";
-			this.全選択解除ToolStripMenuItem.Click += new System.EventHandler(this.全選択解除ToolStripMenuItem_Click);
 			// 
 			// ファイルに保存ToolStripMenuItem
 			// 
@@ -156,6 +142,21 @@
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
 			this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 6);
 			// 
+			// 終了ToolStripMenuItem
+			// 
+			this.終了ToolStripMenuItem.Name = "終了ToolStripMenuItem";
+			this.終了ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.終了ToolStripMenuItem.Text = "終了";
+			this.終了ToolStripMenuItem.Click += new System.EventHandler(this.終了ToolStripMenuItem_Click);
+			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Location = new System.Drawing.Point(0, 239);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(284, 22);
+			this.statusStrip1.TabIndex = 2;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
 			// MainWin
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -175,9 +176,9 @@
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWin_FormClosed);
 			this.Load += new System.EventHandler(this.MainWin_Load);
 			this.Shown += new System.EventHandler(this.MainWin_Shown);
+			this.TVMenu.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			this.TVMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
