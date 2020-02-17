@@ -114,11 +114,15 @@ namespace Charlotte
 					this.CloseWindow();
 					return;
 				}
-				if (this.MTCount % 10 == 0 && this.LastCheckedTVNode != null)
+				if (this.MTCount % this.TVRefreshPeriod == 0)
 				{
+					if (this.TVRefreshPeriod < 20)
+						this.TVRefreshPeriod++;
+
 					using (this.TVEditSection())
 					{
-						this.LastCheckedTVNode.Checked = this.LastCheckedTVNode.Checked;
+						foreach (TreeNode node in this.RecentlyCheckedTVNodes)
+							node.Checked = node.Checked; // リフレッシュ
 					}
 				}
 			}
@@ -332,11 +336,12 @@ namespace Charlotte
 
 		private void TVClear()
 		{
-			this.LastCheckedTVNode = null;
+			this.RecentlyCheckedTVNodes.Clear();
 			this.TV.Nodes.Clear();
 		}
 
-		private TreeNode LastCheckedTVNode = null;
+		private List<TreeNode> RecentlyCheckedTVNodes = new List<TreeNode>();
+		private int TVRefreshPeriod = 1;
 
 		private void TV_AfterCheck(object sender, TreeViewEventArgs e)
 		{
@@ -352,8 +357,20 @@ namespace Charlotte
 					parent.Checked = this.GetNodes(parent.Nodes).Any(node => node.Checked);
 					parent = parent.Parent;
 				}
-				this.LastCheckedTVNode = e.Node;
+				this.AddCheckedTVNode(e.Node);
+				this.TVRefreshPeriod = 1;
 			}
+		}
+
+		private void AddCheckedTVNode(TreeNode node)
+		{
+			if (this.RecentlyCheckedTVNodes.Any(n => n == node))
+				return;
+
+			while (5 <= this.RecentlyCheckedTVNodes.Count)
+				this.RecentlyCheckedTVNodes.RemoveAt(0);
+
+			this.RecentlyCheckedTVNodes.Add(node);
 		}
 
 		private IEnumerable<TreeNode> GetNodes(TreeNodeCollection nodes)
