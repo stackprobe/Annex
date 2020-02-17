@@ -114,6 +114,13 @@ namespace Charlotte
 					this.CloseWindow();
 					return;
 				}
+				if (this.MTCount % 10 == 0 && this.LastCheckedTVNode != null)
+				{
+					using (this.TVEditSection())
+					{
+						this.LastCheckedTVNode.Checked = this.LastCheckedTVNode.Checked;
+					}
+				}
 			}
 			catch (Exception ex)
 			{
@@ -134,30 +141,33 @@ namespace Charlotte
 
 		private void フォルダを開くToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			try
+			using (this.MTBusy.Section())
 			{
-				string dir = Ground.RootDir;
-
-				if (SaveLoadDialogs.SelectFolder(ref dir, "ルートフォルダを開いてください"))
+				try
 				{
-					dir = FileTools.MakeFullPath(dir);
+					string dir = Ground.RootDir;
 
-					if (Directory.Exists(dir) == false)
-						throw new Exception("フォルダは存在しません。" + dir);
-
-					this.TV.Nodes.Clear();
-
-					using (new Utils.UISuspend(this.TV))
+					if (SaveLoadDialogs.SelectFolder(ref dir, "ルートフォルダを開いてください"))
 					{
-						this.AddTo(this.TV.Nodes, dir);
+						dir = FileTools.MakeFullPath(dir);
+
+						if (Directory.Exists(dir) == false)
+							throw new Exception("フォルダは存在しません。" + dir);
+
+						this.TVClear();
+
+						using (new Utils.UISuspend(this.TV))
+						{
+							this.AddTo(this.TV.Nodes, dir);
+						}
+						Ground.RootDir = dir;
 					}
-					Ground.RootDir = dir;
 				}
-			}
-			catch (Exception ex)
-			{
-				MessageDlgTools.Warning("失敗：フォルダを開く", ex);
-				this.TV.Nodes.Clear();
+				catch (Exception ex)
+				{
+					MessageDlgTools.Warning("失敗：フォルダを開く", ex);
+					this.TVClear();
+				}
 			}
 		}
 
@@ -197,21 +207,24 @@ namespace Charlotte
 
 		private void ファイルに保存ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			try
+			using (this.MTBusy.Section())
 			{
-				string wFile = SaveLoadDialogs.SaveFile("保存先のファイルを入力して下さい", "txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "output.txt"));
-
-				if (wFile != null)
+				try
 				{
-					using (StreamWriter writer = new StreamWriter(wFile, false, StringTools.ENCODING_SJIS))
+					string wFile = SaveLoadDialogs.SaveFile("保存先のファイルを入力して下さい", "txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "output.txt"));
+
+					if (wFile != null)
 					{
-						this.WriteTV(writer, "", this.TV.Nodes);
+						using (StreamWriter writer = new StreamWriter(wFile, false, StringTools.ENCODING_SJIS))
+						{
+							this.WriteTV(writer, "", this.TV.Nodes);
+						}
 					}
 				}
-			}
-			catch (Exception ex)
-			{
-				MessageDlgTools.Warning("失敗：ファイルに保存", ex);
+				catch (Exception ex)
+				{
+					MessageDlgTools.Warning("失敗：ファイルに保存", ex);
+				}
 			}
 		}
 
@@ -223,9 +236,11 @@ namespace Charlotte
 
 				if (((NodeTag)node.Tag).DirFlag)
 				{
-					WriteTV(writer, path, node.Nodes);
+					this.WriteTV(writer, path, node.Nodes);
+
+					//writer.WriteLine(path); // test
 				}
-				else
+				else if (node.Checked)
 				{
 					writer.WriteLine(path);
 				}
@@ -234,42 +249,67 @@ namespace Charlotte
 
 		private void ファイルから読み込みToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			try
+			using (this.MTBusy.Section())
 			{
-				string rFile = SaveLoadDialogs.LoadFile("読み込むファイルを選択して下さい", "テキスト:txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "target.txt"));
-
-				if (rFile != null)
+				try
 				{
-					throw null; // TODO
+					string rFile = SaveLoadDialogs.LoadFile("読み込むファイルを選択して下さい", "テキスト:txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "target.txt"));
+
+					if (rFile != null)
+					{
+						throw null; // TODO
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageDlgTools.Warning("失敗：ファイルから読み込み", ex);
 				}
 			}
-			catch (Exception ex)
+		}
+
+		private void リフレッシュToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.TVEditSection())
 			{
-				MessageDlgTools.Warning("失敗：ファイルから読み込み", ex);
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = node.Checked;
+				}
 			}
 		}
 
 		private void 全選択ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			foreach (TreeNode node in this.GetAllNode())
+			using (this.TVEditSection())
 			{
-				node.Checked = true;
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = true;
+				}
 			}
 		}
 
 		private void 全選択解除ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			foreach (TreeNode node in this.GetAllNode())
+			using (this.TVEditSection())
 			{
-				node.Checked = false;
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = false;
+				}
 			}
 		}
 
 		private IEnumerable<TreeNode> GetAllNode()
 		{
+			return this.GetAllNode(this.TV.Nodes);
+		}
+
+		private IEnumerable<TreeNode> GetAllNode(TreeNodeCollection rootNodes)
+		{
 			Queue<TreeNodeCollection> q = new Queue<TreeNodeCollection>();
 
-			q.Enqueue(this.TV.Nodes);
+			q.Enqueue(rootNodes);
 
 			while (1 <= q.Count)
 			{
@@ -283,9 +323,52 @@ namespace Charlotte
 			}
 		}
 
+		// このへんから TV 用
+
 		private void TV_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			// noop
+		}
+
+		private void TVClear()
+		{
+			this.LastCheckedTVNode = null;
+			this.TV.Nodes.Clear();
+		}
+
+		private TreeNode LastCheckedTVNode = null;
+
+		private void TV_AfterCheck(object sender, TreeViewEventArgs e)
+		{
+			using (this.TVEditSection())
+			{
+				foreach (TreeNode node in this.GetAllNode(e.Node.Nodes))
+					node.Checked = e.Node.Checked;
+
+				TreeNode parent = e.Node.Parent;
+
+				while (parent != null)
+				{
+					parent.Checked = this.GetNodes(parent.Nodes).Any(node => node.Checked);
+					parent = parent.Parent;
+				}
+				this.LastCheckedTVNode = e.Node;
+			}
+		}
+
+		private IEnumerable<TreeNode> GetNodes(TreeNodeCollection nodes)
+		{
+			foreach (TreeNode node in nodes)
+				yield return node;
+		}
+
+		private AnonyDisposable TVEditSection()
+		{
+			this.TV.AfterCheck -= this.TV_AfterCheck;
+
+			return new AnonyDisposable(() =>
+				this.TV.AfterCheck += this.TV_AfterCheck
+				);
 		}
 	}
 }

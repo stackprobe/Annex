@@ -44,6 +44,8 @@
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.リフレッシュToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
 			this.TVMenu.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -55,24 +57,27 @@
 			// 
 			// TV
 			// 
-			this.TV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.TV.CheckBoxes = true;
 			this.TV.ContextMenuStrip = this.TVMenu;
 			this.TV.Location = new System.Drawing.Point(12, 27);
 			this.TV.Name = "TV";
 			this.TV.Size = new System.Drawing.Size(260, 209);
 			this.TV.TabIndex = 0;
+			this.TV.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TV_AfterCheck);
 			this.TV.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TV_AfterSelect);
 			// 
 			// TVMenu
 			// 
 			this.TVMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.リフレッシュToolStripMenuItem,
+            this.toolStripMenuItem3,
             this.全選択ToolStripMenuItem,
             this.全選択解除ToolStripMenuItem});
 			this.TVMenu.Name = "TVMenu";
-			this.TVMenu.Size = new System.Drawing.Size(135, 48);
+			this.TVMenu.Size = new System.Drawing.Size(135, 76);
 			// 
 			// 全選択ToolStripMenuItem
 			// 
@@ -157,6 +162,18 @@
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
+			// リフレッシュToolStripMenuItem
+			// 
+			this.リフレッシュToolStripMenuItem.Name = "リフレッシュToolStripMenuItem";
+			this.リフレッシュToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+			this.リフレッシュToolStripMenuItem.Text = "リフレッシュ";
+			this.リフレッシュToolStripMenuItem.Click += new System.EventHandler(this.リフレッシュToolStripMenuItem_Click);
+			// 
+			// toolStripMenuItem3
+			// 
+			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(131, 6);
+			// 
 			// MainWin
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -200,6 +217,8 @@
 		private System.Windows.Forms.ToolStripMenuItem ファイルに保存ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ファイルから読み込みToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem リフレッシュToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
 	}
 }
 
