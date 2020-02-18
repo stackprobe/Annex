@@ -46,8 +46,6 @@ namespace Charlotte
 			// noop
 		}
 
-		private TreeView TV;
-
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
 			// -- 0001
@@ -96,19 +94,12 @@ namespace Charlotte
 					// -- 9000
 
 					// ----
-
-					this.MTBusy.Enter(); // 終了確定
-
-					// ----
-
-					// -- 9900
-
-					// ----
 				}
 				catch (Exception e)
 				{
 					MessageBox.Show("" + e, "Error @ CloseWindow()", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
+				this.MTBusy.Enter();
 				this.Close();
 			}
 		}
@@ -151,9 +142,34 @@ namespace Charlotte
 
 		private void リフレッシュToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			foreach (TreeNode node in this.GetAllNode())
+			using (this.TVEditSection())
 			{
-				node.Checked = node.Checked;
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = node.Checked;
+				}
+			}
+		}
+
+		private void 全選択ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.TVEditSection())
+			{
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = true;
+				}
+			}
+		}
+
+		private void 全選択解除ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.TVEditSection())
+			{
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = false;
+				}
 			}
 		}
 
@@ -178,6 +194,12 @@ namespace Charlotte
 					q.Enqueue(node.Nodes);
 				}
 			}
+		}
+
+		private IEnumerable<TreeNode> GetNodes(TreeNodeCollection nodes)
+		{
+			foreach (TreeNode node in nodes)
+				yield return node;
 		}
 
 		private void フォルダを開くToolStripMenuItem_Click(object sender, EventArgs e)
@@ -245,6 +267,105 @@ namespace Charlotte
 			}
 		}
 
+		private void ファイルに保存ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.MTBusy.Section())
+			{
+				try
+				{
+					string wFile = SaveLoadDialogs.SaveFile("保存先のファイルを入力して下さい", "txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "output.txt"));
+
+					if (wFile != null)
+					{
+						using (StreamWriter writer = new StreamWriter(wFile, false, StringTools.ENCODING_SJIS))
+						{
+							this.WriteTV(writer, "", this.TV.Nodes);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageDlgTools.Warning("失敗：ファイルに保存", ex);
+				}
+			}
+		}
+
+		private void WriteTV(StreamWriter writer, string parentDir, TreeNodeCollection nodes)
+		{
+			foreach (TreeNode node in nodes)
+			{
+				string path = Path.Combine(parentDir, node.Text);
+
+				if (((NodeTag)node.Tag).DirFlag)
+				{
+					this.WriteTV(writer, path, node.Nodes);
+
+					//writer.WriteLine(path); // test
+				}
+				else if (node.Checked)
+				{
+					writer.WriteLine(path);
+				}
+			}
+		}
+
+		private void ファイルから読み込むToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.MTBusy.Section())
+			{
+				try
+				{
+					string rFile = SaveLoadDialogs.LoadFile("読み込むファイルを選択して下さい", "テキスト:txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "target.txt"));
+
+					if (rFile != null)
+					{
+						string[] lines = File.ReadAllLines(rFile, StringTools.ENCODING_SJIS);
+
+						using (this.TVEditSection())
+						{
+							foreach (TreeNode node in this.GetAllNode())
+								node.Checked = false;
+
+							foreach (string line in lines)
+							{
+								string[] tokens = line.Split('\\');
+								TreeNode currNode = null;
+
+								foreach (string token in tokens)
+								{
+									TreeNodeCollection nodeCollection = currNode == null ? this.TV.Nodes : currNode.Nodes;
+									TreeNode[] nodes = this.GetNodes(nodeCollection).ToArray();
+									int nodeIndex = ArrayTools.IndexOf(nodes, node => StringTools.EqualsIgnoreCase(node.Text, token));
+
+									if (nodeIndex == -1)
+										throw new Exception("ツリーに存在しないファイルを読み込みました。" + line);
+
+									currNode = nodes[nodeIndex];
+								}
+								currNode.Checked = true;
+							}
+							this.TVRecorrect();
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageDlgTools.Warning("失敗：ファイルから読み込み", ex);
+				}
+			}
+		}
+
+		private void 終了ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.CloseWindow();
+		}
+
+		//
+		// このへんから TV 用
+		//
+
+		private TreeView TV;
+
 		private void TV_AfterCheck(object sender, TreeViewEventArgs e)
 		{
 			using (this.TVEditSection())
@@ -262,12 +383,6 @@ namespace Charlotte
 			}
 		}
 
-		private IEnumerable<TreeNode> GetNodes(TreeNodeCollection nodes)
-		{
-			foreach (TreeNode node in nodes)
-				yield return node;
-		}
-
 		private AnonyDisposable TVEditSection()
 		{
 			this.TV.AfterCheck -= this.TV_AfterCheck;
@@ -275,6 +390,30 @@ namespace Charlotte
 			return new AnonyDisposable(() =>
 				this.TV.AfterCheck += this.TV_AfterCheck
 				);
+		}
+
+		private void TVRecorrect()
+		{
+			this.TVRecorrect(this.GetNodes(this.TV.Nodes).ToArray());
+		}
+
+		private void TVRecorrect(TreeNode[] nodes)
+		{
+			foreach (TreeNode node in nodes)
+			{
+				this.TVRecorrect(node);
+			}
+		}
+
+		private void TVRecorrect(TreeNode parent)
+		{
+			TreeNode[] children = this.GetNodes(parent.Nodes).ToArray();
+
+			if (1 <= children.Length)
+			{
+				this.TVRecorrect(children);
+				parent.Checked = this.GetNodes(parent.Nodes).Any(node => node.Checked);
+			}
 		}
 	}
 }
