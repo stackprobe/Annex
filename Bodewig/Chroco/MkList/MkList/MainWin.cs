@@ -39,6 +39,10 @@ namespace Charlotte
 		public MainWin()
 		{
 			InitializeComponent();
+
+			this.MinimumSize = this.Size;
+			this.South.Text = "";
+			this.SouthEast.Text = "";
 		}
 
 		private void MainWin_Load(object sender, EventArgs e)
@@ -49,6 +53,8 @@ namespace Charlotte
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
 			// -- 0001
+
+			Ground.LoadDatFile();
 
 			{
 				TreeView tv = new TreeViewWP();
@@ -66,9 +72,33 @@ namespace Charlotte
 			this.Controls.Remove(this.TVDummy);
 			this.Controls.Add(this.TV);
 
+			this.LoadLTWH();
+
 			// ----
 
 			this.MTBusy.Leave();
+		}
+
+		private void LoadLTWH()
+		{
+			if (Ground.MainWin_W == -1) // ? 未保存
+				return;
+
+			this.Left = Ground.MainWin_L;
+			this.Top = Ground.MainWin_T;
+			this.Width = Ground.MainWin_W;
+			this.Height = Ground.MainWin_H;
+		}
+
+		private void SaveLTWH()
+		{
+			if (this.WindowState != FormWindowState.Normal)
+				return;
+
+			Ground.MainWin_L = this.Left;
+			Ground.MainWin_T = this.Top;
+			Ground.MainWin_W = this.Width;
+			Ground.MainWin_H = this.Height;
 		}
 
 		private void MainWin_FormClosing(object sender, FormClosingEventArgs e)
@@ -92,6 +122,10 @@ namespace Charlotte
 				try
 				{
 					// -- 9000
+
+					this.SaveLTWH();
+
+					Ground.SaveDatFile();
 
 					// ----
 				}
@@ -148,6 +182,7 @@ namespace Charlotte
 				{
 					node.Checked = node.Checked;
 				}
+				this.TV.SelectedNode = null; // 選択解除
 			}
 		}
 
@@ -208,7 +243,7 @@ namespace Charlotte
 			{
 				try
 				{
-					string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+					string dir = Ground.RootDir;
 
 					if (SaveLoadDialogs.SelectFolder(ref dir, "ルートフォルダを開いてください"))
 					{
@@ -223,6 +258,10 @@ namespace Charlotte
 						{
 							this.AddTo(this.TV.Nodes, dir);
 						}
+						Ground.RootDir = dir;
+
+						this.South.Text = dir; // 暫定？
+						this.SouthEast.Text = "" + this.GetAllNode().Where(node => ((NodeTag)node.Tag).DirFlag == false).Count(); // 暫定
 					}
 				}
 				catch (Exception ex)
@@ -273,7 +312,7 @@ namespace Charlotte
 			{
 				try
 				{
-					string wFile = SaveLoadDialogs.SaveFile("保存先のファイルを入力して下さい", "txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "output.txt"));
+					string wFile = SaveLoadDialogs.SaveFile("保存先のファイルを入力して下さい", "txt", Ground.LastFile);
 
 					if (wFile != null)
 					{
@@ -281,6 +320,7 @@ namespace Charlotte
 						{
 							this.WriteTV(writer, "", this.TV.Nodes);
 						}
+						Ground.LastFile = wFile;
 					}
 				}
 				catch (Exception ex)
@@ -315,7 +355,7 @@ namespace Charlotte
 			{
 				try
 				{
-					string rFile = SaveLoadDialogs.LoadFile("読み込むファイルを選択して下さい", "テキスト:txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "target.txt"));
+					string rFile = SaveLoadDialogs.LoadFile("読み込むファイルを選択して下さい", "テキスト:txt", Ground.LastFile);
 
 					if (rFile != null)
 					{
@@ -328,6 +368,12 @@ namespace Charlotte
 
 							foreach (string line in lines)
 							{
+								if (line == "")
+									throw new Exception("空行を読み込みました。");
+
+								if (line[1] == ':')
+									throw new Exception("フルパスは処理出来ません。\r\n" + line);
+
 								string[] tokens = line.Split('\\');
 								TreeNode currNode = null;
 
@@ -338,7 +384,7 @@ namespace Charlotte
 									int nodeIndex = ArrayTools.IndexOf(nodes, node => StringTools.EqualsIgnoreCase(node.Text, token));
 
 									if (nodeIndex == -1)
-										throw new Exception("ツリーに存在しないファイルを読み込みました。" + line);
+										throw new Exception("ツリーに存在しないファイルパスを読み込みました。\r\n" + line);
 
 									currNode = nodes[nodeIndex];
 								}
@@ -346,6 +392,7 @@ namespace Charlotte
 							}
 							this.TVRecorrect();
 						}
+						Ground.LastFile = rFile;
 					}
 				}
 				catch (Exception ex)

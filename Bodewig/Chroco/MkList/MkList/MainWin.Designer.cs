@@ -34,6 +34,9 @@
 			this.TVDummy = new System.Windows.Forms.TextBox();
 			this.TVMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.リフレッシュToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+			this.全選択ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.全選択解除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.アプリToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.フォルダを開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,11 +46,11 @@
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-			this.全選択ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.全選択解除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.South = new System.Windows.Forms.ToolStripStatusLabel();
+			this.SouthEast = new System.Windows.Forms.ToolStripStatusLabel();
 			this.TVMenu.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MainTimer
@@ -77,14 +80,33 @@
             this.全選択ToolStripMenuItem,
             this.全選択解除ToolStripMenuItem});
 			this.TVMenu.Name = "TVMenu";
-			this.TVMenu.Size = new System.Drawing.Size(153, 98);
+			this.TVMenu.Size = new System.Drawing.Size(135, 76);
 			// 
 			// リフレッシュToolStripMenuItem
 			// 
 			this.リフレッシュToolStripMenuItem.Name = "リフレッシュToolStripMenuItem";
-			this.リフレッシュToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+			this.リフレッシュToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
 			this.リフレッシュToolStripMenuItem.Text = "リフレッシュ";
 			this.リフレッシュToolStripMenuItem.Click += new System.EventHandler(this.リフレッシュToolStripMenuItem_Click);
+			// 
+			// toolStripMenuItem3
+			// 
+			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(131, 6);
+			// 
+			// 全選択ToolStripMenuItem
+			// 
+			this.全選択ToolStripMenuItem.Name = "全選択ToolStripMenuItem";
+			this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+			this.全選択ToolStripMenuItem.Text = "全選択";
+			this.全選択ToolStripMenuItem.Click += new System.EventHandler(this.全選択ToolStripMenuItem_Click);
+			// 
+			// 全選択解除ToolStripMenuItem
+			// 
+			this.全選択解除ToolStripMenuItem.Name = "全選択解除ToolStripMenuItem";
+			this.全選択解除ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+			this.全選択解除ToolStripMenuItem.Text = "全選択解除";
+			this.全選択解除ToolStripMenuItem.Click += new System.EventHandler(this.全選択解除ToolStripMenuItem_Click);
 			// 
 			// menuStrip1
 			// 
@@ -149,30 +171,28 @@
 			// 
 			// statusStrip1
 			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.South,
+            this.SouthEast});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 239);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(284, 22);
 			this.statusStrip1.TabIndex = 3;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// toolStripMenuItem3
+			// South
 			// 
-			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
+			this.South.Name = "South";
+			this.South.Size = new System.Drawing.Size(210, 17);
+			this.South.Spring = true;
+			this.South.Text = "South";
+			this.South.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// 全選択ToolStripMenuItem
+			// SouthEast
 			// 
-			this.全選択ToolStripMenuItem.Name = "全選択ToolStripMenuItem";
-			this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.全選択ToolStripMenuItem.Text = "全選択";
-			this.全選択ToolStripMenuItem.Click += new System.EventHandler(this.全選択ToolStripMenuItem_Click);
-			// 
-			// 全選択解除ToolStripMenuItem
-			// 
-			this.全選択解除ToolStripMenuItem.Name = "全選択解除ToolStripMenuItem";
-			this.全選択解除ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.全選択解除ToolStripMenuItem.Text = "全選択解除";
-			this.全選択解除ToolStripMenuItem.Click += new System.EventHandler(this.全選択解除ToolStripMenuItem_Click);
+			this.SouthEast.Name = "SouthEast";
+			this.SouthEast.Size = new System.Drawing.Size(59, 17);
+			this.SouthEast.Text = "SouthEast";
 			// 
 			// MainWin
 			// 
@@ -195,6 +215,8 @@
 			this.TVMenu.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -218,6 +240,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
 		private System.Windows.Forms.ToolStripMenuItem 全選択ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 全選択解除ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripStatusLabel South;
+		private System.Windows.Forms.ToolStripStatusLabel SouthEast;
 	}
 }
 
