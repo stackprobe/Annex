@@ -59,7 +59,8 @@ namespace Charlotte
 				tv.Size = this.TVDummy.Size;
 				tv.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
 				tv.CheckBoxes = true;
-				tv.AfterCheck += (sdr, ev) => { }; // TODO
+				tv.ContextMenuStrip = this.TVMenu;
+				tv.AfterCheck += this.TV_AfterCheck;
 
 				this.TV = tv;
 			}
@@ -150,7 +151,33 @@ namespace Charlotte
 
 		private void リフレッシュToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// TODO
+			foreach (TreeNode node in this.GetAllNode())
+			{
+				node.Checked = node.Checked;
+			}
+		}
+
+		private IEnumerable<TreeNode> GetAllNode()
+		{
+			return this.GetAllNode(this.TV.Nodes);
+		}
+
+		private IEnumerable<TreeNode> GetAllNode(TreeNodeCollection rootNodes)
+		{
+			Queue<TreeNodeCollection> q = new Queue<TreeNodeCollection>();
+
+			q.Enqueue(rootNodes);
+
+			while (1 <= q.Count)
+			{
+				TreeNodeCollection nodes = q.Dequeue();
+
+				foreach (TreeNode node in nodes)
+				{
+					yield return node;
+					q.Enqueue(node.Nodes);
+				}
+			}
 		}
 
 		private void フォルダを開くToolStripMenuItem_Click(object sender, EventArgs e)
@@ -216,6 +243,38 @@ namespace Charlotte
 
 				dest.Add(node);
 			}
+		}
+
+		private void TV_AfterCheck(object sender, TreeViewEventArgs e)
+		{
+			using (this.TVEditSection())
+			{
+				foreach (TreeNode node in this.GetAllNode(e.Node.Nodes))
+					node.Checked = e.Node.Checked;
+
+				TreeNode parent = e.Node.Parent;
+
+				while (parent != null)
+				{
+					parent.Checked = this.GetNodes(parent.Nodes).Any(node => node.Checked);
+					parent = parent.Parent;
+				}
+			}
+		}
+
+		private IEnumerable<TreeNode> GetNodes(TreeNodeCollection nodes)
+		{
+			foreach (TreeNode node in nodes)
+				yield return node;
+		}
+
+		private AnonyDisposable TVEditSection()
+		{
+			this.TV.AfterCheck -= this.TV_AfterCheck;
+
+			return new AnonyDisposable(() =>
+				this.TV.AfterCheck += this.TV_AfterCheck
+				);
 		}
 	}
 }
