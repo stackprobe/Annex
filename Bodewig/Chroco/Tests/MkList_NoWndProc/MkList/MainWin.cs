@@ -38,6 +38,8 @@ namespace Charlotte
 
 		public MainWin()
 		{
+			this.MinimumSize = this.Size;
+
 			InitializeComponent();
 		}
 
@@ -46,27 +48,9 @@ namespace Charlotte
 			// noop
 		}
 
-		private TreeView TV;
-
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
 			// -- 0001
-
-			{
-				TreeView tv = new TreeViewWP();
-
-				tv.Location = this.TVDummy.Location;
-				tv.Size = this.TVDummy.Size;
-				tv.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
-				tv.CheckBoxes = true;
-				tv.ContextMenuStrip = this.TVMenu;
-				tv.AfterCheck += this.TV_AfterCheck;
-
-				this.TV = tv;
-			}
-
-			this.Controls.Remove(this.TVDummy);
-			this.Controls.Add(this.TV);
 
 			// ----
 
@@ -124,13 +108,22 @@ namespace Charlotte
 			this.MTBusy.Enter();
 			try
 			{
-				// -- 3001
-
 				if (this.XPressed)
 				{
 					this.XPressed = false;
 					this.CloseWindow();
 					return;
+				}
+				if (this.MTCount % this.TVRefreshPeriod == 0)
+				{
+					if (this.TVRefreshPeriod < 20)
+						this.TVRefreshPeriod++;
+
+					using (this.TVEditSection())
+					{
+						foreach (TreeNode node in this.RecentlyCheckedTVNodes)
+							node.Checked = node.Checked; // リフレッシュ
+					}
 				}
 			}
 			catch (Exception ex)
@@ -144,40 +137,10 @@ namespace Charlotte
 			}
 		}
 
-		private void TVDummy_TextChanged(object sender, EventArgs e)
+		private void 終了ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// noop
-		}
-
-		private void リフレッシュToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			foreach (TreeNode node in this.GetAllNode())
-			{
-				node.Checked = node.Checked;
-			}
-		}
-
-		private IEnumerable<TreeNode> GetAllNode()
-		{
-			return this.GetAllNode(this.TV.Nodes);
-		}
-
-		private IEnumerable<TreeNode> GetAllNode(TreeNodeCollection rootNodes)
-		{
-			Queue<TreeNodeCollection> q = new Queue<TreeNodeCollection>();
-
-			q.Enqueue(rootNodes);
-
-			while (1 <= q.Count)
-			{
-				TreeNodeCollection nodes = q.Dequeue();
-
-				foreach (TreeNode node in nodes)
-				{
-					yield return node;
-					q.Enqueue(node.Nodes);
-				}
-			}
+			this.CloseWindow();
+			return;
 		}
 
 		private void フォルダを開くToolStripMenuItem_Click(object sender, EventArgs e)
@@ -186,7 +149,7 @@ namespace Charlotte
 			{
 				try
 				{
-					string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+					string dir = Ground.RootDir;
 
 					if (SaveLoadDialogs.SelectFolder(ref dir, "ルートフォルダを開いてください"))
 					{
@@ -195,18 +158,19 @@ namespace Charlotte
 						if (Directory.Exists(dir) == false)
 							throw new Exception("フォルダは存在しません。" + dir);
 
-						this.TV.Nodes.Clear();
+						this.TVClear();
 
 						using (new Utils.UISuspend(this.TV))
 						{
 							this.AddTo(this.TV.Nodes, dir);
 						}
+						Ground.RootDir = dir;
 					}
 				}
 				catch (Exception ex)
 				{
 					MessageDlgTools.Warning("失敗：フォルダを開く", ex);
-					this.TV.Nodes.Clear();
+					this.TVClear();
 				}
 			}
 		}
@@ -245,6 +209,140 @@ namespace Charlotte
 			}
 		}
 
+		private void ファイルに保存ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.MTBusy.Section())
+			{
+				try
+				{
+					string wFile = SaveLoadDialogs.SaveFile("保存先のファイルを入力して下さい", "txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "output.txt"));
+
+					if (wFile != null)
+					{
+						using (StreamWriter writer = new StreamWriter(wFile, false, StringTools.ENCODING_SJIS))
+						{
+							this.WriteTV(writer, "", this.TV.Nodes);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageDlgTools.Warning("失敗：ファイルに保存", ex);
+				}
+			}
+		}
+
+		private void WriteTV(StreamWriter writer, string parentDir, TreeNodeCollection nodes)
+		{
+			foreach (TreeNode node in nodes)
+			{
+				string path = Path.Combine(parentDir, node.Text);
+
+				if (((NodeTag)node.Tag).DirFlag)
+				{
+					this.WriteTV(writer, path, node.Nodes);
+
+					//writer.WriteLine(path); // test
+				}
+				else if (node.Checked)
+				{
+					writer.WriteLine(path);
+				}
+			}
+		}
+
+		private void ファイルから読み込みToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.MTBusy.Section())
+			{
+				try
+				{
+					string rFile = SaveLoadDialogs.LoadFile("読み込むファイルを選択して下さい", "テキスト:txt", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "target.txt"));
+
+					if (rFile != null)
+					{
+						throw null; // TODO
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageDlgTools.Warning("失敗：ファイルから読み込み", ex);
+				}
+			}
+		}
+
+		private void リフレッシュToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.TVEditSection())
+			{
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = node.Checked;
+				}
+			}
+		}
+
+		private void 全選択ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.TVEditSection())
+			{
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = true;
+				}
+			}
+		}
+
+		private void 全選択解除ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.TVEditSection())
+			{
+				foreach (TreeNode node in this.GetAllNode())
+				{
+					node.Checked = false;
+				}
+			}
+		}
+
+		private IEnumerable<TreeNode> GetAllNode()
+		{
+			return this.GetAllNode(this.TV.Nodes);
+		}
+
+		private IEnumerable<TreeNode> GetAllNode(TreeNodeCollection rootNodes)
+		{
+			Queue<TreeNodeCollection> q = new Queue<TreeNodeCollection>();
+
+			q.Enqueue(rootNodes);
+
+			while (1 <= q.Count)
+			{
+				TreeNodeCollection nodes = q.Dequeue();
+
+				foreach (TreeNode node in nodes)
+				{
+					yield return node;
+					q.Enqueue(node.Nodes);
+				}
+			}
+		}
+
+		// このへんから TV 用
+
+		private void TV_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			// noop
+		}
+
+		private void TVClear()
+		{
+			this.RecentlyCheckedTVNodes.Clear();
+			this.TV.Nodes.Clear();
+		}
+
+		private List<TreeNode> RecentlyCheckedTVNodes = new List<TreeNode>();
+		private int TVRefreshPeriod = 1;
+
 		private void TV_AfterCheck(object sender, TreeViewEventArgs e)
 		{
 			using (this.TVEditSection())
@@ -259,7 +357,20 @@ namespace Charlotte
 					parent.Checked = this.GetNodes(parent.Nodes).Any(node => node.Checked);
 					parent = parent.Parent;
 				}
+				this.AddCheckedTVNode(e.Node);
+				this.TVRefreshPeriod = 1;
 			}
+		}
+
+		private void AddCheckedTVNode(TreeNode node)
+		{
+			if (this.RecentlyCheckedTVNodes.Any(n => n == node))
+				return;
+
+			while (5 <= this.RecentlyCheckedTVNodes.Count)
+				this.RecentlyCheckedTVNodes.RemoveAt(0);
+
+			this.RecentlyCheckedTVNodes.Add(node);
 		}
 
 		private IEnumerable<TreeNode> GetNodes(TreeNodeCollection nodes)
