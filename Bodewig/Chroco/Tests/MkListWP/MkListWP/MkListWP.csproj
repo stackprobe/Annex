@@ -42,6 +42,9 @@
     <Reference Include="Chocolate">
       <HintPath>C:\Dev\CSharp\Chocolate\Chocolate\bin\Release\Chocolate.dll</HintPath>
     </Reference>
+    <Reference Include="Chocomint">
+      <HintPath>..\..\..\..\..\..\CSharp\DLL\Chocomint\Chocomint\bin\Release\Chocomint.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -60,8 +63,13 @@
     <Compile Include="MainWin.Designer.cs">
       <DependentUpon>MainWin.cs</DependentUpon>
     </Compile>
+    <Compile Include="NodeTag.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeViewWP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utils.cs" />
     <EmbeddedResource Include="MainWin.resx">
       <DependentUpon>MainWin.cs</DependentUpon>
     </EmbeddedResource>

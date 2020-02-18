@@ -10,6 +10,7 @@ using System.Threading;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using Charlotte.Tools;
+using Charlotte.Chocomint.Dialogs;
 
 namespace Charlotte
 {
@@ -45,9 +46,26 @@ namespace Charlotte
 			// noop
 		}
 
+		private TreeView TV;
+
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
 			// -- 0001
+
+			{
+				TreeView tv = new TreeViewWP();
+
+				tv.Location = this.TVDummy.Location;
+				tv.Size = this.TVDummy.Size;
+				tv.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+				tv.CheckBoxes = true;
+				tv.AfterCheck += (sdr, ev) => { }; // TODO
+
+				this.TV = tv;
+			}
+
+			this.Controls.Remove(this.TVDummy);
+			this.Controls.Add(this.TV);
 
 			// ----
 
@@ -113,11 +131,6 @@ namespace Charlotte
 					this.CloseWindow();
 					return;
 				}
-				if (this.MTCount == 150) // 15 sec
-				{
-					this.CloseWindow();
-					return;
-				}
 			}
 			catch (Exception ex)
 			{
@@ -127,6 +140,81 @@ namespace Charlotte
 			{
 				this.MTBusy.Leave();
 				this.MTCount++;
+			}
+		}
+
+		private void TVDummy_TextChanged(object sender, EventArgs e)
+		{
+			// noop
+		}
+
+		private void リフレッシュToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// TODO
+		}
+
+		private void フォルダを開くToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.MTBusy.Section())
+			{
+				try
+				{
+					string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+					if (SaveLoadDialogs.SelectFolder(ref dir, "ルートフォルダを開いてください"))
+					{
+						dir = FileTools.MakeFullPath(dir);
+
+						if (Directory.Exists(dir) == false)
+							throw new Exception("フォルダは存在しません。" + dir);
+
+						this.TV.Nodes.Clear();
+
+						using (new Utils.UISuspend(this.TV))
+						{
+							this.AddTo(this.TV.Nodes, dir);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageDlgTools.Warning("失敗：フォルダを開く", ex);
+					this.TV.Nodes.Clear();
+				}
+			}
+		}
+
+		private void AddTo(TreeNodeCollection dest, string targDir)
+		{
+			string[] dirs = Directory.GetDirectories(targDir);
+			string[] files = Directory.GetFiles(targDir);
+
+			Array.Sort(dirs, StringTools.CompIgnoreCase);
+			Array.Sort(files, StringTools.CompIgnoreCase);
+
+			foreach (string dir in dirs)
+			{
+				TreeNode node = new TreeNode(Path.GetFileName(dir));
+
+				this.AddTo(node.Nodes, dir);
+
+				node.Tag = new NodeTag()
+				{
+					DirFlag = true,
+				};
+
+				dest.Add(node);
+			}
+			foreach (string file in files)
+			{
+				TreeNode node = new TreeNode(Path.GetFileName(file));
+
+				node.Tag = new NodeTag()
+				{
+					DirFlag = false,
+				};
+
+				dest.Add(node);
 			}
 		}
 	}
