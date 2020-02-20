@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Charlotte
 {
@@ -52,15 +53,67 @@ namespace Charlotte
 
 		private void MS_Init()
 		{
-			// TODO
+			this.MainSheet.RowCount = 0;
+			this.MainSheet.ColumnCount = 0;
+
+			this.MS_AddColumn("", true);
+			this.MS_AddColumn("パス");
+			this.MS_AddColumn("ローカル名");
+			this.MS_AddColumn("拡張子");
+			this.MS_AddColumn("サイズ");
 		}
 
-		private void MS_Load()
+		private void MS_AddColumn(string title, bool checkBox = false)
 		{
-			// TODO
+			DataGridViewColumn column;
+
+			if (checkBox)
+				column = new DataGridViewCheckBoxColumn();
+			else
+				column = new DataGridViewColumn();
+
+			column.SortMode = DataGridViewColumnSortMode.Programmatic;
+
+			// TODO ?
+
+			this.MainSheet.Columns.Add(column);
 		}
 
-		// TODO
+		private void MS_Load(TreeView tv)
+		{
+			throw null; // TODO tv --> MainSheet
+		}
+
+		private void MS_Feedback(TreeView tv)
+		{
+			throw null; // TODO MainSheet --> tv
+		}
+
+		private void MS_SetRecord(DataGridViewRow row, MS_Record record)
+		{
+			int c = 0;
+
+			row.Cells[c++].Value = record.Checked;
+			row.Cells[c++].Value = record.FilePath;
+			row.Cells[c++].Value = Path.GetFileName(record.FilePath);
+			row.Cells[c++].Value = Path.GetExtension(record.FilePath);
+			row.Cells[c++].Value = new FileInfo(record.FilePath).Length;
+		}
+
+		private MS_Record MS_GetRecord(DataGridViewRow row)
+		{
+			return new MS_Record()
+			{
+				Checked = (bool)row.Cells[0].Value,
+				FilePath = (string)row.Cells[1].Value,
+			};
+		}
+
+		private class MS_Record
+		{
+			public bool Checked = false;
+			public string FilePath = @"C:\temp\Dummy.tmp"; // Dummy value
+		}
 
 		//
 		// このへんまで MainSheet 用
