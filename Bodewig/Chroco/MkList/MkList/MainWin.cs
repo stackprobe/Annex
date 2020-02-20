@@ -47,14 +47,14 @@ namespace Charlotte
 
 		private void MainWin_Load(object sender, EventArgs e)
 		{
-			// noop
+			Ground.LoadDatFile();
+
+			this.LoadLTWH();
 		}
 
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
 			// -- 0001
-
-			Ground.LoadDatFile();
 
 			{
 				TreeView tv = new TreeViewWP();
@@ -71,8 +71,6 @@ namespace Charlotte
 
 			this.Controls.Remove(this.TVDummy);
 			this.Controls.Add(this.TV);
-
-			this.LoadLTWH();
 
 			// ----
 
