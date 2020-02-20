@@ -64,5 +64,7 @@ namespace Charlotte
 
 			File.WriteAllLines(DatFile, lines.ToArray(), Encoding.UTF8);
 		}
+
+		public static string OpenedRootDir = "";
 	}
 }

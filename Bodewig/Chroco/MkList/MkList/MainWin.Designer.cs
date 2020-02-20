@@ -48,6 +48,8 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.South = new System.Windows.Forms.ToolStripStatusLabel();
 			this.SouthEast = new System.Windows.Forms.ToolStripStatusLabel();
+			this.ツールToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.シートToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TVMenu.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -111,7 +113,8 @@
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.アプリToolStripMenuItem});
+            this.アプリToolStripMenuItem,
+            this.ツールToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(284, 24);
@@ -194,6 +197,21 @@
 			this.SouthEast.Size = new System.Drawing.Size(59, 17);
 			this.SouthEast.Text = "SouthEast";
 			// 
+			// ツールToolStripMenuItem
+			// 
+			this.ツールToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.シートToolStripMenuItem});
+			this.ツールToolStripMenuItem.Name = "ツールToolStripMenuItem";
+			this.ツールToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+			this.ツールToolStripMenuItem.Text = "ツール";
+			// 
+			// シートToolStripMenuItem
+			// 
+			this.シートToolStripMenuItem.Name = "シートToolStripMenuItem";
+			this.シートToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.シートToolStripMenuItem.Text = "シート";
+			this.シートToolStripMenuItem.Click += new System.EventHandler(this.シートToolStripMenuItem_Click);
+			// 
 			// MainWin
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -242,6 +260,8 @@
 		private System.Windows.Forms.ToolStripMenuItem 全選択解除ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripStatusLabel South;
 		private System.Windows.Forms.ToolStripStatusLabel SouthEast;
+		private System.Windows.Forms.ToolStripMenuItem ツールToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem シートToolStripMenuItem;
 	}
 }
 

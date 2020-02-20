@@ -229,12 +229,6 @@ namespace Charlotte
 			}
 		}
 
-		private IEnumerable<TreeNode> GetNodes(TreeNodeCollection nodes)
-		{
-			foreach (TreeNode node in nodes)
-				yield return node;
-		}
-
 		private void フォルダを開くToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (this.MTBusy.Section())
@@ -257,6 +251,7 @@ namespace Charlotte
 							this.AddTo(this.TV.Nodes, dir);
 						}
 						Ground.RootDir = dir;
+						Ground.OpenedRootDir = dir;
 
 						this.South.Text = dir; // 暫定？
 						this.SouthEast.Text = "" + this.GetAllNode().Where(node => ((NodeTag)node.Tag).DirFlag == false).Count(); // 暫定
@@ -378,7 +373,7 @@ namespace Charlotte
 								foreach (string token in tokens)
 								{
 									TreeNodeCollection nodeCollection = currNode == null ? this.TV.Nodes : currNode.Nodes;
-									TreeNode[] nodes = this.GetNodes(nodeCollection).ToArray();
+									TreeNode[] nodes = Utils.GetNodes(nodeCollection).ToArray();
 									int nodeIndex = ArrayTools.IndexOf(nodes, node => StringTools.EqualsIgnoreCase(node.Text, token));
 
 									if (nodeIndex == -1)
@@ -422,7 +417,7 @@ namespace Charlotte
 
 				while (parent != null)
 				{
-					parent.Checked = this.GetNodes(parent.Nodes).Any(node => node.Checked);
+					parent.Checked = Utils.GetNodes(parent.Nodes).Any(node => node.Checked);
 					parent = parent.Parent;
 				}
 			}
@@ -439,7 +434,7 @@ namespace Charlotte
 
 		private void TVRecorrect()
 		{
-			this.TVRecorrect(this.GetNodes(this.TV.Nodes).ToArray());
+			this.TVRecorrect(Utils.GetNodes(this.TV.Nodes).ToArray());
 		}
 
 		private void TVRecorrect(TreeNode[] nodes)
@@ -452,12 +447,26 @@ namespace Charlotte
 
 		private void TVRecorrect(TreeNode parent)
 		{
-			TreeNode[] children = this.GetNodes(parent.Nodes).ToArray();
+			TreeNode[] children = Utils.GetNodes(parent.Nodes).ToArray();
 
 			if (1 <= children.Length)
 			{
 				this.TVRecorrect(children);
-				parent.Checked = this.GetNodes(parent.Nodes).Any(node => node.Checked);
+				parent.Checked = Utils.GetNodes(parent.Nodes).Any(node => node.Checked);
+			}
+		}
+
+		private void シートToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (this.MTBusy.Section())
+			{
+				this.Visible = false;
+
+				using (TreeSheetWin f = new TreeSheetWin(this.TV))
+				{
+					f.ShowDialog();
+				}
+				this.Visible = true;
 			}
 		}
 	}

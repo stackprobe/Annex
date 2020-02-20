@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Charlotte
 {
@@ -46,5 +47,23 @@ namespace Charlotte
 		}
 
 		// < sync
+
+		public static IEnumerable<TreeNode> GetNodes(TreeNodeCollection nodes)
+		{
+			foreach (TreeNode node in nodes)
+				yield return node;
+		}
+
+		public static long TryGetFileSize(string file, long defval)
+		{
+			try
+			{
+				return new FileInfo(file).Length;
+			}
+			catch
+			{
+				return defval;
+			}
+		}
 	}
 }

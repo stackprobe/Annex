@@ -37,7 +37,10 @@
 			this.MainSheet = new System.Windows.Forms.DataGridView();
 			this.MSMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.選択解除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.South = new System.Windows.Forms.ToolStripStatusLabel();
+			this.SouthEast = new System.Windows.Forms.ToolStripStatusLabel();
 			this.menuStrip1.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.MainSheet)).BeginInit();
 			this.MSMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -63,12 +66,15 @@
 			// 閉じるToolStripMenuItem
 			// 
 			this.閉じるToolStripMenuItem.Name = "閉じるToolStripMenuItem";
-			this.閉じるToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.閉じるToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
 			this.閉じるToolStripMenuItem.Text = "閉じる";
 			this.閉じるToolStripMenuItem.Click += new System.EventHandler(this.閉じるToolStripMenuItem_Click);
 			// 
 			// statusStrip1
 			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.South,
+            this.SouthEast});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 439);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(684, 22);
@@ -79,6 +85,7 @@
 			// 
 			this.MainSheet.AllowUserToAddRows = false;
 			this.MainSheet.AllowUserToDeleteRows = false;
+			this.MainSheet.AllowUserToResizeRows = false;
 			this.MainSheet.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -86,24 +93,42 @@
 			this.MainSheet.Location = new System.Drawing.Point(12, 27);
 			this.MainSheet.Name = "MainSheet";
 			this.MainSheet.ReadOnly = true;
+			this.MainSheet.RowHeadersVisible = false;
 			this.MainSheet.RowTemplate.Height = 21;
+			this.MainSheet.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.MainSheet.Size = new System.Drawing.Size(660, 409);
 			this.MainSheet.TabIndex = 3;
+			this.MainSheet.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MainSheet_CellClick);
 			this.MainSheet.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MainSheet_CellContentClick);
+			this.MainSheet.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MainSheet_ColumnHeaderMouseClick);
 			// 
 			// MSMenu
 			// 
 			this.MSMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.選択解除ToolStripMenuItem});
 			this.MSMenu.Name = "MSMenu";
-			this.MSMenu.Size = new System.Drawing.Size(153, 48);
+			this.MSMenu.Size = new System.Drawing.Size(123, 26);
 			// 
 			// 選択解除ToolStripMenuItem
 			// 
 			this.選択解除ToolStripMenuItem.Name = "選択解除ToolStripMenuItem";
-			this.選択解除ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.選択解除ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
 			this.選択解除ToolStripMenuItem.Text = "選択解除";
 			this.選択解除ToolStripMenuItem.Click += new System.EventHandler(this.選択解除ToolStripMenuItem_Click);
+			// 
+			// South
+			// 
+			this.South.Name = "South";
+			this.South.Size = new System.Drawing.Size(610, 17);
+			this.South.Spring = true;
+			this.South.Text = "South";
+			this.South.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// SouthEast
+			// 
+			this.SouthEast.Name = "SouthEast";
+			this.SouthEast.Size = new System.Drawing.Size(59, 17);
+			this.SouthEast.Text = "SouthEast";
 			// 
 			// TreeSheetWin
 			// 
@@ -122,10 +147,12 @@
 			this.Text = "MkList - Sheet";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TreeSheetWin_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TreeSheetWin_FormClosed);
-			this.Load += new System.EventHandler(this.TreeTableWin_Load);
+			this.Load += new System.EventHandler(this.TreeSheetWin_Load);
 			this.Shown += new System.EventHandler(this.TreeSheetWin_Shown);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.MainSheet)).EndInit();
 			this.MSMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -142,5 +169,7 @@
 		private System.Windows.Forms.ToolStripMenuItem 閉じるToolStripMenuItem;
 		private System.Windows.Forms.ContextMenuStrip MSMenu;
 		private System.Windows.Forms.ToolStripMenuItem 選択解除ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripStatusLabel South;
+		private System.Windows.Forms.ToolStripStatusLabel SouthEast;
 	}
 }
