@@ -69,14 +69,14 @@ namespace Charlotte
 			this.MainSheet.RowCount = 0;
 			this.MainSheet.ColumnCount = 0;
 
-			this.MS_AddColumn("", 50, true);
-			this.MS_AddColumn("パス", 300);
-			this.MS_AddColumn("ローカル名", 200);
-			this.MS_AddColumn("拡張子", 100);
-			this.MS_AddColumn("サイズ", 100, false, true);
+			this.MS_AddColumn("Check", "", 50, true);
+			this.MS_AddColumn("Path", "パス", 300);
+			this.MS_AddColumn("LocalName", "ローカル名", 200);
+			this.MS_AddColumn("Ext", "拡張子", 100);
+			this.MS_AddColumn("Size", "サイズ", 100, false, true);
 		}
 
-		private void MS_AddColumn(string title, int width, bool checkBox = false, bool rightAlign = false)
+		private void MS_AddColumn(string name, string title, int width, bool checkBox = false, bool rightAlign = false)
 		{
 			DataGridViewColumn column;
 
@@ -85,6 +85,7 @@ namespace Charlotte
 			else
 				column = new DataGridViewTextBoxColumn();
 
+			column.Name = name;
 			column.HeaderText = title;
 			column.Width = width;
 			column.SortMode = DataGridViewColumnSortMode.Programmatic;
@@ -99,19 +100,27 @@ namespace Charlotte
 		{
 			using (new Utils.UISuspend(this.MainSheet))
 			{
-				IEnumerable<MS_Record> records = this.TVToRecords(Utils.GetNodes(tv.Nodes));
+				List<MS_Record> records = this.GetRecords(tv.Nodes);
 
 				this.MainSheet.RowCount = 0;
-				this.MainSheet.RowCount = records.Count();
+				this.MainSheet.RowCount = records.Count;
 
 				int rowidx = 0;
 				foreach (MS_Record record in records)
 				{
-					this.MS_SetRecord(this.MainSheet.Rows[rowidx], record);
+					DataGridViewRow row = this.MainSheet.Rows[rowidx];
+					int c = 0;
+
+					row.Cells[c++].Value = record.Checked;
+					row.Cells[c++].Value = record.FilePath;
+					row.Cells[c++].Value = Path.GetFileName(record.FilePath);
+					row.Cells[c++].Value = Path.GetExtension(record.FilePath);
+					row.Cells[c++].Value = Utils.TryGetFileSize(Path.Combine(Ground.RootDir, record.FilePath), 0L);
+
 					rowidx++;
 				}
 
-				this.SouthEast.Text = "" + this.MainSheet.RowCount;
+				this.SouthEast.Text = "" + this.MainSheet.RowCount; // 暫定
 			}
 			this.MainSheet.ClearSelection();
 		}
@@ -121,30 +130,11 @@ namespace Charlotte
 			throw null; // TODO MainSheet --> tv
 		}
 
-		private void MS_SetRecord(DataGridViewRow row, MS_Record record)
-		{
-			int c = 0;
-
-			row.Cells[c++].Value = record.Checked;
-			row.Cells[c++].Value = record.FilePath;
-			row.Cells[c++].Value = Path.GetFileName(record.FilePath);
-			row.Cells[c++].Value = Path.GetExtension(record.FilePath);
-			row.Cells[c++].Value = Utils.TryGetFileSize(Path.Combine(Ground.RootDir, record.FilePath), 0L);
-		}
-
-		private MS_Record MS_GetRecord(DataGridViewRow row)
-		{
-			return new MS_Record()
-			{
-				Checked = (bool)row.Cells[0].Value,
-				FilePath = (string)row.Cells[1].Value,
-			};
-		}
-
 		private class MS_Record
 		{
-			public bool Checked = false;
-			public string FilePath = @"C:\temp\Dummy.tmp"; // Dummy value
+			public bool Checked;
+			public string FilePath;
+			public TreeNode Node;
 		}
 
 		private void MainSheet_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -191,7 +181,7 @@ namespace Charlotte
 				Comp = comp,
 			});
 
-			//this.MainSheet.ClearSelection();
+			this.MainSheet.ClearSelection();
 		}
 
 		private class MS_Comp : IComparer
@@ -218,22 +208,29 @@ namespace Charlotte
 		// このへんまで MainSheet 用
 		//
 
-		private IEnumerable<MS_Record> TVToRecords(IEnumerable<TreeNode> nodes, string prefix = "")
+		private List<MS_Record> GetRecords(TreeNodeCollection rootNodes)
+		{
+			List<MS_Record> dest = new List<MS_Record>();
+			this.CollectRecord(rootNodes, "", dest);
+			return dest;
+		}
+
+		private void CollectRecord(TreeNodeCollection nodes, string prefix, List<MS_Record> dest)
 		{
 			foreach (TreeNode node in nodes)
 			{
 				if (((NodeTag)node.Tag).DirFlag)
 				{
-					foreach (MS_Record record in this.TVToRecords(Utils.GetNodes(node.Nodes), prefix + node.Text + "\\"))
-						yield return record;
+					CollectRecord(node.Nodes, prefix + node.Text + "\\", dest);
 				}
 				else
 				{
-					yield return new MS_Record()
+					dest.Add(new MS_Record()
 					{
 						Checked = node.Checked,
 						FilePath = prefix + node.Text,
-					};
+						Node = node,
+					});
 				}
 			}
 		}
