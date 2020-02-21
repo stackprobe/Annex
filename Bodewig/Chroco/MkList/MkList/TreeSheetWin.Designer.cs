@@ -34,11 +34,14 @@
 			this.アプリToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.閉じるToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.South = new System.Windows.Forms.ToolStripStatusLabel();
+			this.SouthEast = new System.Windows.Forms.ToolStripStatusLabel();
 			this.MainSheet = new System.Windows.Forms.DataGridView();
 			this.MSMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.選択解除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.South = new System.Windows.Forms.ToolStripStatusLabel();
-			this.SouthEast = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.選択されている行にチェックを入れるToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.選択されている行のチェックを外すToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.MainSheet)).BeginInit();
@@ -81,6 +84,20 @@
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
+			// South
+			// 
+			this.South.Name = "South";
+			this.South.Size = new System.Drawing.Size(610, 17);
+			this.South.Spring = true;
+			this.South.Text = "South";
+			this.South.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// SouthEast
+			// 
+			this.SouthEast.Name = "SouthEast";
+			this.SouthEast.Size = new System.Drawing.Size(59, 17);
+			this.SouthEast.Text = "SouthEast";
+			// 
 			// MainSheet
 			// 
 			this.MainSheet.AllowUserToAddRows = false;
@@ -90,6 +107,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MainSheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.MainSheet.ContextMenuStrip = this.MSMenu;
 			this.MainSheet.Location = new System.Drawing.Point(12, 27);
 			this.MainSheet.Name = "MainSheet";
 			this.MainSheet.ReadOnly = true;
@@ -105,30 +123,38 @@
 			// MSMenu
 			// 
 			this.MSMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.選択解除ToolStripMenuItem});
+            this.選択解除ToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.選択されている行にチェックを入れるToolStripMenuItem,
+            this.選択されている行のチェックを外すToolStripMenuItem});
 			this.MSMenu.Name = "MSMenu";
-			this.MSMenu.Size = new System.Drawing.Size(123, 26);
+			this.MSMenu.Size = new System.Drawing.Size(241, 98);
 			// 
 			// 選択解除ToolStripMenuItem
 			// 
 			this.選択解除ToolStripMenuItem.Name = "選択解除ToolStripMenuItem";
-			this.選択解除ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			this.選択解除ToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
 			this.選択解除ToolStripMenuItem.Text = "選択解除";
 			this.選択解除ToolStripMenuItem.Click += new System.EventHandler(this.選択解除ToolStripMenuItem_Click);
 			// 
-			// South
+			// toolStripMenuItem1
 			// 
-			this.South.Name = "South";
-			this.South.Size = new System.Drawing.Size(610, 17);
-			this.South.Spring = true;
-			this.South.Text = "South";
-			this.South.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(237, 6);
 			// 
-			// SouthEast
+			// 選択されている行にチェックを入れるToolStripMenuItem
 			// 
-			this.SouthEast.Name = "SouthEast";
-			this.SouthEast.Size = new System.Drawing.Size(59, 17);
-			this.SouthEast.Text = "SouthEast";
+			this.選択されている行にチェックを入れるToolStripMenuItem.Name = "選択されている行にチェックを入れるToolStripMenuItem";
+			this.選択されている行にチェックを入れるToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
+			this.選択されている行にチェックを入れるToolStripMenuItem.Text = "選択されている行にチェックを入れる";
+			this.選択されている行にチェックを入れるToolStripMenuItem.Click += new System.EventHandler(this.選択されている行にチェックを入れるToolStripMenuItem_Click);
+			// 
+			// 選択されている行のチェックを外すToolStripMenuItem
+			// 
+			this.選択されている行のチェックを外すToolStripMenuItem.Name = "選択されている行のチェックを外すToolStripMenuItem";
+			this.選択されている行のチェックを外すToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
+			this.選択されている行のチェックを外すToolStripMenuItem.Text = "選択されている行のチェックを外す";
+			this.選択されている行のチェックを外すToolStripMenuItem.Click += new System.EventHandler(this.選択されている行のチェックを外すToolStripMenuItem_Click);
 			// 
 			// TreeSheetWin
 			// 
@@ -171,5 +197,8 @@
 		private System.Windows.Forms.ToolStripMenuItem 選択解除ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripStatusLabel South;
 		private System.Windows.Forms.ToolStripStatusLabel SouthEast;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem 選択されている行にチェックを入れるToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 選択されている行のチェックを外すToolStripMenuItem;
 	}
 }

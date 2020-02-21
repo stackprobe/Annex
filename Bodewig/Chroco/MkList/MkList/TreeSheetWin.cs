@@ -31,7 +31,13 @@ namespace Charlotte
 
 		private void TreeSheetWin_Load(object sender, EventArgs e)
 		{
-			// noop
+			if (Ground.TreeSheetWin_W != -1)
+			{
+				this.Left = Ground.TreeSheetWin_L;
+				this.Top = Ground.TreeSheetWin_T;
+				this.Width = Ground.TreeSheetWin_W;
+				this.Height = Ground.TreeSheetWin_H;
+			}
 		}
 
 		private void TreeSheetWin_Shown(object sender, EventArgs e)
@@ -47,6 +53,13 @@ namespace Charlotte
 
 		private void TreeSheetWin_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			if (this.WindowState == FormWindowState.Normal)
+			{
+				Ground.TreeSheetWin_L = this.Left;
+				Ground.TreeSheetWin_T = this.Top;
+				Ground.TreeSheetWin_W = this.Width;
+				Ground.TreeSheetWin_H = this.Height;
+			}
 			this.MS_Save(this.TV);
 		}
 
@@ -64,19 +77,25 @@ namespace Charlotte
 		// このへんから MainSheet 用
 		//
 
+		// 列インデックス >
+
+		private const int MS_COL_CHECK = 0;
+
+		// < 列インデックス
+
 		private void MS_Init()
 		{
 			this.MainSheet.RowCount = 0;
 			this.MainSheet.ColumnCount = 0;
 
-			this.MS_AddColumn("Check", "", 50, true);
-			this.MS_AddColumn("Path", "パス", 300);
-			this.MS_AddColumn("LocalName", "ローカル名", 200);
-			this.MS_AddColumn("Ext", "拡張子", 100);
-			this.MS_AddColumn("Size", "サイズ", 100, false, true);
+			this.MS_AddColumn("", 50, true);
+			this.MS_AddColumn("パス", 300);
+			this.MS_AddColumn("ローカル名", 200);
+			this.MS_AddColumn("拡張子", 100);
+			this.MS_AddColumn("サイズ", 100, false, true);
 		}
 
-		private void MS_AddColumn(string name, string title, int width, bool checkBox = false, bool rightAlign = false)
+		private void MS_AddColumn(string title, int width, bool checkBox = false, bool rightAlign = false)
 		{
 			DataGridViewColumn column;
 
@@ -85,7 +104,6 @@ namespace Charlotte
 			else
 				column = new DataGridViewTextBoxColumn();
 
-			column.Name = name;
 			column.HeaderText = title;
 			column.Width = width;
 			column.SortMode = DataGridViewColumnSortMode.Programmatic;
@@ -116,6 +134,7 @@ namespace Charlotte
 					row.Cells[c++].Value = Path.GetFileName(record.FilePath);
 					row.Cells[c++].Value = Path.GetExtension(record.FilePath);
 					row.Cells[c++].Value = Utils.TryGetFileSize(Path.Combine(Ground.RootDir, record.FilePath), 0L);
+					row.Tag = record.Node;
 
 					rowidx++;
 				}
@@ -127,7 +146,10 @@ namespace Charlotte
 
 		private void MS_Save(TreeView tv)
 		{
-			throw null; // TODO MainSheet --> tv
+			foreach (DataGridViewRow row in this.MainSheet.Rows)
+			{
+				((TreeNode)row.Tag).Checked = (bool)row.Cells[0].Value;
+			}
 		}
 
 		private class MS_Record
@@ -196,12 +218,19 @@ namespace Charlotte
 
 		private void MainSheet_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.RowIndex != -1 && e.ColumnIndex == 0)
+			if (e.RowIndex != -1 && e.ColumnIndex == MS_COL_CHECK)
 			{
-				bool value = (bool)this.MainSheet.Rows[e.RowIndex].Cells[0].Value;
+				bool value = (bool)this.MainSheet.Rows[e.RowIndex].Cells[MS_COL_CHECK].Value;
 				value = value == false;
-				this.MainSheet.Rows[e.RowIndex].Cells[0].Value = value;
+				this.MainSheet.Rows[e.RowIndex].Cells[MS_COL_CHECK].Value = value;
 			}
+		}
+
+		private IEnumerable<DataGridViewRow> MS_GetSelectedRows()
+		{
+			foreach (DataGridViewRow row in this.MainSheet.Rows)
+				if (row.Selected)
+					yield return row;
 		}
 
 		//
@@ -238,6 +267,22 @@ namespace Charlotte
 		private void 選択解除ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			this.MainSheet.ClearSelection();
+		}
+
+		private void 選択されている行にチェックを入れるToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			foreach (DataGridViewRow row in this.MS_GetSelectedRows())
+			{
+				row.Cells[MS_COL_CHECK].Value = true;
+			}
+		}
+
+		private void 選択されている行のチェックを外すToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			foreach (DataGridViewRow row in this.MS_GetSelectedRows())
+			{
+				row.Cells[MS_COL_CHECK].Value = false;
+			}
 		}
 	}
 }

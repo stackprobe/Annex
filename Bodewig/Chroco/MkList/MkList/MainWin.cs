@@ -50,11 +50,6 @@ namespace Charlotte
 			Ground.LoadDatFile();
 
 			this.LoadLTWH();
-		}
-
-		private void MainWin_Shown(object sender, EventArgs e)
-		{
-			// -- 0001
 
 			{
 				TreeView tv = new TreeViewWP();
@@ -71,6 +66,11 @@ namespace Charlotte
 
 			this.Controls.Remove(this.TVDummy);
 			this.Controls.Add(this.TV);
+		}
+
+		private void MainWin_Shown(object sender, EventArgs e)
+		{
+			// -- 0001
 
 			// ----
 
@@ -459,6 +459,7 @@ namespace Charlotte
 		private void シートToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (this.MTBusy.Section())
+			using (this.TVEditSection())
 			{
 				this.Visible = false;
 
@@ -467,7 +468,38 @@ namespace Charlotte
 					f.ShowDialog();
 				}
 				this.Visible = true;
+				this.TVRecorrect();
 			}
+		}
+
+		private void ツリーを開くToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.TV.ExpandAll();
+		}
+
+		private void ツリーを閉じるToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.TV.CollapseAll();
+		}
+
+		private void 選択されているノードの配下を開くToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				this.TV.SelectedNode.ExpandAll();
+			}
+			catch // FIXME
+			{ }
+		}
+
+		private void 選択されているノードを閉じるToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				this.TV.SelectedNode.Collapse();
+			}
+			catch // FIXME
+			{ }
 		}
 	}
 }

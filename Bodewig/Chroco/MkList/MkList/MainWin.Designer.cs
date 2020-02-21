@@ -45,11 +45,16 @@
 			this.ファイルから読み込むToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ツールToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.シートToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.South = new System.Windows.Forms.ToolStripStatusLabel();
 			this.SouthEast = new System.Windows.Forms.ToolStripStatusLabel();
-			this.ツールToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.シートToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+			this.ツリーを開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ツリーを閉じるToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.選択されているノードの配下を開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.選択されているノードを閉じるToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TVMenu.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -80,33 +85,38 @@
             this.リフレッシュToolStripMenuItem,
             this.toolStripMenuItem3,
             this.全選択ToolStripMenuItem,
-            this.全選択解除ToolStripMenuItem});
+            this.全選択解除ToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.ツリーを開くToolStripMenuItem,
+            this.ツリーを閉じるToolStripMenuItem,
+            this.選択されているノードの配下を開くToolStripMenuItem,
+            this.選択されているノードを閉じるToolStripMenuItem});
 			this.TVMenu.Name = "TVMenu";
-			this.TVMenu.Size = new System.Drawing.Size(135, 76);
+			this.TVMenu.Size = new System.Drawing.Size(232, 192);
 			// 
 			// リフレッシュToolStripMenuItem
 			// 
 			this.リフレッシュToolStripMenuItem.Name = "リフレッシュToolStripMenuItem";
-			this.リフレッシュToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+			this.リフレッシュToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.リフレッシュToolStripMenuItem.Text = "リフレッシュ";
 			this.リフレッシュToolStripMenuItem.Click += new System.EventHandler(this.リフレッシュToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem3
 			// 
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(131, 6);
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(149, 6);
 			// 
 			// 全選択ToolStripMenuItem
 			// 
 			this.全選択ToolStripMenuItem.Name = "全選択ToolStripMenuItem";
-			this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+			this.全選択ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.全選択ToolStripMenuItem.Text = "全選択";
 			this.全選択ToolStripMenuItem.Click += new System.EventHandler(this.全選択ToolStripMenuItem_Click);
 			// 
 			// 全選択解除ToolStripMenuItem
 			// 
 			this.全選択解除ToolStripMenuItem.Name = "全選択解除ToolStripMenuItem";
-			this.全選択解除ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+			this.全選択解除ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.全選択解除ToolStripMenuItem.Text = "全選択解除";
 			this.全選択解除ToolStripMenuItem.Click += new System.EventHandler(this.全選択解除ToolStripMenuItem_Click);
 			// 
@@ -172,6 +182,21 @@
 			this.終了ToolStripMenuItem.Text = "終了";
 			this.終了ToolStripMenuItem.Click += new System.EventHandler(this.終了ToolStripMenuItem_Click);
 			// 
+			// ツールToolStripMenuItem
+			// 
+			this.ツールToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.シートToolStripMenuItem});
+			this.ツールToolStripMenuItem.Name = "ツールToolStripMenuItem";
+			this.ツールToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+			this.ツールToolStripMenuItem.Text = "ツール";
+			// 
+			// シートToolStripMenuItem
+			// 
+			this.シートToolStripMenuItem.Name = "シートToolStripMenuItem";
+			this.シートToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.シートToolStripMenuItem.Text = "シート";
+			this.シートToolStripMenuItem.Click += new System.EventHandler(this.シートToolStripMenuItem_Click);
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -197,20 +222,38 @@
 			this.SouthEast.Size = new System.Drawing.Size(59, 17);
 			this.SouthEast.Text = "SouthEast";
 			// 
-			// ツールToolStripMenuItem
+			// toolStripMenuItem4
 			// 
-			this.ツールToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.シートToolStripMenuItem});
-			this.ツールToolStripMenuItem.Name = "ツールToolStripMenuItem";
-			this.ツールToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-			this.ツールToolStripMenuItem.Text = "ツール";
+			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+			this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
 			// 
-			// シートToolStripMenuItem
+			// ツリーを開くToolStripMenuItem
 			// 
-			this.シートToolStripMenuItem.Name = "シートToolStripMenuItem";
-			this.シートToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.シートToolStripMenuItem.Text = "シート";
-			this.シートToolStripMenuItem.Click += new System.EventHandler(this.シートToolStripMenuItem_Click);
+			this.ツリーを開くToolStripMenuItem.Name = "ツリーを開くToolStripMenuItem";
+			this.ツリーを開くToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ツリーを開くToolStripMenuItem.Text = "ツリーを開く";
+			this.ツリーを開くToolStripMenuItem.Click += new System.EventHandler(this.ツリーを開くToolStripMenuItem_Click);
+			// 
+			// ツリーを閉じるToolStripMenuItem
+			// 
+			this.ツリーを閉じるToolStripMenuItem.Name = "ツリーを閉じるToolStripMenuItem";
+			this.ツリーを閉じるToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.ツリーを閉じるToolStripMenuItem.Text = "ツリーを閉じる";
+			this.ツリーを閉じるToolStripMenuItem.Click += new System.EventHandler(this.ツリーを閉じるToolStripMenuItem_Click);
+			// 
+			// 選択されているノードの配下を開くToolStripMenuItem
+			// 
+			this.選択されているノードの配下を開くToolStripMenuItem.Name = "選択されているノードの配下を開くToolStripMenuItem";
+			this.選択されているノードの配下を開くToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+			this.選択されているノードの配下を開くToolStripMenuItem.Text = "選択されているノードの配下を開く";
+			this.選択されているノードの配下を開くToolStripMenuItem.Click += new System.EventHandler(this.選択されているノードの配下を開くToolStripMenuItem_Click);
+			// 
+			// 選択されているノードを閉じるToolStripMenuItem
+			// 
+			this.選択されているノードを閉じるToolStripMenuItem.Name = "選択されているノードを閉じるToolStripMenuItem";
+			this.選択されているノードを閉じるToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+			this.選択されているノードを閉じるToolStripMenuItem.Text = "選択されているノードを閉じる";
+			this.選択されているノードを閉じるToolStripMenuItem.Click += new System.EventHandler(this.選択されているノードを閉じるToolStripMenuItem_Click);
 			// 
 			// MainWin
 			// 
@@ -262,6 +305,11 @@
 		private System.Windows.Forms.ToolStripStatusLabel SouthEast;
 		private System.Windows.Forms.ToolStripMenuItem ツールToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem シートToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+		private System.Windows.Forms.ToolStripMenuItem ツリーを開くToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ツリーを閉じるToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 選択されているノードの配下を開くToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 選択されているノードを閉じるToolStripMenuItem;
 	}
 }
 
