@@ -39,6 +39,17 @@ ofiles.exe [/D 出力ファイル] [入力ディレクトリ]
 
 - - -
 
+★パスリストファイル作成ツール(GUI)
+
+MkList\MkList.exe
+
+
+
+既知の問題
+	ノード数が 30,000 を超えると急激に重くなる。
+
+- - -
+
 ダウンロードページ
 
 	http://stackprobe.dip.jp/Chroco/index.html

@@ -121,6 +121,8 @@ namespace Charlotte
 				{
 					// -- 9000
 
+					this.TVClear();
+
 					this.SaveLTWH();
 
 					Ground.SaveDatFile();
@@ -237,18 +239,28 @@ namespace Charlotte
 				{
 					string dir = Ground.RootDir;
 
-					if (SaveLoadDialogs.SelectFolder(ref dir, "ルートフォルダを開いてください"))
+					Ground.OpenedRootDir = "";
+
+					if (SaveLoadDialogs.SelectFolder(ref dir, "ルートフォルダに指定するフォルダを開いてください"))
 					{
 						dir = FileTools.MakeFullPath(dir);
 
 						if (Directory.Exists(dir) == false)
 							throw new Exception("フォルダは存在しません。" + dir);
 
-						this.TV.Nodes.Clear();
+						this.TVClear();
 
 						using (new Utils.UISuspend(this.TV))
 						{
-							this.AddTo(this.TV.Nodes, dir);
+							ProgressDlg.Perform(interlude =>
+							{
+								this.AT_Pulser = new Pulser(count =>
+								{
+									interlude("Node Counter: " + count);
+								});
+
+								this.AddTo(this.TV.Nodes, dir);
+							});
 						}
 						Ground.RootDir = dir;
 						Ground.OpenedRootDir = dir;
@@ -260,10 +272,12 @@ namespace Charlotte
 				catch (Exception ex)
 				{
 					MessageDlgTools.Warning("失敗：フォルダを開く", ex);
-					this.TV.Nodes.Clear();
+					this.TVClear();
 				}
 			}
 		}
+
+		private Pulser AT_Pulser;
 
 		private void AddTo(TreeNodeCollection dest, string targDir)
 		{
@@ -285,6 +299,8 @@ namespace Charlotte
 				};
 
 				dest.Add(node);
+
+				this.AT_Pulser.Invoke();
 			}
 			foreach (string file in files)
 			{
@@ -296,6 +312,8 @@ namespace Charlotte
 				};
 
 				dest.Add(node);
+
+				this.AT_Pulser.Invoke();
 			}
 		}
 
@@ -455,6 +473,15 @@ namespace Charlotte
 				parent.Checked = Utils.GetNodes(parent.Nodes).Any(node => node.Checked);
 			}
 		}
+
+		private void TVClear()
+		{
+			this.TV.Nodes.Clear(); // todo アイテム数が多いとやたら重い。
+		}
+
+		//
+		// このへんまで TV 用
+		//
 
 		private void シートToolStripMenuItem_Click(object sender, EventArgs e)
 		{

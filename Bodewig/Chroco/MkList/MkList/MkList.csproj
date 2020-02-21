@@ -66,7 +66,14 @@
     </Compile>
     <Compile Include="NodeTag.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgressDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressDlg.Designer.cs">
+      <DependentUpon>ProgressDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pulser.cs" />
     <Compile Include="TreeSheetWin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +86,9 @@
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="MainWin.resx">
       <DependentUpon>MainWin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressDlg.resx">
+      <DependentUpon>ProgressDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

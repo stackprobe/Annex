@@ -11,7 +11,7 @@ namespace Charlotte
 	public static class Ground
 	{
 		public static string RootDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-		public static string LastFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "filelist.txt");
+		public static string LastFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "パスリスト.txt");
 
 		public static int MainWin_L;
 		public static int MainWin_T;

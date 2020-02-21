@@ -123,21 +123,27 @@ namespace Charlotte
 				this.MainSheet.RowCount = 0;
 				this.MainSheet.RowCount = records.Count;
 
-				int rowidx = 0;
-				foreach (MS_Record record in records)
+				ProgressDlg.Perform(interlude =>
 				{
-					DataGridViewRow row = this.MainSheet.Rows[rowidx];
-					int c = 0;
+					int rowidx_denom = Math.Max(1, records.Count / 31);
 
-					row.Cells[c++].Value = record.Checked;
-					row.Cells[c++].Value = record.FilePath;
-					row.Cells[c++].Value = Path.GetFileName(record.FilePath);
-					row.Cells[c++].Value = Path.GetExtension(record.FilePath);
-					row.Cells[c++].Value = Utils.TryGetFileSize(Path.Combine(Ground.RootDir, record.FilePath), 0L);
-					row.Tag = record.Node;
+					for (int rowidx = 0; rowidx < records.Count; rowidx++)
+					{
+						if (rowidx % rowidx_denom == 0)
+							interlude((rowidx * 100.0 / records.Count) + " %");
 
-					rowidx++;
-				}
+						MS_Record record = records[rowidx];
+						DataGridViewRow row = this.MainSheet.Rows[rowidx];
+						int c = 0;
+
+						row.Cells[c++].Value = record.Checked;
+						row.Cells[c++].Value = record.FilePath;
+						row.Cells[c++].Value = Path.GetFileName(record.FilePath);
+						row.Cells[c++].Value = Path.GetExtension(record.FilePath);
+						row.Cells[c++].Value = Utils.TryGetFileSize(Path.Combine(Ground.RootDir, record.FilePath), 0L);
+						row.Tag = record.Node;
+					}
+				});
 
 				this.SouthEast.Text = "" + this.MainSheet.RowCount; // 暫定
 			}
