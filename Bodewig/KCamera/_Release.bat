@@ -8,4 +8,4 @@ C:\Factory\Tools\xcp.exe doc out
 
 C:\Factory\SubTools\zip.exe /O out KCamera
 
-PAUSE
+IF NOT "%1" == "/-P" PAUSE

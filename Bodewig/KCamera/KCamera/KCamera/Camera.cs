@@ -77,6 +77,13 @@ namespace Charlotte
 						writer.WriteLine("DVLogMonitor: none");
 				}
 			}
+
+			Ground.SLog = new SimpleLogger()
+			{
+				LogFile = Path.Combine(destDir, "SimpleLog.log"),
+			};
+
+			Ground.SLog.WriteLog("起動しました。");
 		}
 
 		private FilterInfo GetVideoCaptureDevice(FilterInfoCollection fic)

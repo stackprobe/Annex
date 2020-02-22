@@ -61,6 +61,8 @@
     <Compile Include="DiffValueLog.cs" />
     <Compile Include="DVLogMonitor.cs" />
     <Compile Include="DVLogMonitorPrm.cs" />
+    <Compile Include="Ground.cs" />
+    <Compile Include="SimpleLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

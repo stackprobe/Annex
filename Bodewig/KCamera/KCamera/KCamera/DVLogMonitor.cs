@@ -32,6 +32,15 @@ namespace Charlotte
 				return;
 
 			this.LastDifferent = this.ValueMax_Max.Value * this.Prm.DiffMagnifBorder <= value;
+
+			if (this.LastDifferent) // test / 暫定
+			{
+				Ground.SLog.WriteLog(string.Format("CheckDifferent_LastDifferent_True: {0} * {1} <= {2}",
+					this.ValueMax_Max.Value,
+					this.Prm.DiffMagnifBorder,
+					value
+					));
+			}
 		}
 	}
 }
