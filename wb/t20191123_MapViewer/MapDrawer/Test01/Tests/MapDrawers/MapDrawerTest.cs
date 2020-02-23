@@ -5,6 +5,8 @@ using System.Text;
 using Charlotte.MapDrawers;
 using System.Drawing;
 using Charlotte.Tools;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace Charlotte.Tests.MapDrawers
 {
@@ -25,6 +27,70 @@ namespace Charlotte.Tests.MapDrawers
 		private void Test01_B(Image img)
 		{
 			new Canvas2(img).Save(string.Format(@"C:\temp\{0}.png", ImageFileCount++));
+		}
+
+		public void Test02()
+		{
+			//Test02b(35.0, 135.0, 10.0, 100.0, 100, 10, 0.5); // ng
+			//Test02b(35.0, 135.0, 10.0, 100.0, 100, 10, 0.9); // ng
+			Test02b(35.0, 135.0, 10.0, 100.0, 100, 10, 1.0);
+			//Test02b(35.0, 135.0, 10.0, 600.0, 400, 20, 1.0);
+		}
+
+		private void Test02b(double lat, double lon, double mpdStart, double mpdEnd, int frameCount, int fps, double curveExp)
+		{
+			MapDrawer md = new MapDrawer();
+
+			using (WorkingDir wd = new WorkingDir())
+			{
+				string imgsDir = wd.MakePath();
+
+				FileTools.CreateDir(imgsDir);
+
+				for (int frame = 0; frame < frameCount; frame++)
+				{
+					double rate = (double)frame / (frameCount - 1);
+					double rate2 = GetRate2(rate);
+
+					rate *= 2.0;
+					rate -= 1.0;
+					rate = UPow(rate, curveExp);
+					rate += 1.0;
+					rate *= 0.5;
+
+					Console.WriteLine(frame + ", " + rate + ", " + rate2);
+
+					//double mpd = mpdStart + (mpdEnd - mpdStart) * rate;
+					double mpd = mpdStart + (mpdEnd - mpdStart) * rate * rate2;
+
+					new Canvas2(md.Draw(lat, lon, mpd)).Save(Path.Combine(imgsDir, string.Format("{0}.jpg", frame)), ImageFormat.Jpeg, 100);
+				}
+
+				ProcessTools.Batch(new string[]
+				{
+					@"DEL C:\temp\Map.mp4",
+					string.Format(@"C:\app\ffmpeg-4.1.3-win64-shared\bin\ffmpeg.exe -r {0} -i %%d.jpg C:\temp\Map.mp4", fps),
+					@"START C:\temp",
+				},
+				imgsDir
+				);
+			}
+		}
+
+		private double GetRate2(double rate)
+		{
+			double b = 2.0;
+			double e = 2.0;
+			double x = Math.Pow(b, e);
+			return (Math.Pow(b, rate * (e - 1.0) + 1.0) - b) / (x - b);
+		}
+
+		private static double UPow(double x, double y)
+		{
+			if (x < 0.0)
+				return -Math.Pow(-x, y);
+			else
+				return Math.Pow(x, y);
 		}
 	}
 }

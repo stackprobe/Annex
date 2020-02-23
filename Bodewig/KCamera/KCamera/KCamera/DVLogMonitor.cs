@@ -35,9 +35,10 @@ namespace Charlotte
 
 			if (this.LastDifferent) // test / 暫定
 			{
-				Ground.SLog.WriteLog(string.Format("CheckDifferent_LastDifferent_True: {0} * {1} <= {2}",
+				Ground.SLog.WriteLog(string.Format("CheckDifferent_LastDifferent_True: {0:F20} * {1} == {2:F20} <= {3:F20}",
 					this.ValueMax_Max.Value,
 					this.Prm.DiffMagnifBorder,
+					this.ValueMax_Max.Value * this.Prm.DiffMagnifBorder,
 					value
 					));
 			}
