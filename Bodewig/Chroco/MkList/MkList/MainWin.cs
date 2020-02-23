@@ -51,6 +51,9 @@ namespace Charlotte
 
 			this.LoadLTWH();
 
+			this.ファイルサイズも読み込むToolStripMenuItem.Checked = Ground.TreeSheet_CheckFileSize;
+			this.高速終了ToolStripMenuItem.Checked = Ground.FastEndProgram;
+
 			{
 				TreeView tv = new TreeViewWP();
 
@@ -121,11 +124,19 @@ namespace Charlotte
 				{
 					// -- 9000
 
-					this.TVClear();
-
 					this.SaveLTWH();
 
 					Ground.SaveDatFile();
+
+					if (Ground.FastEndProgram)
+						Environment.Exit(0);
+
+					ProgressDlg.Perform(interlude =>
+					{
+						interlude("終了しています...");
+
+						this.TVClear();
+					});
 
 					// ----
 				}
@@ -186,7 +197,7 @@ namespace Charlotte
 			}
 		}
 
-		private void 全選択ToolStripMenuItem_Click(object sender, EventArgs e)
+		private void 全チェックToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (this.TVEditSection())
 			{
@@ -197,7 +208,7 @@ namespace Charlotte
 			}
 		}
 
-		private void 全選択解除ToolStripMenuItem_Click(object sender, EventArgs e)
+		private void 全チェック解除ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			using (this.TVEditSection())
 			{
@@ -248,15 +259,19 @@ namespace Charlotte
 						if (Directory.Exists(dir) == false)
 							throw new Exception("フォルダは存在しません。" + dir);
 
-						this.TVClear();
-
 						using (new Utils.UISuspend(this.TV))
 						{
 							ProgressDlg.Perform(interlude =>
 							{
+								interlude("ツリーをクリアしています...");
+
+								this.TVClear();
+
+								interlude("検索しています...");
+
 								this.AT_Pulser = new Pulser(count =>
 								{
-									interlude("Node Counter: " + count);
+									interlude("読み込んだアイテム数：" + count);
 								});
 
 								this.AddTo(this.TV.Nodes, dir);
@@ -527,6 +542,20 @@ namespace Charlotte
 			}
 			catch // FIXME
 			{ }
+		}
+
+		private void ファイルサイズも読み込むToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.ファイルサイズも読み込むToolStripMenuItem.Checked = this.ファイルサイズも読み込むToolStripMenuItem.Checked == false;
+
+			Ground.TreeSheet_CheckFileSize = this.ファイルサイズも読み込むToolStripMenuItem.Checked;
+		}
+
+		private void 高速終了ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.高速終了ToolStripMenuItem.Checked = this.高速終了ToolStripMenuItem.Checked == false;
+
+			Ground.FastEndProgram = this.高速終了ToolStripMenuItem.Checked;
 		}
 	}
 }

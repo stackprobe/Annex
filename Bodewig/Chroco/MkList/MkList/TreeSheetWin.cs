@@ -140,7 +140,9 @@ namespace Charlotte
 						row.Cells[c++].Value = record.FilePath;
 						row.Cells[c++].Value = Path.GetFileName(record.FilePath);
 						row.Cells[c++].Value = Path.GetExtension(record.FilePath);
-						row.Cells[c++].Value = Utils.TryGetFileSize(Path.Combine(Ground.RootDir, record.FilePath), 0L);
+						row.Cells[c++].Value = Ground.TreeSheet_CheckFileSize ?
+							Utils.TryGetFileSize(Path.Combine(Ground.RootDir, record.FilePath), -1L) :
+							-2L;
 						row.Tag = record.Node;
 					}
 				});

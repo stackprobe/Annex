@@ -23,6 +23,9 @@ namespace Charlotte
 		public static int TreeSheetWin_W = -1; // -1 == TreeSheetWin_LTWH 未設定
 		public static int TreeSheetWin_H;
 
+		public static bool TreeSheet_CheckFileSize = false;
+		public static bool FastEndProgram = false;
+
 		private static string DatFile
 		{
 			get
@@ -56,6 +59,9 @@ namespace Charlotte
 				TreeSheetWin_W = int.Parse(lines[c++]);
 				TreeSheetWin_H = int.Parse(lines[c++]);
 
+				TreeSheet_CheckFileSize = int.Parse(lines[c++]) != 0;
+				FastEndProgram = int.Parse(lines[c++]) != 0;
+
 				// ----
 			}
 			catch (Exception e)
@@ -83,6 +89,9 @@ namespace Charlotte
 				lines.Add("" + TreeSheetWin_T);
 				lines.Add("" + TreeSheetWin_W);
 				lines.Add("" + TreeSheetWin_H);
+
+				lines.Add("" + (TreeSheet_CheckFileSize ? 1 : 0));
+				lines.Add("" + (FastEndProgram ? 1 : 0));
 
 				// ----
 

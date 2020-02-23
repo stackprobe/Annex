@@ -47,7 +47,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Teal;
-			this.ClientSize = new System.Drawing.Size(200, 40);
+			this.ClientSize = new System.Drawing.Size(300, 40);
 			this.Controls.Add(this.PDMessage);
 			this.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
