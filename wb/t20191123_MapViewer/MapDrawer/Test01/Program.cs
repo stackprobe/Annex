@@ -26,7 +26,8 @@ namespace Charlotte
 		private void Main2(ArgsReader ar)
 		{
 			//new MapDrawerTest().Test01();
-			new MapDrawerTest().Test02();
+			//new MapDrawerTest().Test02();
+			new MapDrawerTest().Test03();
 			//new MeterLatLonTest().Test01();
 		}
 	}

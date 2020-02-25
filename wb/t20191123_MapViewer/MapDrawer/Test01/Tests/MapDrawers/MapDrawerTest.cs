@@ -33,8 +33,8 @@ namespace Charlotte.Tests.MapDrawers
 		{
 			//Test02b(35.0, 135.0, 10.0, 100.0, 100, 10, 0.5); // ng
 			//Test02b(35.0, 135.0, 10.0, 100.0, 100, 10, 0.9); // ng
-			Test02b(35.0, 135.0, 10.0, 100.0, 100, 10, 1.0);
-			//Test02b(35.0, 135.0, 10.0, 600.0, 400, 20, 1.0);
+			//Test02b(35.0, 135.0, 10.0, 100.0, 100, 10, 1.0);
+			Test02b(35.0, 135.0, 10.0, 600.0, 400, 20, 1.0);
 		}
 
 		private void Test02b(double lat, double lon, double mpdStart, double mpdEnd, int frameCount, int fps, double curveExp)
@@ -91,6 +91,68 @@ namespace Charlotte.Tests.MapDrawers
 				return -Math.Pow(-x, y);
 			else
 				return Math.Pow(x, y);
+		}
+
+		public void Test03()
+		{
+			//Test03b(35.0, 135.0, 10.0, 30.0, 100, 10, 0.01, 0.1);
+			//Test03b(35.0, 135.0, 30.0, 10.0, 100, 10, 0.01, 0.1);
+
+			//Test03b(35.0, 135.0, 10.0, 600.0, 400, 20, 0.01, 0.1);
+
+			Test03b(35.0, 135.0, 10.0, 600.0, 200, 20, 0.07, 0.1);
+			//Test03b(35.0, 135.0, 10.0, 600.0, 200, 20, 0.05, 0.2);
+			//Test03b(35.0, 135.0, 10.0, 600.0, 200, 20, 0.037, 0.3);
+		}
+
+		private void Test03b(double lat, double lon, double mpdStart, double mpdEnd, int frameCount, int fps, double acceleMax, double approachRate)
+		{
+			MapDrawer md = new MapDrawer();
+
+			using (WorkingDir wd = new WorkingDir())
+			{
+				string imgsDir = wd.MakePath();
+
+				FileTools.CreateDir(imgsDir);
+
+				double mpd = mpdStart;
+				double lastSpeed = 0.0;
+
+				for (int frame = 0; frame < frameCount; frame++)
+				{
+					double speed = (mpdEnd - mpd) * approachRate;
+
+					speed = AdjustSpeed(speed, lastSpeed, acceleMax);
+
+					mpd += speed;
+					lastSpeed = speed;
+
+					Console.WriteLine(frame + ", " + mpd);
+
+					new Canvas2(md.Draw(lat, lon, mpd)).Save(Path.Combine(imgsDir, string.Format("{0}.jpg", frame)), ImageFormat.Jpeg, 100);
+				}
+
+				ProcessTools.Batch(new string[]
+				{
+					@"DEL C:\temp\Map.mp4",
+					string.Format(@"C:\app\ffmpeg-4.1.3-win64-shared\bin\ffmpeg.exe -r {0} -i %%d.jpg C:\temp\Map.mp4", fps),
+					@"START C:\temp",
+				},
+				imgsDir
+				);
+			}
+		}
+
+		private static double AdjustSpeed(double speed, double lastSpeed, double acceleMax)
+		{
+			if (acceleMax < Math.Abs(speed) - Math.Abs(lastSpeed))
+			{
+				if (speed < lastSpeed)
+					speed = lastSpeed - acceleMax;
+				else
+					speed = lastSpeed + acceleMax;
+			}
+			return speed;
 		}
 	}
 }
