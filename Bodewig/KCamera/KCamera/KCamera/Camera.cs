@@ -72,7 +72,10 @@ namespace Charlotte
 					writer.WriteLine("起動日時: " + DateTime.Now);
 
 					if (dvlmPrm != null)
+					{
 						writer.WriteLine(string.Format("DVLogMonitor: {0} 分前から 1 分前までの最大評価値の {1} 倍の評価値を検出すると、差分と見なします。", dvlmPrm.MonitorCount, dvlmPrm.DiffMagnifBorder));
+						writer.WriteLine(string.Format("但し、最大評価値の最小値は {0:F20} とします。", dvlmPrm.ValueMax_Max_Min));
+					}
 					else
 						writer.WriteLine("DVLogMonitor: none");
 				}

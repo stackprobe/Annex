@@ -9,6 +9,7 @@ namespace Charlotte
 	{
 		public int MonitorCount; // 1 ～
 		public int DiffMagnifBorder; // 1 ～
+		public double ValueMax_Max_Min; // 0.0 ～
 
 		// <---- prm
 	}

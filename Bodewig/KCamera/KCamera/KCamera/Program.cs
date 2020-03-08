@@ -64,12 +64,16 @@ namespace Charlotte
 						dvlmPrm = new DVLogMonitorPrm();
 						dvlmPrm.MonitorCount = int.Parse(ar.NextArg());
 						dvlmPrm.DiffMagnifBorder = int.Parse(ar.NextArg());
+						dvlmPrm.ValueMax_Max_Min = double.Parse(ar.NextArg());
 
 						if (dvlmPrm.MonitorCount < 1 || IntTools.IMAX < dvlmPrm.MonitorCount)
 							throw new ArgumentException("dvlmPrm.MonitorCount is not 1 ～ IMAX");
 
 						if (dvlmPrm.DiffMagnifBorder < 1 || IntTools.IMAX < dvlmPrm.DiffMagnifBorder)
 							throw new ArgumentException("dvlmPrm.DiffMagnifBorder is not 1 ～ IMAX");
+
+						if (dvlmPrm.ValueMax_Max_Min < 0.0 || (double)IntTools.IMAX < dvlmPrm.ValueMax_Max_Min)
+							throw new ArgumentException("dvlmPrm.ValueMax_Max_Min is not 0.0 ～ IMAX");
 					}
 					string cameraNamePtn = ar.NextArg();
 					string destDir = ar.NextArg();
