@@ -11,8 +11,8 @@ namespace Charlotte
 {
 	public class MergedList
 	{
-		private const string MERGED_HTML_FILE = @"C:\wb2\20200306_Merged\Merged.html";
-		//private const string MERGED_HTML_FILE = @"C:\wb2\20200310_Merged_mini\Merged.html"; // test
+		//private const string MERGED_HTML_FILE = @"C:\wb2\20200306_Merged\Merged.html";
+		private const string MERGED_HTML_FILE = @"C:\wb2\20200310_Merged_mini\Merged.html"; // test
 
 		public class RowInfo
 		{
