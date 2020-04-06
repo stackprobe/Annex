@@ -41,7 +41,7 @@ namespace Charlotte
 			Test01_a(@"C:\temp\rlg.wav", @"C:\temp\rlg.csv", @"C:\temp\rlg.hz", @"C:\temp\rlg.mp4");
 		}
 
-		private const double DELAY_SEC = 0.2;
+		private const double SOUND_DELAY_SEC = 0.2;
 
 		private const int DFT_SIZE = 1000;
 		//private const int DFT_SIZE = 2000;
@@ -128,7 +128,7 @@ namespace Charlotte
 					if (wavData.Length <= wavDataPos)
 						break;
 
-					wavDataPos += DoubleTools.ToInt(DELAY_SEC * src_hz);
+					wavDataPos += DoubleTools.ToInt(SOUND_DELAY_SEC * src_hz);
 
 					{
 						int img_w = RetHzList.Length * BAR_SPAN;
@@ -137,6 +137,8 @@ namespace Charlotte
 							img_w++;
 
 						Canvas2 canvas = new Canvas2(img_w, IMG_H);
+
+						canvas.AntiAliasing = false;
 
 						using (Graphics g = canvas.GetGraphics())
 						{
@@ -153,7 +155,8 @@ namespace Charlotte
 								double spctR = dftR.Perform(ret_hz);
 								double spct = (spctL + spctR) / 2.0;
 
-								spct *= 3.0 + 7.0 * retHzRate;
+								//spct *= 3.0 + 7.0 * retHzRate;
+								spct *= 4.0 + 8.0 * retHzRate;
 
 								lastSpctList[retHzIndex] -= 10.0;
 								lastSpctList[retHzIndex] = Math.Max(lastSpctList[retHzIndex], spct);
