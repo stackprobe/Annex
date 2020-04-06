@@ -49,8 +49,6 @@ namespace Charlotte
 		//private const int FPS = 10; // 再生に支障
 		private const int FPS = 20;
 
-		private const double SPCT_HI_RATE = 5.0;
-
 #if false
 		private const int BAR_W = 8;
 		private const int BAR_SPAN = 10;
@@ -61,7 +59,7 @@ namespace Charlotte
 		private const int BAR_W = 2;
 		private const int BAR_SPAN = 3;
 #endif
-		private const int IMG_H = 500;
+		private const int IMG_H = 300;
 
 		private static int[] RetHzList = null;
 
@@ -119,6 +117,8 @@ namespace Charlotte
 				FileTools.CreateDir(imgDir);
 				File.Copy(rWavFile, audioFile);
 
+				double[] lastSpctList = new double[RetHzList.Length];
+
 				for (int i = 0; ; i++)
 				{
 					int wavDataPos = (i * src_hz) / FPS;
@@ -138,16 +138,24 @@ namespace Charlotte
 						{
 							int x = 0;
 
-							foreach (int ret_hz in RetHzList)
+							for (int retHzIndex = 0; retHzIndex < RetHzList.Length; retHzIndex++)
 							{
+								double retHzRate = retHzIndex * 1.0 / (RetHzList.Length - 1);
+								int ret_hz = RetHzList[retHzIndex];
+
 								double spctL = DFT.Perform(wavData, wavDataPos, 0, src_hz, ret_hz, DFT_SIZE);
 								double spctR = DFT.Perform(wavData, wavDataPos, 1, src_hz, ret_hz, DFT_SIZE);
 								double spct = (spctL + spctR) / 2.0;
 
-								spct *= SPCT_HI_RATE;
+								spct *= 3.0 + 7.0 * retHzRate;
+
+								lastSpctList[retHzIndex] -= 10.0;
+								lastSpctList[retHzIndex] = Math.Max(lastSpctList[retHzIndex], spct);
 
 								int y = DoubleTools.ToInt(spct);
+								int y2 = DoubleTools.ToInt(lastSpctList[retHzIndex]);
 
+								g.FillRectangle(Brushes.Cyan, x, IMG_H - y2, BAR_W, y2);
 								g.FillRectangle(Brushes.Orange, x, IMG_H - y, BAR_W, y);
 
 								x += BAR_SPAN;
