@@ -87,7 +87,7 @@ namespace Charlotte
 				for (int offset = 0; offset < WINDOW_SIZE; offset++)
 				{
 					double aa = monHz * offset;
-					double vv = wavData[offset];
+					double vv = wavPart[offset];
 
 					cc += Math.Cos(aa) * vv;
 					ss += Math.Sin(aa) * vv;
@@ -100,6 +100,16 @@ namespace Charlotte
 		private static double Hamming(double rate)
 		{
 			return 0.5 - 0.5 * Math.Cos(rate * Math.PI * 2.0);
+		}
+
+		public int GetLength()
+		{
+			return this.WavDataL.Count;
+		}
+
+		public int GetHz()
+		{
+			return this.WavHz;
 		}
 	}
 }
