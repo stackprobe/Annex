@@ -28,7 +28,20 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			MessageBox.Show(APP_TITLE); // ---- 0001
+			Test01();
+		}
+
+		private void Test01()
+		{
+			WallPicture.Perform(
+				//////////////////////////////////////////////////////////// $_git:secret
+				).Save(@"C:\temp\1.png");
+			WallPicture.Perform(
+				/////////////////////////////////////////////////////////////////////////////// $_git:secret
+				).Save(@"C:\temp\2.png");
+			WallPicture.Perform(
+				//////////////////////////////////////////////////////////////////////////////////////// $_git:secret
+				).Save(@"C:\temp\3.png");
 		}
 	}
 }

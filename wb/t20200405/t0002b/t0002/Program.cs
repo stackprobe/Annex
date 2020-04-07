@@ -81,7 +81,7 @@ namespace Charlotte
 				for (int hz = 20; hz < 1000; hz += 20)
 					dest.Add(hz);
 #else
-				for (int hz = 20; hz <
+				for (int hz = 20; hz <=
 					//2000
 					//3000
 					4200 // ピアノの周波数： 27.5 Hz ～ 4186.009 Hz
