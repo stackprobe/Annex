@@ -28,7 +28,21 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			MessageBox.Show(APP_TITLE); // ---- 0001
+			Test01();
+		}
+
+		private void Test01()
+		{
+			for (int c = 0; c < 24; c++)
+			{
+				double d = c * (Math.PI * 2.0) / 24.0;
+				double s = 0.0;
+
+				for (double a = 0.0; a < Math.PI * 2.0 * 10.0; a += 0.001)
+					s += Math.Sin(a) * Math.Sin(a + d);
+
+				Console.WriteLine(DoubleTools.ToInt(d * 360.0 / (Math.PI * 2.0)) + " ==> " + s.ToString("F9"));
+			}
 		}
 	}
 }
