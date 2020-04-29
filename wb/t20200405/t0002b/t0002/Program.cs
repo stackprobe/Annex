@@ -100,8 +100,8 @@ namespace Charlotte
 			{
 				wavData = reader.ReadToEnd().Select(v => new double[]
 				{
-					(int.Parse(v[0]) / 65535.0 - 0.5) * 2.0,
-					(int.Parse(v[1]) / 65535.0 - 0.5) * 2.0,
+					(int.Parse(v[0]) / 65536.0 - 0.5) * 2.0,
+					(int.Parse(v[1]) / 65536.0 - 0.5) * 2.0,
 				})
 				.ToArray();
 			}

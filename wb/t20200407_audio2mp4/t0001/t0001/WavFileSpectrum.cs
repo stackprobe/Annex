@@ -45,8 +45,8 @@ namespace Charlotte
 						if (row == null)
 							break;
 
-						this.WavDataL.Add((int.Parse(row[0]) / 65535.0 - 0.5) * 2.0);
-						this.WavDataR.Add((int.Parse(row[1]) / 65535.0 - 0.5) * 2.0);
+						this.WavDataL.Add((int.Parse(row[0]) / 65536.0 - 0.5) * 2.0);
+						this.WavDataR.Add((int.Parse(row[1]) / 65536.0 - 0.5) * 2.0);
 					}
 				}
 				this.WavHz = int.Parse(File.ReadAllText(hzFile));
