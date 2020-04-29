@@ -12,7 +12,7 @@ namespace Charlotte
 {
 	class Program
 	{
-		public const string APP_IDENT = "{56e576cb-2a4c-44f3-b35a-5d21a03b3ff4}";
+		public const string APP_IDENT = "{42ce69d5-b67d-4935-ace3-17af956de147}";
 		public const string APP_TITLE = "t0002";
 
 		static void Main(string[] args)
