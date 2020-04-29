@@ -74,7 +74,7 @@ namespace Charlotte
 			double[] wavPart = new double[WINDOW_SIZE];
 
 			for (int offset = 0; offset < WINDOW_SIZE; offset++)
-				wavPart[offset] = wavData[IntTools.Range(startIndex + offset, 0, wavData.Count - 1)];
+				wavPart[offset] = wavData[IntTools.Range(startIndex + (int)(WavHz * SOUND_DELAY_SEC) + offset, 0, wavData.Count - 1)];
 
 			List<double> spectrum = new List<double>();
 
@@ -88,9 +88,11 @@ namespace Charlotte
 				{
 					double aa = monHz * offset;
 					double vv = wavPart[offset];
+					double rate = offset * 1.0 / (WINDOW_SIZE - 1);
+					double hh = Hamming(rate);
 
-					cc += Math.Cos(aa) * vv;
-					ss += Math.Sin(aa) * vv;
+					cc += Math.Cos(aa) * vv * hh;
+					ss += Math.Sin(aa) * vv * hh;
 				}
 				spectrum.Add(cc * cc + ss * ss);
 			}
