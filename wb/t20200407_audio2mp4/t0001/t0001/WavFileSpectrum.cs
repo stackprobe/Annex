@@ -95,6 +95,7 @@ namespace Charlotte
 					ss += Math.Sin(aa) * vv * hh;
 				}
 				spectrum.Add(cc * cc + ss * ss);
+				//spectrum.Add(Math.Abs(cc) + Math.Abs(ss)); // いまいち
 			}
 			return spectrum.ToArray();
 		}
