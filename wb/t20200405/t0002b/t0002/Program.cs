@@ -138,9 +138,7 @@ namespace Charlotte
 
 						Canvas2 canvas = new Canvas2(img_w, IMG_H);
 
-						canvas.AntiAliasing = false;
-
-						using (Graphics g = canvas.GetGraphics())
+						using (Graphics g = canvas.GetGraphics(false))
 						{
 							DFT dftL = new DFT(wavData, wavDataPos, 0, src_hz, DFT_SIZE);
 							DFT dftR = new DFT(wavData, wavDataPos, 1, src_hz, DFT_SIZE);

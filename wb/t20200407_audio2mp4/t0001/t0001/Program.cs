@@ -67,8 +67,7 @@ namespace Charlotte
 					double[] spct = spctList[i];
 
 					Canvas2 cvs = new Canvas2(canvas.GetWidth(), canvas.GetHeight());
-					cvs.AntiAliasing = false;
-					using (Graphics g = cvs.GetGraphics())
+					using (Graphics g = cvs.GetGraphics(false))
 					{
 						g.Clear(Color.Transparent);
 
