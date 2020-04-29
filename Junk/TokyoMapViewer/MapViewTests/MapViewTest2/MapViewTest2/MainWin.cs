@@ -93,7 +93,7 @@ namespace Charlotte
 						vDlt = Gnd.I.Delta < 0 ? -1 : 1;
 
 					Gnd.I.DegreePerMDot -= vDlt;
-					Gnd.I.DegreePerMDot = IntTools.Range(Gnd.I.DegreePerMDot, 1, 10000);
+					Gnd.I.DegreePerMDot = IntTools.ToRange(Gnd.I.DegreePerMDot, 1, 10000);
 
 					Gnd.I.Delta = 0;
 				}
@@ -163,8 +163,8 @@ namespace Charlotte
 					double x = Gnd.I.CenterLatLon.X;
 					double y = Gnd.I.CenterLatLon.Y;
 
-					x = DoubleTools.Range(x, 120.0, 160.0);
-					y = DoubleTools.Range(y, 20.0, 50.0);
+					x = DoubleTools.ToRange(x, 120.0, 160.0);
+					y = DoubleTools.ToRange(y, 20.0, 50.0);
 
 					Gnd.I.CenterLatLon.X = x;
 					Gnd.I.CenterLatLon.Y = y;

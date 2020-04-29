@@ -18,7 +18,7 @@ namespace Charlotte
 
 		public void Add(double diffValue)
 		{
-			this.CountList[IntTools.Range((int)(diffValue * 1000000.0), 0, this.CountList.Length - 1)]++;
+			this.CountList[IntTools.ToRange((int)(diffValue * 1000000.0), 0, this.CountList.Length - 1)]++;
 
 			this.AddToLog(diffValue);
 		}

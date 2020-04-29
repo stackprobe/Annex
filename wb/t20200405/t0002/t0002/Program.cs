@@ -92,8 +92,8 @@ namespace Charlotte
 						{
 							for (int j = 0; j < DFT_SIZE; j++)
 							{
-								int l = IntTools.Range(DoubleTools.ToInt(lSpct[j] * SPCT_HI_RATE * IMG_H), 0, IMG_H);
-								int r = IntTools.Range(DoubleTools.ToInt(rSpct[j] * SPCT_HI_RATE * IMG_H), 0, IMG_H);
+								int l = IntTools.ToRange(DoubleTools.ToInt(lSpct[j] * SPCT_HI_RATE * IMG_H), 0, IMG_H);
+								int r = IntTools.ToRange(DoubleTools.ToInt(rSpct[j] * SPCT_HI_RATE * IMG_H), 0, IMG_H);
 								int m = (l + r) / 2;
 
 								g.DrawLine(new Pen(Color.Orange), new Point(j, IMG_H - m), new Point(j, IMG_H));
