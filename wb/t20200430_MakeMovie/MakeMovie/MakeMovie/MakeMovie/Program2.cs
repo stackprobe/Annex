@@ -80,12 +80,12 @@ namespace Charlotte
 		private void Main4_Debug()
 		{
 			//new Test0001().Test01();
-			MkMv.Main01();
+			MakeMovie0001.Main01();
 		}
 
 		private void Main4_Release()
 		{
-			MkMv.Main01();
+			MakeMovie0001.Main01();
 		}
 	}
 }
