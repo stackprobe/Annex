@@ -59,6 +59,12 @@ namespace Charlotte.MkMvs
 
 				DDSubScreenUtils.RestoreDrawScreen();
 
+				// ----
+
+				DDCurtain.DrawCurtain();
+				DDPrint.SetPrint();
+				DDPrint.Print("Phase_1: " + frame);
+
 				DDEngine.EachFrame();
 			}
 
@@ -67,6 +73,22 @@ namespace Charlotte.MkMvs
 			for (int frame = 0; frame < frameNum; frame++)
 			{
 				new Canvas2(string.Format(@"C:\temp\mm\bmp\{0}.bmp", frame)).Save(string.Format(@"C:\temp\mm\img\{0}.jpg", frame), ImageFormat.Jpeg, 90);
+
+				// ----
+
+				DDCurtain.DrawCurtain();
+				DDPrint.SetPrint();
+				DDPrint.Print("Phase_2: " + frame);
+
+				DDEngine.EachFrame();
+			}
+
+			{
+				DDCurtain.DrawCurtain();
+				DDPrint.SetPrint();
+				DDPrint.Print("Phase_3");
+
+				DDEngine.EachFrame();
 			}
 
 			ProcessTools.Batch(new string[]
