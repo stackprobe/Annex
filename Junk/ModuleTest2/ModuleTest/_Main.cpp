@@ -9,7 +9,8 @@ int main(int argc, char **argv)
 	cout("%I64d %I64d %I64d\n", lastDiskFree_User, lastDiskFree, lastDiskSize);
 	updateDiskSpace_Dir("C:\\temp");
 	cout("%I64d %I64d %I64d\n", lastDiskFree_User, lastDiskFree, lastDiskSize);
-	updateDiskSpace_Dir("xxx");
+//	updateDiskSpace_Dir("xxx");
+	updateDiskSpace_Dir(".");
 	cout("%I64d %I64d %I64d\n", lastDiskFree_User, lastDiskFree, lastDiskSize);
 #else
 	initRnd((int)time(NULL));
