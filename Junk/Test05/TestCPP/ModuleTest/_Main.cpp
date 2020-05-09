@@ -2,8 +2,19 @@
 
 int main(int argc, char **argv)
 {
+#if 0 // test test test test test
+	updateDiskSpace('C');
+	cout("%I64d %I64d %I64d\n", lastDiskFree_User, lastDiskFree, lastDiskSize);
+	updateDiskSpace_Dir("C:");
+	cout("%I64d %I64d %I64d\n", lastDiskFree_User, lastDiskFree, lastDiskSize);
+	updateDiskSpace_Dir("C:\\temp");
+	cout("%I64d %I64d %I64d\n", lastDiskFree_User, lastDiskFree, lastDiskSize);
+	updateDiskSpace_Dir("xxx");
+	cout("%I64d %I64d %I64d\n", lastDiskFree_User, lastDiskFree, lastDiskSize);
+#else
 	for(; ; )
 	{
 		Sleep(1000);
 	}
+#endif
 }
