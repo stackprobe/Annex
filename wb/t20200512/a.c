@@ -6,16 +6,16 @@
 
 static void Jammer(autoBlock_t *block, uint seed)
 {
-	autoList_t *swapIdxLst = createSq(getSize(block) / 2, 0, 1);
+	autoList_t *swapIdxLst = createSq(getSize(block) / 2, 1, 1);
 	uint swapIdx;
 	uint index;
 
-	mt19937_initRnd(seed);
+	mt19937_initRnd(seed); // enter
 	shuffle(swapIdxLst);
-	mt19937_initCRnd(); // restore
+	mt19937_initCRnd(); // leave
 
 	foreach(swapIdxLst, swapIdx, index)
-		swapByte(block, index, getCount(swapIdxLst) + swapIdx);
+		swapByte(block, index, getSize(block) - swapIdx);
 
 	releaseAutoList(swapIdxLst);
 }
