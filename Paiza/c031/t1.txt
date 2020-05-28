@@ -1,0 +1,8 @@
+6
+tokyo 9
+beijing 8
+singapore 7
+london 0
+newyork -5
+osaka 9
+singapore 19:38
