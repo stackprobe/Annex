@@ -1,0 +1,22 @@
+621 -855
+2 6 3 6
+19
+t L
+t L
+t R
+m L
+m B
+t R
+t L
+t L
+t B
+t B
+m R
+t B
+m R
+t R
+t L
+t B
+m L
+m R
+t L
