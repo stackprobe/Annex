@@ -6,8 +6,7 @@
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-int MouseRot;
-
+static int Rot;
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
@@ -22,15 +21,15 @@ void MouseEachFrame(void)
 
 	if(WindowIsActive)
 	{
-		MouseRot = GetMouseWheelRotVol();
+		Rot = GetMouseWheelRotVol();
 		status = (uint)GetMouseInput();
 	}
 	else // ? 非アクティブ -> 無入力
 	{
-		MouseRot = 0;
+		Rot = 0;
 		status = 0u;
 	}
-	m_range(MouseRot, -IMAX, IMAX);
+	m_range(Rot, -IMAX, IMAX);
 
 	updateInput(MouseStatus[MOUBTN_L], status & MOUSE_INPUT_LEFT);
 	updateInput(MouseStatus[MOUBTN_M], status & MOUSE_INPUT_MIDDLE);
@@ -51,6 +50,13 @@ int GetMouInput(int mouBtnId)
 int GetMouPound(int mouBtnId)
 {
 	return isPound(GetMouInput(mouBtnId));
+}
+/*
+	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
+*/
+int MouseRot_Get(void)
+{
+	return FreezeInputFrame ? 0 : Rot;
 }
 
 /*
