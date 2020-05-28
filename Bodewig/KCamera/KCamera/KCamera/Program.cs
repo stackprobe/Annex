@@ -29,6 +29,8 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
+			Ground.CurrTime = DateTime.Now;
+
 			if (ar.ArgIs("/L"))
 			{
 				Camera.ShowList();

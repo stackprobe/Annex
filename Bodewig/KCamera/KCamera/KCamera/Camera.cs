@@ -69,7 +69,7 @@ namespace Charlotte
 					writer.WriteLine("DiffValueMonitoringMode: " + this.DiffValueMonitoringMode);
 					writer.WriteLine("MarginFrame: " + this.MarginFrame);
 					writer.WriteLine("DelayCompareFrame: " + this.DelayCompareFrame);
-					writer.WriteLine("起動日時: " + DateTime.Now);
+					writer.WriteLine("起動日時: " + Ground.CurrTime);
 
 					if (dvlmPrm != null)
 					{
@@ -139,6 +139,8 @@ namespace Charlotte
 				}
 				bmp = bmp2;
 			}
+
+			Ground.CurrTime = DateTime.Now;
 
 			lock (SYNCROOT)
 			{
@@ -225,7 +227,7 @@ namespace Charlotte
 
 				this.RecentlyBmps.Enqueue(new BmpInfo()
 				{
-					BmpDateTime = DateTime.Now,
+					BmpDateTime = Ground.CurrTime,
 					DiffValue1 = this.LastDiffValue1,
 					DiffValue2 = this.LastDiffValue2,
 					DetectedStatus = (this.LastDifferent1 ? 1 : 0) + (this.LastDifferent2 ? 2 : 0) + (this.LastDifferent3 ? 4 : 0),

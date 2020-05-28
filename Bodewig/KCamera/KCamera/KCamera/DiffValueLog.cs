@@ -39,7 +39,7 @@ namespace Charlotte
 			return lines.ToArray();
 		}
 
-		private DateTime LastLogWroteTime = DateTime.Now;
+		private DateTime LastLogWroteTime = Ground.CurrTime;
 		private double DiffValueMin = double.MaxValue;
 		private double DiffValueMax = 0.0;
 		private double DiffValueAvgNumer = 0.0;
@@ -55,7 +55,7 @@ namespace Charlotte
 			if (this.DVLogMonitor != null)
 				this.DVLogMonitor.CheckDifferent(diffValue);
 
-			DateTime currTime = DateTime.Now;
+			DateTime currTime = Ground.CurrTime;
 
 			if (60 <= (currTime - this.LastLogWroteTime).TotalSeconds)
 			{

@@ -7,6 +7,7 @@ namespace Charlotte
 {
 	public static class Ground
 	{
+		public static DateTime CurrTime;
 		public static SimpleLogger SLog;
 	}
 }

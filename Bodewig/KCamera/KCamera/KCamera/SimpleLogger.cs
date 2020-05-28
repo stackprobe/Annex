@@ -16,7 +16,7 @@ namespace Charlotte
 		{
 			using (StreamWriter writer = new StreamWriter(this.LogFile, true, Encoding.UTF8))
 			{
-				writer.WriteLine("[" + DateTime.Now + "] " + line);
+				writer.WriteLine("[" + Ground.CurrTime + "] " + line);
 			}
 		}
 	}
