@@ -57,6 +57,8 @@ namespace Charlotte
 
 		private void Test01_b(int valueNum, int valKindNum)
 		{
+			Console.WriteLine(valueNum + ", " + valKindNum);
+
 			int[] origValues = new int[valueNum];
 
 			int[] values1 = new int[valueNum];
@@ -88,21 +90,71 @@ namespace Charlotte
 					)
 					throw null; // bugged !!!
 			}
+
+			Console.WriteLine("done");
 		}
 
 		private void DoSort01(int[] values)
 		{
-			throw new NotImplementedException();
+			Array.Sort(values, (a, b) => a - b);
 		}
 
 		private void DoSort02(int[] values)
 		{
-			throw new NotImplementedException();
+			int[] indexes = Enumerable.Range(0, values.Length).ToArray();
+
+			Array.Sort(indexes, (a, b) => values[a] - values[b]);
+
+			for (int index = 0; index < values.Length; index++)
+			{
+				if (indexes[index] != -1)
+				{
+					int xi = index;
+
+					for (; ; )
+					{
+						int yi = indexes[xi];
+
+						indexes[xi] = -1;
+
+						if (yi == index)
+							break;
+
+						ArrayTools.Swap(values, xi, yi);
+						xi = yi;
+					}
+				}
+			}
 		}
 
 		private void DoSort03(int[] values)
 		{
-			throw new NotImplementedException();
+			int[] indexes = Enumerable.Range(0, values.Length).ToArray();
+
+			Array.Sort(indexes, (a, b) => values[a] - values[b]);
+
+			for (int index = 0; index < values.Length; index++)
+			{
+				if (indexes[index] != -1)
+				{
+					int escVal = values[index];
+					int xi = index;
+
+					for (; ; )
+					{
+						int yi = indexes[xi];
+
+						indexes[xi] = -1;
+
+						if (yi == index)
+							break;
+
+						values[xi] = values[yi];
+						xi = yi;
+					}
+					values[xi] = escVal;
+				}
+			}
 		}
 	}
 }
