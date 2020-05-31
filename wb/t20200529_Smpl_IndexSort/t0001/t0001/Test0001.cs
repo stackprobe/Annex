@@ -10,6 +10,8 @@ namespace Charlotte
 	{
 		public void Test01()
 		{
+			Test01_b(0, 1);
+
 			Test01_a(1);
 			Test01_a(2);
 			Test01_a(3);
@@ -26,6 +28,11 @@ namespace Charlotte
 			Test01_a(1000);
 			Test01_a(3000);
 			Test01_a(10000);
+
+			for (int c = 0; c < 10000; c++)
+			{
+				Test01_b(SecurityTools.CRandom.GetRange(0, 10000), SecurityTools.CRandom.GetRange(1, 10000));
+			}
 		}
 
 		private void Test01_a(int valueNum)
@@ -109,19 +116,19 @@ namespace Charlotte
 			{
 				if (indexes[index] != -1)
 				{
-					int xi = index;
+					int ci = index;
 
 					for (; ; )
 					{
-						int yi = indexes[xi];
+						int xi = indexes[ci];
 
-						indexes[xi] = -1;
+						indexes[ci] = -1;
 
-						if (yi == index)
+						if (xi == index)
 							break;
 
-						ArrayTools.Swap(values, xi, yi);
-						xi = yi;
+						ArrayTools.Swap(values, ci, xi);
+						ci = xi;
 					}
 				}
 			}
@@ -138,21 +145,21 @@ namespace Charlotte
 				if (indexes[index] != -1)
 				{
 					int escVal = values[index];
-					int xi = index;
+					int ci = index;
 
 					for (; ; )
 					{
-						int yi = indexes[xi];
+						int xi = indexes[ci];
 
-						indexes[xi] = -1;
+						indexes[ci] = -1;
 
-						if (yi == index)
+						if (xi == index)
 							break;
 
-						values[xi] = values[yi];
-						xi = yi;
+						values[ci] = values[xi];
+						ci = xi;
 					}
-					values[xi] = escVal;
+					values[ci] = escVal;
 				}
 			}
 		}
