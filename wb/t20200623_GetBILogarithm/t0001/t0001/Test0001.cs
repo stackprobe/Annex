@@ -32,7 +32,7 @@ namespace Charlotte
 			if (x < 2)
 				x = 2;
 
-			int xe = BigIntegerUtils.GetLogarithm(v, x);
+			int xe = BigIntegerUtils_v1.GetLogarithm(v, x);
 
 			Console.WriteLine("xe: " + xe); // test
 
@@ -82,27 +82,15 @@ namespace Charlotte
 			BigInteger v = new BigInteger(BinTools.Join(SecurityTools.CRandom.GetBytes(SecurityTools.CRandom.GetRange(1, scale)), new byte[] { 0x00 }));
 
 			Console.WriteLine("*1"); // test
-			int t1 = BigIntegerUtils.GetByteArrayLength(v);
+			int t1 = BigIntegerUtils_v1.GetByteArrayLength(v);
 			Console.WriteLine("*2"); // test
-			int t2 = T02_GetScale(v);
+			int t2 = BigIntegerUtils.GetByteArrayLength(v);
 			Console.WriteLine("*3"); // test
 
 			if (t1 != t2)
 				throw null; // bugged !!!
 
 			Console.WriteLine("ok"); // test
-		}
-
-		private static int T02_GetScale(BigInteger v)
-		{
-			byte[] bytes = v.ToByteArray();
-			int index;
-
-			for (index = bytes.Length - 1; 0 <= index; index--)
-				if (bytes[index] != 0)
-					break;
-
-			return index + 1;
 		}
 	}
 }
