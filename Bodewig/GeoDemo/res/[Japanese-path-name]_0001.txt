@@ -97,5 +97,5 @@ GeoDemo.zip を任意の場所に(アーカイブ内のツリー構造を維持�
 ----
 GitHub
 
-https://github.com/stackprobe/Denebola/tree/master/Bodewig/GeoDemo
+https://github.com/stackprobe/Annex/tree/master/Bodewig/GeoDemo
 
