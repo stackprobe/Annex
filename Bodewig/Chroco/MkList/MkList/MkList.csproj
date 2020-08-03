@@ -43,7 +43,7 @@
       <HintPath>C:\Dev\CSharp\Chocolate\Chocolate\bin\Release\Chocolate.dll</HintPath>
     </Reference>
     <Reference Include="Chocomint">
-      <HintPath>..\..\..\..\..\CSharp\DLL\Chocomint\Chocomint\bin\Release\Chocomint.dll</HintPath>
+      <HintPath>C:\Dev\CSharp\DLL\Chocomint\Chocomint\bin\Release\Chocomint.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
