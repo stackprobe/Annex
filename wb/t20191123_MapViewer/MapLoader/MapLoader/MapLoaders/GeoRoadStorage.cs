@@ -176,7 +176,7 @@ namespace Charlotte.MapLoaders
 			}
 			catch
 			{
-				FileTools.Delete(Consts.ROAD_CACHE_FILE); // todo デバッグ用に退避する？
+				FileTools.Delete(Consts.ROAD_CACHE_FILE); // HACK デバッグ用に退避する？
 				throw;
 			}
 		}

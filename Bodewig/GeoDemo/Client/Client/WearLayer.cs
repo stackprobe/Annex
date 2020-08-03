@@ -93,7 +93,7 @@ namespace Charlotte
 
 							foreach (Route route in this.Routes)
 							{
-								r_drawRoute(route, Gnd.I.Config.RouteColor); // todo ハイライト2回描画している。
+								r_drawRoute(route, Gnd.I.Config.RouteColor); // HACK ハイライト2回描画している。
 							}
 
 							if (0 <= this.HighlightRouteIndex && this.HighlightRouteIndex < this.Routes.Count)
@@ -137,7 +137,7 @@ namespace Charlotte
 
 						string name = CommonUtils.PlotIndexToName(index);
 
-						// todo 適当な位置
+						// HACK 適当な位置
 
 						x -= 3.0 + 3.0 * name.Length;
 						y -= 7.0;
@@ -182,7 +182,7 @@ namespace Charlotte
 							}
 							g.FillEllipse(brush, (float)(x - circle_r), (float)(y - circle_r), (float)(circle_r * 2.0), (float)(circle_r * 2.0));
 
-							// todo 適当な位置
+							// HACK 適当な位置
 
 							x -= 6.0;
 							y -= 4.0;

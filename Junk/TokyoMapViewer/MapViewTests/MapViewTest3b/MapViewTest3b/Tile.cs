@@ -40,12 +40,12 @@ namespace Charlotte
 				g.DrawString(string.Join("\n", dest), new Font("メイリオ", 10F, FontStyle.Regular), Brushes.OrangeRed, 0, 0);
 			}
 
-			// todo ???
+			// HACK ???
 		}
 
 		public void Deleted()
 		{
-			// todo ???
+			// HACK ???
 		}
 	}
 }

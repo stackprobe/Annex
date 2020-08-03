@@ -20,7 +20,7 @@ namespace BusyDlg
 
 			string[] args = Environment.GetCommandLineArgs();
 
-			Gnd.I.SelfFile = args[0]; // todo
+			Gnd.I.SelfFile = args[0]; // HACK
 			Gnd.I.ExecuteMode = int.Parse(Tools.GetString(args, 1, "-1"));
 			Gnd.I.Message = Tools.GetString(args, 2, "しばらくお待ち下さい...");
 

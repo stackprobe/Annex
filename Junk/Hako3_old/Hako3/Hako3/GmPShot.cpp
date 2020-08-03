@@ -97,7 +97,7 @@ static int ProcPShot(PShot_t *ps)
 			z = 1.5;
 			break;
 		case PST_BLADE:
-			ps->Death = 1; // todo
+			ps->Death = 1; // HACK
 			break;
 		case PST_DBL_SPREAD:
 			z = 1.0; // dummy

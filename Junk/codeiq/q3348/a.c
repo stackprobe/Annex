@@ -144,7 +144,7 @@ static void N_Found(void)
 }
 static int N_IsFairScorecard(int i)
 {
-	return 1; // todo
+	return 1; // HACK
 }
 static void N_Search(void)
 {

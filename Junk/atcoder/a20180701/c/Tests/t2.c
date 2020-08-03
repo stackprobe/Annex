@@ -26,8 +26,8 @@ static int Search_BBS(int *aa, int n, int b, int bStep)
 {
 	for(; ; )
 	{
-		__int64 ans1 = GetSadness(aa, n, b + bStep * 2); // todo -- æ‚Ì•û
-		__int64 ans2 = GetSadness(aa, n, b + bStep * 3); // todo -- æ‚Ì•û‚Ìæ‚Ì•û
+		__int64 ans1 = GetSadness(aa, n, b + bStep * 2); // HACK -- æ‚Ì•û
+		__int64 ans2 = GetSadness(aa, n, b + bStep * 3); // HACK -- æ‚Ì•û‚Ìæ‚Ì•û
 
 		if(ans1 <= ans2) // ? ! ‰º~‚µ‚Ä‚¢‚éB
 			return b;

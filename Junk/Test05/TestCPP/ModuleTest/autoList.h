@@ -214,7 +214,7 @@ public:
 		}
 	}
 
-	void InsertElements(int insPos, Element_t *list, int count) // todo: ’x‚¢
+	void InsertElements(int insPos, Element_t *list, int count) // HACK: ’x‚¢
 	{
 		for(int index = 0; index < count; index++)
 		{

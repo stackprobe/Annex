@@ -166,8 +166,8 @@ void GmProcPlayer(void)
 	if(GmDc.Player.CrashFrame == PLAYER_CRASH_MAX) // ? PlayerCrashed (クラッシュ開始)
 	{
 		GmDc.Player.ToujouFrame = 0;
-		GmDc.Player.T_X = -100.0; // todo
-		GmDc.Player.T_Y = -100.0; // todo
+		GmDc.Player.T_X = -100.0; // HACK
+		GmDc.Player.T_Y = -100.0; // HACK
 		GmDc.Player.CrashedX = GmDc.Player.X;
 		GmDc.Player.CrashedY = GmDc.Player.Y;
 	}

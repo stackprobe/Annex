@@ -44,8 +44,8 @@ static void DrawLine(autoTable_t *bmp, double x1, double y1, double x2, double y
 		ix = d2i(x);
 		iy = d2i(y);
 
-		m_range(ix, 0, BMP_WH - 1); // todo ???
-		m_range(iy, 0, BMP_WH - 1); // todo ???
+		m_range(ix, 0, BMP_WH - 1); // HACK ???
+		m_range(iy, 0, BMP_WH - 1); // HACK ???
 
 		putTableCell(bmp, ix, iy, COLOR_PLOT);
 	}

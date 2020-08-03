@@ -491,7 +491,7 @@ namespace Charlotte
 
 		private void TVClear()
 		{
-			this.TV.Nodes.Clear(); // todo アイテム数が多いとやたら重い。
+			this.TV.Nodes.Clear(); // HACK アイテム数が多いとやたら重い。
 		}
 
 		//
@@ -530,7 +530,7 @@ namespace Charlotte
 			{
 				this.TV.SelectedNode.ExpandAll();
 			}
-			catch // todo
+			catch // HACK
 			{ }
 		}
 
@@ -540,7 +540,7 @@ namespace Charlotte
 			{
 				this.TV.SelectedNode.Collapse();
 			}
-			catch // todo
+			catch // HACK
 			{ }
 		}
 

@@ -25,7 +25,7 @@ namespace Charlotte.Utils
 
 		public static bool IsCrashed_Double_Double(double a, double b)
 		{
-			return Math.Abs(a - b) < 1.0 / 1000000.0; // todo 適当なマージン
+			return Math.Abs(a - b) < 1.0 / 1000000.0; // HACK 適当なマージン
 		}
 
 		public static bool IsCrashed_Point_Point(MapPoint a, MapPoint b)
@@ -84,7 +84,7 @@ namespace Charlotte.Utils
 			double x2, double y2
 			)
 		{
-			// todo 雑な判定
+			// HACK 雑な判定
 			return IsCrashed_Rect_Rect(
 				l, t, r, b,
 				Math.Min(x1, x2),

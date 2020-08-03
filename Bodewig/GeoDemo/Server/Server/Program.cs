@@ -322,7 +322,7 @@ namespace Charlotte
 							{
 								Color color;
 
-								// todo 適当な色
+								// HACK 適当な色
 								{
 									int color_r = index / 9;
 									int color_g = (index / 3) % 3;

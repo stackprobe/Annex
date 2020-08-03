@@ -44,7 +44,7 @@ namespace Charlotte
 
 		private void MainTh()
 		{
-			// todo このスレッド内で Gnd.I.Config を見てしまっている。今の所問題無いけど、実装上マズい。@ 2018.10.12
+			// HACK このスレッド内で Gnd.I.Config を見てしまっている。今の所問題無いけど、実装上マズい。@ 2018.10.12
 
 			while (this.StopFlag == false)
 			{
