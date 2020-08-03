@@ -31,7 +31,7 @@ namespace Charlotte.Utils
 			double x2, double y2
 			)
 		{
-			// FIXME 雑な判定
+			// todo 雑な判定
 			return IsCrashed_Rect_Rect(
 				l, t, r, b,
 				Math.Min(x1, x2),

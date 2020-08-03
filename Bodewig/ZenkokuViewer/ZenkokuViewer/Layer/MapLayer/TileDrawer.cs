@@ -166,7 +166,7 @@ namespace Charlotte.Layer.MapLayer
 
 			point = new PointF((float)x, (float)y);
 
-			// FIXME 有効範囲適当
+			// todo 有効範囲適当
 			return
 				-10000.0 < x && x < 10000.0 &&
 				-10000.0 < y && y < 10000.0;

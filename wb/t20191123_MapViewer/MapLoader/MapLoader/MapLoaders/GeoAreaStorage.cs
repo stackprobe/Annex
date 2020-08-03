@@ -201,7 +201,7 @@ namespace Charlotte.MapLoaders
 			}
 			catch
 			{
-				FileTools.Delete(Consts.AREA_CACHE_FILE); // FIXME デバッグ用に退避する？
+				FileTools.Delete(Consts.AREA_CACHE_FILE); // todo デバッグ用に退避する？
 				throw;
 			}
 		}

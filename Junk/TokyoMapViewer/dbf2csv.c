@@ -33,7 +33,7 @@ static void DBFFileToCSVFile(char *dbfFile, char *csvFile)
 
 		writeCSVCell(wfp, "最終更新");
 		writeChar(wfp, ',');
-		writeCSVCell_x(wfp, xcout("%04d/%02d/%02d", 1970 + c1, c2, c3)); // fixme: これでいいのか？
+		writeCSVCell_x(wfp, xcout("%04d/%02d/%02d", 1970 + c1, c2, c3)); // todo: これでいいのか？
 		writeChar(wfp, '\n');
 	}
 
@@ -260,7 +260,7 @@ static void DBFFileToCSVFile(char *dbfFile, char *csvFile)
 			{
 				char *line = ab_makeLine_x(neReadBinaryBlock(rfp, getElement(fieldSizes, colidx)));
 
-				line2JLine(line, 1, 0, 0, 1); // fixme: 全部文字列扱い。
+				line2JLine(line, 1, 0, 0, 1); // todo: 全部文字列扱い。
 
 				if(colidx)
 					writeChar(wfp, ',');
@@ -271,7 +271,7 @@ static void DBFFileToCSVFile(char *dbfFile, char *csvFile)
 		}
 	}
 
-	errorCase(neReadChar(rfp) != 0x1a); // ? ターミネータ // fixme: こんなのあるの？
+	errorCase(neReadChar(rfp) != 0x1a); // ? ターミネータ // todo: こんなのあるの？
 
 	errorCase(readChar(rfp) != EOF); // ? まだファイルの途中
 

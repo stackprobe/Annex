@@ -530,7 +530,7 @@ namespace Charlotte
 			{
 				this.TV.SelectedNode.ExpandAll();
 			}
-			catch // FIXME
+			catch // todo
 			{ }
 		}
 
@@ -540,7 +540,7 @@ namespace Charlotte
 			{
 				this.TV.SelectedNode.Collapse();
 			}
-			catch // FIXME
+			catch // todo
 			{ }
 		}
 

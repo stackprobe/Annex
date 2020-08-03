@@ -311,7 +311,7 @@ namespace Charlotte
 					));
 			}
 
-			// FIXME テキストボックスにフォーカスが当たったままだと、ホイールが効かなくなる模様。Win7のみだろうか？
+			// todo テキストボックスにフォーカスが当たったままだと、ホイールが効かなくなる模様。Win7のみだろうか？
 			if (this.MapPanel.Focused == false)
 				this.MapPanel.Focus();
 		}

@@ -96,7 +96,7 @@ namespace Charlotte
 				Console.WriteLine("point:    " + Counters[3]);
 
 				GC.Collect();
-				Thread.Sleep(100); // XXX GC完了待ち。意味ないかも
+				Thread.Sleep(100); // todo GC完了待ち。意味ないかも
 			}
 		}
 

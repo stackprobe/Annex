@@ -102,7 +102,7 @@ namespace Charlotte
 
 			foreach (string file in Directory.GetFiles(Gnd.I.Config.MRD_RootDir, "*.mrd.conved.txt"))
 			{
-				//if (IsInside_RoadFile(file)) // XXX -- MRDの西偏が考慮されていないので、とりあえず全部読み込んでしまう。
+				//if (IsInside_RoadFile(file)) // todo -- MRDの西偏が考慮されていないので、とりあえず全部読み込んでしまう。
 				{
 					using (StreamReader reader = new StreamReader(file, Encoding.ASCII))
 					{

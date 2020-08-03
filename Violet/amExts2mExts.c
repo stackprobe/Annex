@@ -68,7 +68,7 @@ static Main2(char *amExtsFile)
 
 	openOutDir();
 
-	// XXX gomi...
+	// todo gomi...
 }
 int main(int argc, char **argv)
 {
