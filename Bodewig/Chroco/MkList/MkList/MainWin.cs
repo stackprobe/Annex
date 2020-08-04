@@ -491,7 +491,7 @@ namespace Charlotte
 
 		private void TVClear()
 		{
-			this.TV.Nodes.Clear(); // HACK アイテム数が多いとやたら重い。
+			this.TV.Nodes.Clear(); // HACK: アイテム数が多いとやたら重い。
 		}
 
 		//

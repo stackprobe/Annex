@@ -10,7 +10,7 @@ namespace Charlotte.Utils
 	{
 		public static double GetDistance(GeoPoint a, GeoPoint b)
 		{
-			return GetDistance(a.Lon, a.Lat, b.Lon, b.Lat); // HACK 緯度経度を距離に換算していない。
+			return GetDistance(a.Lon, a.Lat, b.Lon, b.Lat); // HACK: 緯度経度を距離に換算していない。
 		}
 
 		public static double GetDistance(double x1, double y1, double x2, double y2)
@@ -100,7 +100,7 @@ namespace Charlotte.Utils
 			double x2, double y2
 			)
 		{
-			// HACK 雑な判定
+			// HACK: 雑な判定
 			return IsCrashed_Rect_Rect(
 				l, t, r, b,
 				Math.Min(x1, x2),

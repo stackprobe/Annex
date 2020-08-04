@@ -68,7 +68,7 @@ static Main2(char *amExtsFile)
 
 	openOutDir();
 
-	// HACK gomi...
+	// g
 }
 int main(int argc, char **argv)
 {
