@@ -58,7 +58,7 @@ namespace Charlotte.Layer.MapLayer
 					files.Add(file);
 				});
 
-				// キャッシュクリア FIXME ???
+				// キャッシュクリア HACK ???
 				if (1000.0 < SyncGnd.I.UsedMemoryMB.Get()) // ? 1 GB <
 				{
 					this.AreaCache = null;
