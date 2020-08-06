@@ -13,7 +13,11 @@
 
 javaから呼び出す。
 
-	private static final String PROGRAM = "C:/Dev/Tools/BusyDlg/BusyDlg/bin/Release/BusyDlg.exe";
+	private static final String PROGRAM = "C:/Dev/Annex/Junk/BusyDlg/BusyDlg/bin/Release/BusyDlg.exe";
+
+	public static void openDlg() throws IOException, InterruptedException {
+		Runtime.getRuntime().exec("cmd /c start \"\" /wait \"" + PROGRAM + "\" 1").waitFor();
+	}
 
 	public static void openDlg(String message) throws IOException, InterruptedException {
 		Runtime.getRuntime().exec("cmd /c start \"\" /wait \"" + PROGRAM + "\" 1 \"" + message + "\"").waitFor();

@@ -20,48 +20,48 @@ namespace BusyDlg
 
 			string[] args = Environment.GetCommandLineArgs();
 
-			Gnd.I.SelfFile = args[0]; // HACK
-			Gnd.I.ExecuteMode = int.Parse(Tools.GetString(args, 1, "-1"));
-			Gnd.I.Message = Tools.GetString(args, 2, "しばらくお待ち下さい...");
+			Ground.I.SelfFile = args[0]; // HACK
+			Ground.I.ExecuteMode = int.Parse(Utils.GetString(args, 1, "-1"));
+			Ground.I.Message = Utils.GetString(args, 2, "しばらくお待ち下さい...");
 
-			Gnd.I.DlgOpened = new EventWaitHandle(false, EventResetMode.AutoReset, Gnd.DLG_OPENED_EVENT_NAME);
-			Gnd.I.CloseDlg = new EventWaitHandle(false, EventResetMode.AutoReset, Gnd.CLOSE_DLG_EVENT_NAME);
-			Gnd.I.DlgClosed = new EventWaitHandle(false, EventResetMode.AutoReset, Gnd.DLG_CLOSED_EVENT_NAME);
-			Gnd.I.DlgOpenCloseMutex = new Mutex(false, Gnd.DLG_OPEN_CLOSE_MUTEX_NAME);
+			Ground.I.DlgOpened = new EventWaitHandle(false, EventResetMode.AutoReset, Ground.DLG_OPENED_EVENT_NAME);
+			Ground.I.CloseDlg = new EventWaitHandle(false, EventResetMode.AutoReset, Ground.CLOSE_DLG_EVENT_NAME);
+			Ground.I.DlgClosed = new EventWaitHandle(false, EventResetMode.AutoReset, Ground.DLG_CLOSED_EVENT_NAME);
+			Ground.I.DlgOpenCloseMutex = new Mutex(false, Ground.DLG_OPEN_CLOSE_MUTEX_NAME);
 
 			bool dlgOpened;
 
-			switch (Gnd.I.ExecuteMode)
+			switch (Ground.I.ExecuteMode)
 			{
 				case 0:
-					Gnd.I.DlgOpenCloseMutex.WaitOne();
-					dlgOpened = Gnd.I.IsDlgOpened();
-					Gnd.I.CloseDlg.Set();
-					Gnd.I.DlgClosed.WaitOne(dlgOpened ? Gnd.CREDIBLE_TIMEOUT_MILLIS : Gnd.INCREDIBLE_TIMEOUT_MILLIS);
-					Gnd.I.DlgOpenCloseMutex.ReleaseMutex();
+					Ground.I.DlgOpenCloseMutex.WaitOne();
+					dlgOpened = Ground.I.IsProbablyDlgOpened();
+					Ground.I.CloseDlg.Set();
+					Ground.I.DlgClosed.WaitOne(dlgOpened ? Ground.CREDIBLE_TIMEOUT_MILLIS : Ground.INCREDIBLE_TIMEOUT_MILLIS);
+					Ground.I.DlgOpenCloseMutex.ReleaseMutex();
 					break;
 
 				case 1:
-					Gnd.I.DlgOpenCloseMutex.WaitOne();
-					Process.Start(Gnd.I.SelfFile, "999 \"" + Gnd.I.Message + "\"");
-					Gnd.I.DlgOpened.WaitOne(Gnd.CREDIBLE_TIMEOUT_MILLIS);
-					Gnd.I.DlgOpenCloseMutex.ReleaseMutex();
+					Ground.I.DlgOpenCloseMutex.WaitOne();
+					Process.Start(Ground.I.SelfFile, "999 \"" + Ground.I.Message + "\"");
+					Ground.I.DlgOpened.WaitOne(Ground.CREDIBLE_TIMEOUT_MILLIS);
+					Ground.I.DlgOpenCloseMutex.ReleaseMutex();
 					break;
 
 				case 999:
 					Main2();
-					// この時点でdlgは閉じている。それが唯一のdlgだったら、この時点で G.I.IsDlgOpened() == false になる。
-					Gnd.I.DlgClosed.Set();
+					// この時点でdlgは閉じている。それが唯一のdlgだったら、この時点で Ground.I.IsDlgOpened() == false になる。
+					Ground.I.DlgClosed.Set();
 					break;
 
 				default:
-					throw new Exception("不明な実行モード: " + Gnd.I.ExecuteMode);
+					throw new Exception("不明な実行モード: " + Ground.I.ExecuteMode);
 			}
 
-			Gnd.I.DlgOpened.Close();
-			Gnd.I.CloseDlg.Close();
-			Gnd.I.DlgClosed.Close();
-			Gnd.I.DlgOpenCloseMutex.Close();
+			Ground.I.DlgOpened.Close();
+			Ground.I.CloseDlg.Close();
+			Ground.I.DlgClosed.Close();
+			Ground.I.DlgOpenCloseMutex.Close();
 		}
 
 		private static void Main2()

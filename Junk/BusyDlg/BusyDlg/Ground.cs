@@ -7,12 +7,12 @@ using System.IO;
 
 namespace BusyDlg
 {
-	public class Gnd
+	public class Ground
 	{
-		private Gnd()
+		private Ground()
 		{ }
 
-		public static Gnd I = new Gnd();
+		public static Ground I = new Ground();
 
 		public string SelfFile;
 		public int ExecuteMode;
@@ -33,13 +33,13 @@ namespace BusyDlg
 		public static readonly string DLG_OPEN_CLOSE_MUTEX_NAME = "{ca3635c8-ed1d-440a-84c8-0156205da0ff}";
 		public Mutex DlgOpenCloseMutex;
 
-		public bool IsDlgOpened()
+		public bool IsProbablyDlgOpened()
 		{
 			bool ret = false;
 
 			try
 			{
-				if (Tools.Contains(Tools.GetAllMainWindowTitle(), "　"))
+				if (Utils.Contains(Utils.GetAllMainWindowTitle(), "　"))
 					ret = true;
 			}
 			catch

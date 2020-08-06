@@ -36,7 +36,7 @@ namespace BusyDlg
 
 		private void MainWin_Load(object sender, EventArgs e)
 		{
-			this.Message.Text = Gnd.I.Message;
+			this.Message.Text = Ground.I.Message;
 		}
 
 		private bool ActivatedFlag;
@@ -83,10 +83,10 @@ namespace BusyDlg
 						this.Width += d;
 						this.Location = new Point(this.Location.X - d / 2, this.Location.Y);
 					}
-					Gnd.I.CloseDlg.WaitOne(0); // ごみイベント回収
-					Gnd.I.DlgOpened.Set();
+					Ground.I.CloseDlg.WaitOne(0); // ごみイベント回収
+					Ground.I.DlgOpened.Set();
 				}
-				if (Gnd.I.CloseDlg.WaitOne(0))
+				if (Ground.I.CloseDlg.WaitOne(0))
 				{
 					this.MT_Enabled = false;
 					this.Close();

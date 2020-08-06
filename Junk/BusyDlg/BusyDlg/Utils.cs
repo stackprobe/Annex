@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace BusyDlg
 {
-	public static class Tools
+	public static class Utils
 	{
 		public static string GetString(string[] list, int index, string defval)
 		{
@@ -22,11 +22,12 @@ namespace BusyDlg
 			return defval;
 		}
 
+#if false // not used
 		private static string TempDir;
 
 		public static string GetTempDir()
 		{
-			if (Tools.TempDir == null)
+			if (Utils.TempDir == null)
 			{
 				string dir = Environment.GetEnvironmentVariable("TMP");
 
@@ -36,10 +37,11 @@ namespace BusyDlg
 				if (string.IsNullOrEmpty(dir) || Directory.Exists(dir) == false)
 					throw new Exception("BAD_TMP");
 
-				Tools.TempDir = dir;
+				Utils.TempDir = dir;
 			}
-			return Tools.TempDir;
+			return Utils.TempDir;
 		}
+#endif
 
 		public static string[] GetAllMainWindowTitle()
 		{
