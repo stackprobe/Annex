@@ -126,7 +126,7 @@
     <ClCompile Include="Common\SHA512.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Common\SmplMenu.cpp">
+    <ClCompile Include="Common\SimpleMenu.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Common\Sound.cpp">
@@ -305,7 +305,7 @@
     <ClInclude Include="Common\SHA512.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Common\SmplMenu.h">
+    <ClInclude Include="Common\SimpleMenu.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Common\Sound.h">
