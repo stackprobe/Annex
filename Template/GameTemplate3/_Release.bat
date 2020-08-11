@@ -1,6 +1,6 @@
 C:\Factory\Tools\RDMD.exe /RC out
 
-C:\Factory\SubTools\makeDDResourceFile.exe C:\Dat\Resource out\Resource.dat C:\Dev\Fairy\Tools\MaskGZDataForDonut3\MaskGZData.exe
+C:\Factory\SubTools\makeDDResourceFile.exe C:\Dat\Resource out\Resource.dat C:\Factory\Program\MaskGZDataForDonut3\MaskGZData.exe
 
 C:\Factory\SubTools\CallConfuserCLI.exe GGGGTMPL\GGGGTMPL\bin\Release\GGGGTMPL.exe out\GGGGTMPL.exe
 rem COPY /B GGGGTMPL\GGGGTMPL\bin\Release\GGGGTMPL.exe out
