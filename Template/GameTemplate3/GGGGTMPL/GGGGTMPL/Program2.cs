@@ -43,9 +43,7 @@ namespace Charlotte
 
 			DDAdditionalEvents.Save = lines =>
 			{
-				lines.Add(DateTime.Now.ToString()); // Dummy
-				lines.Add(DateTime.Now.ToString()); // Dummy
-				lines.Add(DateTime.Now.ToString()); // Dummy
+				lines.Add("GGGGTMPL-Dummy"); // Dummy
 
 				// 新しい項目をここへ追加...
 			};
@@ -54,8 +52,6 @@ namespace Charlotte
 			{
 				int c = 0;
 
-				DDUtils.Noop(lines[c++]); // Dummy
-				DDUtils.Noop(lines[c++]); // Dummy
 				DDUtils.Noop(lines[c++]); // Dummy
 
 				// 新しい項目をここへ追加...
