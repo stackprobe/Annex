@@ -49,6 +49,8 @@ namespace Charlotte
 		{
 			// -- 0001
 
+			Utils.PostShown(this);
+
 			// ----
 
 			this.MTBusy.Leave();
@@ -75,17 +77,6 @@ namespace Charlotte
 				try
 				{
 					// -- 9000
-
-					// test
-					if (MessageBox.Show(
-						"アプリケーションを終了して宜しいですか？",
-						"終了確認",
-						MessageBoxButtons.YesNo,
-						MessageBoxIcon.Question
-						)
-						!= System.Windows.Forms.DialogResult.Yes
-						)
-						return;
 
 					// ----
 				}
@@ -117,13 +108,6 @@ namespace Charlotte
 				}
 
 				// -- 3001
-
-				// test
-				if (this.MTCount == 150) // 15 sec
-				{
-					this.CloseWindow();
-					return;
-				}
 
 				// ----
 			}
