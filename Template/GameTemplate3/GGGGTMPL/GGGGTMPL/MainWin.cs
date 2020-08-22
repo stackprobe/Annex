@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using System.Security.Permissions;
@@ -50,13 +51,19 @@ namespace Charlotte
 
 		private void MainWin_Shown(object sender, EventArgs e)
 		{
-			ProcMain.WriteLog = message =>
 			{
-				if (message is Exception)
-					throw new AggregateException((Exception)message);
-				else
-					throw new Exception("Bad log: " + message);
-			};
+				string logFile = ProcMain.SelfFile + ".G3_MainWin.log";
+
+				FileTools.Delete(logFile);
+
+				ProcMain.WriteLog = message =>
+				{
+					using (StreamWriter writer = new StreamWriter(logFile, true, Encoding.UTF8))
+					{
+						writer.WriteLine("[" + DateTime.Now + "] " + message);
+					}
+				};
+			}
 
 			bool aliving = true;
 
