@@ -11,7 +11,8 @@ namespace Charlotte
 		{
 			try
 			{
-				new Program().Main5();
+				new Program().Main6();
+				//new Program().Main5();
 				//new DirectoryTest().Test01();
 				//new Program().Main4();
 				//new Program().Main3();
@@ -150,6 +151,68 @@ namespace Charlotte
 			string[] b = l.ToArray();
 
 			Console.WriteLine(string.Join(", ", b));
+		}
+
+		private void Main6()
+		{
+#if true
+			for (int i = int.MinValue; i <= int.MinValue + 1000; i++)
+				Main6_a(i);
+
+			for (int i = -1000; i <= 1000; i++)
+				Main6_a(i);
+
+			for (int i = int.MaxValue - 1000; i < int.MaxValue; i++)
+				Main6_a(i);
+
+			Main6_a(int.MaxValue);
+#else
+			for (int i = int.MinValue; i < int.MaxValue; i++)
+				Main6_a(i);
+
+			Main6_a(int.MaxValue);
+#endif
+
+			// ----
+
+			for (long l = long.MinValue; l <= long.MinValue + 1000L; l++)
+				Main6_b(l);
+
+			for (long l = (long)int.MinValue - 1000L; l <= (long)int.MinValue + 1000L; l++)
+				Main6_b(l);
+
+			for (long l = -1000L; l <= 1000L; l++)
+				Main6_b(l);
+
+			for (long l = (long)int.MaxValue - 1000L; l <= (long)int.MaxValue + 1000L; l++)
+				Main6_b(l);
+
+			for (long l = long.MaxValue - 1000L; l < long.MaxValue; l++)
+				Main6_b(l);
+
+			Main6_b(long.MaxValue);
+		}
+
+		private void Main6_a(int i)
+		{
+			uint ui = (uint)i;
+			int si = (int)ui;
+
+			Console.WriteLine(string.Join(", ", i, ui, si)); // test
+
+			if (i != si)
+				throw null; // souteigai !!!
+		}
+
+		private void Main6_b(long l)
+		{
+			ulong ul = (ulong)l;
+			long sl = (long)ul;
+
+			Console.WriteLine(string.Join(", ", l, ul, sl)); // test
+
+			if (l != sl)
+				throw null; // souteigai !!!
 		}
 	}
 }
