@@ -5,13 +5,13 @@ static uint Ptr;
 
 static uint Increment_Ptr(void)
 {
-	errorCase(Ptr == UINTMAX);
+	errorCase(Ptr == UINTMAX); // ? Overflow
 	Ptr++;
 	return 0;
 }
 static uint Decrement_Ptr(void)
 {
-	errorCase(!Ptr);
+	errorCase(!Ptr); // ? Overflow
 	Ptr--;
 	return 0;
 }
