@@ -17,13 +17,13 @@ static uint Decrement_Ptr(void)
 }
 static uint Increment(void)
 {
-	errorCase(refElement(Memory, Ptr) == UINTMAX);
+//	errorCase(refElement(Memory, Ptr) == UINTMAX); // ? Overflow
 	putElement(Memory, Ptr, refElement(Memory, Ptr) + 1);
 	return 0;
 }
 static uint Decrement(void)
 {
-	errorCase(!refElement(Memory, Ptr));
+//	errorCase(!refElement(Memory, Ptr)); // ? Overflow
 	putElement(Memory, Ptr, refElement(Memory, Ptr) - 1);
 	return 0;
 }
