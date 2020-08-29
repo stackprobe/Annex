@@ -16,7 +16,7 @@ __int64 FrameStartTime;
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
-__int64 LangolierTime;
+__int64 HzChaserTime;
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
@@ -50,10 +50,10 @@ static void CheckHz(void)
 {
 	__int64 currTime = GetCurrTime();
 
-	LangolierTime += 16; // 16.666 より小さいので、60Hzならどんどん引き離されるはず。
-	m_range(LangolierTime, currTime - 100, currTime + 100);
+	HzChaserTime += 16; // 16.666 より小さいので、60Hzならどんどん引き離されるはず。
+	m_range(HzChaserTime, currTime - 100, currTime + 100);
 
-	while(currTime < LangolierTime)
+	while(currTime < HzChaserTime)
 	{
 		Sleep(1);
 		currTime = GetCurrTime();
