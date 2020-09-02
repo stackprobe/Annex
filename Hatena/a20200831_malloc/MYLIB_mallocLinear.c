@@ -44,7 +44,7 @@ void *MYLIB_realloc(void *ptr, size_t size)
 	if(!ptrNew)
 		return NULL;
 
-	memcpy(ptrNew, ptr, BLOCK_SIZE);
+	memcpy(ptrNew, ptr, size);
 	return ptrNew;
 }
 void MYLIB_free(void *ptr)

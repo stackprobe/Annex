@@ -21,7 +21,7 @@ static unsigned int Rand32(void)
 
 #define TEST_COUNT 10000000 // テスト回数
 
-#define ALLOC_NUM_MAX  15000 // 実際に確保されるメモリブロックの最大数は、この半分くらいになる。
+#define ALLOC_NUM_MAX  14000 // 実際に確保されるメモリブロックの最大数は、この 2 / 3 くらいになる。
 #define ALLOC_SIZE_MAX 10000
 
 static void *Ptrs[ALLOC_NUM_MAX];
@@ -35,23 +35,26 @@ main()
 	for(count = 0; count < TEST_COUNT; count++)
 	{
 		size_t index = Rand32() % ALLOC_NUM_MAX;
+		size_t size;
 
 		if(!Ptrs[index])
 		{
-			void *ptr = MYLIB_malloc(Rand32() % ALLOC_SIZE_MAX + 1);
+			void *ptr = MYLIB_malloc(size = Rand32() % ALLOC_SIZE_MAX + 1);
 
 			if(!ptr)
 				exit(0); // fatal
 
+//			memset(ptr, Rand32() & 0xff, size);
 			Ptrs[index] = ptr;
 		}
 		else if(Rand32() % 2)
 		{
-			void *ptr = MYLIB_realloc(Ptrs[index], Rand32() % ALLOC_SIZE_MAX + 1);
+			void *ptr = MYLIB_realloc(Ptrs[index], size = Rand32() % ALLOC_SIZE_MAX + 1);
 
 			if(!ptr)
 				exit(0); // fatal
 
+//			memset(ptr, Rand32() & 0xff, size);
 			Ptrs[index] = ptr;
 		}
 		else
