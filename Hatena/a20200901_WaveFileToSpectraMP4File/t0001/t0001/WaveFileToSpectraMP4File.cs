@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Charlotte
 {
@@ -14,7 +16,7 @@ namespace Charlotte
 			const string WORK_DIR = @"C:\temp\wf2sMP4_tmp";
 			const int FPS = 20;
 
-			string audioFile = Path.Combine(WORK_DIR, "audio.wav");
+			string midWavFile = Path.Combine(WORK_DIR, "audio.wav");
 			string imagesDir = Path.Combine(WORK_DIR, "images");
 			string videoFile = Path.Combine(WORK_DIR, "video.mp4");
 			string movieFile = Path.Combine(WORK_DIR, "movie.mp4");
@@ -24,14 +26,14 @@ namespace Charlotte
 			Directory.CreateDirectory(WORK_DIR);
 			Directory.CreateDirectory(imagesDir);
 
-			File.Copy(wavFile, audioFile);
+			File.Copy(wavFile, midWavFile);
 
 			int hz;
-			double[][] wave = this.ReadWaveFile(audioFile, out hz);
+			double[][] wave = this.ReadWaveFile(midWavFile, out hz);
 			double[][][] spectra = this.WaveToSpectra(wave, hz, FPS);
 			this.SpectraToImageFiles(spectra, imagesDir);
 			this.ImageFilesToVideoFile(FFMPEG_FILE, imagesDir, FPS, videoFile);
-			this.MakeMovieFile(FFMPEG_FILE, wavFile, videoFile, movieFile);
+			this.MakeMovieFile(FFMPEG_FILE, midWavFile, videoFile, movieFile);
 
 			File.Copy(movieFile, mp4File);
 		}
@@ -200,12 +202,14 @@ namespace Charlotte
 		{
 			double[] SPECTRUM_HZS = new double[]
 			{
-				27.500, 29.135, 30.868,
-				32.703, 34.648, 36.708, 38.891, 41.203, 43.654, 46.249, 48.999, 51.913, 55.000, 58.270, 61.735,
-				65.406, 69.296, 73.416, 77.782, 82.407, 87.307, 92.499, 97.999, 103.826, 110.000, 116.541, 123.471,
-				130.813, 138.591, 146.832, 155.563, 164.814, 174.614, 184.997, 195.998, 207.652, 220.000, 233.082, 246.942,
-				261.626, 277.183, 293.665, 311.127, 329.628, 349.228, 369.994, 391.995, 415.305, 440.000, 466.164, 493.883,
-				523.251, 554.365, 587.330, 622.254, 659.255, 698.456, 739.989, 783.991, 830.609, 880.000, 932.328, 987.767,
+				// --https://en.wikipedia.org/wiki/Piano_key_frequencies
+
+				27.50000, 29.13524, 30.86771,
+				32.70320, 34.64783, 36.70810, 38.89087, 41.20344, 43.65353, 46.24930, 48.99943, 51.91309, 55.00000, 58.27047, 61.73541,
+				65.40639, 69.29566, 73.41619, 77.78175, 82.40689, 87.30706, 92.49861, 97.99886, 103.8262, 110.0000, 116.5409, 123.4708,
+				130.8128, 138.5913, 146.8324, 155.5635, 164.8138, 174.6141, 184.9972, 195.9977, 207.6523, 220.0000, 233.0819, 246.9417,
+				261.6256, 277.1826, 293.6648, 311.1270, 329.6276, 349.2282, 369.9944, 391.9954, 415.3047, 440.0000, 466.1638, 493.8833,
+				523.2511, 554.3653, 587.3295, 622.2540, 659.2551, 698.4565, 739.9888, 783.9909, 830.6094, 880.0000, 932.3275, 987.7666,
 				1046.502, 1108.731, 1174.659, 1244.508, 1318.510, 1396.913, 1479.978, 1567.982, 1661.219, 1760.000, 1864.655, 1975.533,
 				2093.005, 2217.461, 2349.318, 2489.016, 2637.020, 2793.826, 2959.955, 3135.963, 3322.438, 3520.000, 3729.310, 3951.066,
 				4186.009,
@@ -223,6 +227,8 @@ namespace Charlotte
 			int waveLen = wave[0].Length;
 			double waveSecLen = (double)waveLen / wave_hz;
 			int frameCount = (int)(waveSecLen * fps);
+
+			frameCount = Math.Max(1, frameCount); // zantei
 
 			for (int frame = 0; frame < frameCount; frame++)
 			{
@@ -267,7 +273,28 @@ namespace Charlotte
 							v00 += value * Math.Sin(angle_00);
 							v90 += value * Math.Sin(angle_90);
 						}
-						spectrum[spHzIndex] = v00 * v00 + v90 * v90;
+						double v = v00 * v00 + v90 * v90;
+
+						// v to 0-1 range
+						{
+							double r = 1.0;
+
+							for (; ; )
+							{
+								r *= 0.9;
+
+								double b = 1.0 - r;
+
+								if (v <= b)
+									break;
+
+								v -= b;
+								v *= 0.5;
+								v += b;
+							}
+						}
+
+						spectrum[spHzIndex] = v;
 					}
 					spectra[side].Add(spectrum);
 				}
@@ -281,7 +308,55 @@ namespace Charlotte
 
 		private void SpectraToImageFiles(double[][][] spectra, string imgsDir)
 		{
-			throw null; // TODO
+			int BAR_W = 7;
+			int BAR_H = 400;
+			int SP_LEN = spectra[0][0].Length;
+			int SP_W = BAR_W * SP_LEN;
+			int SP_H = BAR_H;
+			int W = SP_W * 2;
+			int H = SP_H;
+
+			int frameCount = spectra[0].Length;
+
+			using (EncoderParameters eps = new EncoderParameters(1))
+			using (EncoderParameter ep = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 90L))
+			{
+				eps.Param[0] = ep;
+
+				ImageCodecInfo ici = ImageCodecInfo.GetImageEncoders().First(v => v.FormatID == ImageFormat.Jpeg.Guid);
+
+				for (int frame = 0; frame < frameCount; frame++)
+				{
+					using (Bitmap bmp = new Bitmap(W, H))
+					{
+						using (Graphics g = Graphics.FromImage(bmp))
+						{
+							for (int side = 0; side < 2; side++)
+							{
+								Brush brash = new Brush[] { Brushes.LightGreen, Brushes.LightSalmon }[side];
+
+								for (int spHzIndex = 0; spHzIndex < SP_LEN; spHzIndex++)
+								{
+									double spValue = spectra[side][frame][spHzIndex];
+
+									int l = side * SP_W + (spHzIndex + 0) * BAR_W;
+									int r = side * SP_W + (spHzIndex + 1) * BAR_W;
+									int t = (int)(BAR_H * (1.0 - spValue));
+									int b = BAR_H;
+									int w = r - l;
+									int h = b - t;
+
+									if (1 <= h)
+									{
+										g.FillRectangle(brash, l, t, w, h);
+									}
+								}
+							}
+						}
+						bmp.Save(Path.Combine(imgsDir, frame + ".jpg"), ici, eps);
+					}
+				}
+			}
 		}
 
 		private void ImageFilesToVideoFile(string ffmpegExe, string imgsDir, int fps, string videoFile)

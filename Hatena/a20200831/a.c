@@ -20,8 +20,14 @@ static unsigned int Rand32(void)
 
 #define TEST_COUNT 30000
 
-#define ALLOC_NUM_MAX  1500
-#define ALLOC_SIZE_MAX 1000000
+#define HEAP_MAX 1250000000 // 1.25 GB
+
+//#define ALLOC_NUM_MAX 30000
+//#define ALLOC_NUM_MAX 10000
+#define ALLOC_NUM_MAX 3000
+//#define ALLOC_NUM_MAX 1000
+
+#define ALLOC_SIZE_MAX ((uint)(HEAP_MAX * 2.0 / (ALLOC_NUM_MAX * 0.666)))
 
 static void *Ptrs[ALLOC_NUM_MAX];
 
@@ -46,10 +52,9 @@ main()
 			ptr = malloc(size = Rand32() % ALLOC_SIZE_MAX + 1);
 			edTm = GetPerformanceCounter();
 
-			printf("M %.3f\n", (edTm - stTm) / (double)tmFreq);
+			cout("M %.3f\n", (edTm - stTm) / (double)tmFreq);
 
-			if(!ptr)
-				exit(0); // fatal
+			errorCase(!ptr);
 
 			memset(ptr, Rand32() & 0xff, size);
 
@@ -61,10 +66,9 @@ main()
 			ptr = realloc(Ptrs[index], size = Rand32() % ALLOC_SIZE_MAX + 1);
 			edTm = GetPerformanceCounter();
 
-			printf("R %.3f\n", (edTm - stTm) / (double)tmFreq);
+			cout("R %.3f\n", (edTm - stTm) / (double)tmFreq);
 
-			if(!ptr)
-				exit(0); // fatal
+			errorCase(!ptr);
 
 			memset(ptr, Rand32() & 0xff, size);
 
@@ -76,7 +80,7 @@ main()
 			free(Ptrs[index]);
 			edTm = GetPerformanceCounter();
 
-			printf("F %.3f\n", (edTm - stTm) / (double)tmFreq);
+			cout("F %.3f\n", (edTm - stTm) / (double)tmFreq);
 
 			Ptrs[index] = NULL;
 		}

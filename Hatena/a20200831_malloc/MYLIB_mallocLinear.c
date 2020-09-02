@@ -53,5 +53,5 @@ void MYLIB_free(void *ptr)
 	if(IsLinearBlock(ptr))
 		Blocks[BlockCount++] = ptr;
 	else
-		free(ptr);
+		free(ptr); // ptr == NULL ‚Ìê‡‚Í‚±‚±‚Ö—ˆ‚éB
 }
