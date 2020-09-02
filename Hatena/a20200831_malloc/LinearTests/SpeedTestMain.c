@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <windows.h>
 #include "MYLIB_malloc.h"
 
@@ -42,7 +41,7 @@ main()
 			void *ptr = MYLIB_malloc(Rand32() % ALLOC_SIZE_MAX + 1);
 
 			if(!ptr)
-				exit(1); // fatal
+				exit(0); // fatal
 
 			Ptrs[index] = ptr;
 		}
@@ -51,7 +50,7 @@ main()
 			void *ptr = MYLIB_realloc(Ptrs[index], Rand32() % ALLOC_SIZE_MAX + 1);
 
 			if(!ptr)
-				exit(1); // fatal
+				exit(0); // fatal
 
 			Ptrs[index] = ptr;
 		}

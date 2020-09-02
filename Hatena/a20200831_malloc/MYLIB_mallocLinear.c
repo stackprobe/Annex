@@ -1,4 +1,4 @@
-#include "MYLIB_malloc.h"
+#include "MYLIB_mallocLinear.h"
 
 #define BLOCK_NUM  10000
 #define BLOCK_SIZE 10000

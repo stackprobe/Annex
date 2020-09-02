@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 #include <malloc.h>
 
 void *MYLIB_malloc(size_t size);

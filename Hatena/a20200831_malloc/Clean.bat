@@ -1,2 +1,1 @@
-DEL *.obj
-DEL *.exe
+CALL _Sync.bat
