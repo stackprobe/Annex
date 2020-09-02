@@ -216,7 +216,8 @@ namespace Charlotte
 			};
 
 			const double AUDIO_DELAY_SEC = 0.2;
-			const int WINDOW_SIZE = 1000;
+			const int WINDOW_SIZE = 5000;
+			//const int WINDOW_SIZE = 1000; // orig
 
 			List<double[]>[] spectra = new List<double[]>[]
 			{
@@ -308,6 +309,11 @@ namespace Charlotte
 
 		private void SpectraToImageFiles(double[][][] spectra, string imgsDir)
 		{
+			Brush[] SHADOW_SP_BRUSHES = new Brush[] { Brushes.DarkCyan, Brushes.DarkOrange };
+			Brush[] SP_BRUSHES = new Brush[] { Brushes.LightCyan, Brushes.LightSalmon };
+
+			double SHADOW_FALL_SPEED = 0.01;
+
 			int BAR_W = 7;
 			int BAR_H = 400;
 			int SP_LEN = spectra[0][0].Length;
@@ -317,6 +323,12 @@ namespace Charlotte
 			int H = SP_H;
 
 			int frameCount = spectra[0].Length;
+
+			double[][] shadowSpectra = new double[][]
+			{
+				new double[SP_LEN],
+				new double[SP_LEN],
+			};
 
 			using (EncoderParameters eps = new EncoderParameters(1))
 			using (EncoderParameter ep = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 90L))
@@ -333,23 +345,28 @@ namespace Charlotte
 						{
 							for (int side = 0; side < 2; side++)
 							{
-								Brush brash = new Brush[] { Brushes.LightGreen, Brushes.LightSalmon }[side];
-
 								for (int spHzIndex = 0; spHzIndex < SP_LEN; spHzIndex++)
 								{
-									double spValue = spectra[side][frame][spHzIndex];
+									double v = shadowSpectra[side][spHzIndex];
+									v = Math.Max(v - SHADOW_FALL_SPEED, spectra[side][frame][spHzIndex]);
+									shadowSpectra[side][spHzIndex] = v;
 
 									int l = side * SP_W + (spHzIndex + 0) * BAR_W;
 									int r = side * SP_W + (spHzIndex + 1) * BAR_W;
-									int t = (int)(BAR_H * (1.0 - spValue));
+									int t = (int)(BAR_H * (1.0 - v));
 									int b = BAR_H;
 									int w = r - l;
 									int h = b - t;
 
 									if (1 <= h)
-									{
-										g.FillRectangle(brash, l, t, w, h);
-									}
+										g.FillRectangle(SHADOW_SP_BRUSHES[side], l, t, w, h);
+
+									v = spectra[side][frame][spHzIndex];
+									t = (int)(BAR_H * (1.0 - v));
+									h = b - t;
+
+									if (1 <= h)
+										g.FillRectangle(SP_BRUSHES[side], l, t, w, h);
 								}
 							}
 						}
