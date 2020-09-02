@@ -220,13 +220,13 @@ namespace Charlotte
 
 			const double AUDIO_DELAY_SEC = 0.2;
 
-			//const int WINDOW_SIZE = 20000; // 何か変
-			//const int WINDOW_SIZE = 15000; // これも変
-			//const int WINDOW_SIZE = 10000; // 微妙に変
+			//const int WINDOW_SIZE = 20000;
+			//const int WINDOW_SIZE = 15000;
+			//const int WINDOW_SIZE = 10000;
 			const int WINDOW_SIZE = 7000;
 			//const int WINDOW_SIZE = 5000;
-			//const int WINDOW_SIZE = 3000; // 何か雑
-			//const int WINDOW_SIZE = 1000; // 何か雑 // orig
+			//const int WINDOW_SIZE = 3000;
+			//const int WINDOW_SIZE = 1000; // orig
 
 			List<double[]>[] spectra = new List<double[]>[]
 			{
@@ -239,6 +239,8 @@ namespace Charlotte
 			int frameCount = (int)(waveSecLen * fps);
 
 			frameCount = Math.Max(1, frameCount); // zantei
+
+			double vMax = 1.0; // test
 
 			for (int frame = 0; frame < frameCount; frame++)
 			{
@@ -285,8 +287,19 @@ namespace Charlotte
 						}
 						double v = v00 * v00 + v90 * v90;
 
+#if false
 						// v to 0-1 range
 						{
+							//v /= 50.0;
+							//v /= 40.0;
+							//v /= 30.0;
+							//v /= 20.0;
+							v /= 10.0;
+							//v /= 5.0;
+							//v /= 4.0;
+							//v /= 3.0;
+							//v /= 2.0;
+
 							double r = 1.0;
 
 							for (; ; )
@@ -303,12 +316,21 @@ namespace Charlotte
 								v += b;
 							}
 						}
+#endif
+						vMax = Math.Max(vMax, v); // test
 
 						spectrum[spHzIndex] = v;
 					}
 					spectra[side].Add(spectrum);
 				}
 			}
+
+			// test
+			foreach (var sp in spectra)
+				foreach (var spct in sp)
+					for (int i = 0; i < spct.Length; i++)
+						spct[i] /= vMax;
+
 			return new double[][][]
 			{
 				spectra[0].ToArray(),
