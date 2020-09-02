@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace Charlotte
 {
@@ -16,7 +17,7 @@ namespace Charlotte
 			const string WORK_DIR = @"C:\temp\wf2sMP4_tmp";
 			const int FPS = 20;
 
-			string midWavFile = Path.Combine(WORK_DIR, "audio.wav");
+			string mid_wavFile = Path.Combine(WORK_DIR, "audio.wav");
 			string imagesDir = Path.Combine(WORK_DIR, "images");
 			string videoFile = Path.Combine(WORK_DIR, "video.mp4");
 			string movieFile = Path.Combine(WORK_DIR, "movie.mp4");
@@ -26,14 +27,16 @@ namespace Charlotte
 			Directory.CreateDirectory(WORK_DIR);
 			Directory.CreateDirectory(imagesDir);
 
-			File.Copy(wavFile, midWavFile);
+			File.Delete(mp4File);
+
+			File.Copy(wavFile, mid_wavFile);
 
 			int hz;
-			double[][] wave = this.ReadWaveFile(midWavFile, out hz);
+			double[][] wave = this.ReadWaveFile(mid_wavFile, out hz);
 			double[][][] spectra = this.WaveToSpectra(wave, hz, FPS);
 			this.SpectraToImageFiles(spectra, imagesDir);
 			this.ImageFilesToVideoFile(FFMPEG_FILE, imagesDir, FPS, videoFile);
-			this.MakeMovieFile(FFMPEG_FILE, midWavFile, videoFile, movieFile);
+			this.MakeMovieFile(FFMPEG_FILE, videoFile, mid_wavFile, movieFile);
 
 			File.Copy(movieFile, mp4File);
 		}
@@ -216,8 +219,14 @@ namespace Charlotte
 			};
 
 			const double AUDIO_DELAY_SEC = 0.2;
-			const int WINDOW_SIZE = 5000;
-			//const int WINDOW_SIZE = 1000; // orig
+
+			//const int WINDOW_SIZE = 20000; // 何か変
+			//const int WINDOW_SIZE = 15000; // これも変
+			//const int WINDOW_SIZE = 10000; // 微妙に変
+			const int WINDOW_SIZE = 7000;
+			//const int WINDOW_SIZE = 5000;
+			//const int WINDOW_SIZE = 3000; // 何か雑
+			//const int WINDOW_SIZE = 1000; // 何か雑 // orig
 
 			List<double[]>[] spectra = new List<double[]>[]
 			{
@@ -309,8 +318,17 @@ namespace Charlotte
 
 		private void SpectraToImageFiles(double[][][] spectra, string imgsDir)
 		{
-			Brush[] SHADOW_SP_BRUSHES = new Brush[] { Brushes.DarkCyan, Brushes.DarkOrange };
-			Brush[] SP_BRUSHES = new Brush[] { Brushes.LightCyan, Brushes.LightSalmon };
+			Brush[] SHADOW_SP_BRUSHES = new Brush[]
+			{
+				new SolidBrush(Color.FromArgb(50, 100, 100)),
+				new SolidBrush(Color.FromArgb(100, 100, 50)),
+			};
+
+			Brush[] SP_BRUSHES = new Brush[]
+			{
+				new SolidBrush(Color.FromArgb(0, 255, 255)),
+				new SolidBrush(Color.FromArgb(255, 255, 0)),
+			};
 
 			double SHADOW_FALL_SPEED = 0.01;
 
@@ -378,12 +396,26 @@ namespace Charlotte
 
 		private void ImageFilesToVideoFile(string ffmpegExe, string imgsDir, int fps, string videoFile)
 		{
-			throw null; // TODO
+			ProcessStartInfo psi = new ProcessStartInfo();
+
+			psi.FileName = ffmpegExe;
+			psi.Arguments = "-r " + fps + " -i \"" + imgsDir + "\\%d.jpg\" \"" + videoFile + "\"";
+			psi.CreateNoWindow = true;
+			psi.UseShellExecute = false;
+
+			Process.Start(psi).WaitForExit();
 		}
 
-		private void MakeMovieFile(string ffmpegExe, string wavFile, string videoFile, string movieFile)
+		private void MakeMovieFile(string ffmpegExe, string videoFile, string wavFile, string movieFile)
 		{
-			throw null; // TODO
+			ProcessStartInfo psi = new ProcessStartInfo();
+
+			psi.FileName = ffmpegExe;
+			psi.Arguments = "-i \"" + videoFile + "\" -i \"" + wavFile + "\" -map 0:0 -map 1:0 -vcodec copy -ab 160k \"" + movieFile + "\"";
+			psi.CreateNoWindow = true;
+			psi.UseShellExecute = false;
+
+			Process.Start(psi).WaitForExit();
 		}
 	}
 }

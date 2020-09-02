@@ -28,7 +28,10 @@ namespace Charlotte
 
 		private void Main2(ArgsReader ar)
 		{
-			new WaveFileToSpectraMP4File().Conv(@"C:\var\mp4\short_wav\pastel_color1.wav", @"C:\temp\a.mp4");
+			//new WaveFileToSpectraMP4File().Conv(@"C:\wb2\20200901_wav\pastel color1.wav", @"C:\temp\a.mp4");
+			//new WaveFileToSpectraMP4File().Conv(@"C:\wb2\20200901_wav\short_song_shiho_shining_star.wav", @"C:\temp\a.mp4");
+			//new WaveFileToSpectraMP4File().Conv(@"C:\wb2\20200901_wav\n28.wav", @"C:\temp\a.mp4");
+			new WaveFileToSpectraMP4File().Conv(@"C:\wb2\20200901_wav\bgm_maoudamashii_piano_calendula.wav", @"C:\temp\a.mp4");
 		}
 	}
 }
