@@ -11,6 +11,11 @@ namespace Charlotte
 {
 	public class WaveFileToSpectraMP4File
 	{
+		/// <summary>
+		/// .wavファイルからオーディオ・スペクトラム(.mp4ファイル)を生成する。
+		/// </summary>
+		/// <param name="wavFile">入力.wavファイル</param>
+		/// <param name="mp4File">出力.mp4ファイル</param>
 		public void Conv(string wavFile, string mp4File)
 		{
 			const string FFMPEG_FILE = @"C:\app\ffmpeg-4.1.3-win64-shared\bin\ffmpeg.exe";
@@ -218,7 +223,8 @@ namespace Charlotte
 				4186.009,
 			};
 
-			const double AUDIO_DELAY_SEC = 0.2;
+			const double AUDIO_DELAY_SEC = 0.1;
+			//const double AUDIO_DELAY_SEC = 0.2;
 
 			//const int WINDOW_SIZE = 20000;
 			//const int WINDOW_SIZE = 15000;
@@ -226,7 +232,7 @@ namespace Charlotte
 			const int WINDOW_SIZE = 7000;
 			//const int WINDOW_SIZE = 5000;
 			//const int WINDOW_SIZE = 3000;
-			//const int WINDOW_SIZE = 1000; // orig
+			//const int WINDOW_SIZE = 1000;
 
 			List<double[]>[] spectra = new List<double[]>[]
 			{
@@ -238,9 +244,7 @@ namespace Charlotte
 			double waveSecLen = (double)waveLen / wave_hz;
 			int frameCount = (int)(waveSecLen * fps);
 
-			frameCount = Math.Max(1, frameCount); // zantei
-
-			double vMax = 1.0; // test
+			frameCount = Math.Max(1, frameCount); // 極端に短くても少なくとも1フレームは生成する。
 
 			for (int frame = 0; frame < frameCount; frame++)
 			{
@@ -287,7 +291,6 @@ namespace Charlotte
 						}
 						double v = v00 * v00 + v90 * v90;
 
-#if false
 						// v to 0-1 range
 						{
 							//v /= 50.0;
@@ -316,20 +319,11 @@ namespace Charlotte
 								v += b;
 							}
 						}
-#endif
-						vMax = Math.Max(vMax, v); // test
-
 						spectrum[spHzIndex] = v;
 					}
 					spectra[side].Add(spectrum);
 				}
 			}
-
-			// test
-			foreach (var sp in spectra)
-				foreach (var spct in sp)
-					for (int i = 0; i < spct.Length; i++)
-						spct[i] /= vMax;
 
 			return new double[][][]
 			{
