@@ -2,7 +2,7 @@
 #include "C:\Factory\Common\Options\CRRandom.h"
 #include "MYLIB_malloc.h"
 
-#define TEST_COUNT 3000000
+#define TEST_COUNT 150000
 
 static uint AllocNumMax;
 static uint AllocSizeMax;

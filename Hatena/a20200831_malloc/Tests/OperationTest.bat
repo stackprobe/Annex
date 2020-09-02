@@ -1,5 +1,0 @@
-FOR %%C IN (1,15000,20000,45000) DO (
-FOR %%S IN (1,15000,20000,45000) DO (
-OperationTest %%C %%S
-)
-)
