@@ -35,22 +35,27 @@ main()
 	for(count = 0; count < TEST_COUNT; count++)
 	{
 		size_t index = Rand32() % ALLOC_NUM_MAX;
+		size_t size;
 
 		if(!Ptrs[index])
 		{
-			void *ptr = MYLIB_malloc(Rand32() % ALLOC_SIZE_MAX + 1);
+			void *ptr = MYLIB_malloc(size = Rand32() % ALLOC_SIZE_MAX + 1);
 
 			if(!ptr)
 				exit(0); // fatal
+
+			memset(ptr, Rand32() & 0xff, size); // 適当な値でブロック全体を初期化
 
 			Ptrs[index] = ptr;
 		}
 		else if(Rand32() % 2)
 		{
-			void *ptr = MYLIB_realloc(Ptrs[index], Rand32() % ALLOC_SIZE_MAX + 1);
+			void *ptr = MYLIB_realloc(Ptrs[index], size = Rand32() % ALLOC_SIZE_MAX + 1);
 
 			if(!ptr)
 				exit(0); // fatal
+
+			memset(ptr, Rand32() & 0xff, size); // 適当な値でブロック全体を初期化
 
 			Ptrs[index] = ptr;
 		}
