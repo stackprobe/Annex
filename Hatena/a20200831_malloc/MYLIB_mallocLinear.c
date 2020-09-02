@@ -2,7 +2,7 @@
 #include "MYLIB_mallocLinear.h"
 
 #define BLOCK_NUM  10000
-#define BLOCK_SIZE 10000
+#define BLOCK_SIZE 10000 // mallocと同じアライメントの倍数であること。
 
 static char Linear[BLOCK_NUM * BLOCK_SIZE];
 static void *Blocks[BLOCK_NUM];
@@ -35,7 +35,7 @@ void *MYLIB_realloc(void *ptr, size_t size)
 	void *ptrNew;
 
 	if(!IsLinearBlock(ptr))
-		return realloc(ptr, size);
+		return realloc(ptr, size); // ptr == NULL の場合もここへ来る。
 
 	if(size <= BLOCK_SIZE)
 		return ptr;

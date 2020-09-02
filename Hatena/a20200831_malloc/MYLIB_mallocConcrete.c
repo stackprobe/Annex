@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include "MYLIB_mallocConcrete.h"
 
-#define LINEAR_SIZE 500000000
+#define LINEAR_SIZE 500000000 // MEM_ALIGN ÇÃî{êîÇ≈Ç†ÇÈÇ±Ç∆ÅB
 #define MEM_ALIGN 4
 
 static char Linear[LINEAR_SIZE];
