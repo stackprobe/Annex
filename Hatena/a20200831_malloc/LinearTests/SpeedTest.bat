@@ -4,8 +4,8 @@ Stopwatch SpeedTestMain
 Stopwatch SpeedTestMain
 Stopwatch SpeedTestMain
 
-Stopwatch SpeedTestMain2
-Stopwatch SpeedTestMain2
-Stopwatch SpeedTestMain2
-Stopwatch SpeedTestMain2
-Stopwatch SpeedTestMain2
+rem Stopwatch SpeedTestMain2
+rem Stopwatch SpeedTestMain2
+rem Stopwatch SpeedTestMain2
+rem Stopwatch SpeedTestMain2
+rem Stopwatch SpeedTestMain2

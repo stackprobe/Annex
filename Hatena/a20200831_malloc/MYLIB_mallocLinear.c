@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include "MYLIB_mallocLinear.h"
 
 #define BLOCK_NUM  10000
