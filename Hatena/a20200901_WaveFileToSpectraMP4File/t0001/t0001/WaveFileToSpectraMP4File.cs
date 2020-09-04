@@ -319,6 +319,7 @@ namespace Charlotte
 								v += b;
 							}
 						}
+
 						spectrum[spHzIndex] = v;
 					}
 					spectra[side].Add(spectrum);
