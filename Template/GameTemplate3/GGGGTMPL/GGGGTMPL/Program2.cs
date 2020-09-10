@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DxLibDLL;
-using Charlotte.Common;
 using Charlotte.Tools;
+using Charlotte.Common;
 using Charlotte.Tests;
 
 namespace Charlotte
