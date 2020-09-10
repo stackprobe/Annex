@@ -44,6 +44,8 @@ namespace Charlotte
 			this.MakeMovieFile(FFMPEG_FILE, videoFile, mid_wavFile, movieFile);
 
 			File.Copy(movieFile, mp4File);
+
+			Directory.Delete(WORK_DIR, true);
 		}
 
 		private double[][] ReadWaveFile(string wavFile, out int hz)
@@ -223,8 +225,8 @@ namespace Charlotte
 				4186.009,
 			};
 
-			const double AUDIO_DELAY_SEC = 0.1;
-			//const double AUDIO_DELAY_SEC = 0.2;
+			//const double AUDIO_DELAY_SEC = 0.1;
+			const double AUDIO_DELAY_SEC = 0.2;
 
 			//const int WINDOW_SIZE = 20000;
 			//const int WINDOW_SIZE = 15000;
@@ -258,10 +260,10 @@ namespace Charlotte
 
 					for (int offset = 0; offset < WINDOW_SIZE; offset++)
 					{
-						int wavePos = waveStartPos + offset;
+						int wavePos = waveStartPos + offset - WINDOW_SIZE / 2;
 						double value;
 
-						if (wavePos < waveLen)
+						if (0 <= wavePos && wavePos < waveLen)
 						{
 							double rate = (double)offset / (WINDOW_SIZE - 1);
 							double hamming = 0.5 - 0.5 * Math.Cos(rate * Math.PI * 2.0);
