@@ -83,12 +83,12 @@ namespace Charlotte
 		private const int DEST_H = 1080;
 
 		// 0 ～ 100
-		private const int EXTERIA_BOKASHI_LEVEL = 10;
-		//private const int EXTERIA_BOKASHI_LEVEL = 30;
+		private const int EXTERIOR_BOKASHI_LEVEL = 10;
+		//private const int EXTERIOR_BOKASHI_LEVEL = 30;
 
 		// 0 ～ 100
-		private const int EXTERIA_AKARUSA_LEVEL = 70;
-		//private const int EXTERIA_AKARUSA_LEVEL = 50;
+		private const int EXTERIOR_AKARUSA_LEVEL = 70;
+		//private const int EXTERIOR_AKARUSA_LEVEL = 50;
 
 		private void Main3(string destImgFile, params string[] srcImgFiles)
 		{
@@ -110,15 +110,15 @@ namespace Charlotte
 			using (WorkingDir wd = new WorkingDir())
 			{
 				string tiledImgFile = wd.MakePath() + ".png";
-				string interiaImgFile = wd.MakePath() + ".png";
-				string exteriaImgFile = wd.MakePath() + ".png";
+				string interiorImgFile = wd.MakePath() + ".png";
+				string exteriorImgFile = wd.MakePath() + ".png";
 
 				tiledImg.Save(tiledImgFile);
 
-				int interia_w;
-				int interia_h;
-				int exteria_w;
-				int exteria_h;
+				int interior_w;
+				int interior_h;
+				int exterior_w;
+				int exterior_h;
 
 				{
 					int w_h = DoubleTools.ToInt(DEST_H * (double)tiledImg.GetWidth() / tiledImg.GetHeight()); // 高さを基準にした幅
@@ -126,17 +126,17 @@ namespace Charlotte
 
 					if (w_h < DEST_W)
 					{
-						interia_w = w_h;
-						interia_h = DEST_H;
-						exteria_w = DEST_W;
-						exteria_h = h_w;
+						interior_w = w_h;
+						interior_h = DEST_H;
+						exterior_w = DEST_W;
+						exterior_h = h_w;
 					}
 					else
 					{
-						interia_w = DEST_W;
-						interia_h = h_w;
-						exteria_w = w_h;
-						exteria_h = DEST_H;
+						interior_w = DEST_W;
+						interior_h = h_w;
+						exterior_w = w_h;
+						exterior_h = DEST_H;
 					}
 				}
 
@@ -145,33 +145,33 @@ namespace Charlotte
 					string.Format("\"{0}\" /RF \"{1}\" /WF \"{2}\" /E {3} {4}"
 						, IMG_TOOLS_EXE
 						, tiledImgFile
-						, interiaImgFile
-						, interia_w
-						, interia_h
+						, interiorImgFile
+						, interior_w
+						, interior_h
 						),
 					string.Format("\"{0}\" /RF \"{1}\" /WF \"{2}\" /E {3} {4} /C {5} {6} {7} {8} /BOKASHI 0 0 {9} {10} {11} 1 /DOTFLTR A R:{12} G:{12} B:{12} /2 \"{13}\" /PASTE {14} {15}"
 						, IMG_TOOLS_EXE
 						, tiledImgFile
-						, exteriaImgFile
-						, exteria_w
-						, exteria_h
-						, (exteria_w - DEST_W) / 2
-						, (exteria_h - DEST_H) / 2
+						, exteriorImgFile
+						, exterior_w
+						, exterior_h
+						, (exterior_w - DEST_W) / 2
+						, (exterior_h - DEST_H) / 2
 						, DEST_W
 						, DEST_H
 						, DEST_W
 						, DEST_H
-						, EXTERIA_BOKASHI_LEVEL
-						, EXTERIA_AKARUSA_LEVEL
-						, interiaImgFile
-						, (DEST_W - interia_w) / 2
-						, (DEST_H - interia_h) / 2
+						, EXTERIOR_BOKASHI_LEVEL
+						, EXTERIOR_AKARUSA_LEVEL
+						, interiorImgFile
+						, (DEST_W - interior_w) / 2
+						, (DEST_H - interior_h) / 2
 						),
 				},
 				wd.GetPath(".")
 				);
 
-				File.Copy(exteriaImgFile, destImgFile, true);
+				File.Copy(exteriorImgFile, destImgFile, true);
 			}
 		}
 	}
