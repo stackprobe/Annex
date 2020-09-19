@@ -12,7 +12,7 @@ typedef struct Gnd_st
 
 	// < app
 
-	// SaveData {
+	// -- セーブデータ項目 ここから
 
 	int RealScreen_W;
 	int RealScreen_H;
@@ -67,7 +67,7 @@ typedef struct Gnd_st
 
 	// < app
 
-	// } SaveData
+	// -- セーブデータ項目 ここまで
 }
 Gnd_t;
 

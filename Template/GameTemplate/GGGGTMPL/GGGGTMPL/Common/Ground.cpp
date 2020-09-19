@@ -417,7 +417,7 @@ void LoadFromDatFile(void)
 		return;
 	}
 
-	// セーブデータ項目 {
+	// -- セーブデータ項目 ここから
 
 	Gnd.RealScreen_W = SD_ReadInt(SCREEN_W, SCREEN_W_MAX);
 	Gnd.RealScreen_H = SD_ReadInt(SCREEN_H, SCREEN_H_MAX);
@@ -466,7 +466,7 @@ void LoadFromDatFile(void)
 
 	// < app
 
-	// } セーブデータ項目
+	// -- セーブデータ項目 ここまで
 
 	delete SaveData;
 
@@ -485,7 +485,7 @@ void SaveToDatFile(void)
 
 	SD_WriteLine(SAVEDATA_SIGNATURE);
 
-	// セーブデータ項目 {
+	// -- セーブデータ項目 ここから
 
 	SD_WriteInt(Gnd.RealScreen_W);
 	SD_WriteInt(Gnd.RealScreen_H);
@@ -534,7 +534,7 @@ void SaveToDatFile(void)
 
 	// < app
 
-	// } セーブデータ項目
+	// -- セーブデータ項目 ここまで
 
 #if LOG_ENABLED == 0
 	errorCase(!Jammer(SaveData, 1));

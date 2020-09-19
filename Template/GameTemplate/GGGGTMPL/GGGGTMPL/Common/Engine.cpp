@@ -8,7 +8,8 @@
 */
 int IgnoreEscapeKey;
 
-// 他のファイルからは read only {
+// -- 他のファイルからは read only ここから
+
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
@@ -41,7 +42,8 @@ int FreezeInputFrame;
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
 */
 int WindowIsActive;
-// }
+
+// -- 他のファイルからは read only ここまで
 
 /*
 	copied the source file by https://github.com/stackprobe/Factory/blob/master/SubTools/CopyLib.c
