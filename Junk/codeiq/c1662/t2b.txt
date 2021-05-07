@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS"/>
-<!--<meta http-equiv="refresh" content="100; URL=http://stackprobe.dip.jp:8080/">-->
+<!--<meta http-equiv="refresh" content="100; URL=http://stackprobe.ccsp.mydns.jp:8080/">-->
 <style type="text/css">
 <!--
 body
@@ -33,6 +33,6 @@ body, a:link, a:visited, a:hover, a:active
 
 一時的にポート番号を8080に変更しています。<br/>
 数秒以内にジャンプします。<br/>
-いつまでもジャンプしない場合は<a href="http://stackprobe.dip.jp:8080/" style="font-size:150%">ここ</a>をクリックして下さい。
+いつまでもジャンプしない場合は<a href="http://stackprobe.ccsp.mydns.jp:8080/" style="font-size:150%">ここ</a>をクリックして下さい。
 </body>
 </html>
