@@ -144,5 +144,5 @@ MkList\MkList.exe
 
 ダウンロードページ
 
-	http://stackprobe.dip.jp/Chroco/index.html
+	http://stackprobe.ccsp.mydns.jp/Chroco/index.html
 
