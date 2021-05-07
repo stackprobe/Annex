@@ -1,6 +1,6 @@
 /*
-	newest.txt        --  http://stackprobe.dip.jp:58946/newest.txt ‚Ì“à—e‚ğƒRƒsƒy‚µ‚Ä•Û‘¶iˆ½‚¢‚Íƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä•Û‘¶j
-	ŒöŠJƒtƒ@ƒCƒ‹ˆê——  --  Vector‚ÉƒƒOƒCƒ“ -> V‹K“o˜^E“o˜^ƒ\ƒtƒgˆê—— -> ŒöŠJƒtƒ@ƒCƒ‹ˆê—— or “o˜^\¿’†ƒtƒ@ƒCƒ‹ˆê——@‚±‚Ìƒy[ƒW‚ğƒRƒsƒy‚µ‚Ä•Û‘¶
+	newest.txt        --  http://stackprobe.ccsp.mydns.jp:58946/newest.txt ã®å†…å®¹ã‚’ã‚³ãƒ”ãƒšã—ã¦ä¿å­˜ï¼ˆæˆ–ã„ã¯ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ä¿å­˜ï¼‰
+	å…¬é–‹ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§  --  Vectorã«ãƒ­ã‚°ã‚¤ãƒ³ -> æ–°è¦ç™»éŒ²ãƒ»ç™»éŒ²ã‚½ãƒ•ãƒˆä¸€è¦§ -> å…¬é–‹ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§ or ç™»éŒ²ç”³è«‹ä¸­ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§ã€€ã“ã®ãƒšãƒ¼ã‚¸ã‚’ã‚³ãƒ”ãƒšã—ã¦ä¿å­˜
 */
 
 #include "C:\Factory\Common\all.h"
@@ -45,7 +45,7 @@ static void CheckRevision(void)
 
 		if(strcmp(rev1, rev2))
 		{
-			cout("šššƒŠƒrƒWƒ‡ƒ“‚ÌXV–Y‚ê‚Ä‚é‚æššš\n");
+			cout("â˜…â˜…â˜…ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã®æ›´æ–°å¿˜ã‚Œã¦ã‚‹ã‚ˆâ˜…â˜…â˜…\n");
 			cout("%s\n", app1);
 			cout("%s\n", app2);
 		}
@@ -80,10 +80,10 @@ int main(int argc, char **argv)
 
 	hasArgs(0); // for //X opts
 
-	cout("Drop newest.txt ƒRƒsƒy file\n");
+	cout("Drop newest.txt ã‚³ãƒ”ãƒš file\n");
 	newestCppFile = dropFile();
 
-	cout("Drop ŒöŠJƒtƒ@ƒCƒ‹ˆê—— page ƒRƒsƒy file\n");
+	cout("Drop å…¬é–‹ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§ page ã‚³ãƒ”ãƒš file\n");
 	vectorCppFile = dropFile();
 
 	HPApps = newList();
@@ -141,8 +141,8 @@ int main(int argc, char **argv)
 
 	BEApps = merge(HPApps, VtApps, AppComp, (void (*)(uint))memFree);
 
-	PrintApps(HPApps, "HP (—vƒAƒbƒvƒf[ƒg + —vV‹K“o˜^H)");
-	PrintApps(VtApps, "Vector (—vƒAƒbƒvƒf[ƒg)");
+	PrintApps(HPApps, "HP (è¦ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ + è¦æ–°è¦ç™»éŒ²ï¼Ÿ)");
+	PrintApps(VtApps, "Vector (è¦ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ)");
 	PrintApps(BEApps, "Both-exists");
 
 	releaseDim(HPApps, 1);
