@@ -2,7 +2,7 @@
 #include "MYLIB_mallocLinear.h"
 
 #define BLOCK_NUM  10000
-#define BLOCK_SIZE 10000 // malloc‚Æ“¯‚¶ƒAƒ‰ƒCƒƒ“ƒg‚Ì”{”‚Å‚ ‚é‚±‚ÆB
+#define BLOCK_SIZE 10000 // mallocã¨åŒã˜ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆã®å€æ•°ã§ã‚ã‚‹ã“ã¨ã€‚
 
 static char Linear[BLOCK_NUM * BLOCK_SIZE];
 static void *Blocks[BLOCK_NUM];
@@ -35,7 +35,7 @@ void *MYLIB_realloc(void *ptr, size_t size)
 	void *ptrNew;
 
 	if(!IsLinearBlock(ptr))
-		return realloc(ptr, size); // ptr == NULL ‚Ìê‡‚à‚±‚±‚Ö—ˆ‚éB
+		return realloc(ptr, size); // ptr == NULL ã®å ´åˆã‚‚ã“ã“ã¸æ¥ã‚‹ã€‚
 
 	if(size <= BLOCK_SIZE)
 		return ptr;
@@ -45,7 +45,7 @@ void *MYLIB_realloc(void *ptr, size_t size)
 	if(!ptrNew)
 		return NULL;
 
-	memcpy(ptrNew, ptr, size);
+	memcpy(ptrNew, ptr, BLOCK_SIZE);
 	return ptrNew;
 }
 void MYLIB_free(void *ptr)
@@ -53,5 +53,5 @@ void MYLIB_free(void *ptr)
 	if(IsLinearBlock(ptr))
 		Blocks[BlockCount++] = ptr;
 	else
-		free(ptr); // ptr == NULL ‚Ìê‡‚Í‚±‚±‚Ö—ˆ‚éB
+		free(ptr); // ptr == NULL ã®å ´åˆã¯ã“ã“ã¸æ¥ã‚‹ã€‚
 }
